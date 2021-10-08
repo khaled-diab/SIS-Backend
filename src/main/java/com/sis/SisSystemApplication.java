@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class SisSystemApplication {
-	private static final Logger LOG = LogManager.getLogger(SisSystemApplication.class);
+	private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(SisSystemApplication.class, args);
-		LOG.info("SIS backend started successfully");		
+		log.info("SIS backend started successfully");		
 	}
 
 }
