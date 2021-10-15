@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import org.graalvm.compiler.graph.Node;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +17,6 @@ import com.sis.exception.ItemNotFoundException;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 public abstract class BaseServiceImp<E extends BaseEntity> implements BaseService<E> {
 	@Override
