@@ -20,12 +20,22 @@ public class Classroom extends BaseEntity {
    
     @Column(name = "code")
     private String code;
-    @Column(name = "name")
-    private String name;
+
+    @Column(name = "name_ar")
+    private String name_ar;
+
+    @Column(name = "name_en")
+    private String name_en;
+
     @Column(name = "capacity")
     private int capacity;
+
+    @Column(name = "status")
+    private int status;
+
     @Column(name = "departmentID")
     private String departmentID;
+
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne
     private Building buildingId;
@@ -38,12 +48,36 @@ public class Classroom extends BaseEntity {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getName_ar() {
+        return name_ar;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName_ar(String name_ar) {
+        this.name_ar = name_ar;
+    }
+
+    public String getName_en() {
+        return name_en;
+    }
+
+    public void setName_en(String name_en) {
+        this.name_en = name_en;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(String departmentID) {
+        this.departmentID = departmentID;
     }
 
     public Building getBuildingId() {
@@ -52,6 +86,13 @@ public class Classroom extends BaseEntity {
 
     public void setBuildingId(Building buildingId) {
         this.buildingId = buildingId;
-    }   
-    
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }
