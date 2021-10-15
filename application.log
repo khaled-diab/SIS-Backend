@@ -2137,3 +2137,60 @@ Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo can
 2021-10-15 22:25:45.617  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-10-15 22:25:45.618  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
 2021-10-15 22:25:45.619  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-15 22:34:38.145  INFO 1516 --- [Thread-137] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:34:38.146  INFO 1516 --- [Thread-137] c.z.h.HikariDataSource                   : HikariPool-34 - Shutdown initiated...
+2021-10-15 22:34:38.148  INFO 1516 --- [Thread-137] c.z.h.HikariDataSource                   : HikariPool-34 - Shutdown completed.
+2021-10-15 22:34:38.240  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:34:38.241  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:34:38.409  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:34:38.427  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 5 JPA repository interfaces.
+2021-10-15 22:34:38.499  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:34:38.500  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:34:38.500  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:34:38.513  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:34:38.513  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 270 ms
+2021-10-15 22:34:38.544  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:34:38.548  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-35 - Starting...
+2021-10-15 22:34:38.550  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-35 - Start completed.
+2021-10-15 22:34:38.550  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:34:38.684  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:34:38.684  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:34:38.796  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 22:34:38.994  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 22:34:39.002  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 22:34:39.004  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.786 seconds (JVM running for 17738.19)
+2021-10-15 22:34:39.005  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 22:34:39.005  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:34:46.333  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 22:34:46.333  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 22:34:46.333  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 0 ms
+2021-10-15 22:34:38.145  INFO 1516 --- [Thread-137] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:34:38.146  INFO 1516 --- [Thread-137] c.z.h.HikariDataSource                   : HikariPool-34 - Shutdown initiated...
+2021-10-15 22:34:38.148  INFO 1516 --- [Thread-137] c.z.h.HikariDataSource                   : HikariPool-34 - Shutdown completed.
+2021-10-15 22:34:38.240  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:34:38.241  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:34:38.409  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:34:38.427  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 5 JPA repository interfaces.
+2021-10-15 22:34:38.499  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:34:38.500  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:34:38.500  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:34:38.513  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:34:38.513  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 270 ms
+2021-10-15 22:34:38.544  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:34:38.548  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-35 - Starting...
+2021-10-15 22:34:38.550  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-35 - Start completed.
+2021-10-15 22:34:38.550  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:34:38.684  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:34:38.684  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:34:38.796  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 22:34:38.994  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 22:34:39.002  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 22:34:39.004  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.786 seconds (JVM running for 17738.19)
+2021-10-15 22:34:39.005  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 22:34:39.005  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:34:46.333  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 22:34:46.333  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 22:34:46.333  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 0 ms
+2021-10-15 22:43:32.452  INFO 1516 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:43:32.452  INFO 1516 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-35 - Shutdown initiated...
+2021-10-15 22:43:32.454  INFO 1516 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-35 - Shutdown completed.
