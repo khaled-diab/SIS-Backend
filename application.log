@@ -1170,3 +1170,922 @@ Caused by: java.io.FileNotFoundException: class path resource [com/sis/service/B
 2021-10-15 20:21:42.158  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-10-15 20:21:42.159  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
 2021-10-15 20:21:42.160  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-15 20:25:51.173  INFO 1516 --- [Thread-73] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:25:51.174  INFO 1516 --- [Thread-73] c.z.h.HikariDataSource                   : HikariPool-18 - Shutdown initiated...
+2021-10-15 20:25:51.177  INFO 1516 --- [Thread-73] c.z.h.HikariDataSource                   : HikariPool-18 - Shutdown completed.
+2021-10-15 20:25:51.280  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 20:25:51.280  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 20:25:51.296  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sis.SisSystemApplication]; nested exception is java.io.FileNotFoundException: class path resource [com/sis/service/BaseServiceImp.class] cannot be opened because it does not exist
+2021-10-15 20:25:51.299 ERROR 1516 --- [restartedMain] o.s.b.SpringApplication                  : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sis.SisSystemApplication]; nested exception is java.io.FileNotFoundException: class path resource [com/sis/service/BaseServiceImp.class] cannot be opened because it does not exist
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+Caused by: java.io.FileNotFoundException: class path resource [com/sis/service/BaseServiceImp.class] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:187) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:55) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:49) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.asSourceClass(ConfigurationClassParser.java:696) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser$SourceClass.getSuperClass(ConfigurationClassParser.java:1010) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:341) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:199) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:304) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.10.jar:5.3.10]
+	... 18 more
+
+2021-10-15 20:26:09.132  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 20:26:09.133  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 20:26:09.267  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 20:26:09.278  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 4 JPA repository interfaces.
+2021-10-15 20:26:09.337  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 20:26:09.338  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 20:26:09.338  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 20:26:09.352  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 20:26:09.352  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 218 ms
+2021-10-15 20:26:09.399  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 20:26:09.407  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-19 - Starting...
+2021-10-15 20:26:09.410  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-19 - Start completed.
+2021-10-15 20:26:09.410  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 20:26:09.911  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 20:26:09.911  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:26:10.047  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 20:26:10.319  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 20:26:10.327  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 20:26:10.330  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 1.223 seconds (JVM running for 10029.516)
+2021-10-15 20:26:10.331  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 20:26:10.331  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 20:32:13.172  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 20:32:13.172  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 20:32:13.173  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-15 20:25:51.173  INFO 1516 --- [Thread-73] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:25:51.174  INFO 1516 --- [Thread-73] c.z.h.HikariDataSource                   : HikariPool-18 - Shutdown initiated...
+2021-10-15 20:25:51.177  INFO 1516 --- [Thread-73] c.z.h.HikariDataSource                   : HikariPool-18 - Shutdown completed.
+2021-10-15 20:25:51.280  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 20:25:51.280  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 20:25:51.296  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sis.SisSystemApplication]; nested exception is java.io.FileNotFoundException: class path resource [com/sis/service/BaseServiceImp.class] cannot be opened because it does not exist
+2021-10-15 20:25:51.299 ERROR 1516 --- [restartedMain] o.s.b.SpringApplication                  : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sis.SisSystemApplication]; nested exception is java.io.FileNotFoundException: class path resource [com/sis/service/BaseServiceImp.class] cannot be opened because it does not exist
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+Caused by: java.io.FileNotFoundException: class path resource [com/sis/service/BaseServiceImp.class] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:187) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:55) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:49) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.asSourceClass(ConfigurationClassParser.java:696) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser$SourceClass.getSuperClass(ConfigurationClassParser.java:1010) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:341) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:199) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:304) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.10.jar:5.3.10]
+	... 18 more
+
+2021-10-15 20:26:09.132  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 20:26:09.133  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 20:26:09.267  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 20:26:09.278  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 4 JPA repository interfaces.
+2021-10-15 20:26:09.337  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 20:26:09.338  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 20:26:09.338  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 20:26:09.352  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 20:26:09.352  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 218 ms
+2021-10-15 20:26:09.399  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 20:26:09.407  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-19 - Starting...
+2021-10-15 20:26:09.410  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-19 - Start completed.
+2021-10-15 20:26:09.410  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 20:26:09.911  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 20:26:09.911  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:26:10.047  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 20:26:10.319  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 20:26:10.327  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 20:26:10.330  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 1.223 seconds (JVM running for 10029.516)
+2021-10-15 20:26:10.331  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 20:26:10.331  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 20:32:13.172  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 20:32:13.172  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 20:32:13.173  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-15 20:34:55.282  INFO 1516 --- [Thread-77] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:34:55.283  INFO 1516 --- [Thread-77] c.z.h.HikariDataSource                   : HikariPool-19 - Shutdown initiated...
+2021-10-15 20:34:55.287  INFO 1516 --- [Thread-77] c.z.h.HikariDataSource                   : HikariPool-19 - Shutdown completed.
+2021-10-15 20:34:55.375  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 20:34:55.375  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 20:34:55.522  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 20:34:55.545  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 4 JPA repository interfaces.
+2021-10-15 20:34:55.624  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 20:34:55.627  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 20:34:55.627  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 20:34:55.652  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 20:34:55.652  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 275 ms
+2021-10-15 20:34:55.704  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 20:34:55.708  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-20 - Starting...
+2021-10-15 20:34:55.711  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-20 - Start completed.
+2021-10-15 20:34:55.711  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 20:34:55.868  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 20:34:55.868  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:34:55.989  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 20:34:56.257  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 20:34:56.265  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 20:34:56.269  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.924 seconds (JVM running for 10555.455)
+2021-10-15 20:34:56.271  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 20:34:56.271  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 20:34:56.338  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 20:34:56.338  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 20:34:56.339  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-15 20:49:48.827  INFO 1516 --- [Thread-83] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:49:48.828  INFO 1516 --- [Thread-83] c.z.h.HikariDataSource                   : HikariPool-20 - Shutdown initiated...
+2021-10-15 20:49:48.831  INFO 1516 --- [Thread-83] c.z.h.HikariDataSource                   : HikariPool-20 - Shutdown completed.
+2021-10-15 20:49:48.913  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 20:49:48.914  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 20:49:49.058  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 20:49:49.070  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 4 JPA repository interfaces.
+2021-10-15 20:49:49.142  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 20:49:49.142  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 20:49:49.142  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 20:49:49.183  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 20:49:49.183  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 267 ms
+2021-10-15 20:49:49.221  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 20:49:49.225  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-21 - Starting...
+2021-10-15 20:49:49.227  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-21 - Start completed.
+2021-10-15 20:49:49.227  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 20:49:49.364  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 20:49:49.365  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 20:49:49.460  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 20:49:49.676  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 20:49:49.685  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 20:49:49.687  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.798 seconds (JVM running for 11448.873)
+2021-10-15 20:49:49.688  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 20:49:49.688  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 20:55:29.068  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 20:55:29.068  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 20:55:29.069  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-15 21:53:12.411  INFO 1516 --- [Thread-87] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:53:12.435  INFO 1516 --- [Thread-87] c.z.h.HikariDataSource                   : HikariPool-21 - Shutdown initiated...
+2021-10-15 21:53:12.440  INFO 1516 --- [Thread-87] c.z.h.HikariDataSource                   : HikariPool-21 - Shutdown completed.
+2021-10-15 21:53:12.627  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 21:53:12.627  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 21:53:12.960  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 21:53:12.971  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 4 JPA repository interfaces.
+2021-10-15 21:53:13.069  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 21:53:13.070  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 21:53:13.070  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 21:53:13.091  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 21:53:13.091  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 461 ms
+2021-10-15 21:53:13.116  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 21:53:13.121  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-22 - Starting...
+2021-10-15 21:53:13.123  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-22 - Start completed.
+2021-10-15 21:53:13.123  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 21:53:13.249  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 21:53:13.249  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:53:13.356  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 21:53:13.596  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 21:53:13.602  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 21:53:13.605  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 1.021 seconds (JVM running for 15252.791)
+2021-10-15 21:53:13.606  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 21:53:13.606  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 21:57:10.300  INFO 1516 --- [Thread-91] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:57:10.301  INFO 1516 --- [Thread-91] c.z.h.HikariDataSource                   : HikariPool-22 - Shutdown initiated...
+2021-10-15 21:57:10.305  INFO 1516 --- [Thread-91] c.z.h.HikariDataSource                   : HikariPool-22 - Shutdown completed.
+2021-10-15 21:57:10.394  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 21:57:10.394  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 21:57:10.550  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 21:57:10.560  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 4 JPA repository interfaces.
+2021-10-15 21:57:10.624  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 21:57:10.625  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 21:57:10.625  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 21:57:10.639  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 21:57:10.639  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 243 ms
+2021-10-15 21:57:10.671  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 21:57:10.674  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-23 - Starting...
+2021-10-15 21:57:10.676  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-23 - Start completed.
+2021-10-15 21:57:10.677  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 21:57:10.835  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 21:57:10.836  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:57:10.936  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 21:57:11.135  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 21:57:11.142  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 21:57:11.144  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.775 seconds (JVM running for 15490.33)
+2021-10-15 21:57:11.145  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 21:57:11.145  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 21:58:29.997  INFO 1516 --- [Thread-95] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:58:29.997  INFO 1516 --- [Thread-95] c.z.h.HikariDataSource                   : HikariPool-23 - Shutdown initiated...
+2021-10-15 21:58:30.002  INFO 1516 --- [Thread-95] c.z.h.HikariDataSource                   : HikariPool-23 - Shutdown completed.
+2021-10-15 21:58:30.141  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 21:58:30.142  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 21:58:30.346  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 21:58:30.357  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 4 JPA repository interfaces.
+2021-10-15 21:58:30.426  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 21:58:30.427  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 21:58:30.427  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 21:58:30.442  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 21:58:30.442  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 298 ms
+2021-10-15 21:58:30.493  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 21:58:30.498  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-24 - Starting...
+2021-10-15 21:58:30.500  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-24 - Start completed.
+2021-10-15 21:58:30.501  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 21:58:30.685  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 21:58:30.686  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:58:30.820  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 21:58:31.047  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 21:58:31.054  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 21:58:31.059  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.977 seconds (JVM running for 15570.245)
+2021-10-15 21:58:31.060  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 21:58:31.060  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 21:58:40.737  INFO 1516 --- [Thread-99] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:58:40.738  INFO 1516 --- [Thread-99] c.z.h.HikariDataSource                   : HikariPool-24 - Shutdown initiated...
+2021-10-15 21:58:40.739  INFO 1516 --- [Thread-99] c.z.h.HikariDataSource                   : HikariPool-24 - Shutdown completed.
+2021-10-15 21:58:40.820  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 21:58:40.821  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 21:58:40.939  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 21:58:40.948  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2021-10-15 21:58:41.007  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 21:58:41.007  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 21:58:41.007  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 21:58:41.021  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 21:58:41.021  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 199 ms
+2021-10-15 21:58:41.050  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 21:58:41.053  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-25 - Starting...
+2021-10-15 21:58:41.056  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-25 - Start completed.
+2021-10-15 21:58:41.056  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 21:58:41.185  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 21:58:41.186  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:58:41.282  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 21:58:41.463  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 21:58:41.470  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 21:58:41.472  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.681 seconds (JVM running for 15580.658)
+2021-10-15 21:58:41.473  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 21:58:41.473  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 21:58:53.176  INFO 1516 --- [Thread-103] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:58:53.176  INFO 1516 --- [Thread-103] c.z.h.HikariDataSource                   : HikariPool-25 - Shutdown initiated...
+2021-10-15 21:58:53.179  INFO 1516 --- [Thread-103] c.z.h.HikariDataSource                   : HikariPool-25 - Shutdown completed.
+2021-10-15 21:58:53.250  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 21:58:53.250  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 21:58:53.369  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 21:58:53.379  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 4 JPA repository interfaces.
+2021-10-15 21:58:53.435  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 21:58:53.435  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 21:58:53.435  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 21:58:53.449  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 21:58:53.449  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 197 ms
+2021-10-15 21:58:53.482  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 21:58:53.486  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-26 - Starting...
+2021-10-15 21:58:53.488  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-26 - Start completed.
+2021-10-15 21:58:53.488  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 21:58:53.615  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 21:58:53.615  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 21:58:53.714  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 21:58:54.045  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 21:58:54.055  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 21:58:54.059  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.828 seconds (JVM running for 15593.245)
+2021-10-15 21:58:54.060  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 21:58:54.060  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:05:12.010  INFO 1516 --- [Thread-107] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:05:12.011  INFO 1516 --- [Thread-107] c.z.h.HikariDataSource                   : HikariPool-26 - Shutdown initiated...
+2021-10-15 22:05:12.015  INFO 1516 --- [Thread-107] c.z.h.HikariDataSource                   : HikariPool-26 - Shutdown completed.
+2021-10-15 22:05:12.097  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:05:12.098  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:05:12.259  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:05:12.272  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 5 JPA repository interfaces.
+2021-10-15 22:05:12.337  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:05:12.337  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:05:12.337  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:05:12.352  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:05:12.352  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 252 ms
+2021-10-15 22:05:12.388  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:05:12.392  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-27 - Starting...
+2021-10-15 22:05:12.394  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-27 - Start completed.
+2021-10-15 22:05:12.394  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:05:12.550  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:05:12.550  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:05:12.613  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'classroomController': Unsatisfied dependency expressed through field 'mapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.sis.entities.mapper.Mapper<com.sis.entities.Classroom, com.sis.dto.ClassroomDTO>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2021-10-15 22:05:12.614  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:05:12.614  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-27 - Shutdown initiated...
+2021-10-15 22:05:12.616  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-27 - Shutdown completed.
+2021-10-15 22:05:12.617  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Stopping service [Tomcat]
+2021-10-15 22:05:12.621  INFO 1516 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-10-15 22:05:12.623 ERROR 1516 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mapper in com.sis.controller.BaseController required a bean of type 'com.sis.entities.mapper.Mapper' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.sis.entities.mapper.Mapper' in your configuration.
+
+2021-10-15 22:05:59.431  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:05:59.431  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:05:59.600  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:05:59.614  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 5 JPA repository interfaces.
+2021-10-15 22:05:59.681  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:05:59.682  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:05:59.682  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:05:59.699  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:05:59.699  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 267 ms
+2021-10-15 22:05:59.738  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:05:59.742  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-28 - Starting...
+2021-10-15 22:05:59.744  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-28 - Start completed.
+2021-10-15 22:05:59.745  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:05:59.889  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:05:59.889  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:05:59.945  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'classroomController': Unsatisfied dependency expressed through field 'mapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.sis.entities.mapper.Mapper<com.sis.entities.Classroom, com.sis.dto.ClassroomDTO>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2021-10-15 22:05:59.945  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:05:59.945  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-28 - Shutdown initiated...
+2021-10-15 22:05:59.947  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-28 - Shutdown completed.
+2021-10-15 22:05:59.948  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Stopping service [Tomcat]
+2021-10-15 22:05:59.952  INFO 1516 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-10-15 22:05:59.954 ERROR 1516 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mapper in com.sis.controller.BaseController required a bean of type 'com.sis.entities.mapper.Mapper' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.sis.entities.mapper.Mapper' in your configuration.
+
+2021-10-15 22:07:44.607  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:07:44.608  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:07:44.791  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:07:44.804  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 5 JPA repository interfaces.
+2021-10-15 22:07:44.875  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:07:44.876  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:07:44.876  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:07:44.893  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:07:44.893  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 284 ms
+2021-10-15 22:07:44.923  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:07:44.927  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-29 - Starting...
+2021-10-15 22:07:44.932  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-29 - Start completed.
+2021-10-15 22:07:44.932  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:07:45.127  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:07:45.127  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:07:45.254  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 22:07:45.439  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 22:07:45.447  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 22:07:45.450  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.868 seconds (JVM running for 16124.636)
+2021-10-15 22:07:45.451  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 22:07:45.451  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:07:52.553  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 22:07:52.553  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 22:07:52.553  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 0 ms
+2021-10-15 22:17:48.753  INFO 1516 --- [Thread-111] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:17:48.754  INFO 1516 --- [Thread-111] c.z.h.HikariDataSource                   : HikariPool-29 - Shutdown initiated...
+2021-10-15 22:17:48.758  INFO 1516 --- [Thread-111] c.z.h.HikariDataSource                   : HikariPool-29 - Shutdown completed.
+2021-10-15 22:17:48.848  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:17:48.849  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:17:48.985  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:17:48.997  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 5 JPA repository interfaces.
+2021-10-15 22:17:49.066  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:17:49.067  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:17:49.067  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:17:49.083  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:17:49.083  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 233 ms
+2021-10-15 22:17:49.127  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:17:49.130  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-30 - Starting...
+2021-10-15 22:17:49.133  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-30 - Start completed.
+2021-10-15 22:17:49.133  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:17:49.324  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:17:49.325  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:17:49.474  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 22:17:49.739  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 22:17:49.749  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 22:17:49.752  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.928 seconds (JVM running for 16728.937)
+2021-10-15 22:17:49.753  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 22:17:49.754  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:17:52.246  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 22:17:52.246  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 22:17:52.247  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 0 ms
+2021-10-15 22:22:15.276  INFO 1516 --- [Thread-121] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:22:15.277  INFO 1516 --- [Thread-121] c.z.h.HikariDataSource                   : HikariPool-30 - Shutdown initiated...
+2021-10-15 22:22:15.281  INFO 1516 --- [Thread-121] c.z.h.HikariDataSource                   : HikariPool-30 - Shutdown completed.
+2021-10-15 22:22:15.456  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:22:15.458  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:22:15.477  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sis.SisSystemApplication]; nested exception is java.io.FileNotFoundException: class path resource [com/sis/controller/BaseController.class] cannot be opened because it does not exist
+2021-10-15 22:22:15.479 ERROR 1516 --- [restartedMain] o.s.b.SpringApplication                  : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sis.SisSystemApplication]; nested exception is java.io.FileNotFoundException: class path resource [com/sis/controller/BaseController.class] cannot be opened because it does not exist
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+Caused by: java.io.FileNotFoundException: class path resource [com/sis/controller/BaseController.class] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:187) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:55) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:49) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.asSourceClass(ConfigurationClassParser.java:696) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser$SourceClass.getSuperClass(ConfigurationClassParser.java:1010) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:341) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:199) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:304) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.10.jar:5.3.10]
+	... 18 more
+
+2021-10-15 22:23:17.006  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:23:17.007  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:23:17.204  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:23:17.205  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 JPA repository interfaces.
+2021-10-15 22:23:17.306  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:23:17.307  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:23:17.307  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:23:17.330  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:23:17.330  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 322 ms
+2021-10-15 22:23:17.426  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:23:17.434  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-31 - Starting...
+2021-10-15 22:23:18.458 ERROR 1516 --- [restartedMain] c.z.h.p.HikariPool                       : HikariPool-31 - Exception during pool initialization.
+
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:448) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:?]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+
+2021-10-15 22:23:18.459  WARN 1516 --- [restartedMain] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:448) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:?]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+
+2021-10-15 22:23:18.471 ERROR 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2021-10-15 22:23:18.472  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2021-10-15 22:23:18.472  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Stopping service [Tomcat]
+2021-10-15 22:23:18.477  INFO 1516 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-10-15 22:23:18.479 ERROR 1516 --- [restartedMain] o.s.b.SpringApplication                  : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:275) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	... 21 more
+Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:100) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:54) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:137) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	... 21 more
+
+2021-10-15 22:23:19.933  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:23:19.934  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:23:20.203  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:23:20.212  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 3 JPA repository interfaces.
+2021-10-15 22:23:20.263  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:23:20.263  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:23:20.264  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:23:20.276  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:23:20.276  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 341 ms
+2021-10-15 22:23:20.297  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:23:20.300  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-32 - Starting...
+2021-10-15 22:23:21.307 ERROR 1516 --- [restartedMain] c.z.h.p.HikariPool                       : HikariPool-32 - Exception during pool initialization.
+
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:448) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:?]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+
+2021-10-15 22:23:21.308  WARN 1516 --- [restartedMain] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:448) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:?]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) [spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) [spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+
+2021-10-15 22:23:21.308 ERROR 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2021-10-15 22:23:21.308  WARN 1516 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2021-10-15 22:23:21.308  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Stopping service [Tomcat]
+2021-10-15 22:23:21.312  INFO 1516 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-10-15 22:23:21.313 ERROR 1516 --- [restartedMain] o.s.b.SpringApplication                  : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.10.jar:5.3.10]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.5.jar:2.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.5.jar:2.5.5]
+	at com.sis.SisSystemApplication.main(SisSystemApplication.java:13) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.5.jar:2.5.5]
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:275) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	... 21 more
+Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:100) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:54) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:137) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	... 21 more
+

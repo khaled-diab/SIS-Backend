@@ -1,11 +1,10 @@
 package com.sis.controller;
 
 import java.util.List;
+
+import com.sis.dto.BuildingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import com.sis.dto.BaseDTO;
 import com.sis.entities.BaseEntity;
 import com.sis.entities.mapper.Mapper;
@@ -29,6 +28,11 @@ public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 	@RequestMapping(value="/all", method = RequestMethod.GET)
 	public List<DTO> list() {
 		return mapper.toDTOs(baseService.findAll());
+	}
+
+	@RequestMapping(value="/search", method = RequestMethod.GET)
+	public List<DTO> list(@RequestParam("key") String key) {
+		return mapper.toDTOs(baseService.find(key));
 	}
 
 	@RequestMapping(value="/datapage", method = RequestMethod.POST)
