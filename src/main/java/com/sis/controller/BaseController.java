@@ -17,6 +17,7 @@ import com.sis.util.PageResult;
 public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 	@Autowired
 	private BaseServiceImp<T> baseService;
+	
 	@Autowired
 	private Mapper<T, DTO>mapper;
 	
@@ -29,6 +30,7 @@ public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 	public List<DTO> list() {
 		return mapper.toDTOs(baseService.findAll());
 	}
+
 	@RequestMapping(value="/datapage", method = RequestMethod.POST)
 	public PageResult<DTO> getDataPage(PageQueryUtil pageUtil) {
 		return mapper.toDataPage(baseService.getDataPage(pageUtil));
