@@ -34,6 +34,7 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
         dto.setCode(entity.getCode());
         dto.setName_ar(entity.getName_ar());
         dto.setName_en(entity.getName_en());
+        dto.setStatus(entity.getStatus());
         return dto;
     }
 
@@ -44,6 +45,7 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
         entity.setCode(dto.getCode());
         entity.setName_ar(dto.getName_ar());
         entity.setName_en(dto.getName_en());
+        entity.setStatus(dto.getStatus());
         return entity;
     }
 
