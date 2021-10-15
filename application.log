@@ -2089,3 +2089,51 @@ Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo can
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
 	... 21 more
 
+2021-10-15 22:25:26.899  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:25:26.899  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:25:27.141  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:25:27.207  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 0 JPA repository interfaces.
+2021-10-15 22:25:27.302  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:25:27.303  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:25:27.303  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:25:27.321  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:25:27.321  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 419 ms
+2021-10-15 22:25:27.400  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:25:27.406  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-33 - Starting...
+2021-10-15 22:25:27.409  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-33 - Start completed.
+2021-10-15 22:25:27.410  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:25:27.660  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:25:27.660  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:25:27.707  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 22:25:27.985  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 22:25:27.999  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 22:25:28.005  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 1.156 seconds (JVM running for 17187.191)
+2021-10-15 22:25:28.006  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 22:25:28.007  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:25:29.527  INFO 1516 --- [Thread-125] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:25:29.527  INFO 1516 --- [Thread-125] c.z.h.HikariDataSource                   : HikariPool-33 - Shutdown initiated...
+2021-10-15 22:25:29.530  INFO 1516 --- [Thread-125] c.z.h.HikariDataSource                   : HikariPool-33 - Shutdown completed.
+2021-10-15 22:25:29.618  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 1516 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-15 22:25:29.618  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-15 22:25:29.746  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-15 22:25:29.756  INFO 1516 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2021-10-15 22:25:29.815  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-15 22:25:29.816  INFO 1516 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-15 22:25:29.816  INFO 1516 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-15 22:25:29.831  INFO 1516 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-15 22:25:29.831  INFO 1516 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 211 ms
+2021-10-15 22:25:29.862  INFO 1516 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-15 22:25:29.866  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-34 - Starting...
+2021-10-15 22:25:29.869  INFO 1516 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-34 - Start completed.
+2021-10-15 22:25:29.869  INFO 1516 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-15 22:25:29.991  INFO 1516 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-15 22:25:29.992  INFO 1516 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-15 22:25:30.092  WARN 1516 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 22:25:30.297  INFO 1516 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-15 22:25:30.304  INFO 1516 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-15 22:25:30.307  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 0.711 seconds (JVM running for 17189.493)
+2021-10-15 22:25:30.308  INFO 1516 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-10-15 22:25:30.308  INFO 1516 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-15 22:25:45.617  INFO 1516 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-15 22:25:45.618  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-15 22:25:45.619  INFO 1516 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
