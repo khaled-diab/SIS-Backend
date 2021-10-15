@@ -10,7 +10,9 @@ import com.sis.util.PageResult;
 public interface BaseService<E extends BaseEntity > {
 	
 	public List<E> findAll();
-	
+
+	public List<E> find(String key);
+
 	public E findById(Long id);
 	
 	public E save(E entity);

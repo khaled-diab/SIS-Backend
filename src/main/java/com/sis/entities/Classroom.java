@@ -22,6 +22,10 @@ public class Classroom extends BaseEntity {
     private String code;
     @Column(name = "name")
     private String name;
+    @Column(name = "capacity")
+    private int capacity;
+    @Column(name = "departmentID")
+    private String departmentID;
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne
     private Building buildingId;
