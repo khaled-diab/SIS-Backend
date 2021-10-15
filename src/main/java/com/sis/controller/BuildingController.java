@@ -13,13 +13,4 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/building")
 public class BuildingController extends BaseController<Building, BuildingDTO>{
-    @Autowired
-    private BaseServiceImp<Building> baseService;
-    @Autowired
-    private Mapper<Building, BuildingDTO> mapper;
-
-    @RequestMapping(value="/search", method = RequestMethod.GET)
-    public List<BuildingDTO> list(@RequestParam("key") String key) {
-        return mapper.toDTOs(baseService.find(key));
-    }
 }
