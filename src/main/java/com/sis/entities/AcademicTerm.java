@@ -15,21 +15,25 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "academic_tearm")
-public class AcademicTearm extends BaseEntity {
+@Table(name = "academic_term")
+public class AcademicTerm extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
    
     @Column(name = "code")
     private String code;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
+
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+
     @JoinColumn(name = "academic_year", referencedColumnName = "id")
     @ManyToOne
     private AcademicYear academicYear;

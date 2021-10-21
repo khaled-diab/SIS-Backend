@@ -15,36 +15,49 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "faculty")
-public class Faculty extends BaseEntity {
+@Table(name = "student")
+public class Student extends BaseEntity {
 
     private static final long serialVersionUID = 1L;   
     @Column(name = "name_ar")
     private String nameAr;
+
     @Column(name = "name_en")
     private String nameEn;
-    @Column(name = "Nationality")
+
+    @Column(name = "nationality")
     private String nationality;
-    @Column(name = "NationalID")
+
+    @Column(name = "nationalID")
     private String nationalID;
+
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
-    private Date birthDate;   
+    private Date birthDate;
+
+    @Column(name = "university_mail")
+    private String universityMail;
+
     @Column(name = "alternative_mail")
     private String alternativeMail;
+
     @Column(name = "phone")
     private String phone;
-    @Column(name = "degree")
-    private String degree;
-    @JoinColumn(name = "colage_id", referencedColumnName = "id")
-    @ManyToOne
-    private Colage colageId;
-    @JoinColumn(name = "dept_id", referencedColumnName = "id")
-    @ManyToOne
-    private Departemnt deptId;
 
-    public Faculty() {
-    }  
+    @Column(name = "parent_phone")
+    private String parentPhone;
+
+    @JoinColumn(name = "programId", referencedColumnName = "id")
+    @ManyToOne
+    private AcademicProgram programId;
+
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
+    @ManyToOne
+    private College collegeId;
+
+    @JoinColumn(name = "departmentId", referencedColumnName = "id")
+    @ManyToOne
+    private Department departmentId;
 
     public String getNameAr() {
         return nameAr;
@@ -84,8 +97,17 @@ public class Faculty extends BaseEntity {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    } 
-	public String getAlternativeMail() {
+    }
+
+    public String getUniversityMail() {
+        return universityMail;
+    }
+
+    public void setUniversityMail(String universityMail) {
+        this.universityMail = universityMail;
+    }
+
+    public String getAlternativeMail() {
         return alternativeMail;
     }
 
@@ -101,28 +123,36 @@ public class Faculty extends BaseEntity {
         this.phone = phone;
     }
 
-    public String getDegree() {
-        return degree;
+    public String getParentPhone() {
+        return parentPhone;
     }
 
-    public void setDegree(String degree) {
-        this.degree = degree;
+    public void setParentPhone(String parentPhone) {
+        this.parentPhone = parentPhone;
     }
 
-    public Colage getColageId() {
-        return colageId;
+    public AcademicProgram getProgramId() {
+        return programId;
     }
 
-    public void setColageId(Colage colageId) {
-        this.colageId = colageId;
+    public void setProgramId(AcademicProgram programId) {
+        this.programId = programId;
     }
 
-    public Departemnt getDeptId() {
-        return deptId;
+    public College getCollegeId() {
+        return collegeId;
     }
 
-    public void setDeptId(Departemnt deptId) {
-        this.deptId = deptId;
-    } 
-    
+    public void setCollegeId(College collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Department getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Department departmentId) {
+        this.departmentId = departmentId;
+    }
+   
 }
