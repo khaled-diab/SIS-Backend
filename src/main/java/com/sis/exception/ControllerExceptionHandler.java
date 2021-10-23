@@ -16,7 +16,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<MessageResponse> globalExceptionHandler(Exception ex, WebRequest request) {
 		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse("An error has occured please try again later"),
+		return new ResponseEntity<MessageResponse>(new MessageResponse("An error has occurred please try again later"),
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	@ExceptionHandler(InvalidUserNameOrPasswordException.class)

@@ -1,11 +1,9 @@
 package com.sis.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import com.sis.dto.BaseDTO;
 import com.sis.entities.BaseEntity;
 import com.sis.entities.mapper.Mapper;
@@ -14,9 +12,12 @@ import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 
+
 public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
+
 	@Autowired
 	private BaseServiceImp<T> baseService;
+
 	@Autowired
 	private Mapper<T, DTO>mapper;
 	
@@ -29,6 +30,7 @@ public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 	public List<DTO> list() {
 		return mapper.toDTOs(baseService.findAll());
 	}
+
 	@RequestMapping(value="/datapage", method = RequestMethod.POST)
 	public PageResult<DTO> getDataPage(PageQueryUtil pageUtil) {
 		return mapper.toDataPage(baseService.getDataPage(pageUtil));

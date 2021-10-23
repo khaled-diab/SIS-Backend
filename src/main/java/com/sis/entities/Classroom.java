@@ -20,8 +20,10 @@ public class Classroom extends BaseEntity {
    
     @Column(name = "code")
     private String code;
+
     @Column(name = "name")
     private String name;
+
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne
     private Building buildingId;

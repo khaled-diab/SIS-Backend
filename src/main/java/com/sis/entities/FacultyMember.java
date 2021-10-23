@@ -6,45 +6,60 @@
 package com.sis.entities;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "faculty")
-public class Faculty extends BaseEntity {
+@Table(name = "faculty_member")
+public class FacultyMember extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;   
-    @Column(name = "name_ar")
+    private static final long serialVersionUID = 1L;
+
+    @Column(name = "name_ar", unique = true, nullable = false)
     private String nameAr;
-    @Column(name = "name_en")
+
+    @Column(name = "name_en", unique = true, nullable = false)
     private String nameEn;
-    @Column(name = "Nationality")
+
+    @Column(name = "nationality")
     private String nationality;
-    @Column(name = "NationalID")
+
+    @Column(name = "nationalID", length = 14, nullable = false, unique = true)
     private String nationalID;
+
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
-    private Date birthDate;   
-    @Column(name = "alternative_mail")
+    private Date birthDate;
+
+    @Column(name = "university_mail", unique = true, nullable = false)
+    private String universityMail;
+
+    @Column(name = "alternative_mail",unique = true)
     private String alternativeMail;
+
     @Column(name = "phone")
     private String phone;
-    @Column(name = "degree")
-    private String degree;
-    @JoinColumn(name = "colage_id", referencedColumnName = "id")
-    @ManyToOne
-    private Colage colageId;
-    @JoinColumn(name = "dept_id", referencedColumnName = "id")
-    @ManyToOne
-    private Departemnt deptId;
 
-    public Faculty() {
-    }  
+    @Column(name = "degree", nullable = false)
+    private String degree;
+
+    @ManyToOne
+    @JoinColumn(name = "collegeId", referencedColumnName = "id")
+    private College collegeId;
+
+    @ManyToOne
+    @JoinColumn(name = "departmentId", referencedColumnName = "id")
+    private Department departmentId;
+
+    public FacultyMember() {
+    }
+
+    public String getUniversityMail() {
+        return universityMail;
+    }
+
+    public void setUniversityMail(String universityMail) {
+        this.universityMail = universityMail;
+    }
 
     public String getNameAr() {
         return nameAr;
@@ -84,7 +99,8 @@ public class Faculty extends BaseEntity {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    } 
+    }
+
 	public String getAlternativeMail() {
         return alternativeMail;
     }
@@ -109,20 +125,20 @@ public class Faculty extends BaseEntity {
         this.degree = degree;
     }
 
-    public Colage getColageId() {
-        return colageId;
+    public College getCollegeId() {
+        return collegeId;
     }
 
-    public void setColageId(Colage colageId) {
-        this.colageId = colageId;
+    public void setCollegeId(College collegeId) {
+        this.collegeId = collegeId;
     }
 
-    public Departemnt getDeptId() {
-        return deptId;
+    public Department getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDeptId(Departemnt deptId) {
-        this.deptId = deptId;
+    public void setDepartmentId(Department deptId) {
+        this.departmentId = deptId;
     } 
     
 }

@@ -1,6 +1,10 @@
 package com.sis.service;
 
+import java.lang.reflect.Field;
 import java.util.List;
+
+import com.sis.dto.FacultyMemberDTO;
+import com.sis.entities.FacultyMember;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +16,10 @@ import com.sis.entities.BaseEntity;
 import com.sis.exception.ItemNotFoundException;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 public abstract class BaseServiceImp<E extends BaseEntity> implements BaseService<E> {
 
@@ -59,4 +67,27 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
 				pageUtil.getLimit(), pageUtil.getPage());
 		return pageResult;
 	}
+
+	@Override
+	public List<E> find(String key){
+		key = key.toLowerCase();
+		String finalKey = key;
+		List<E> list = Repository().findAll().stream().filter(e -> {
+			Field[] declaredFields = e.getClass().getDeclaredFields();
+			boolean found = e.getId().toString().toLowerCase().contains(finalKey);
+			for (Field declaredField : declaredFields) {
+				try {
+					declaredField.setAccessible(true);
+					Object value = declaredField.get(e);
+					if (value == null) continue;
+					found |= value.toString().toLowerCase().contains(finalKey.toLowerCase());
+				} catch (IllegalAccessException | NullPointerException exception) {
+					exception.printStackTrace();
+				}
+			}
+			return found;
+		}).collect(Collectors.toList());
+		return list;
+	}
+
 }

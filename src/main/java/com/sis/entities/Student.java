@@ -15,45 +15,56 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "studnet")
-public class Studnet extends BaseEntity {
+@Table(name = "student")
+public class Student extends BaseEntity {
 
     private static final long serialVersionUID = 1L;   
-    @Column(name = "name_arb")
-    private String nameArb;
+    @Column(name = "name_ar")
+    private String nameAr;
+
     @Column(name = "name_en")
     private String nameEn;
-    @Column(name = "Nationality")
+
+    @Column(name = "nationality")
     private String nationality;
-    @Column(name = "NationalID")
+
+    @Column(name = "nationalID")
     private String nationalID;
+
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-    @Column(name = "UniversityMail")
+
+    @Column(name = "university_mail")
     private String universityMail;
-    @Column(name = "AlternativeMail")
+
+    @Column(name = "alternative_mail")
     private String alternativeMail;
+
     @Column(name = "phone")
     private String phone;
+
     @Column(name = "parent_phone")
     private String parentPhone;
-    @JoinColumn(name = "prog_id", referencedColumnName = "id")
-    @ManyToOne
-    private AcademicProgrm progId;
-    @JoinColumn(name = "colage_id", referencedColumnName = "id")
-    @ManyToOne
-    private Colage colageId;
-    @JoinColumn(name = "dept_id", referencedColumnName = "id")
-    @ManyToOne
-    private Departemnt deptId;   
 
-    public String getNameArb() {
-        return nameArb;
+    @JoinColumn(name = "programId", referencedColumnName = "id")
+    @ManyToOne
+    private AcademicProgram programId;
+
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
+    @ManyToOne
+    private College collegeId;
+
+    @JoinColumn(name = "departmentId", referencedColumnName = "id")
+    @ManyToOne
+    private Department departmentId;
+
+    public String getNameAr() {
+        return nameAr;
     }
 
-    public void setNameArb(String nameArb) {
-        this.nameArb = nameArb;
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
     }
 
     public String getNameEn() {
@@ -120,28 +131,28 @@ public class Studnet extends BaseEntity {
         this.parentPhone = parentPhone;
     }
 
-    public AcademicProgrm getProgId() {
-        return progId;
+    public AcademicProgram getProgramId() {
+        return programId;
     }
 
-    public void setProgId(AcademicProgrm progId) {
-        this.progId = progId;
+    public void setProgramId(AcademicProgram programId) {
+        this.programId = programId;
     }
 
-    public Colage getColageId() {
-        return colageId;
+    public College getCollegeId() {
+        return collegeId;
     }
 
-    public void setColageId(Colage colageId) {
-        this.colageId = colageId;
+    public void setCollegeId(College collegeId) {
+        this.collegeId = collegeId;
     }
 
-    public Departemnt getDeptId() {
-        return deptId;
+    public Department getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDeptId(Departemnt deptId) {
-        this.deptId = deptId;
+    public void setDepartmentId(Department departmentId) {
+        this.departmentId = departmentId;
     }
    
 }
