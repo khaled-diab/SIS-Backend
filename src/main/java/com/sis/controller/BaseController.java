@@ -1,9 +1,11 @@
 package com.sis.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sis.dto.BuildingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.*;
 import com.sis.dto.BaseDTO;
 import com.sis.entities.BaseEntity;
@@ -28,6 +30,11 @@ public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 	@RequestMapping(value="/all", method = RequestMethod.GET)
 	public List<DTO> list() {
 		return mapper.toDTOs(baseService.findAll());
+	}
+
+	@RequestMapping(value="/filterBy", method = RequestMethod.GET)
+	public List<DTO> filterBy(@RequestParam Map<String, String> params) {
+		return mapper.toDTOs(baseService.filterBy(params));
 	}
 
 	@RequestMapping(value="/search", method = RequestMethod.GET)
