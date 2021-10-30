@@ -7693,3 +7693,33 @@ Caused by: java.io.FileNotFoundException: class path resource [com/sis/service/B
 2021-10-22 04:12:09.366  INFO 14244 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2021-10-22 04:12:09.367  INFO 14244 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-3 - Shutdown initiated...
 2021-10-22 04:12:09.369  INFO 14244 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-3 - Shutdown completed.
+2021-10-30 19:34:58.704  INFO 9376 --- [restartedMain] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 11.0.12 on DESKTOP-1LBDFL5 with PID 9376 (F:\Graduation Project\Source\sis-system-backend\target\classes started by Moustafa Mohamed in F:\Graduation Project\Source\sis-system-backend)
+2021-10-30 19:34:58.711  INFO 9376 --- [restartedMain] c.s.SisSystemApplication                 : The following profiles are active: dev
+2021-10-30 19:34:58.746  INFO 9376 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-10-30 19:34:58.747  INFO 9376 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-10-30 19:34:59.790  INFO 9376 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-30 19:34:59.865  INFO 9376 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 5 JPA repository interfaces.
+2021-10-30 19:35:00.665  INFO 9376 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 5000 (http)
+2021-10-30 19:35:00.678  INFO 9376 --- [restartedMain] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-30 19:35:00.678  INFO 9376 --- [restartedMain] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-30 19:35:00.810  INFO 9376 --- [restartedMain] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-30 19:35:00.810  INFO 9376 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2063 ms
+2021-10-30 19:35:00.939  INFO 9376 --- [restartedMain] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-30 19:35:00.999  INFO 9376 --- [restartedMain] o.h.Version                              : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-10-30 19:35:01.120  INFO 9376 --- [restartedMain] o.h.a.c.Version                          : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-10-30 19:35:01.211  INFO 9376 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-1 - Starting...
+2021-10-30 19:35:01.339  INFO 9376 --- [restartedMain] c.z.h.HikariDataSource                   : HikariPool-1 - Start completed.
+2021-10-30 19:35:01.355  INFO 9376 --- [restartedMain] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2021-10-30 19:35:02.234  INFO 9376 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-30 19:35:02.242  INFO 9376 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-30 19:35:02.776  WARN 9376 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-30 19:35:03.382  INFO 9376 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-30 19:35:03.416  INFO 9376 --- [restartedMain] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 5000 (http) with context path ''
+2021-10-30 19:35:03.424  INFO 9376 --- [restartedMain] c.s.SisSystemApplication                 : Started SisSystemApplication in 5.246 seconds (JVM running for 7.093)
+2021-10-30 19:35:03.426  INFO 9376 --- [restartedMain] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-30 19:35:18.064  INFO 9376 --- [http-nio-5000-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-30 19:35:18.066  INFO 9376 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-30 19:35:18.067  INFO 9376 --- [http-nio-5000-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 1 ms
+2021-10-30 19:36:13.068  INFO 9376 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-30 19:36:13.071  INFO 9376 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown initiated...
+2021-10-30 19:36:13.081  INFO 9376 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown completed.
