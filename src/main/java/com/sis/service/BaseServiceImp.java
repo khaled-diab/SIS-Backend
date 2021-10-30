@@ -66,28 +66,6 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
     }
 
     @Override
-    public List<E> find(String key) {
-        key = key.toLowerCase();
-        String finalKey = key;
-        List<E> list = Repository().findAll().stream().filter(e -> {
-            Field[] declaredFields = e.getClass().getDeclaredFields();
-            boolean found = e.getId().toString().toLowerCase().contains(finalKey);
-            for (Field declaredField : declaredFields) {
-                try {
-                    declaredField.setAccessible(true);
-                    Object value = declaredField.get(e);
-                    if (value == null) continue;
-                    found |= value.toString().toLowerCase().contains(finalKey.toLowerCase());
-                } catch (IllegalAccessException | NullPointerException exception) {
-                    exception.printStackTrace();
-                }
-            }
-            return found;
-        }).collect(Collectors.toList());
-        return list;
-    }
-
-    @Override
     public List<E> filterBy(Map<String, String> whereClause) {
         List<E> res = Repository().findAll().stream().filter(e -> {
             boolean found = false;
