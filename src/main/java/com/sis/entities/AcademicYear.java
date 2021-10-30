@@ -23,16 +23,20 @@ public class AcademicYear extends BaseEntity {
    
     @Column(name = "code")
     private String code;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
+
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+
     @OneToMany(mappedBy = "academicYear")
-    private Collection<AcademicTearm> academicTearmCollection;   
+    private Collection<AcademicTerm> academicTermCollection;
 
     public String getCode() {
         return code;
@@ -67,12 +71,12 @@ public class AcademicYear extends BaseEntity {
     }
 
     @XmlTransient
-    public Collection<AcademicTearm> getAcademicTearmCollection() {
-        return academicTearmCollection;
+    public Collection<AcademicTerm> getAcademicTermCollection() {
+        return academicTermCollection;
     }
 
-    public void setAcademicTearmCollection(Collection<AcademicTearm> academicTearmCollection) {
-        this.academicTearmCollection = academicTearmCollection;
+    public void setAcademicTermCollection(Collection<AcademicTerm> academicTermCollection) {
+        this.academicTermCollection = academicTermCollection;
     }  
     
 }
