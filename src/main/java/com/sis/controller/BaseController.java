@@ -30,11 +30,6 @@ public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 		return mapper.toDTOs(baseService.findAll());
 	}
 
-	@RequestMapping(value="/search", method = RequestMethod.GET)
-	public List<DTO> list(@RequestParam("key") String key) {
-		return mapper.toDTOs(baseService.find(key));
-	}
-
 	@RequestMapping(value="/datapage", method = RequestMethod.POST)
 	public PageResult<DTO> getDataPage(PageQueryUtil pageUtil) {
 		return mapper.toDataPage(baseService.getDataPage(pageUtil));
