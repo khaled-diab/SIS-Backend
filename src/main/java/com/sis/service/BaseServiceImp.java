@@ -12,13 +12,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.util.Pair;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.sis.entities.BaseEntity;
 import com.sis.exception.ItemNotFoundException;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 
-
+@Service
 public abstract class BaseServiceImp<E extends BaseEntity> implements BaseService<E> {
     @Override
     public List<E> findAll() {
