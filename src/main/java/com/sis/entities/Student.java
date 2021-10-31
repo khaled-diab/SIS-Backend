@@ -15,45 +15,70 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "studnet")
-public class Studnet extends BaseEntity {
+@Table(name = "student")
+public class Student extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;   
-    @Column(name = "name_arb")
-    private String nameArb;
+    private static final long serialVersionUID = 1L;
+    @Column(name = "university_id", unique = true)
+    private long universityId;
+    @Column(name = "name_ar")
+    private String nameAr;
+
     @Column(name = "name_en")
     private String nameEn;
-    @Column(name = "Nationality")
+
+    @Column(name = "nationality")
     private String nationality;
-    @Column(name = "NationalID")
-    private String nationalID;
+
+    @Column(name = "nationalID")
+    private String nationalId;
+
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-    @Column(name = "UniversityMail")
+
+    @Column(name = "university_mail")
     private String universityMail;
-    @Column(name = "AlternativeMail")
+
+    @Column(name = "alternative_mail")
     private String alternativeMail;
+
     @Column(name = "phone")
     private String phone;
+
     @Column(name = "parent_phone")
     private String parentPhone;
-    @JoinColumn(name = "prog_id", referencedColumnName = "id")
+    @Column(name = "level")
+    private  String level;
+    @Column(name = "photo")
+    private  String photo;
+    @JoinColumn(name = "academic_program_id", referencedColumnName = "id")
     @ManyToOne
-    private AcademicProgrm progId;
-    @JoinColumn(name = "colage_id", referencedColumnName = "id")
-    @ManyToOne
-    private Colage colageId;
-    @JoinColumn(name = "dept_id", referencedColumnName = "id")
-    @ManyToOne
-    private Departemnt deptId;   
+    private AcademicProgram programId;
 
-    public String getNameArb() {
-        return nameArb;
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
+    @ManyToOne
+    private College collegeId;
+
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    @ManyToOne
+    private Department departmentId;
+
+
+    public long getUniversityId() {
+        return universityId;
     }
 
-    public void setNameArb(String nameArb) {
-        this.nameArb = nameArb;
+    public void setUniversityId(long universityId) {
+        this.universityId = universityId;
+    }
+
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
     }
 
     public String getNameEn() {
@@ -72,12 +97,12 @@ public class Studnet extends BaseEntity {
         this.nationality = nationality;
     }
 
-    public String getNationalID() {
-        return nationalID;
+    public String getNationalId() {
+        return nationalId;
     }
 
-    public void setNationalID(String nationalID) {
-        this.nationalID = nationalID;
+    public void setNationalId(String nationalID) {
+        this.nationalId = nationalID;
     }
 
     public Date getBirthDate() {
@@ -120,28 +145,45 @@ public class Studnet extends BaseEntity {
         this.parentPhone = parentPhone;
     }
 
-    public AcademicProgrm getProgId() {
-        return progId;
+    public String getLevel() {
+        return level;
     }
 
-    public void setProgId(AcademicProgrm progId) {
-        this.progId = progId;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public Colage getColageId() {
-        return colageId;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setColageId(Colage colageId) {
-        this.colageId = colageId;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public Departemnt getDeptId() {
-        return deptId;
+    public AcademicProgram getProgramId() {
+        return programId;
     }
 
-    public void setDeptId(Departemnt deptId) {
-        this.deptId = deptId;
+    public void setProgramId(AcademicProgram programId) {
+        this.programId = programId;
     }
+
+    public College getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(College collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Department getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Department departmentId) {
+        this.departmentId = departmentId;
+    }
+
    
 }

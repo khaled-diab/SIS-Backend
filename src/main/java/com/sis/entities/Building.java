@@ -35,9 +35,9 @@ public class Building extends BaseEntity {
     @OneToMany(mappedBy = "buildingId")
     private Collection<Classroom> classroomCollection;
 
-    @JoinColumn(name = "colage_id", referencedColumnName = "id")
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
     @ManyToOne
-    private Colage colageId; 
+    private College collegeId;
 
     public String getCode() {
         return code;
@@ -56,8 +56,8 @@ public class Building extends BaseEntity {
         this.classroomCollection = classroomCollection;
     }
 
-    public Colage getColageId() {
-        return colageId;
+    public College getCollegeId() {
+        return collegeId;
     }
 
     public void setColageId(Colage colageId) {
