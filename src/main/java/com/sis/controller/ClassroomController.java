@@ -4,7 +4,7 @@ import com.sis.dto.ClassroomDTO;
 import com.sis.entities.Classroom;
 import com.sis.entities.mapper.ClassroomMapper;
 import com.sis.service.ClassroomService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,14 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/classroom")
-public class ClassroomController extends BaseController<Classroom, ClassroomDTO>{
-    @Autowired
-    ClassroomService classroomService;
+@AllArgsConstructor
+public class ClassroomController extends BaseController<Classroom, ClassroomDTO> {
 
-    @Autowired
-    ClassroomMapper classroomMapper;
+    private final ClassroomService classroomService;
+    private final ClassroomMapper classroomMapper;
 
-    @RequestMapping(value="/search", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public List<ClassroomDTO> search(@RequestParam("key") String key) {
         return classroomMapper.toDTOs(classroomService.search(key));
     }

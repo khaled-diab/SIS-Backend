@@ -16,15 +16,15 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
 
     @Override
     public ArrayList<BuildingDTO> toDTOs(Collection<Building> entities) {
-        return entities.stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<BuildingDTO>::new));
+        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<BuildingDTO>::new));
     }
     @Override
     public PageResult<BuildingDTO> toDataPage(PageResult<Building> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<BuildingDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<BuildingDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
     }
     @Override
     public ArrayList<Building> toEntities(Collection<BuildingDTO> dtos) {
-        return dtos.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Building>::new));
+        return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Building>::new));
     }
 
     @Override

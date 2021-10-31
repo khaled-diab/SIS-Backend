@@ -340,3 +340,77 @@ Method [public com.sis.util.PageResult<DTO> com.sis.controller.BaseController.ge
 2021-10-30 12:24:34.174  WARN 17448 --- [HikariPool-1 housekeeper] c.z.h.p.HikariPool                       : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9h17m6s464ms89µs500ns).
 2021-10-31 19:50:25.208  WARN 17448 --- [HikariPool-1 housekeeper] c.z.h.p.HikariPool                       : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18h29m37s467ms992µs).
 2021-10-31 19:50:25.208  WARN 17448 --- [HikariPool-1 housekeeper] c.z.h.p.HikariPool                       : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18h29m37s467ms992µs).
+2021-10-31 21:06:10.016  INFO 17448 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-31 21:06:10.649  INFO 17448 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown initiated...
+2021-10-31 21:06:10.696  INFO 17448 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown completed.
+2021-10-31 21:06:26.203  INFO 19404 --- [main] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 16.0.1 on DESKTOP-3CT4E9E with PID 19404 (G:\graduation-project\sis-system-backend\target\classes started by moham in G:\graduation-project\sis-system-backend)
+2021-10-31 21:06:26.216  INFO 19404 --- [main] c.s.SisSystemApplication                 : The following profiles are active: prod
+2021-10-31 21:06:27.238  INFO 19404 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-31 21:06:27.353  INFO 19404 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 107 ms. Found 6 JPA repository interfaces.
+2021-10-31 21:06:27.840  INFO 19404 --- [main] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 8080 (http)
+2021-10-31 21:06:27.848  INFO 19404 --- [main] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-31 21:06:27.848  INFO 19404 --- [main] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-31 21:06:27.964  INFO 19404 --- [main] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-31 21:06:27.965  INFO 19404 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1680 ms
+2021-10-31 21:06:28.279  INFO 19404 --- [main] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-31 21:06:28.357  INFO 19404 --- [main] o.h.Version                              : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-10-31 21:06:28.803  INFO 19404 --- [main] o.h.a.c.Version                          : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-10-31 21:06:29.102  INFO 19404 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Starting...
+2021-10-31 21:06:29.743  INFO 19404 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Start completed.
+2021-10-31 21:06:29.865  INFO 19404 --- [main] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-10-31 21:06:32.369  INFO 19404 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-31 21:06:32.396  INFO 19404 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-31 21:06:32.941  WARN 19404 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'buildingController': Unsatisfied dependency expressed through field 'mapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'buildingMapper' defined in file [G:\graduation-project\sis-system-backend\target\classes\com\sis\entities\mapper\BuildingMapper.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'collegeMapper' defined in file [G:\graduation-project\sis-system-backend\target\classes\com\sis\entities\mapper\CollegeMapper.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'buildingMapper': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2021-10-31 21:06:32.942  INFO 19404 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-31 21:06:32.945  INFO 19404 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown initiated...
+2021-10-31 21:06:32.966  INFO 19404 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown completed.
+2021-10-31 21:06:32.970  INFO 19404 --- [main] o.a.c.c.StandardService                  : Stopping service [Tomcat]
+2021-10-31 21:06:32.993  INFO 19404 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-10-31 21:06:33.006 ERROR 19404 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   buildingController (field private com.sis.entities.mapper.Mapper com.sis.controller.BaseController.mapper)
+┌─────┐
+|  buildingMapper defined in file [G:\graduation-project\sis-system-backend\target\classes\com\sis\entities\mapper\BuildingMapper.class]
+↑     ↓
+|  collegeMapper defined in file [G:\graduation-project\sis-system-backend\target\classes\com\sis\entities\mapper\CollegeMapper.class]
+└─────┘
+
+
+2021-10-31 21:08:24.874  INFO 17344 --- [main] c.s.SisSystemApplication                 : Starting SisSystemApplication using Java 16.0.1 on DESKTOP-3CT4E9E with PID 17344 (G:\graduation-project\sis-system-backend\target\classes started by moham in G:\graduation-project\sis-system-backend)
+2021-10-31 21:08:24.883  INFO 17344 --- [main] c.s.SisSystemApplication                 : The following profiles are active: prod
+2021-10-31 21:08:26.464  INFO 17344 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-31 21:08:26.559  INFO 17344 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 87 ms. Found 6 JPA repository interfaces.
+2021-10-31 21:08:27.029  INFO 17344 --- [main] o.s.b.w.e.t.TomcatWebServer              : Tomcat initialized with port(s): 8080 (http)
+2021-10-31 21:08:27.036  INFO 17344 --- [main] o.a.c.c.StandardService                  : Starting service [Tomcat]
+2021-10-31 21:08:27.037  INFO 17344 --- [main] o.a.c.c.StandardEngine                   : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-31 21:08:27.160  INFO 17344 --- [main] o.a.c.c.C.[.[.[/]                        : Initializing Spring embedded WebApplicationContext
+2021-10-31 21:08:27.160  INFO 17344 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2234 ms
+2021-10-31 21:08:27.300  INFO 17344 --- [main] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-31 21:08:27.376  INFO 17344 --- [main] o.h.Version                              : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-10-31 21:08:27.507  INFO 17344 --- [main] o.h.a.c.Version                          : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-10-31 21:08:27.611  INFO 17344 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Starting...
+2021-10-31 21:08:27.949  INFO 17344 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Start completed.
+2021-10-31 21:08:27.965  INFO 17344 --- [main] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-10-31 21:08:28.915  INFO 17344 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-31 21:08:28.923  INFO 17344 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-31 21:08:29.542  WARN 17344 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-31 21:08:30.266  INFO 17344 --- [main] o.s.b.w.e.t.TomcatWebServer              : Tomcat started on port(s): 8080 (http) with context path ''
+2021-10-31 21:08:30.274  INFO 17344 --- [main] c.s.SisSystemApplication                 : Started SisSystemApplication in 5.796 seconds (JVM running for 7.562)
+2021-10-31 21:08:30.277  INFO 17344 --- [main] c.s.SisSystemApplication                 : SIS backend started successfully
+2021-10-31 21:09:18.271  INFO 17344 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/]                        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-31 21:09:18.272  INFO 17344 --- [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet                : Initializing Servlet 'dispatcherServlet'
+2021-10-31 21:09:18.276  INFO 17344 --- [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet                : Completed initialization in 4 ms
+2021-10-31 21:09:18.879 ERROR 17344 --- [http-nio-8080-exec-2] c.s.e.ControllerExceptionHandler         : Cannot invoke "com.sis.entities.mapper.BuildingMapper.toDTOs(java.util.Collection)" because "this.buildingMapper" is null
+2021-10-31 21:20:29.780  INFO 17344 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-31 21:20:29.946  INFO 17344 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown initiated...
+2021-10-31 21:20:30.031  INFO 17344 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown completed.

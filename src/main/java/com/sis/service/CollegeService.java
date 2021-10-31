@@ -20,6 +20,7 @@ public class CollegeService extends BaseServiceImp<College> {
     private final CollegeRepository collegeRepository;
     private final CollegeMapper collegeMapper;
 
+
     @Override
     public JpaRepository<College, Long> Repository() {
         return collegeRepository;
