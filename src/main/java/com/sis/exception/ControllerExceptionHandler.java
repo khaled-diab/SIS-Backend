@@ -44,5 +44,12 @@ public class ControllerExceptionHandler {
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(StudentNotFoundException.class)
+	public ResponseEntity<MessageResponse> globalExceptionHandler(StudentNotFoundException ex, WebRequest request) {
+		log.error(ex.getMessage());
+		return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 
 }
