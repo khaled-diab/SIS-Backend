@@ -1,5 +1,7 @@
 package com.sis.dto;
 
+import com.sis.dto.college.CollegeDTO;
+
 import java.util.Date;
 
 public class StudentDTO extends BaseDTO {
@@ -18,7 +20,7 @@ public class StudentDTO extends BaseDTO {
     private  String photo;
     /*Relations instances*/
    private  DepartmentDTO departmentDTO;
-   private  CollegeDTO collegeDTO;
+   private com.sis.dto.college.CollegeDTO collegeDTO;
    private AcademicProgramDTO academicProgramDTO;
 
 

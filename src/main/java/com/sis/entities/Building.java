@@ -60,8 +60,8 @@ public class Building extends BaseEntity {
         return collegeId;
     }
 
-    public void setColageId(Colage colageId) {
-        this.colageId = colageId;
+    public void setCollegeId(College collegeId) {
+        this.collegeId = collegeId;
     }
 
     public String getName_ar() {

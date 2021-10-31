@@ -1,5 +1,6 @@
 package com.sis.entities.mapper;
 
+
 import com.sis.dto.college.CollegeDTO;
 import com.sis.entities.College;
 import com.sis.util.PageResult;
