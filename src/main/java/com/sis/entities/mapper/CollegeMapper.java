@@ -1,57 +1,54 @@
 package com.sis.entities.mapper;
 
-import com.sis.dto.CollegeDTO;
+import com.sis.dto.college.CollegeDTO;
 import com.sis.entities.College;
 import com.sis.util.PageResult;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
-import static java.util.stream.Collectors.toCollection;
+import java.util.stream.Collectors;
 
 @Component
-public class CollegeMapper implements Mapper<College,CollegeDTO>{
-
-
-
+public class CollegeMapper implements Mapper<College, CollegeDTO> {
     @Override
     public CollegeDTO toDTO(College entity) {
-
-        CollegeDTO dto = new CollegeDTO();
-        dto.setCode(entity.getCode());
-        dto.setNameAr(entity.getNameAr());
-        dto.setNameEn(entity.getNameEn());
-        dto.setId(entity.getId());
-        return dto;
+        CollegeDTO collegeDto = CollegeDTO.builder()
+                .code(entity.getCode())
+                .nameAr(entity.getNameAr())
+                .nameEn(entity.getNameEn())
+                .build();
+        collegeDto.setId(entity.getId());
+        return collegeDto;
     }
 
     @Override
     public College toEntity(CollegeDTO dto) {
-
-        College entity =new College();
-        entity.setCode(dto.getCode());
-        entity.setNameAr(dto.getNameAr());
-        entity.setNameEn(dto.getNameEn());
-        entity.setId(dto.getId());
-        return entity;
-
+        return College.builder()
+                .code(dto.getCode())
+                .nameAr(dto.getNameAr())
+                .nameEn(dto.getNameEn())
+                .build();
     }
 
     @Override
-    public ArrayList<CollegeDTO> toDTOs(Collection<College> Colleges) {
-        return Colleges.stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<CollegeDTO>::new));
+    public ArrayList<CollegeDTO> toDTOs(Collection<College> colleges) {
+        return (ArrayList<CollegeDTO>) colleges.
+                stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public ArrayList<College> toEntities(Collection<CollegeDTO> collegeDTOS) {
-        return collegeDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<College>::new));
+        return (ArrayList<College>) collegeDTOS.
+                stream()
+                .map(this::toEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
     public PageResult<CollegeDTO> toDataPage(PageResult<College> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<CollegeDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
-
+        return new PageResult<>(toDTOs(entities.getData()), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
     }
-
 }
