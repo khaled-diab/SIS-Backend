@@ -1,5 +1,6 @@
 package com.sis.dto;
 
+import com.sis.dto.college.CollegeDTO;
 import com.sis.entities.College;
 import com.sis.entities.Department;
 
@@ -16,24 +17,8 @@ public class FacultyMemberDTO extends BaseDTO {
 	private String nationality;
 	private String phone;
 	private Date birthDate;
-//	private College collegeId;
-//	private Department deptId;
-
-//	public College getCollegeId() {
-//		return collegeId;
-//	}
-//
-//	public void setCollegeId(College collegeId) {
-//		this.collegeId = collegeId;
-//	}
-//
-//	public Department getDeptId() {
-//		return deptId;
-//	}
-//
-//	public void setDeptId(Department deptId) {
-//		this.deptId = deptId;
-//	}
+//	private CollegeDTO collegeDto;
+//	private departmentDto departmentDto;
 
 	public String getNameAr() {
 		return nameAr;

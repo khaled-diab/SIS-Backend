@@ -3,6 +3,8 @@ package com.sis.entities.mapper;
 import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.sis.dto.FacultyMemberDTO;
 import com.sis.entities.FacultyMember;
@@ -10,6 +12,9 @@ import com.sis.util.PageResult;
 
 @Component
 public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberDTO> {
+
+//	@Autowired
+//	CollegeMapper collegeMapper;
 
 	@Override
 	public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entities) {
@@ -36,8 +41,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		dto.setNationalID(entity.getNationalID());
 		dto.setNationality(entity.getNationality());
 		dto.setPhone(entity.getPhone());
-//		dto.setCollegeId(entity.getCollegeId());
-//		dto.setDeptId(entity.getDeptId());
+
 		return dto;
 	}
 	@Override
@@ -53,8 +57,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		entity.setNationalID(dto.getNationalID());
 		entity.setNationality(dto.getNationality());
 		entity.setPhone(dto.getPhone());
-//		entity.setCollegeId(dto.getCollegeId());
-//		entity.setDeptId(dto.getDeptId());
+
 		return entity;
 	}
 

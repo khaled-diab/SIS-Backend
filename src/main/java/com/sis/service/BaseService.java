@@ -1,6 +1,8 @@
 package com.sis.service;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.sis.entities.BaseEntity;
@@ -14,7 +16,7 @@ public interface BaseService<E extends BaseEntity > {
 	
 	public E findById(Long id);
 
-	public List<E> find(String key);
+	public List<E> filterBy(Map<String, String> WhereClause);
 	
 	public E save(E entity);
 
