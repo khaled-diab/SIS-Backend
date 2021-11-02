@@ -1,5 +1,6 @@
 package com.sis.dto;
 
+
 public class CollegeDTO extends BaseDTO{
 
     private String code;
