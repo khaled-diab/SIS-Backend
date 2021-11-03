@@ -36,7 +36,8 @@ public class BaseController <T extends BaseEntity, DTO extends BaseDTO>{
 	}
 
 	@RequestMapping(value="/datapage", method = RequestMethod.POST)
-	public PageResult<DTO> getDataPage(PageQueryUtil pageUtil) {
+	public PageResult<DTO> getDataPage(@RequestBody PageQueryUtil pageUtil) {
+		System.out.println("ho");
 		return mapper.toDataPage(baseService.getDataPage(pageUtil));
 	}
 	

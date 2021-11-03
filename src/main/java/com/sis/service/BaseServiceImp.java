@@ -54,7 +54,10 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
 
     @Override
     public PageResult<E> getDataPage(PageQueryUtil pageUtil) {
-        PageResult<E> pageResult = getDataPage(pageUtil);
+        Pageable pageable = PageRequest.of(pageUtil.getPage() -1, pageUtil.getLimit());
+        Page<E> page = this.Repository().findAll(pageable);
+        PageResult<E> pageResult = new PageResult<E>(page.getContent(), (int) page.getTotalElements(),
+                pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 
