@@ -1,6 +1,7 @@
 package com.sis.controller;
 
 import com.sis.dto.StudentDTO;
+import com.sis.dto.StudentFilterDTO;
 import com.sis.entities.Student;
 import com.sis.entities.mapper.StudentMapper;
 import com.sis.exception.StudentNotFoundException;
@@ -26,7 +27,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     private StudentMapper studentMapper;
 
     @RequestMapping(value="/addStudent", method = RequestMethod.POST)
-    public MessageResponse create(@RequestBody StudentDTO dto) {
+    public MessageResponse create(@RequestBody  StudentDTO dto) {
 
         if(this.studentService.findByuniversityId(dto.getUniversityId())!=null){
 
@@ -77,41 +78,37 @@ public class StudentController extends BaseController<Student, StudentDTO> {
 
     @RequestMapping(
             value = "/search/{attribute}",
-            method = RequestMethod.GET
+            method = RequestMethod.POST
     )
-    public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(@PathVariable Optional<String> attribute, @RequestParam(required = false) Optional<Long> collageId, @RequestParam(required = false) Optional<Long>  departmentId, @RequestParam() int page, @RequestParam() int limit) {
+    public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(@PathVariable String attribute, @RequestParam() Optional<Long> collegeId, @RequestParam() Optional<Long>  departmentId,
+                                                                    @RequestParam int page, @RequestParam int limit,
+                                                                    @RequestBody StudentFilterDTO filterDTO ) {
         //this.studentService.getDataPage(attribute);
-        System.out.println(attribute.isPresent());
-        System.out.println(attribute.get());
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(attribute,collageId, departmentId, page,limit);
+        System.out.println("abdo");
+        System.out.println(attribute);
+        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(attribute,collegeId, departmentId, page,limit,filterDTO);
         return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
     }
     @RequestMapping(
             value = "/search",
-            method = RequestMethod.GET
+            method = RequestMethod.POST
     )
-    public ResponseEntity<PageResult<StudentDTO>> filterStudentPage( @RequestParam(required = false) Optional<Long> collageId , @RequestParam(required = false) Optional<Long>  departmentId, @RequestParam() int page, @RequestParam() int limit) {
+    public ResponseEntity<PageResult<StudentDTO>> filterStudentPage( @RequestParam Optional<Long> collegeId , @RequestParam Optional<Long>  departmentId,
+                                                                     @RequestParam int page, @RequestParam int limit,
+                                                                     @RequestBody StudentFilterDTO filterDTO) {
         //this.studentService.getDataPage(attribute);
-        System.out.println("yess");
 
-        Optional<String> opt=Optional.ofNullable(null);
-        System.out.println(opt.isPresent());
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(opt,collageId, departmentId, page,limit);
+        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(null,collegeId, departmentId, page,limit,filterDTO);
         return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
 
     }
-    @RequestMapping(value="/sort", method = RequestMethod.POST)
-    public PageResult<StudentDTO> getStudentPage(@RequestBody  PageQueryUtil pageUtil,@RequestParam() String sortField,@RequestParam() String direction) {
-//        System.out.println(pageUtil.getPage());
-        Sort.Direction d= Sort.Direction.ASC;
-        if(direction.equals("asc")){
-
-        }else{
-            d= Sort.Direction.DESC;
-        }
-       return this.studentMapper.toDataPage(this.studentService.getDataPage(pageUtil,sortField, d));
-
-    }
+//    @RequestMapping(value="/sort", method = RequestMethod.POST)
+//    public PageResult<StudentDTO> getStudentPage(@RequestBody StudentFilterDTO filterDTO,
+//                                                 @RequestParam() int page, @RequestParam() int limit) {
+//
+//       return this.studentMapper.toDataPage(this.studentService.getDataPage(pqu, filterDTO.getSortBy(),d));
+//
+//    }
 
 
 
