@@ -36,7 +36,7 @@ public class AcademicProgram extends BaseEntity {
     @ManyToOne
     private College collegeId;
 
-    @JoinColumn(name = "departmentId", referencedColumnName = "id")
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
     private Department departmentId;
 

@@ -5,15 +5,25 @@
  */
 package com.sis.entities;
 
-import java.util.Collection;
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.Collection;
 
 @Entity
 @Table(name = "college")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class College extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;   
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "code")
     private String code;
@@ -29,9 +39,6 @@ public class College extends BaseEntity {
 
     @OneToMany(mappedBy = "collegeId")
     private Collection<Department> departmentCollection;
-
-    @OneToMany(mappedBy = "college")
-    private Collection<Course> courseCollection;
 
     @OneToMany(mappedBy = "collegeId")
     private Collection<AcademicProgram> academicProgramCollection;
@@ -111,21 +118,4 @@ public class College extends BaseEntity {
         this.facultyMemberCollection = facultyMemberCollection;
     }
 
-    @XmlTransient
-    public Collection<Course> getCourseCollection() {
-        return courseCollection;
-    }
-
-    public void setCourseCollection(Collection<Course> courseCollection) {
-        this.courseCollection = courseCollection;
-    }
-
-    @XmlTransient
-    public Collection<FacultyMember> getFacultyMemberCollection() {
-        return facultyMemberCollection;
-    }
-
-    public void setFacultyMemberCollection(Collection<FacultyMember> facultyMemberCollection) {
-        this.facultyMemberCollection = facultyMemberCollection;
-    }
 }

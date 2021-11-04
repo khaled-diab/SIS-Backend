@@ -1,5 +1,7 @@
 package com.sis.entities;
 
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 import javax.persistence.Basic;
@@ -11,6 +13,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @SuppressWarnings("serial")
+@NoArgsConstructor
 public class BaseEntity implements Serializable  {
 
 	@Id
