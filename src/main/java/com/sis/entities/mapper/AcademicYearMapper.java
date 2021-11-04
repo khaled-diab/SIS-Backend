@@ -1,11 +1,7 @@
 package com.sis.entities.mapper;
 
 import com.sis.dto.AcademicYearDTO;
-import com.sis.dto.BuildingDTO;
-import com.sis.dto.CollegeDTO;
 import com.sis.entities.AcademicYear;
-import com.sis.entities.Building;
-import com.sis.entities.Student;
 import com.sis.util.PageResult;
 
 import java.util.ArrayList;
@@ -19,7 +15,7 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
     @Override
     public AcademicYearDTO toDTO(AcademicYear entity) {
         AcademicYearDTO academicYearDTO = new AcademicYearDTO(entity.getCode(),
-                entity.getName(), entity.getStartDate() ,entity.getEndDate());
+                entity.getName(), entity.getStartDate(), entity.getEndDate());
         academicYearDTO.setId(academicYearDTO.getId());
         return academicYearDTO;
     }
@@ -32,7 +28,7 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
         academicYear.setEndDate(dto.getEnd_date());
         academicYear.setStartDate(dto.getStart_date());
         academicYear.setName(dto.getName());
-        return academicYear ;
+        return academicYear;
     }
 
     @Override
