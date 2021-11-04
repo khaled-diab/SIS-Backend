@@ -15,15 +15,15 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 
 	@Override
 	public ArrayList<CourseDTO> toDTOs(Collection<Course> entities) {
-		return entities.stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<CourseDTO>::new));
+		return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<CourseDTO>::new));
 	}
 	@Override
 	public PageResult<CourseDTO> toDataPage(PageResult<Course> entities) {
-		return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<CourseDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+		return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<CourseDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
 	}
 	@Override
 	public ArrayList<Course> toEntities(Collection<CourseDTO> dtos) {
-		return dtos.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Course>::new));
+		return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Course>::new));
 	}
 	@Override
 	public CourseDTO toDTO(Course entity) {

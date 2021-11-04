@@ -30,10 +30,6 @@ public class BaseController <T extends BaseEntity, DTO extends BaseDTO>{
 		return mapper.toDTOs(baseService.findAll());
 	}
 
-	@RequestMapping(value="/filterBy", method = RequestMethod.GET)
-	public List<DTO> filterBy(@RequestParam Map<String, String> params) {
-		return mapper.toDTOs(baseService.filterBy(params));
-	}
 
 	@RequestMapping(value="/datapage", method = RequestMethod.POST)
 	public PageResult<DTO> getDataPage(PageQueryUtil pageUtil) {
