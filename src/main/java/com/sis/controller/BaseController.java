@@ -53,10 +53,5 @@ public class BaseController <T extends BaseEntity , DTO extends BaseDTO>{
 		return new MessageResponse("Item has been deleted successfully");
 	}
 
-	@RequestMapping(value="/filterBy", method = RequestMethod.GET)
-	public List<DTO> filterBy(@RequestParam Map<String, String> params) {
-		return mapper.toDTOs(baseService.filterBy(params));
-	}
-
 
 }

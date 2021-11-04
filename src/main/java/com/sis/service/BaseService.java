@@ -17,10 +17,6 @@ public interface BaseService<E extends BaseEntity > {
 	
 	public E findById(Long id);
 
-	public List<E> find(String key);
-
-	public List<E> filterBy(Map<String, String> whereClause);
-	
 	public E save(E entity);
 
 	public void delete(E entity);

@@ -1,11 +1,9 @@
 package com.sis.service;
 
 import com.sis.dao.CourseRepository;
-import com.sis.dao.CourseSpecification;
-import com.sis.dto.CourseDTO;
+import com.sis.dao.specification.CourseSpecification;
 import com.sis.entities.Course;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 

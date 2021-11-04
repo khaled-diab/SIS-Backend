@@ -1,9 +1,6 @@
 package com.sis.dto;
 
 
-import com.sis.entities.College;
-import com.sis.entities.Department;
-
 public class CourseDTO extends BaseDTO {
 
     private String code;
@@ -19,8 +16,7 @@ public class CourseDTO extends BaseDTO {
     private Float practicalGrade;
     private Float oralGrade;
     private Float midGrade;
-    private College college;
-    private Department department;
+
 
     public String getCode() {
         return code;
@@ -126,19 +122,4 @@ public class CourseDTO extends BaseDTO {
         this.midGrade = midGrade;
     }
 
-    public College getCollege() {
-        return college;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
 }
