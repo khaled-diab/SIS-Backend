@@ -30,7 +30,6 @@ public class UserController extends BaseController<User, UserDTO> {
 		UserDTO userDTO = userService.createAccount(registerDTO);
 		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 	}
-
 	/**
 	 * login (username and password)	
 	 * @param loginDto

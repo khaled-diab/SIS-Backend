@@ -13,6 +13,7 @@ import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 
+
 public class BaseController <T extends BaseEntity, DTO extends BaseDTO>{
 	@Autowired
 	private BaseServiceImp<T> baseService;
