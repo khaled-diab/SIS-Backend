@@ -5,8 +5,9 @@ import java.util.Date;
 public class AcademicTermDTO extends BaseDTO {
     private String code, name;
     private Date start_date, end_date;
-    private Long id_academic_year ;
-    private String name_academic_year ;
+//    private AcademicYearDTO academicYearDTO ;
+    private String year_name ;
+    private Long year_id ;
     public AcademicTermDTO() {
     }
 
@@ -16,25 +17,9 @@ public class AcademicTermDTO extends BaseDTO {
         this.name = name;
         this.start_date = start_date;
         this.end_date = end_date;
-        this.id_academic_year = id_academic_year ;
-        this.name_academic_year = name_academic_year ;
     }
 
-    public Long getId_academic_year() {
-        return id_academic_year;
-    }
 
-    public void setId_academic_year(Long id_academic_year) {
-        this.id_academic_year = id_academic_year;
-    }
-
-    public String getName_academic_year() {
-        return name_academic_year;
-    }
-
-    public void setName_academic_year(String name_academic_year) {
-        this.name_academic_year = name_academic_year;
-    }
 
     public String getCode() {
         return code;
@@ -66,5 +51,21 @@ public class AcademicTermDTO extends BaseDTO {
 
     public void setEnd_date(Date end_date) {
         this.end_date = end_date;
+    }
+
+    public String getYear_name() {
+        return year_name;
+    }
+
+    public void setYear_name(String year_name) {
+        this.year_name = year_name;
+    }
+
+    public Long getYear_id() {
+        return year_id;
+    }
+
+    public void setYear_id(Long year_id) {
+        this.year_id = year_id;
     }
 }
