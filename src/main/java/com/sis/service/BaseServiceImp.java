@@ -3,32 +3,32 @@ package com.sis.service;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import com.sis.entities.BaseEntity;
-import com.sis.exception.ItemNotFoundException;
-import com.sis.util.PageQueryUtil;
-import com.sis.util.PageResult;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.util.Pair;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.sis.entities.BaseEntity;
+import com.sis.exception.ItemNotFoundException;
+import com.sis.util.PageQueryUtil;
+import com.sis.util.PageResult;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public abstract class BaseServiceImp<E extends BaseEntity> implements BaseService<E> {
 
-	@Override
-	public List<E> findAll() {
-		List<E> entities = Repository().findAll();
-		return entities;
-	}
+    @Override
+    public List<E> findAll() {
+        List<E> entities = Repository().findAll();
+        return entities;
+    }
 
     @Override
     public E findById(Long id) {
@@ -60,7 +60,7 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
 
     @Override
     public PageResult<E> getDataPage(PageQueryUtil pageUtil, @Nullable String sortField, @Nullable Direction sortDirection) {
-        Sort sort = sortDirection.equals(Sort.Direction.ASC) ? Sort.by(sortField).ascending()
+        Sort sort = sortDirection.equals(Direction.ASC) ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), sort);
         Page<E> page = this.Repository().findAll(pageable);
@@ -69,25 +69,5 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
         return pageResult;
     }
 
-    @Override
-    public List<E> filterBy(Map<String, String> whereClause) {
-        List<E> res = Repository().findAll().stream().filter(e -> {
-            boolean found = false;
-            for(Map.Entry<String, String> keys : whereClause.entrySet()){
-                String[] values = keys.getValue().split("\\+");
-                try {
-                    Field field = e.getClass().getDeclaredField(keys.getKey());
-                    field.setAccessible(true);
-                    Object ob = field.get(e);
-                    for (String value : values) {
-                        found |= ob.toString().toLowerCase().contains(value.toLowerCase());
-                    }
-                } catch (NoSuchFieldException | IllegalAccessException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            return found;
-        }).collect(Collectors.toList());
-        return res;
-    }
+
 }
