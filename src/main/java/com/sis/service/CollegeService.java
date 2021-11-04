@@ -2,7 +2,7 @@ package com.sis.service;
 
 import com.sis.dao.CollegeRepository;
 import com.sis.dto.college.CollegeDTO;
-import com.sis.dto.college.CollegeFilterDTO;
+import com.sis.dto.college.CollegeRequestDTO;
 import com.sis.entities.College;
 import com.sis.entities.mapper.CollegeMapper;
 import com.sis.util.PageResult;
@@ -26,16 +26,15 @@ public class CollegeService extends BaseServiceImp<College> {
         return collegeRepository;
     }
 
-    public PageResult<CollegeDTO> getCollegesPage(Integer page, Integer size, CollegeFilterDTO collegeFilterDTO) {
-        Sort sort = Sort.by(Sort.Direction.valueOf(collegeFilterDTO.getSortDirection()), collegeFilterDTO.getSortBy());
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
+    public PageResult<CollegeDTO> getCollegesPage(Integer page, Integer size, CollegeRequestDTO collegeRequestDTO) {
         Page<College> collegePage;
-        if (collegeFilterDTO.getFilterValue() != null && !collegeFilterDTO.getFilterValue().equals("")) {
+        PageRequest pageRequest = PageRequest.of(page, size, constructSortObject(collegeRequestDTO));
+        if (collegeRequestDTO.getFilterValue() != null && !collegeRequestDTO.getFilterValue().equals("")) {
             collegePage = this.collegeRepository
                     .findAllByCodeContainingOrNameArContainingOrNameEnContaining(
-                            collegeFilterDTO.getFilterValue(),
-                            collegeFilterDTO.getFilterValue(),
-                            collegeFilterDTO.getFilterValue(),
+                            collegeRequestDTO.getFilterValue(),
+                            collegeRequestDTO.getFilterValue(),
+                            collegeRequestDTO.getFilterValue(),
                             pageRequest);
         } else {
             collegePage = this.collegeRepository.findAll(pageRequest);
@@ -44,5 +43,12 @@ public class CollegeService extends BaseServiceImp<College> {
                 (int) collegePage.getTotalElements(),
                 collegePage.getSize(),
                 collegePage.getNumber()));
+    }
+
+    private Sort constructSortObject(CollegeRequestDTO collegeRequestDTO) {
+        if (collegeRequestDTO.getSortDirection() == null) {
+            return Sort.by(Sort.Direction.ASC, "nameAr");
+        }
+        return Sort.by(Sort.Direction.valueOf(collegeRequestDTO.getSortDirection()), collegeRequestDTO.getSortBy());
     }
 }

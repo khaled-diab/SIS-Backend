@@ -1,6 +1,6 @@
 package com.sis.dto.college;
 
-public class CollegeFilterDTO {
+public class CollegeRequestDTO {
     private String filterValue;
     private String sortDirection;
     private String sortBy;
