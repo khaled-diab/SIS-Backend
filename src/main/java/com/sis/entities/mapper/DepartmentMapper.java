@@ -1,7 +1,6 @@
 package com.sis.entities.mapper;
 
-import com.sis.dao.DepartmentDao;
-import com.sis.dto.CollegeDTO;
+
 import com.sis.dto.DepartmentDTO;
 import com.sis.entities.Department;
 import com.sis.util.PageResult;
@@ -14,10 +13,9 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Component
-
 public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
 
-    @Autowired
+
 
 
     @Override
@@ -42,8 +40,7 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
         entity.setNameAr(dto.getNameAr());
         entity.setNameEn(dto.getNameEn());
         entity.setId(dto.getId());
-
-        entity.setCollegeId();
+//        entity.setCollegeId(dto.getId());
         return entity;
 
     }
