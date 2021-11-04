@@ -1,81 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.sis.entities;
+package com.sis.dto;
 
 
-import javax.persistence.*;
+public class CourseDTO extends BaseDTO {
 
-@Entity
-@Table(name = "course")
-public class Course extends BaseEntity {
-
-    private static final long serialVersionUID = 1L;
-
-    @Column(name = "code")
     private String code;
-
-    @Column(name = "name_ar")
     private String nameAr;
-
-    @Column(name = "name_en")
     private String nameEn;
-
-    @Column(name = "theoretical_hours")
     private Float theoreticalHours;
-
-    @Column(name = "exercises_hours")
     private Float exercisesHours;
-
-    @Column(name = "practical_hours")
     private Float practicalHours;
-
-    @Column(name = "total_hours")
     private Float totalHours;
-
-    @Column(name = "weeks")
     private Integer weeks;
-
-    @Column(name = "final_grade")
     private Float finalGrade;
-
-    @Column(name = "final_exam_grade")
     private Float finalExamGrade;
-
-    @Column(name = "practical_grade")
     private Float practicalGrade;
-
-    @Column(name = "oral_grade")
     private Float oralGrade;
-
-    @Column(name = "mid_grade")
     private Float midGrade;
 
-    @ManyToOne
-    @JoinColumn(name = "collegeId", referencedColumnName = "id")
-    private College college;
-
-    @ManyToOne
-    @JoinColumn(name = "departmentId", referencedColumnName = "id")
-    private Department department;
-
-    public College getCollege() {
-        return college;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department departmentId) {
-        this.department = departmentId;
-    }
 
     public String getCode() {
         return code;
@@ -179,6 +120,6 @@ public class Course extends BaseEntity {
 
     public void setMidGrade(Float midGrade) {
         this.midGrade = midGrade;
-    }  
-    
+    }
+
 }
