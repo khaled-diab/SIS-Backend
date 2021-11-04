@@ -5,8 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@EnableAsync
+@CrossOrigin(origins = ("*"))
 public class SisSystemApplication {
 	private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
 	public static void main(String[] args) {

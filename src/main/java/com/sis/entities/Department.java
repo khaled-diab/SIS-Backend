@@ -35,9 +35,6 @@ public class Department extends BaseEntity {
     @OneToMany(mappedBy = "departmentId")
     private Collection<AcademicProgram> academicProgramCollection;
 
-    @OneToMany(mappedBy = "department")
-    private Collection<Course> courseCollection;
-
     @OneToMany(mappedBy = "departmentId")
     private Collection<FacultyMember> facultyMemberCollection;
 
@@ -98,23 +95,6 @@ public class Department extends BaseEntity {
 
     public void setFacultyCollection(Collection<FacultyMember> facultyMemberCollection) {
         this.facultyMemberCollection = facultyMemberCollection;
-    }
-
-    @XmlTransient
-    public Collection<Course> getCourseCollection() {
-        return courseCollection;
-    }
-
-    public void setCourseCollection(Collection<Course> courseCollection) {
-        this.courseCollection = courseCollection;
-    }
-
-    @XmlTransient
-    public Collection<FacultyMember> getFacultyMemberCollection() {
-        return facultyMemberCollection;
-    }
-
-    public void setFacultyMemberCollection(Collection<FacultyMember> facultyMemberCollection) {
-        this.facultyMemberCollection = facultyMemberCollection;
-    }
+    } 
+    
 }
