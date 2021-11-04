@@ -13,8 +13,11 @@ import com.sis.util.PageResult;
 @Component
 public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberDTO> {
 
-//	@Autowired
-//	CollegeMapper collegeMapper;
+	@Autowired
+	private CollegeMapper collegeMapper;
+
+	@Autowired
+	private DepartmentMapper departmentMapper;
 
 	@Override
 	public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entities) {
@@ -41,6 +44,12 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		dto.setNationalID(entity.getNationalID());
 		dto.setNationality(entity.getNationality());
 		dto.setPhone(entity.getPhone());
+		if(entity.getDepartmentId()!=null) {
+			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartmentId()));
+		}
+		if(entity.getCollegeId()!=null) {
+			dto.setCollageDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
+		}
 
 		return dto;
 	}
@@ -57,6 +66,13 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		entity.setNationalID(dto.getNationalID());
 		entity.setNationality(dto.getNationality());
 		entity.setPhone(dto.getPhone());
+		if(dto.getCollegeDTO()!=null) {
+			entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
+		}
+		if(dto.getDepartmentDTO()!=null) {
+
+			entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+		}
 
 		return entity;
 	}
