@@ -558,3 +558,8 @@ The dependencies of some of the beans in the application context form a cycle:
 2021-11-04 20:08:08.544 ERROR 13260 --- [http-nio-8080-exec-5] c.s.e.ControllerExceptionHandler         : No class com.sis.entities.College entity with id 64 exists!
 2021-11-04 20:08:08.544 ERROR 13260 --- [http-nio-8080-exec-4] c.s.e.ControllerExceptionHandler         : No class com.sis.entities.College entity with id 64 exists!
 2021-11-04 20:19:20.449 ERROR 13260 --- [http-nio-8080-exec-2] c.s.e.ControllerExceptionHandler         : No class com.sis.entities.College entity with id 63 exists!
+2021-11-04 22:43:47.220  INFO 13260 --- [http-nio-8080-exec-10] o.h.e.j.b.i.AbstractBatchImpl            : HHH000010: On release of batch it still contained JDBC statements
+2021-11-04 22:43:47.291 ERROR 13260 --- [http-nio-8080-exec-10] c.s.e.ControllerExceptionHandler         : Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1; statement executed: delete from college where id=?; nested exception is org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1; statement executed: delete from college where id=?
+2021-11-04 22:44:06.006 ERROR 13260 --- [http-nio-8080-exec-7] c.s.e.ControllerExceptionHandler         : No class com.sis.entities.College entity with id 3 exists!
+2021-11-04 22:44:06.056 ERROR 13260 --- [http-nio-8080-exec-6] c.s.e.ControllerExceptionHandler         : No class com.sis.entities.College entity with id 3 exists!
+2021-11-04 23:08:35.015  WARN 13260 --- [HikariPool-1 housekeeper] c.z.h.p.HikariPool                       : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=45s489ms381µs99ns).

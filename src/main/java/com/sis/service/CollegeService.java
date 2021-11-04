@@ -52,3 +52,5 @@ public class CollegeService extends BaseServiceImp<College> {
         return Sort.by(Sort.Direction.valueOf(collegeRequestDTO.getSortDirection()), collegeRequestDTO.getSortBy());
     }
 }
+
+
