@@ -6,6 +6,7 @@
 package com.sis.entities;
 
 import java.util.Date;
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -36,7 +37,7 @@ public class AcademicTerm extends BaseEntity {
 
     @JoinColumn(name = "academic_year", referencedColumnName = "id")
     @ManyToOne
-    private AcademicYear academicYear;
+    private Optional<AcademicYear> academicYear;
    
     public String getCode() {
         return code;
@@ -70,11 +71,11 @@ public class AcademicTerm extends BaseEntity {
         this.endDate = endDate;
     }
 
-    public AcademicYear getAcademicYear() {
+    public Optional<AcademicYear> getAcademicYear() {
         return academicYear;
     }
 
-    public void setAcademicYear(AcademicYear academicYear) {
+    public void setAcademicYear(Optional<AcademicYear> academicYear) {
         this.academicYear = academicYear;
     }  
     
