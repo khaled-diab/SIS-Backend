@@ -37,7 +37,7 @@ public class AcademicTerm extends BaseEntity {
 
     @JoinColumn(name = "academic_year", referencedColumnName = "id")
     @ManyToOne
-    private Optional<AcademicYear> academicYear;
+    private AcademicYear academicYear;
    
     public String getCode() {
         return code;
@@ -71,12 +71,11 @@ public class AcademicTerm extends BaseEntity {
         this.endDate = endDate;
     }
 
-    public Optional<AcademicYear> getAcademicYear() {
+    public AcademicYear getAcademicYear() {
         return academicYear;
     }
 
-    public void setAcademicYear(Optional<AcademicYear> academicYear) {
+    public void setAcademicYear(AcademicYear academicYear) {
         this.academicYear = academicYear;
-    }  
-    
+    }
 }
