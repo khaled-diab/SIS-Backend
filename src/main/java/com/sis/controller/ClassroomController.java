@@ -16,13 +16,4 @@ import java.util.List;
 @RequestMapping(value = "/api/classroom")
 @AllArgsConstructor
 public class ClassroomController extends BaseController<Classroom, ClassroomDTO> {
-
-    private final ClassroomService classroomService;
-    private final ClassroomMapper classroomMapper;
-
-
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public List<ClassroomDTO> search(@RequestParam("key") String key) {
-        return classroomMapper.toDTOs(classroomService.search(key));
-    }
 }
