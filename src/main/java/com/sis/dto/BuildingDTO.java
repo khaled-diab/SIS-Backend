@@ -4,6 +4,8 @@ import com.sis.dto.college.CollegeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+
 @Getter
 @Setter
 public class BuildingDTO extends BaseDTO{
@@ -12,4 +14,5 @@ public class BuildingDTO extends BaseDTO{
     private String code;
     private int status;
     private CollegeDTO collegeDTO;
+    private Collection<ClassroomDTO> classroomDTOCollection;
 }
