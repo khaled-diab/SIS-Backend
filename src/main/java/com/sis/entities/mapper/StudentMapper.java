@@ -38,9 +38,11 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 		dto.setNameAr(entity.getNameAr());
 		dto.setNationalId(entity.getNationalId());
 		dto.setPhone(entity.getPhone());
+		dto.setPhoto(entity.getPhoto());
 		dto.setUniversityId(entity.getUniversityId());
 		if(entity.getDepartmentId()!=null) {
 			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartmentId()));
+
 		}
 		if(entity.getCollegeId()!=null) {
 			dto.setCollageDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
@@ -76,8 +78,8 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 			entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 		}
 		if(dto.getDepartmentDTO()!=null) {
-
 			entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+
 		}
 		if(dto.getAcademicProgramDTO()!=null) {
 

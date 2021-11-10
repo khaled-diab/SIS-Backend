@@ -1,12 +1,14 @@
 package com.sis.dto;
 
 import com.sis.dto.college.CollegeDTO;
-
+import javax.validation.constraints.*;
 import java.util.Date;
 
 public class StudentDTO extends BaseDTO {
 
     private long UniversityId;
+    @NotEmpty
+    @Size(min=2, message = "user must be more than 2")
     private String nameAr;
     private String nameEn;
     private String nationality;
