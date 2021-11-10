@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.sis.dto.CourseDTO;
+import com.sis.dto.college.CollegeDTO;
 import com.sis.entities.Course;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.sis.util.PageResult;
 
 @Component
+@AllArgsConstructor
 public class CourseMapper implements Mapper<Course, CourseDTO> {
+
+	CollegeMapper collegeMapper;
 
 
 	@Override
@@ -27,6 +32,8 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 	}
 	@Override
 	public CourseDTO toDTO(Course entity) {
+//		CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
+//		collegeDTO.setCourseList(null);
 		CourseDTO dto=new CourseDTO();
 		dto.setId(entity.getId());
 		dto.setCode(entity.getCode());
@@ -42,6 +49,7 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 		dto.setPracticalGrade(entity.getPracticalGrade());
 		dto.setOralGrade(entity.getOralGrade());
 		dto.setMidGrade(entity.getMidGrade());
+//		dto.setCollegeDTO(collegeDTO);
 
 		return dto;
 	}

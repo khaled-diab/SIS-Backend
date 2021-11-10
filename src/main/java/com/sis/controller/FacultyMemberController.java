@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/facultyMember")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class FacultyMemberController extends BaseController<FacultyMember, FacultyMemberDTO> {
 
