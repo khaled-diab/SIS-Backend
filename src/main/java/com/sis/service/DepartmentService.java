@@ -16,6 +16,7 @@ public class DepartmentService extends BaseServiceImp<Department>{
     }
     @Override
     public JpaRepository<Department, Long> Repository() {
+
         return  departmentDao;
     }
 }
