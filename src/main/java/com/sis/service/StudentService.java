@@ -58,7 +58,8 @@ public class StudentService extends BaseServiceImp<Student>{
 
 
     public PageResult<Student> searchStudents(PageQueryUtil pageUtil, String attribute, Optional<Long>  collegeId,
-                                              Optional<Long>  departmentId, @Nullable String sortField,@Nullable Sort.Direction sort) {
+                                              Optional<Long>  departmentId, @Nullable String sortField,
+                                              @Nullable Sort.Direction sort) {
         Sort s = sort.equals(Sort.Direction.ASC) ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),s);

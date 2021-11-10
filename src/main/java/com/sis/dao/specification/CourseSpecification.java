@@ -33,7 +33,6 @@ public class CourseSpecification implements Specification<Course> {
                 criteriaBuilder.like(root.get("nameAr"), "%" + key + "%"),
                 criteriaBuilder.like(root.get("nameEn"), "%" + key + "%"),
                 criteriaBuilder.like(root.get("code"), "%" + key + "%")
-
         );
        float f1;
 

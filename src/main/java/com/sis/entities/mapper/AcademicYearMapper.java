@@ -3,12 +3,14 @@ package com.sis.entities.mapper;
 import com.sis.dto.AcademicYearDTO;
 import com.sis.entities.AcademicYear;
 import com.sis.util.PageResult;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static java.util.stream.Collectors.toCollection;
 
+@Component
 public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO> {
 
 
@@ -16,7 +18,7 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
     public AcademicYearDTO toDTO(AcademicYear entity) {
         AcademicYearDTO academicYearDTO = new AcademicYearDTO(entity.getCode(),
                 entity.getName(), entity.getStartDate(), entity.getEndDate());
-        academicYearDTO.setId(academicYearDTO.getId());
+        academicYearDTO.setId(entity.getId());
         return academicYearDTO;
     }
 

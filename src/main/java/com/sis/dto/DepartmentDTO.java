@@ -7,7 +7,6 @@ public class DepartmentDTO extends BaseDTO{
     private String nameEn;
     private Long college_id ;
     private String college_name_ar ;
-
     private String getCollege_name_en ;
 
     public DepartmentDTO() {
