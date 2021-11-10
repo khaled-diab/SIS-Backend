@@ -1,32 +1,16 @@
 package com.sis.dto;
 
+import com.sis.dto.college.CollegeDTO;
+import com.sis.entities.College;
+import com.sis.entities.Department;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AcademicProgramDTO extends BaseDTO{
-
-    private String code;
-    private String nameAr;
-    private String nameEn;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getNameAr() {
-        return nameAr;
-    }
-
-    public void setNameAr(String nameArb) {
-        this.nameAr = nameArb;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
+//     private Long  college_id , dept_id;
+     private String code , name_ar , name_en ;
+     private DepartmentDTO departmentDTO ;
+     private CollegeDTO collegeDTO ;
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 public class AcademicTermDTO extends BaseDTO {
     private String code, name;
     private Date start_date, end_date;
-//    private AcademicYearDTO academicYearDTO ;
     private String year_name ;
     private Long year_id ;
     public AcademicTermDTO() {
