@@ -5,14 +5,10 @@
  */
 package com.sis.entities;
 
+
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "student")
@@ -21,6 +17,7 @@ public class Student extends BaseEntity {
     private static final long serialVersionUID = 1L;
     @Column(name = "university_id", unique = true)
     private long universityId;
+    @NotNull
     @Column(name = "name_ar")
     private String nameAr;
 
