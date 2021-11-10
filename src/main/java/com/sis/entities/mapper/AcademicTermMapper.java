@@ -25,8 +25,8 @@ public class AcademicTermMapper implements  Mapper<AcademicTerm , AcademicTermDT
         academicTermDTO.setName(entity.getName());
         academicTermDTO.setEnd_date(entity.getEndDate());
         academicTermDTO.setStart_date(entity.getStartDate());
-        academicTermDTO.setYear_id(entity.getAcademicYear().get().getId());
-        academicTermDTO.setYear_name(entity.getAcademicYear().get().getName());
+        academicTermDTO.setYear_id(entity.getAcademicYear().getId());
+        academicTermDTO.setYear_name(entity.getAcademicYear().getName());
         return academicTermDTO;
     }
 
@@ -38,7 +38,7 @@ public class AcademicTermMapper implements  Mapper<AcademicTerm , AcademicTermDT
         academicTerm.setId(dto.getId());
         academicTerm.setEndDate(dto.getEnd_date());
         academicTerm.setStartDate(dto.getStart_date());
-        academicTerm.setAcademicYear(academicYearDao.findById(dto.getYear_id()));
+        academicTerm.setAcademicYear(academicYearDao.findById(dto.getYear_id()).get());
         return academicTerm;
     }
 
