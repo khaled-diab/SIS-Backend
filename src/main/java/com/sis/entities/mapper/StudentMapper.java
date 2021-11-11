@@ -30,11 +30,13 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 
 		StudentDTO dto = new StudentDTO();
 		dto.setAlternativeMail(entity.getAlternativeMail());
+		dto.setUniversityMail(entity.getUniversityMail());
 		dto.setBirthDate(entity.getBirthDate());
 		dto.setId(entity.getId());
 		dto.setNameEn(entity.getNameEn());
 		dto.setNationality(entity.getNationality());
 		dto.setLevel(entity.getLevel());
+		dto.setYear(entity.getYear());
 		dto.setNameAr(entity.getNameAr());
 		dto.setNationalId(entity.getNationalId());
 		dto.setPhone(entity.getPhone());
@@ -45,7 +47,7 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 
 		}
 		if(entity.getCollegeId()!=null) {
-			dto.setCollageDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
+			dto.setCollegeDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
 		}
 		if(entity.getProgramId()!=null) {
 			dto.setAcademicProgramDTO(this.academicProgramMapper.toDTO(entity.getProgramId()));
@@ -63,6 +65,7 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 		entity.setId(dto.getId());
 		entity.setAlternativeMail(dto.getAlternativeMail());
 		entity.setLevel(dto.getLevel());
+		entity.setYear(dto.getYear());
 		entity.setBirthDate(dto.getBirthDate());
 		entity.setNationality(dto.getNationality());
 		entity.setNameEn(dto.getNameEn());

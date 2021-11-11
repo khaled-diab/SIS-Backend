@@ -6,10 +6,15 @@
 package com.sis.entities;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "student")
 public class Student extends BaseEntity {
@@ -47,6 +52,10 @@ public class Student extends BaseEntity {
     private String parentPhone;
     @Column(name = "level")
     private  String level;
+
+    @Column(name = "year")
+    private  String year;
+
     @Column(name = "photo")
     private  String photo;
     @JoinColumn(name = "academic_program_id", referencedColumnName = "id")
@@ -61,126 +70,6 @@ public class Student extends BaseEntity {
     @ManyToOne
     private Department departmentId;
 
-
-    public long getUniversityId() {
-        return universityId;
-    }
-
-    public void setUniversityId(long universityId) {
-        this.universityId = universityId;
-    }
-
-    public String getNameAr() {
-        return nameAr;
-    }
-
-    public void setNameAr(String nameAr) {
-        this.nameAr = nameAr;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(String nationalID) {
-        this.nationalId = nationalID;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getUniversityMail() {
-        return universityMail;
-    }
-
-    public void setUniversityMail(String universityMail) {
-        this.universityMail = universityMail;
-    }
-
-    public String getAlternativeMail() {
-        return alternativeMail;
-    }
-
-    public void setAlternativeMail(String alternativeMail) {
-        this.alternativeMail = alternativeMail;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getParentPhone() {
-        return parentPhone;
-    }
-
-    public void setParentPhone(String parentPhone) {
-        this.parentPhone = parentPhone;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public AcademicProgram getProgramId() {
-        return programId;
-    }
-
-    public void setProgramId(AcademicProgram programId) {
-        this.programId = programId;
-    }
-
-    public College getCollegeId() {
-        return collegeId;
-    }
-
-    public void setCollegeId(College collegeId) {
-        this.collegeId = collegeId;
-    }
-
-    public Department getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
-    }
 
    
 }
