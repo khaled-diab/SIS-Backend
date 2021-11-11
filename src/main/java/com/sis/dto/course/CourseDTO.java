@@ -1,6 +1,7 @@
-package com.sis.dto;
+package com.sis.dto.course;
 
 
+import com.sis.dto.BaseDTO;
 import com.sis.dto.college.CollegeDTO;
 import lombok.Getter;
 import lombok.Setter;

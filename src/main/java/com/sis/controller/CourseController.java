@@ -1,6 +1,7 @@
 package com.sis.controller;
 
-import com.sis.dto.CourseDTO;
+import com.sis.dto.course.CourseDTO;
+import com.sis.dto.course.CourseRequestDTO;
 import com.sis.entities.Course;
 import com.sis.entities.mapper.CourseMapper;
 import com.sis.service.CourseService;
@@ -24,10 +25,12 @@ public class CourseController extends BaseController<Course, CourseDTO> {
 
     private final CourseMapper courseMapper;
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public ResponseEntity<PageResult<CourseDTO>> search(@RequestParam(value = "key") String key, @RequestBody PageQueryUtil pageUtil) {
-
-        return new ResponseEntity<>(courseService.search(pageUtil, key), HttpStatus.OK);
+    @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<CourseDTO>> search(@PathVariable int pageNumber,
+                                                        @PathVariable int size,
+                                                        @RequestBody CourseRequestDTO courseRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(courseService.search(pageUtil, courseRequestDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/updateCourse", method = RequestMethod.PUT)
@@ -36,6 +39,11 @@ public class CourseController extends BaseController<Course, CourseDTO> {
         return new MessageResponse("Item has been updated successfully");
     }
 
+    @RequestMapping(value = "/save", method = RequestMethod.PUT)
+    public MessageResponse update(@RequestBody CourseDTO dto) {
+        courseService.save(courseMapper.toEntity(dto));
+        return new MessageResponse("Item has been updated successfully");
+    }
 
 }
 
