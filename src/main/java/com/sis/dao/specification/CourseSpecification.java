@@ -1,6 +1,5 @@
 package com.sis.dao.specification;
 
-import com.sis.dto.CourseDTO;
 import com.sis.entities.Course;
 import org.springframework.data.jpa.domain.Specification;
 

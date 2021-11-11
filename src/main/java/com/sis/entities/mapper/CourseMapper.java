@@ -4,8 +4,7 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.sis.dto.CourseDTO;
-import com.sis.dto.college.CollegeDTO;
+import com.sis.dto.course.CourseDTO;
 import com.sis.entities.Course;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
