@@ -5,6 +5,7 @@ import com.sis.dto.StudentDTO;
 import com.sis.dto.StudentFilterDTO;
 import com.sis.entities.Student;
 import com.sis.entities.mapper.StudentMapper;
+import com.sis.exception.ItemNotFoundException;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 @Service
@@ -33,30 +36,9 @@ public class StudentService extends BaseServiceImp<Student>{
 
 
 
-//    public PageResult<Student> filterStudents(PageQueryUtil pageUtil, long collegeId, long departmentId) {
-//
-//        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit());
-//        Page<Student> page=null;
-//        if(departmentId==-1) {
-//            page = this.studentRepository.findStudentsByCollage(collegeId, pageable);
-//        }else{
-//            page = this.studentRepository.findStudentsByCollage(collegeId, departmentId, pageable);
-//        }
-//
-//        PageResult<Student> pageResult = new PageResult<Student>(page.getContent(), (int) page.getTotalElements(),
-//                pageUtil.getLimit(), pageUtil.getPage());
-//        return pageResult;
-//    }
-//    public PageResult<StudentDTO> filterStudentsDTO(long collegeId, long departmentId ,int page, int limit ){
-//
-//        PageQueryUtil pgq=new PageQueryUtil(page,limit);
-//        PageResult<Student> students=this.filterStudents(pgq,collegeId,departmentId);
-//        return this.studentMapper.toDataPage(students);
-//    }
 
-
-    public PageResult<Student> searchStudents(PageQueryUtil pageUtil, String attribute,Long  collegeId,
-                                              Long  departmentId, @Nullable String sortField,@Nullable Sort.Direction sort) {
+    public PageResult<Student> searchStudents(PageQueryUtil pageUtil, String attribute,long  collegeId,
+                                              long  departmentId, @Nullable String sortField,@Nullable Sort.Direction sort) {
         if(attribute!=null && attribute.equals("")){
             attribute=null;
         }
@@ -97,10 +79,8 @@ public class StudentService extends BaseServiceImp<Student>{
 
         }else if(attribute==null && collegeId!=-1 && departmentId==-1){
             System.out.println(44);
-            s=Sort.by("name_ar").ascending();
-
+//            s=Sort.by("name_ar").ascending();
             Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),s);
-
             page=this.studentRepository.findStudentsByCollage(collegeId,pageable2);
 
         }else if(attribute==null && collegeId!=-1 && departmentId!=-1) {
@@ -119,7 +99,7 @@ public class StudentService extends BaseServiceImp<Student>{
         return pageResult;
     }
 
-    public PageResult<StudentDTO> searchStudentsDTO(String attribute, Long collegeId, Long  departmentId,
+    public PageResult<StudentDTO> searchStudentsDTO(String attribute, long collegeId, long  departmentId,
                                                     int page, int limit, StudentFilterDTO studentFilterDTO ){
         Sort.Direction direction=null;
 

@@ -1,150 +1,68 @@
 package com.sis.dto;
 
 import com.sis.dto.college.CollegeDTO;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 import java.util.Date;
-
+@Getter
+@Setter
+@Validated
 public class StudentDTO extends BaseDTO {
 
+    @NotNull(message = "Required")
     private long UniversityId;
-    @NotEmpty
-    @Size(min=2, message = "user must be more than 2")
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
+    @Pattern(regexp="^[\\u0621-\\u064A]+$",message="Arabic Letters only")
     private String nameAr;
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
+    @Pattern(regexp="[a-zA-Z ]+",message="English Letters only")
+
     private String nameEn;
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
     private String nationality;
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
+    @Pattern(regexp="^[0-9]{14}",message="must be 14 digits")
+
     private String nationalId;
+
     private Date birthDate;
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
+    @Email(message = "must be email")
     private String universityMail;
+
+    @Email(message = "must be email")
     private String alternativeMail;
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
+    @Pattern(regexp="^[0-9]{11}",message="Invalid Mobile Number")
     private String phone;
+    @Pattern(regexp="^[0-9]{11}",message="Invalid Mobile Number")
     private String parentPhone;
+
     private  String level;
+    private  String year;
     private  String photo;
     /*Relations instances*/
-   private  DepartmentDTO departmentDTO;
-   private com.sis.dto.college.CollegeDTO collegeDTO;
+
+    private  DepartmentDTO departmentDTO;
+    private CollegeDTO collegeDTO;
    private AcademicProgramDTO academicProgramDTO;
 
 
-
-
-    public long getUniversityId() {
-        return UniversityId;
-    }
-
-    public void setUniversityId(long universityId) {
-        UniversityId = universityId;
-    }
-
-    public String getNameAr() {
-        return nameAr;
-    }
-
-    public void setNameAr(String nameAr) {
-        this.nameAr = nameAr;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getUniversityMail() {
-        return universityMail;
-    }
-
-    public void setUniversityMail(String universityMail) {
-        this.universityMail = universityMail;
-    }
-
-    public String getAlternativeMail() {
-        return alternativeMail;
-    }
-
-    public void setAlternativeMail(String alternativeMail) {
-        this.alternativeMail = alternativeMail;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getParentPhone() {
-        return parentPhone;
-    }
-
-    public void setParentPhone(String parentPhone) {
-        this.parentPhone = parentPhone;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public DepartmentDTO getDepartmentDTO() {
-        return departmentDTO;
-    }
-
-    public void setDepartmentDTO(DepartmentDTO departmentDTO) {
-        this.departmentDTO = departmentDTO;
-    }
-
-    public CollegeDTO getCollegeDTO() {
-        return collegeDTO;
-    }
-
-    public void setCollageDTO(CollegeDTO collegeDTO) {
-        this.collegeDTO = collegeDTO;
-    }
-
-    public AcademicProgramDTO getAcademicProgramDTO() {
-        return academicProgramDTO;
-    }
-
-    public void setAcademicProgramDTO(AcademicProgramDTO academicProgramDTO) {
-        this.academicProgramDTO = academicProgramDTO;
-    }
 }
