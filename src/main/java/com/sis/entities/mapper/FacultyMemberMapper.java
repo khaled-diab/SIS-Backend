@@ -4,19 +4,18 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import com.sis.dto.FacultyMemberDTO;
+import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.entities.FacultyMember;
 import com.sis.util.PageResult;
 
 @Component
+@AllArgsConstructor
 public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberDTO> {
 
-	@Autowired
 	private CollegeMapper collegeMapper;
 
-	@Autowired
 	private DepartmentMapper departmentMapper;
 
 	@Override
@@ -48,7 +47,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartmentId()));
 		}
 		if(entity.getCollegeId()!=null) {
-			dto.setCollageDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
+			dto.setCollegeDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
 		}
 
 		return dto;
