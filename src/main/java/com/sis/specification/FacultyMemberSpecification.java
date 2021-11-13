@@ -34,8 +34,6 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
                 criteriaBuilder.like(root.get("nameEn"), "%" + key + "%"),
                 criteriaBuilder.like(root.get("degree"), "%" + key + "%"),
                 criteriaBuilder.like(root.get("universityMail"), "%" + key + "%")
-//                ,criteriaBuilder.like(root.get("collegeId"), "%" + key + "%"),
-//                criteriaBuilder.like(root.get("departmentId"), "%" + key + "%")
         );
 
         return x;
