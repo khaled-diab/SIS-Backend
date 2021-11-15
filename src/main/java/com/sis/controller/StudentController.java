@@ -28,7 +28,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     private final StudentMapper studentMapper;
 
     @RequestMapping(value="/addStudent", method = RequestMethod.POST)
-    public MessageResponse create(@RequestBody  StudentDTO dto) {
+    public MessageResponse createStudent(@Valid @RequestBody  StudentDTO dto) {
 
 
         if(this.studentService.findByuniversityId(dto.getUniversityId())!=null){
@@ -46,7 +46,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     }
 
     @RequestMapping(value = "/updateStudent", method = RequestMethod.PUT)
-    public MessageResponse update( @Valid @RequestBody StudentDTO dto) {
+    public MessageResponse updateStudent( @Valid @RequestBody StudentDTO dto) {
 
 
         Student st = this.studentService.findById(dto.getId());
