@@ -70,8 +70,6 @@ import java.util.Map;
 		System.out.println("hi "+ ex.getFieldError().getDefaultMessage());
 			messageResponse.setField(ex.getFieldError().getField());
 
-
-
 		log.error(ex.getFieldError());
 //			System.out.println();
 		return new ResponseEntity<MessageResponse>(messageResponse,

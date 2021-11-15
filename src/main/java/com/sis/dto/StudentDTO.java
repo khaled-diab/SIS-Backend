@@ -61,8 +61,12 @@ public class StudentDTO extends BaseDTO {
     /*Relations instances*/
 
     private  DepartmentDTO departmentDTO;
+
+    @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
-   private AcademicProgramDTO academicProgramDTO;
+
+    @NotNull
+    private AcademicProgramDTO academicProgramDTO;
 
 
 }
