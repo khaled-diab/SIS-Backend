@@ -5,6 +5,10 @@ import com.sis.dto.BaseDTO;
 import com.sis.dto.college.CollegeDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.Null;
 
 @Getter
 @Setter

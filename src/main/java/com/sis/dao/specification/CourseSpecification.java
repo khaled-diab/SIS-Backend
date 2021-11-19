@@ -1,19 +1,25 @@
 package com.sis.dao.specification;
 
+import com.sis.entities.College;
 import com.sis.entities.Course;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 public class CourseSpecification implements Specification<Course> {
 
-    private String key;
+    private String searchValue;
 
-    public CourseSpecification(String key) {
-        this.key = key;
+    private Long filterCollege;
+
+    public CourseSpecification(String searchValue, Long filterCollege) {
+        this.searchValue = searchValue;
+        this.filterCollege = filterCollege;
+    }
+
+    public CourseSpecification() {
+        this.searchValue = null;
+        this.filterCollege = null;
     }
 
     @Override
@@ -28,28 +34,41 @@ public class CourseSpecification implements Specification<Course> {
 
     @Override
     public Predicate toPredicate(Root<Course> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-       Predicate x = criteriaBuilder.or(
-                criteriaBuilder.like(root.get("nameAr"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("nameEn"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("code"), "%" + key + "%")
+        if (searchValue != null) {
+            Predicate x = criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("nameAr"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(root.get("nameEn"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(root.get("code"), "%" + searchValue + "%")
 
-        );
-       float f1;
+            );
+            float f1;
 
-       try{
-           f1= Float.parseFloat(key);
-       }catch (Exception ex){
-           f1=-1;
-       }
-       Predicate y =  criteriaBuilder.or(
-               criteriaBuilder.equal(root.get("totalHours"), f1),
-               criteriaBuilder.equal(root.get("finalGrade"), f1)
-       );
+            try {
+                f1 = Float.parseFloat(searchValue);
+            } catch (Exception ex) {
+                f1 = -1;
+            }
+            Predicate y = criteriaBuilder.or(
+                    criteriaBuilder.equal(root.get("totalHours"), f1),
+                    criteriaBuilder.equal(root.get("finalGrade"), f1)
+            );
+            if (filterCollege == null) {
+                return criteriaBuilder.or(x, y);
+            }
+            return criteriaBuilder.and(criteriaBuilder.or(x, y),
+                    getFilterPredicate(root, query, criteriaBuilder));
+        }
 
-        return criteriaBuilder.or(x,y);
-
+        return getFilterPredicate(root, query, criteriaBuilder);
 
     }
+
+    private Predicate getFilterPredicate(Root<Course> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        Join<Course, College> courseCollegeJoin = root.join("college");
+        System.out.println(filterCollege);
+        return criteriaBuilder.equal(courseCollegeJoin.get("id"), filterCollege);
+    }
 }
+
 
 

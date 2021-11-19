@@ -46,11 +46,13 @@ public class CourseService extends BaseServiceImp<Course> {
 
     public PageResult<CourseDTO> search(PageQueryUtil pageUtil, CourseRequestDTO courseRequestDTO) {
         Page<Course> coursePage;
-        String key = courseRequestDTO.getFilterValue();
+        String searchValue = courseRequestDTO.getSearchValue();
+
+        Long filterCollege = courseRequestDTO.getFilterCollege();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(courseRequestDTO));
-        if (key != null && !key.trim().isEmpty()) {
-            CourseSpecification courseSpecification = new CourseSpecification(key);
+        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null) {
+            CourseSpecification courseSpecification = new CourseSpecification(searchValue, filterCollege);
 
             coursePage = courseRepository.findAll(courseSpecification, pageable);
         } else {
