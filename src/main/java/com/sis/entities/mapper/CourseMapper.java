@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.entities.Course;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 	}
 	@Override
 	public CourseDTO toDTO(Course entity) {
-//		CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
+		CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
 //		collegeDTO.setCourseList(null);
 		CourseDTO dto=new CourseDTO();
 		dto.setId(entity.getId());
@@ -48,13 +49,14 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 		dto.setPracticalGrade(entity.getPracticalGrade());
 		dto.setOralGrade(entity.getOralGrade());
 		dto.setMidGrade(entity.getMidGrade());
-//		dto.setCollegeDTO(collegeDTO);
+		dto.setCollegeDTO(collegeDTO);
 
 		return dto;
 	}
 	@Override
 	public Course toEntity(CourseDTO dto) {
 		Course entity=new Course();
+		CollegeMapper collegeMapper = new CollegeMapper();
 		entity.setId(dto.getId());
 		entity.setCode(dto.getCode());
 		entity.setNameAr(dto.getNameAr());
@@ -69,6 +71,7 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 		entity.setPracticalGrade(dto.getPracticalGrade());
 		entity.setOralGrade(dto.getOralGrade());
 		entity.setMidGrade(dto.getMidGrade());
+		entity.setCollege(collegeMapper.toEntity(dto.getCollegeDTO()));
 		return entity;
 	}
 
