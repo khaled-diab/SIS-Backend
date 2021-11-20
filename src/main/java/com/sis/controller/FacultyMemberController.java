@@ -1,6 +1,7 @@
 package com.sis.controller;
 
-import com.sis.dto.FacultyMemberDTO;
+import com.sis.dto.facultyMember.FacultyMemberDTO;
+import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.entities.FacultyMember;
 import com.sis.entities.mapper.FacultyMemberMapper;
 import com.sis.service.FacultyMemberService;
@@ -13,23 +14,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/facultyMember")
+@RequestMapping(value = "/api/facultyMembers")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class FacultyMemberController extends BaseController<FacultyMember, FacultyMemberDTO> {
 
 
     private final FacultyMemberService facultyMemberService;
+    private final FacultyMemberMapper facultyMemberMapper;
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateFacultyMember", method = RequestMethod.PUT)
     public MessageResponse up(@RequestBody FacultyMemberDTO dto) {
         facultyMemberService.update(dto);
         return new MessageResponse("Item has been updated successfully");
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public ResponseEntity<PageResult<FacultyMemberDTO>> search(@RequestParam(value = "key") String key, @RequestBody PageQueryUtil pageUtil) {
+    @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
+                                                               @PathVariable int size,
+                                                               @RequestBody FacultyMemberRequestDTO facultyMemberRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(facultyMemberService.search(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(facultyMemberService.search(pageUtil, key), HttpStatus.OK);
+    @RequestMapping(value = "/saveFacultyMember", method = RequestMethod.PUT)
+    public MessageResponse update(@RequestBody FacultyMemberDTO dto) {
+        facultyMemberService.save(facultyMemberMapper.toEntity(dto));
+        return new MessageResponse("Item has been updated successfully");
     }
 
 }
+
+
+
+
+

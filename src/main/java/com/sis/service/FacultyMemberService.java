@@ -1,7 +1,8 @@
 package com.sis.service;
 
 import com.sis.dao.FacultyMemberRepository;
-import com.sis.dto.FacultyMemberDTO;
+import com.sis.dto.facultyMember.FacultyMemberDTO;
+import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.entities.FacultyMember;
 import com.sis.entities.mapper.FacultyMemberMapper;
 import com.sis.specification.FacultyMemberSpecification;
@@ -11,11 +12,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
@@ -39,19 +40,32 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
         }
     }
 
-    public PageResult<FacultyMemberDTO> search(PageQueryUtil pageUtil, String key) {
+    public PageResult<FacultyMemberDTO> search(PageQueryUtil pageUtil, FacultyMemberRequestDTO facultyMemberRequestDTO) {
+        Page<FacultyMember> facultyMemberPage;
+        String searchValue = facultyMemberRequestDTO.getSearchValue();
 
-        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit());
+        Long filterCollege = facultyMemberRequestDTO.getFilterCollege();
 
-        FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(key);
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(facultyMemberRequestDTO));
+        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null) {
+            FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(searchValue, filterCollege);
 
-        Page<FacultyMember> coursePage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
-
-        PageResult<FacultyMember> pageResult = new PageResult<>(coursePage.getContent(), (int) coursePage.getTotalElements(),
+            facultyMemberPage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
+        } else {
+            facultyMemberPage = facultyMemberRepository.findAll(pageable);
+        }
+        PageResult<FacultyMember> pageResult = new PageResult<>(facultyMemberPage.getContent(), (int) facultyMemberPage.getTotalElements(),
                 pageUtil.getLimit(), pageUtil.getPage());
 
         return facultyMemberMapper.toDataPage(pageResult);
     }
 
+
+    private Sort constructSortObject(FacultyMemberRequestDTO facultyMemberRequestDTO) {
+        if (facultyMemberRequestDTO.getSortDirection() == null) {
+            return Sort.by(Sort.Direction.ASC, "nameAr");
+        }
+        return Sort.by(Sort.Direction.valueOf(facultyMemberRequestDTO.getSortDirection()), facultyMemberRequestDTO.getSortBy());
+    }
 
 }
