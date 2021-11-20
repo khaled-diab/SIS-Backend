@@ -46,7 +46,7 @@ public class College extends BaseEntity {
     @OneToMany(mappedBy = "collegeId")
     private Collection<Building> buildingCollection;
 
-    @OneToMany(mappedBy = "collegeId")
+    @OneToMany(mappedBy = "college")
     private Collection<FacultyMember> facultyMemberCollection;
 
     public String getCode() {
