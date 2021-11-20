@@ -1,18 +1,26 @@
 package com.sis.controller;
 
-import com.sis.dto.BuildingDTO;
+import com.sis.dto.building.BuildingDTO;
 import com.sis.entities.Building;
 import com.sis.entities.mapper.BuildingMapper;
-import com.sis.entities.mapper.Mapper;
-import com.sis.service.BaseServiceImp;
 import com.sis.service.BuildingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import com.sis.util.MessageResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/building")
-public class BuildingController extends BaseController<Building, BuildingDTO>{
+@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+public class BuildingController extends BaseController<Building, BuildingDTO> {
+
+    private final BuildingService buildingService;
+    private final BuildingMapper buildingMapper;
+
+    @RequestMapping(value="/addOrUpdate", method = RequestMethod.PUT)
+    public MessageResponse addOrUpdate(@RequestBody BuildingDTO dto) {
+        buildingService.save(buildingMapper.toEntity(dto));
+        System.out.println("entered");
+        return new MessageResponse("Item has been saved successfully");
+    }
 }
