@@ -1,32 +1,14 @@
 package com.sis.dto.facultyMember;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class FacultyMemberRequestDTO {
-    private String filterValue;
+    private String searchValue;
+    private Long filterCollege;
     private String sortDirection;
     private String sortBy;
-
-    public String getFilterValue() {
-        return filterValue;
-    }
-
-    public void setFilterValue(String filterValue) {
-        this.filterValue = filterValue;
-    }
-
-    public String getSortDirection() {
-        return sortDirection;
-    }
-
-    public void setSortDirection(String sortDirection) {
-        this.sortDirection = sortDirection;
-    }
-
-    public String getSortBy() {
-        return sortBy;
-    }
-
-    public void setSortBy(String sortBy) {
-        this.sortBy = sortBy;
-    }
 
 }

@@ -17,7 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
@@ -43,11 +42,13 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
     public PageResult<FacultyMemberDTO> search(PageQueryUtil pageUtil, FacultyMemberRequestDTO facultyMemberRequestDTO) {
         Page<FacultyMember> facultyMemberPage;
-        String key = facultyMemberRequestDTO.getFilterValue();
+        String searchValue = facultyMemberRequestDTO.getSearchValue();
+
+        Long filterCollege = facultyMemberRequestDTO.getFilterCollege();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(facultyMemberRequestDTO));
-        if (key != null && !key.trim().isEmpty()) {
-            FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(key);
+        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null) {
+            FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(searchValue, filterCollege);
 
             facultyMemberPage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
         } else {
@@ -58,6 +59,7 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
         return facultyMemberMapper.toDataPage(pageResult);
     }
+
 
     private Sort constructSortObject(FacultyMemberRequestDTO facultyMemberRequestDTO) {
         if (facultyMemberRequestDTO.getSortDirection() == null) {
