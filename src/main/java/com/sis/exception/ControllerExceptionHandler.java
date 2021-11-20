@@ -67,11 +67,9 @@ import java.util.Map;
 		@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<MessageResponse> globalExceptionHandler(MethodArgumentNotValidException ex, WebRequest request) {
 			MessageResponse messageResponse=new MessageResponse(ex.getFieldError().getDefaultMessage());
-		System.out.println("hi "+ ex.getFieldError().getDefaultMessage());
 			messageResponse.setField(ex.getFieldError().getField());
 
 		log.error(ex.getFieldError());
-//			System.out.println();
 		return new ResponseEntity<MessageResponse>(messageResponse,
 				HttpStatus.BAD_REQUEST);
 

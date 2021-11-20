@@ -1,6 +1,7 @@
 package com.sis.dto;
 
 import com.sis.dto.college.CollegeDTO;
+import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
@@ -19,12 +20,12 @@ public class StudentDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp="^[\\u0621-\\u064A]+$",message="Arabic Letters only")
+    @Pattern(regexp= Constants.ARABIC_CHARACTERS,message="Arabic Letters only")
     private String nameAr;
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp="[a-zA-Z ]+",message="English Letters only")
+    @Pattern(regexp= Constants.ENGLISH_CHARACTERS, message="English Letters only")
 
     private String nameEn;
 
@@ -34,7 +35,7 @@ public class StudentDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp="^[0-9]{14}",message="must be 14 digits")
+    @Pattern(regexp= Constants.DIGITS_ONLY_14, message="must be 14 digits")
 
     private String nationalId;
 
@@ -50,9 +51,10 @@ public class StudentDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp="^[0-9]{11}",message="Invalid Mobile Number")
+    @Pattern(regexp= Constants.DIGITS_ONLY_11, message="Invalid Mobile Number")
     private String phone;
-    @Pattern(regexp="^[0-9]{11}",message="Invalid Mobile Number")
+
+    @Pattern(regexp=Constants.DIGITS_ONLY_11, message="Invalid Mobile Number")
     private String parentPhone;
 
     private  String level;
