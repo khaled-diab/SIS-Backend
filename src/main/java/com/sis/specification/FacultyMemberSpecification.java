@@ -1,21 +1,28 @@
 package com.sis.specification;
 
+import com.sis.entities.College;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 import com.sis.entities.FacultyMember;
 
 public class FacultyMemberSpecification implements Specification<FacultyMember> {
 
-    private String key;
+    private String searchValue;
 
-    public FacultyMemberSpecification(String key) {
-        this.key = key;
+    private Long filterCollege;
+
+    public FacultyMemberSpecification(String searchValue, Long filterCollege) {
+        this.searchValue = searchValue;
+        this.filterCollege = filterCollege;
     }
+
+    public FacultyMemberSpecification() {
+        this.searchValue = null;
+        this.filterCollege = null;
+    }
+
 
     @Override
     public Specification<FacultyMember> and(Specification<FacultyMember> other) {
@@ -29,13 +36,27 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
 
     @Override
     public Predicate toPredicate(Root<FacultyMember> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Predicate x = criteriaBuilder.or(
-                criteriaBuilder.like(root.get("nameAr"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("nameEn"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("degree"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("universityMail"), "%" + key + "%")
-        );
+        if (searchValue != null) {
+            Predicate x = criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("nameAr"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(root.get("nameEn"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(root.get("degree"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(root.get("universityMail"), "%" + searchValue + "%")
+            );
+            if (filterCollege == null) {
+                return x;
+            }
+            return criteriaBuilder.and(x, getFilterPredicate(root, query, criteriaBuilder));
+        }
 
-        return x;
+        return getFilterPredicate(root, query, criteriaBuilder);
+
     }
+
+    private Predicate getFilterPredicate(Root<FacultyMember> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        Join<FacultyMember, College> facultyMemberCollegeJoin = root.join("college");
+        System.out.println(filterCollege);
+        return criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
+    }
+
 }

@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.sis.dto.college.CollegeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
@@ -33,6 +34,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 	@Override
 	public FacultyMemberDTO toDTO(FacultyMember entity) {
 		FacultyMemberDTO dto=new FacultyMemberDTO();
+		CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
 		dto.setId(entity.getId());
 		dto.setUniversityMail(entity.getUniversityMail());
 		dto.setAlternativeMail(entity.getAlternativeMail());
@@ -43,11 +45,11 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		dto.setNationalID(entity.getNationalID());
 		dto.setNationality(entity.getNationality());
 		dto.setPhone(entity.getPhone());
-		if(entity.getDepartmentId()!=null) {
-			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartmentId()));
+		if(entity.getDepartment()!=null) {
+			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartment()));
 		}
-		if(entity.getCollegeId()!=null) {
-			dto.setCollegeDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
+		if(entity.getCollege()!=null) {
+			dto.setCollegeDTO(collegeDTO);
 		}
 
 		return dto;
@@ -66,11 +68,11 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		entity.setNationality(dto.getNationality());
 		entity.setPhone(dto.getPhone());
 		if(dto.getCollegeDTO()!=null) {
-			entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
+			entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 		}
 		if(dto.getDepartmentDTO()!=null) {
 
-			entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+			entity.setDepartment(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
 		}
 
 		return entity;

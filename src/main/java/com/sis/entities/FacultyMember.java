@@ -7,8 +7,12 @@ package com.sis.entities;
 
 import java.util.Date;
 import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "faculty_member")
 public class FacultyMember extends BaseEntity {
 
@@ -44,101 +48,10 @@ public class FacultyMember extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "collegeId", referencedColumnName = "id")
-    private College collegeId;
+    private College college;
 
     @ManyToOne
     @JoinColumn(name = "departmentId", referencedColumnName = "id")
-    private Department departmentId;
+    private Department department;
 
-    public FacultyMember() {
-    }
-
-    public String getUniversityMail() {
-        return universityMail;
-    }
-
-    public void setUniversityMail(String universityMail) {
-        this.universityMail = universityMail;
-    }
-
-    public String getNameAr() {
-        return nameAr;
-    }
-
-    public void setNameAr(String nameAr) {
-        this.nameAr = nameAr;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getNationalID() {
-        return nationalID;
-    }
-
-    public void setNationalID(String nationalID) {
-        this.nationalID = nationalID;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-	public String getAlternativeMail() {
-        return alternativeMail;
-    }
-
-    public void setAlternativeMail(String alternativeMail) {
-        this.alternativeMail = alternativeMail;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public College getCollegeId() {
-        return collegeId;
-    }
-
-    public void setCollegeId(College collegeId) {
-        this.collegeId = collegeId;
-    }
-
-    public Department getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Department deptId) {
-        this.departmentId = deptId;
-    } 
-    
 }
