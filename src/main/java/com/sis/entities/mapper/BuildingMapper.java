@@ -5,20 +5,17 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.sis.dto.BuildingDTO;
-import com.sis.dto.college.CollegeDTO;
+import com.sis.dto.building.BuildingDTO;
 import com.sis.entities.Building;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import com.sis.dto.BuildingDTO;
-import com.sis.entities.Building;
 import com.sis.util.PageResult;
 
 @Component
 @AllArgsConstructor
 public class BuildingMapper implements Mapper<Building, BuildingDTO> {
 
-    //private final CollegeMapper collegeMapper;
+    private final CollegeMapper collegeMapper;
 
     @Override
     public ArrayList<BuildingDTO> toDTOs(Collection<Building> entities) {
@@ -37,15 +34,12 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
 
     @Override
     public BuildingDTO toDTO(Building entity) {
-        //CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollegeId());
-        //wait CollegeDTO to be fixed
-        //collegeDTO.setBuildingDTOList(null);
         BuildingDTO dto = new BuildingDTO();
-        //dto.setCollegeDTO(collegeDTO);
+        dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
-        dto.setName_ar(entity.getName_ar());
-        dto.setName_en(entity.getName_en());
+        dto.setNameAr(entity.getNameAr());
+        dto.setNameEn(entity.getNameEn());
         dto.setStatus(entity.getStatus());
         return dto;
     }
@@ -55,9 +49,10 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
         Building entity = new Building();
         entity.setId(dto.getId());
         entity.setCode(dto.getCode());
-        entity.setName_ar(dto.getName_ar());
-        entity.setName_en(dto.getName_en());
+        entity.setNameAr(dto.getNameAr());
+        entity.setNameEn(dto.getNameEn());
         entity.setStatus(dto.getStatus());
+        entity.setCollegeId(collegeMapper.toEntity(dto.getCollegeDTO()));
         return entity;
     }
 

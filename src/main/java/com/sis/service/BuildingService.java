@@ -19,9 +19,4 @@ public class BuildingService extends BaseServiceImp<Building> {
     public JpaRepository<Building, Long> Repository() {
         return buildingDao;
     }
-
-	public List<Building> search(String key){
-		BuildingSpecification buildingSpecification = new BuildingSpecification(key);
-		return buildingDao.findAll(buildingSpecification);
-	}
 }
