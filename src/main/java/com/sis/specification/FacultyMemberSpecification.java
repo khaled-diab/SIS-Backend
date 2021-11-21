@@ -1,6 +1,7 @@
 package com.sis.specification;
 
 import com.sis.entities.College;
+import com.sis.entities.Department;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
@@ -13,14 +14,19 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
 
     private Long filterCollege;
 
+//    private Long filterDepartment;
+
+//    public FacultyMemberSpecification(String searchValue, Long filterCollege, Long filterDepartment) {
     public FacultyMemberSpecification(String searchValue, Long filterCollege) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
+//        this.filterDepartment = filterDepartment;
     }
 
     public FacultyMemberSpecification() {
         this.searchValue = null;
         this.filterCollege = null;
+//        this.filterDepartment = null;
     }
 
 
@@ -48,15 +54,20 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
             }
             return criteriaBuilder.and(x, getFilterPredicate(root, query, criteriaBuilder));
         }
-
         return getFilterPredicate(root, query, criteriaBuilder);
-
     }
 
     private Predicate getFilterPredicate(Root<FacultyMember> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Join<FacultyMember, College> facultyMemberCollegeJoin = root.join("college");
+//        Join<FacultyMember, Department> facultyMemberDepartmentJoin = root.join("department");
+
         System.out.println(filterCollege);
-        return criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
+//        System.out.println(filterDepartment);
+
+        Predicate x = criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
+//        Predicate y = criteriaBuilder.equal(facultyMemberDepartmentJoin.get("id"), filterDepartment);
+
+        return criteriaBuilder.and(x);
     }
 
 }

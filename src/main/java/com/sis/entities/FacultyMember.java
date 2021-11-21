@@ -47,11 +47,11 @@ public class FacultyMember extends BaseEntity {
     private String degree;
 
     @ManyToOne
-    @JoinColumn(name = "collegeId", referencedColumnName = "id")
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
     private College college;
 
     @ManyToOne
-    @JoinColumn(name = "departmentId", referencedColumnName = "id")
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
 }

@@ -16,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
@@ -30,21 +29,12 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
         return facultyMemberRepository;
     }
 
-    public void update(FacultyMemberDTO dto) {
-        Optional<FacultyMember> object = facultyMemberRepository.findById(dto.getId());
-        if (object.isPresent()) {
-            FacultyMember member = facultyMemberMapper.toEntity(dto);
-            facultyMemberRepository.save(member);
-        } else {
-            throw new RuntimeException("faculty member not found");
-        }
-    }
-
     public PageResult<FacultyMemberDTO> search(PageQueryUtil pageUtil, FacultyMemberRequestDTO facultyMemberRequestDTO) {
         Page<FacultyMember> facultyMemberPage;
-        String searchValue = facultyMemberRequestDTO.getSearchValue();
 
+        String searchValue = facultyMemberRequestDTO.getSearchValue();
         Long filterCollege = facultyMemberRequestDTO.getFilterCollege();
+//        Long filterDepartment = facultyMemberRequestDTO.getFilterDepartment();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(facultyMemberRequestDTO));
         if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null) {
@@ -59,7 +49,6 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
         return facultyMemberMapper.toDataPage(pageResult);
     }
-
 
     private Sort constructSortObject(FacultyMemberRequestDTO facultyMemberRequestDTO) {
         if (facultyMemberRequestDTO.getSortDirection() == null) {

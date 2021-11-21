@@ -23,12 +23,6 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     private final FacultyMemberService facultyMemberService;
     private final FacultyMemberMapper facultyMemberMapper;
 
-    @RequestMapping(value = "/updateFacultyMember", method = RequestMethod.PUT)
-    public MessageResponse up(@RequestBody FacultyMemberDTO dto) {
-        facultyMemberService.update(dto);
-        return new MessageResponse("Item has been updated successfully");
-    }
-
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
                                                                @PathVariable int size,
@@ -44,8 +38,3 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     }
 
 }
-
-
-
-
-
