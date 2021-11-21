@@ -34,11 +34,11 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
         String searchValue = facultyMemberRequestDTO.getSearchValue();
         Long filterCollege = facultyMemberRequestDTO.getFilterCollege();
-//        Long filterDepartment = facultyMemberRequestDTO.getFilterDepartment();
+        Long filterDepartment = facultyMemberRequestDTO.getFilterDepartment();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(facultyMemberRequestDTO));
-        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null) {
-            FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(searchValue, filterCollege);
+        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null) {
+            FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(searchValue, filterCollege, filterDepartment);
 
             facultyMemberPage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
         } else {

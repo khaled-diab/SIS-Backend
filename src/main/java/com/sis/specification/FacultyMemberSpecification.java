@@ -14,19 +14,19 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
 
     private Long filterCollege;
 
-//    private Long filterDepartment;
+    private Long filterDepartment;
 
-//    public FacultyMemberSpecification(String searchValue, Long filterCollege, Long filterDepartment) {
-    public FacultyMemberSpecification(String searchValue, Long filterCollege) {
+    public FacultyMemberSpecification(String searchValue, Long filterCollege, Long filterDepartment) {
+//    public FacultyMemberSpecification(String searchValue, Long filterCollege) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
-//        this.filterDepartment = filterDepartment;
+        this.filterDepartment = filterDepartment;
     }
 
     public FacultyMemberSpecification() {
         this.searchValue = null;
         this.filterCollege = null;
-//        this.filterDepartment = null;
+        this.filterDepartment = null;
     }
 
 
@@ -49,7 +49,7 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
                     criteriaBuilder.like(root.get("degree"), "%" + searchValue + "%"),
                     criteriaBuilder.like(root.get("universityMail"), "%" + searchValue + "%")
             );
-            if (filterCollege == null) {
+            if (filterCollege == null && filterDepartment == null) {
                 return x;
             }
             return criteriaBuilder.and(x, getFilterPredicate(root, query, criteriaBuilder));
@@ -59,15 +59,18 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
 
     private Predicate getFilterPredicate(Root<FacultyMember> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Join<FacultyMember, College> facultyMemberCollegeJoin = root.join("college");
-//        Join<FacultyMember, Department> facultyMemberDepartmentJoin = root.join("department");
+        Join<FacultyMember, Department> facultyMemberDepartmentJoin = root.join("department");
 
         System.out.println(filterCollege);
-//        System.out.println(filterDepartment);
+        System.out.println(filterDepartment);
 
-        Predicate x = criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
-//        Predicate y = criteriaBuilder.equal(facultyMemberDepartmentJoin.get("id"), filterDepartment);
+        Predicate college = criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
+        if (filterDepartment == null){
+            return college;
+        }
+        Predicate department = criteriaBuilder.equal(facultyMemberDepartmentJoin.get("id"), filterDepartment);
 
-        return criteriaBuilder.and(x);
+        return criteriaBuilder.and(college, department);
     }
 
 }
