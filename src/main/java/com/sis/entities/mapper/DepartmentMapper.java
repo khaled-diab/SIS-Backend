@@ -17,7 +17,6 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
 
 
 
-
     @Override
     public DepartmentDTO toDTO(Department entity) {
         DepartmentDTO dto = new DepartmentDTO();
@@ -29,6 +28,7 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
         dto.setCollege_id(entity.getCollegeId().getId());
         dto.setCollege_name_ar(entity.getCollegeId().getNameAr());
         dto.setGetCollege_name_en(entity.getCollegeId().getNameEn());
+
         return dto;
     }
 

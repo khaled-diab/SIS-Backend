@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Getter
 @Setter
 public class Building extends BaseEntity {
-
     private static final long serialVersionUID = 1L;
    
     @Column(name = "code")

@@ -1,5 +1,7 @@
 package com.sis.dto;
 
+import java.util.Collection;
+
 public class DepartmentDTO extends BaseDTO{
 
     private String code;
@@ -7,8 +9,9 @@ public class DepartmentDTO extends BaseDTO{
     private String nameEn;
     private Long college_id ;
     private String college_name_ar ;
-
     private String getCollege_name_en ;
+
+
 
     public DepartmentDTO() {
     }
