@@ -19,6 +19,8 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 
 	private DepartmentMapper departmentMapper;
 
+	private DegreeMapper degreeMapper;
+
 	@Override
 	public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entities) {
 		return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<FacultyMemberDTO>::new));
@@ -39,12 +41,14 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		dto.setUniversityMail(entity.getUniversityMail());
 		dto.setAlternativeMail(entity.getAlternativeMail());
 		dto.setBirthDate(entity.getBirthDate());
-		dto.setDegree(entity.getDegree());
 		dto.setNameAr(entity.getNameAr());
 		dto.setNameEn(entity.getNameEn());
 		dto.setNationalID(entity.getNationalID());
 		dto.setNationality(entity.getNationality());
 		dto.setPhone(entity.getPhone());
+		if(entity.getDegree()!=null) {
+			dto.setDegreeDTO(this.degreeMapper.toDTO(entity.getDegree()));
+		}
 		if(entity.getDepartment()!=null) {
 			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartment()));
 		}
@@ -61,18 +65,20 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
 		entity.setUniversityMail(dto.getUniversityMail());
 		entity.setAlternativeMail(dto.getAlternativeMail());
 		entity.setBirthDate(dto.getBirthDate());
-		entity.setDegree(dto.getDegree());
 		entity.setNameAr(dto.getNameAr());
 		entity.setNameEn(dto.getNameEn());
 		entity.setNationalID(dto.getNationalID());
 		entity.setNationality(dto.getNationality());
 		entity.setPhone(dto.getPhone());
-		if(dto.getCollegeDTO()!=null) {
-			entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
+		if(dto.getDepartmentDTO()!=null) {
+			entity.setDegree(this.degreeMapper.toEntity(dto.getDegreeDTO()));
 		}
 		if(dto.getDepartmentDTO()!=null) {
 
 			entity.setDepartment(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+		}
+		if(dto.getCollegeDTO()!=null) {
+			entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 		}
 
 		return entity;

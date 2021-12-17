@@ -5,7 +5,7 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.entities.FacultyMember;
 import com.sis.entities.mapper.FacultyMemberMapper;
-import com.sis.specification.FacultyMemberSpecification;
+import com.sis.dao.specification.FacultyMemberSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
