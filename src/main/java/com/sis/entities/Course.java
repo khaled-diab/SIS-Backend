@@ -8,6 +8,7 @@ package com.sis.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
@@ -22,7 +23,7 @@ public class Course extends BaseEntity {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "name_ar")
+    @Column(name = "name_ar", unique = true)
     private String nameAr;
 
     @Column(name = "name_en")
