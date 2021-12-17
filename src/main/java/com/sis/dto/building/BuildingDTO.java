@@ -17,12 +17,12 @@ import javax.validation.constraints.Pattern;
 public class BuildingDTO extends BaseDTO {
     @NotNull(message = "Required")
     @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.ARABIC_CHARACTERS, message = "Arabic Letters only")
+    @Pattern(regexp = Constants.ARABIC_CHARACTERS_OR_DIGITS, message = "Arabic Letters and/or Digits")
     private String nameAr;
 
     @NotNull(message = "Required")
     @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.ENGLISH_CHARACTERS, message = "English Letters only")
+    @Pattern(regexp = Constants.ENGLISH_CHARACTERS_OR_DIGITS, message = "English Letters and/or Digits")
     private String nameEn;
 
     @NotNull(message = "Required")
