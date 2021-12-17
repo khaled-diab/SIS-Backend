@@ -11,13 +11,17 @@ import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "'http://localhost:4200")
 @RequestMapping(value = "/api/courses")
+@Validated
 public class CourseController extends BaseController<Course, CourseDTO> {
 
     private final CourseService courseService;
@@ -34,13 +38,13 @@ public class CourseController extends BaseController<Course, CourseDTO> {
     }
 
     @RequestMapping(value = "/updateCourse", method = RequestMethod.PUT)
-    public MessageResponse up(@RequestBody CourseDTO dto) {
+    public MessageResponse up(@RequestBody @Valid CourseDTO dto) {
         courseService.update(dto);
         return new MessageResponse("Item has been updated successfully");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.PUT)
-    public MessageResponse update(@RequestBody CourseDTO dto) {
+    public MessageResponse update(@RequestBody @Valid CourseDTO dto) {
         courseService.save(courseMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
