@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Column;
-import javax.persistence.UniqueConstraint;
+
+
 import javax.validation.constraints.*;
 import java.util.Date;
 @Getter
