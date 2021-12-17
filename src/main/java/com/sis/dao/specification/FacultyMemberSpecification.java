@@ -1,11 +1,9 @@
-package com.sis.specification;
+package com.sis.dao.specification;
 
 import com.sis.entities.College;
 import com.sis.entities.Department;
 import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.*;
-
 import com.sis.entities.FacultyMember;
 
 public class FacultyMemberSpecification implements Specification<FacultyMember> {
@@ -17,7 +15,6 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
     private Long filterDepartment;
 
     public FacultyMemberSpecification(String searchValue, Long filterCollege, Long filterDepartment) {
-//    public FacultyMemberSpecification(String searchValue, Long filterCollege) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
         this.filterDepartment = filterDepartment;
@@ -28,7 +25,6 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
         this.filterCollege = null;
         this.filterDepartment = null;
     }
-
 
     @Override
     public Specification<FacultyMember> and(Specification<FacultyMember> other) {
