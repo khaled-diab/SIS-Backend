@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "building")
@@ -40,4 +39,7 @@ public class Building extends BaseEntity {
     @JoinColumn(name = "college_id", referencedColumnName = "id")
     @ManyToOne
     private College collegeId;
+
+    @OneToMany(mappedBy = "building")
+    private Collection<Classroom> classroomCollection;
 }

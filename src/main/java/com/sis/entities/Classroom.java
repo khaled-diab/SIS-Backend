@@ -45,5 +45,5 @@ public class Classroom extends BaseEntity {
 
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne
-    private Building buildingId;
+    private Building building;
 }
