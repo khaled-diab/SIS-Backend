@@ -2,6 +2,7 @@ package com.sis.dao.specification;
 
 import com.sis.entities.College;
 import com.sis.entities.Course;
+import com.sis.entities.Department;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
@@ -11,15 +12,18 @@ public class CourseSpecification implements Specification<Course> {
     private String searchValue;
 
     private Long filterCollege;
+    private Long filterDepartment;
 
-    public CourseSpecification(String searchValue, Long filterCollege) {
+    public CourseSpecification(String searchValue, Long filterCollege, Long filterDepartment) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
+        this.filterDepartment = filterDepartment;
     }
 
     public CourseSpecification() {
         this.searchValue = null;
         this.filterCollege = null;
+        this.filterDepartment = null;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class CourseSpecification implements Specification<Course> {
                     criteriaBuilder.equal(root.get("totalHours"), f1),
                     criteriaBuilder.equal(root.get("finalGrade"), f1)
             );
-            if (filterCollege == null) {
+            if (filterCollege == null && filterDepartment == null) {
                 return criteriaBuilder.or(x, y);
             }
             return criteriaBuilder.and(criteriaBuilder.or(x, y),
@@ -65,8 +69,16 @@ public class CourseSpecification implements Specification<Course> {
 
     private Predicate getFilterPredicate(Root<Course> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Join<Course, College> courseCollegeJoin = root.join("college");
+        Join<Course, Department> courseDepartmentJoin = root.join("department");
         System.out.println(filterCollege);
-        return criteriaBuilder.equal(courseCollegeJoin.get("id"), filterCollege);
+
+        Predicate college = criteriaBuilder.equal(courseCollegeJoin.get("id"), filterCollege);
+
+        Predicate department = criteriaBuilder.equal(courseDepartmentJoin.get("id"), filterDepartment);
+
+        if (filterDepartment == null)
+            return college;
+        return criteriaBuilder.and(college, department);
     }
 }
 

@@ -50,9 +50,11 @@ public class CourseService extends BaseServiceImp<Course> {
 
         Long filterCollege = courseRequestDTO.getFilterCollege();
 
+        Long filterDepartment = courseRequestDTO.getFilterDepartment();
+
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(courseRequestDTO));
-        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null) {
-            CourseSpecification courseSpecification = new CourseSpecification(searchValue, filterCollege);
+        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null) {
+            CourseSpecification courseSpecification = new CourseSpecification(searchValue, filterCollege, filterDepartment);
 
             coursePage = courseRepository.findAll(courseSpecification, pageable);
         } else {

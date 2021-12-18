@@ -2,6 +2,7 @@ package com.sis.dto.course;
 
 
 import com.sis.dto.BaseDTO;
+import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
@@ -75,6 +76,9 @@ public class CourseDTO extends BaseDTO {
 
     @NotNull(message = "can't be null")
     private CollegeDTO collegeDTO;
+
+    @NotNull(message = "can't be null")
+    private DepartmentDTO departmentDTO;
 
 
 }
