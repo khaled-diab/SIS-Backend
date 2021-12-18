@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.entities.Course;
@@ -16,6 +17,7 @@ import com.sis.util.PageResult;
 public class CourseMapper implements Mapper<Course, CourseDTO> {
 
 	CollegeMapper collegeMapper;
+	DepartmentMapper departmentMapper;
 
 
 	@Override
@@ -33,6 +35,7 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 	@Override
 	public CourseDTO toDTO(Course entity) {
 		CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
+		DepartmentDTO departmentDTO = departmentMapper.toDTO(entity.getDepartment());
 //		collegeDTO.setCourseList(null);
 		CourseDTO dto=new CourseDTO();
 		dto.setId(entity.getId());
@@ -50,6 +53,7 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 		dto.setOralGrade(entity.getOralGrade());
 		dto.setMidGrade(entity.getMidGrade());
 		dto.setCollegeDTO(collegeDTO);
+		dto.setDepartmentDTO(departmentDTO);
 
 		return dto;
 	}
@@ -72,6 +76,7 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 		entity.setOralGrade(dto.getOralGrade());
 		entity.setMidGrade(dto.getMidGrade());
 		entity.setCollege(collegeMapper.toEntity(dto.getCollegeDTO()));
+		entity.setDepartment(departmentMapper.toEntity(dto.getDepartmentDTO()));
 		return entity;
 	}
 
