@@ -5,11 +5,10 @@ import com.sis.entities.Department;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -32,8 +31,8 @@ public class ClassroomDTO extends BaseDTO{
     private int status;
 
     @NotNull(message = "Required")
-    @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.DIGITS_ONLY, message = "Numerical Digits only")
+    @Digits(integer = 4, fraction = 0)
+    @Positive
     private int capacity;
 
     @NotNull(message = "Required")
