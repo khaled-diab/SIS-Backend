@@ -20,50 +20,54 @@ import java.util.Map;
 
 @ControllerAdvice
 
-	public class ControllerExceptionHandler{
-	private static final Logger log = LogManager.getLogger(ControllerExceptionHandler.class);
+public class ControllerExceptionHandler {
+    private static final Logger log = LogManager.getLogger(ControllerExceptionHandler.class);
 
 
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(Exception ex, WebRequest request) {
-		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse("An error has occurred please try again later"),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	@ExceptionHandler(InvalidUserNameOrPasswordException.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(InvalidUserNameOrPasswordException ex, WebRequest request) {
-		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	@ExceptionHandler(UserNameOrEmailAlreadyExistException.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(UserNameOrEmailAlreadyExistException ex, WebRequest request) {
-		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(UserNotFoundException ex, WebRequest request) {
-		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	@ExceptionHandler(ItemNotFoundException.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(ItemNotFoundException ex, WebRequest request) {
-		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(Exception ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<MessageResponse>(new MessageResponse("An error has occurred please try again later"),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-		@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(MethodArgumentNotValidException ex, WebRequest request) {
-			MessageResponse messageResponse=new MessageResponse(ex.getFieldError().getDefaultMessage());
-			messageResponse.setField(ex.getFieldError().getField());
+    @ExceptionHandler(InvalidUserNameOrPasswordException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(InvalidUserNameOrPasswordException ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-		log.error(ex.getFieldError());
-		return new ResponseEntity<MessageResponse>(messageResponse,
-				HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(UserNameOrEmailAlreadyExistException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(UserNameOrEmailAlreadyExistException ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-	}
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(UserNotFoundException ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(ItemNotFoundException ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(MethodArgumentNotValidException ex, WebRequest request) {
+        MessageResponse messageResponse = new MessageResponse(ex.getFieldError().getDefaultMessage());
+        messageResponse.setField(ex.getFieldError().getField());
+
+        log.error(ex.getFieldError());
+        return new ResponseEntity<MessageResponse>(messageResponse,
+                HttpStatus.BAD_REQUEST);
+
+    }
 
 }
