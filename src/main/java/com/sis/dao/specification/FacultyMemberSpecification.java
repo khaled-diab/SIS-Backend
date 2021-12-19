@@ -42,7 +42,6 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
             Predicate x = criteriaBuilder.or(
                     criteriaBuilder.like(root.get("nameAr"), "%" + searchValue + "%"),
                     criteriaBuilder.like(root.get("nameEn"), "%" + searchValue + "%"),
-                    criteriaBuilder.like(root.get("degree"), "%" + searchValue + "%"),
                     criteriaBuilder.like(root.get("universityMail"), "%" + searchValue + "%")
             );
             if (filterCollege == null && filterDepartment == null) {
