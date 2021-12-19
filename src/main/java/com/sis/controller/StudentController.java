@@ -9,14 +9,12 @@ import com.sis.service.StudentService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 
 
 @RestController
@@ -91,23 +89,11 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
-        //this.studentService.getDataPage(attribute);
         System.out.println("abdo");
         PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(filterDTO.getFilterValue(),filterDTO.getCollegeId(), filterDTO.getDepartmentId(), page,limit,filterDTO);
         return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
     }
-//    @RequestMapping(
-//            value = "/search",
-//            method = RequestMethod.POST
-//    )
-//    public ResponseEntity<PageResult<StudentDTO>> filterStudentPage(@RequestParam int page, @RequestParam int limit,
-//                                                                     @RequestBody StudentFilterDTO filterDTO) {
-//
-//        System.out.println("no attribute");
-//        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(null,filterDTO.getCollegeId(),filterDTO.getDepartmentId(), page,limit,filterDTO);
-//        return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
-//
-//    }
+
 
 
 

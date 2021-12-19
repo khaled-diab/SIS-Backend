@@ -5,7 +5,6 @@ import com.sis.dto.StudentDTO;
 import com.sis.dto.StudentFilterDTO;
 import com.sis.entities.Student;
 import com.sis.entities.mapper.StudentMapper;
-import com.sis.exception.ItemNotFoundException;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 
 
 @Service
