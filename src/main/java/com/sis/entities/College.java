@@ -118,4 +118,5 @@ public class College extends BaseEntity {
         this.facultyMemberCollection = facultyMemberCollection;
     }
 
+
 }
