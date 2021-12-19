@@ -4,7 +4,6 @@ package com.sis.entities.mapper;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.entities.College;
 import com.sis.util.PageResult;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,10 +11,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-@Setter
 public class CollegeMapper implements Mapper<College, CollegeDTO> {
-
-
     @Override
     public CollegeDTO toDTO(College entity) {
         CollegeDTO collegeDto = CollegeDTO.builder()
@@ -29,7 +25,7 @@ public class CollegeMapper implements Mapper<College, CollegeDTO> {
 
     @Override
     public College toEntity(CollegeDTO dto) {
-        College college = College.builder()
+        College college =  College.builder()
                 .code(dto.getCode())
                 .nameAr(dto.getNameAr())
                 .nameEn(dto.getNameEn())

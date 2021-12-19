@@ -1,6 +1,5 @@
 package com.sis.entities.mapper;
 
-import com.sis.dto.building.BuildingDTO;
 import com.sis.dto.ClassroomDTO;
 import com.sis.entities.Classroom;
 import com.sis.util.PageResult;
@@ -43,7 +42,7 @@ public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
         dto.setNameEn(entity.getName_en());
         dto.setStatus(entity.getStatus());
         dto.setCapacity(entity.getCapacity());
-        dto.setBuildingDTO(buildingMapper.toDTO(entity.getBuildingId()));
+        dto.setBuildingDTO(buildingMapper.toDTO(entity.getBuilding()));
         dto.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartment()));
         return dto;
     }
@@ -58,7 +57,7 @@ public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
         entity.setStatus(dto.getStatus());
         entity.setCapacity(dto.getCapacity());
         entity.setDepartment(departmentMapper.toEntity(dto.getDepartmentDTO()));
-        entity.setBuildingId(buildingMapper.toEntity(dto.getBuildingDTO()));
+        entity.setBuilding(buildingMapper.toEntity(dto.getBuildingDTO()));
         return entity;
     }
 

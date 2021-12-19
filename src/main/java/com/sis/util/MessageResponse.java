@@ -4,7 +4,7 @@ public class MessageResponse {
 	private String message;
 	private String field;
 
-	
+
 	public MessageResponse(String field, String message) {
 		super();
 		this.message = message;
