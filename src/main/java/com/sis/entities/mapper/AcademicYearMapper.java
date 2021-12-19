@@ -26,7 +26,7 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
     public AcademicYear toEntity(AcademicYearDTO dto) {
         AcademicYear academicYear = new AcademicYear();
         academicYear.setId(dto.getId());
-        academicYear.setCode(dto.getName());
+        academicYear.setCode(dto.getCode());
         academicYear.setEndDate(dto.getEnd_date());
         academicYear.setStartDate(dto.getStart_date());
         academicYear.setName(dto.getName());
