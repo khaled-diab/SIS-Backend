@@ -9,17 +9,22 @@ import com.sis.service.StudentService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
+import java.util.Arrays;
 
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/students")
 @AllArgsConstructor
+@CrossOrigin(origins = ("*"))
+
 public class StudentController extends BaseController<Student, StudentDTO> {
 
     //Autowired
@@ -48,8 +53,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @RequestMapping(value = "/updateStudent", method = RequestMethod.PUT)
     public MessageResponse updateStudent( @Valid @RequestBody StudentDTO dto) {
 
-
         Student st = this.studentService.findById(dto.getId());
+
 
         Student studentByuniversityID=this.studentService.findByuniversityId(dto.getUniversityId());
         Student studentByNationalID=this.studentService.findByNationalId(dto.getNationalId());
@@ -80,7 +85,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     }
 
     @RequestMapping(
-            value = "/search",
+            value = "/searchStudent",
             method = RequestMethod.POST
     )
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
