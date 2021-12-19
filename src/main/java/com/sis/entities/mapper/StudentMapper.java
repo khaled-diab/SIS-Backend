@@ -40,6 +40,7 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 		dto.setNameAr(entity.getNameAr());
 		dto.setNationalId(entity.getNationalId());
 		dto.setPhone(entity.getPhone());
+		dto.setParentPhone(entity.getParentPhone());
 		dto.setPhoto(entity.getPhoto());
 		dto.setUniversityId(entity.getUniversityId());
 		if(entity.getDepartmentId()!=null) {
