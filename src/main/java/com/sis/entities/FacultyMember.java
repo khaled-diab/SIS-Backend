@@ -43,6 +43,9 @@ public class FacultyMember extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "photo")
+    private String photo ;
+
     @ManyToOne
     @JoinColumn(name = "degree_id", referencedColumnName = "id")
     private Degree degree;
