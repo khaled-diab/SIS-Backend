@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class AcademicYear extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-   
+
     @Column(name = "code")
     private String code;
 
@@ -77,6 +77,6 @@ public class AcademicYear extends BaseEntity {
 
     public void setAcademicTermCollection(Collection<AcademicTerm> academicTermCollection) {
         this.academicTermCollection = academicTermCollection;
-    }  
-    
+    }
+
 }

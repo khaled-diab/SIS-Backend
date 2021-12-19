@@ -5,10 +5,13 @@ import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.UniqueConstraint;
+
 import javax.validation.constraints.*;
+import java.io.File;
+import java.sql.Blob;
 import java.util.Date;
 @Getter
 @Setter
@@ -60,6 +63,7 @@ public class StudentDTO extends BaseDTO {
     private  String level;
     private  String year;
     private  String photo;
+
     /*Relations instances*/
 
     private  DepartmentDTO departmentDTO;
