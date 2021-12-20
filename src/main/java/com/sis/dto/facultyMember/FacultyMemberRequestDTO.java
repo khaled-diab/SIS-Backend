@@ -8,6 +8,7 @@ import lombok.Setter;
 public class FacultyMemberRequestDTO {
     private String searchValue;
     private Long filterCollege;
+    private Long filterDepartment;
     private String sortDirection;
     private String sortBy;
 
