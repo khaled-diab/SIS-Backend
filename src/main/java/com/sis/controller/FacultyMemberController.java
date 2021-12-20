@@ -11,9 +11,13 @@ import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
+@Validated
 @RequestMapping(value = "/api/facultyMembers")
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
@@ -22,12 +26,6 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
 
     private final FacultyMemberService facultyMemberService;
     private final FacultyMemberMapper facultyMemberMapper;
-
-    @RequestMapping(value = "/updateFacultyMember", method = RequestMethod.PUT)
-    public MessageResponse up(@RequestBody FacultyMemberDTO dto) {
-        facultyMemberService.update(dto);
-        return new MessageResponse("Item has been updated successfully");
-    }
 
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
@@ -38,14 +36,9 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     }
 
     @RequestMapping(value = "/saveFacultyMember", method = RequestMethod.PUT)
-    public MessageResponse update(@RequestBody FacultyMemberDTO dto) {
+    public MessageResponse update(@RequestBody @Valid FacultyMemberDTO dto) {
         facultyMemberService.save(facultyMemberMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
 
 }
-
-
-
-
-
