@@ -13,5 +13,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class AcademicTermController extends BaseController<AcademicTerm, AcademicTermDTO> {
     @Autowired
     private AcademicTermMapper academicTermMapper ;
-
 }

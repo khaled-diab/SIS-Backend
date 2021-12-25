@@ -20,6 +20,9 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
 
     @Autowired
     private CollegeService collegeService ;
+
+    @Autowired
+    private CollegeMapper collegeMapper ;
     @Override
     public DepartmentDTO toDTO(Department entity) {
         DepartmentDTO dto = new DepartmentDTO();
@@ -28,9 +31,7 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
         dto.setNameAr(entity.getNameAr());
         dto.setNameEn(entity.getNameEn());
         dto.setId(entity.getId());
-        dto.setCollege_id(entity.getCollegeId().getId());
-        dto.setCollege_name_ar(entity.getCollegeId().getNameAr());
-        dto.setGetCollege_name_en(entity.getCollegeId().getNameEn());
+        dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
         return dto;
     }
 
@@ -41,7 +42,7 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
         department.setNameAr(dto.getNameAr());
         department.setNameEn(dto.getNameEn());
         department.setId(dto.getId());
-        College college = collegeService.findById(dto.getCollege_id());
+        College college = collegeService.findById(dto.getCollegeDTO().getId());
         department.setCollegeId(college);
         department.setAcademicProgramCollection(null);
         department.setFacultyCollection(null);
