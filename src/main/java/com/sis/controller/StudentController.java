@@ -32,7 +32,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import static java.nio.file.Files.copy;
-import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 @RestController
@@ -50,7 +49,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @Autowired
     private HttpServletRequest request;
 
-    public static final String DIRECTORY = System.getProperty("user.home") + "/resources/Images/";
+    public static final String DIRECTORY = System.getProperty("user.home") + "/resources/StudentImages/";
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();
