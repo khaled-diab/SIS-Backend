@@ -63,7 +63,6 @@ public class StudentDTO extends BaseDTO {
     private  String level;
     private  String year;
     private  String photo;
-
     /*Relations instances*/
 
     private  DepartmentDTO departmentDTO;
