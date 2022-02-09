@@ -2,11 +2,18 @@ package com.sis.util;
 
 public class MessageResponse {
 	private String message;
+	private String field;
 
-	
-	public MessageResponse(String message) {
+
+	public MessageResponse(String field, String message) {
 		super();
 		this.message = message;
+		this.field=field;
+	}
+	public MessageResponse( String message) {
+		super();
+		this.message = message;
+
 	}
 
 	public String getMessage() {
@@ -17,4 +24,11 @@ public class MessageResponse {
 		this.message = message;
 	}
 
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
 }

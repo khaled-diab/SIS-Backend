@@ -77,6 +77,5 @@ public class AcademicTerm extends BaseEntity {
 
     public void setAcademicYear(AcademicYear academicYear) {
         this.academicYear = academicYear;
-    }  
-    
+    }
 }

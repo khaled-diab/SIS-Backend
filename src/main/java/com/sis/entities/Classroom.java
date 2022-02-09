@@ -5,6 +5,10 @@
  */
 package com.sis.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "classroom")
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class Classroom extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -33,66 +39,11 @@ public class Classroom extends BaseEntity {
     @Column(name = "status")
     private int status;
 
-    @Column(name = "departmentID")
-    private String departmentID;
+    @JoinColumn(name = "department", referencedColumnName = "id")
+    @ManyToOne
+    private Department department;
 
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne
-    private Building buildingId;
-   
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName_ar() {
-        return name_ar;
-    }
-
-    public void setName_ar(String name_ar) {
-        this.name_ar = name_ar;
-    }
-
-    public String getName_en() {
-        return name_en;
-    }
-
-    public void setName_en(String name_en) {
-        this.name_en = name_en;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getDepartmentID() {
-        return departmentID;
-    }
-
-    public void setDepartmentID(String departmentID) {
-        this.departmentID = departmentID;
-    }
-
-    public Building getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(Building buildingId) {
-        this.buildingId = buildingId;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    private Building building;
 }

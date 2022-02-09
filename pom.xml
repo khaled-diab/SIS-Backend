@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sis</groupId>
-    <artifactId>SISSystem</artifactId>
-    <version>1.0</version>
-    <name>SISSystem</name>
+    <artifactId>SIS-System</artifactId>
+    <version>V1</version>
+    <name>SIS-System</name>
     <description>SIS Project</description>
     <properties>
         <java.version>1.8</java.version>
@@ -49,6 +49,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>
