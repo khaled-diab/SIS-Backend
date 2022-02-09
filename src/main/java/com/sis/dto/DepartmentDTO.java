@@ -1,30 +1,24 @@
 package com.sis.dto;
 
-import java.util.Collection;
+import com.sis.dto.college.CollegeDTO;
 
 public class DepartmentDTO extends BaseDTO{
 
     private String code;
     private String nameAr;
     private String nameEn;
-    private Long college_id ;
-    private String college_name_ar ;
-    private String getCollege_name_en ;
-
-
-
+//    private Long college_id ;
+//    private String college_name_ar ;
+//    private String getCollege_name_en ;
+    private CollegeDTO collegeDTO;
     public DepartmentDTO() {
     }
 
-    public DepartmentDTO(Long id ,String code, String nameAr, String nameEn,
-                         Long college_id, String college_name_ar, String getCollege_name_en) {
+    public DepartmentDTO(Long id ,String code, String nameAr, String nameEn ) {
         super(id);
         this.code = code;
         this.nameAr = nameAr;
         this.nameEn = nameEn;
-        this.college_id = college_id;
-        this.college_name_ar = college_name_ar;
-        this.getCollege_name_en = getCollege_name_en;
     }
 
     public String getCode() {
@@ -51,27 +45,11 @@ public class DepartmentDTO extends BaseDTO{
         this.nameEn = nameEn;
     }
 
-    public Long getCollege_id() {
-        return college_id;
+    public CollegeDTO getCollegeDTO() {
+        return collegeDTO;
     }
 
-    public void setCollege_id(Long college_id) {
-        this.college_id = college_id;
-    }
-
-    public String getCollege_name_ar() {
-        return college_name_ar;
-    }
-
-    public void setCollege_name_ar(String college_name_ar) {
-        this.college_name_ar = college_name_ar;
-    }
-
-    public String getGetCollege_name_en() {
-        return getCollege_name_en;
-    }
-
-    public void setGetCollege_name_en(String getCollege_name_en) {
-        this.getCollege_name_en = getCollege_name_en;
+    public void setCollegeDTO(CollegeDTO collegeDTO) {
+        this.collegeDTO = collegeDTO;
     }
 }

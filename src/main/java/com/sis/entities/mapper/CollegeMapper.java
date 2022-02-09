@@ -25,13 +25,13 @@ public class CollegeMapper implements Mapper<College, CollegeDTO> {
 
     @Override
     public College toEntity(CollegeDTO dto) {
-        College college =  College.builder()
+        College college  = College.builder()
                 .code(dto.getCode())
                 .nameAr(dto.getNameAr())
                 .nameEn(dto.getNameEn())
                 .build();
         college.setId(dto.getId());
-        return college;
+        return  college;
     }
 
     @Override
