@@ -1,19 +1,20 @@
-package com.sis.dto;
+package com.sis.dto.building;
 
-import com.sis.dto.building.BuildingDTO;
-import com.sis.entities.Department;
+import com.sis.dto.BaseDTO;
+import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.NumberFormat;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
 @Validated
-public class ClassroomDTO extends BaseDTO{
+public class BuildingDTO extends BaseDTO {
     @NotNull(message = "Required")
     @NotEmpty(message = "Required")
     @Pattern(regexp = Constants.ARABIC_CHARACTERS_OR_DIGITS, message = "Arabic Letters and/or Digits")
@@ -31,13 +32,5 @@ public class ClassroomDTO extends BaseDTO{
     private int status;
 
     @NotNull(message = "Required")
-    @Digits(integer = 4, fraction = 0)
-    @Positive
-    private int capacity;
-
-    @NotNull(message = "Required")
-    private DepartmentDTO departmentDTO;
-
-    @NotNull(message = "Required")
-    private BuildingDTO buildingDTO;
+    private CollegeDTO collegeDTO;
 }

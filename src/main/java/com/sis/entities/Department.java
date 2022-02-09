@@ -35,7 +35,7 @@ public class Department extends BaseEntity {
     @OneToMany(mappedBy = "departmentId")
     private Collection<AcademicProgram> academicProgramCollection;
 
-    @OneToMany(mappedBy = "departmentId")
+    @OneToMany(mappedBy = "department")
     private Collection<FacultyMember> facultyMemberCollection;
 
     public String getCode() {
