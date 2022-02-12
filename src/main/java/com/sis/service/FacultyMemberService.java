@@ -37,7 +37,7 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
         Long filterDepartment = facultyMemberRequestDTO.getFilterDepartment();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(facultyMemberRequestDTO));
-        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null) {
+        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null) {
             FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(searchValue, filterCollege, filterDepartment);
 
             facultyMemberPage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
@@ -57,4 +57,15 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
         return Sort.by(Sort.Direction.valueOf(facultyMemberRequestDTO.getSortDirection()), facultyMemberRequestDTO.getSortBy());
     }
 
+    public FacultyMember findByNationalID(String id) {
+        return this.facultyMemberRepository.findByNationalID(id);
+    }
+
+    public FacultyMember findByUniversityMail(String mail) {
+        return this.facultyMemberRepository.findByUniversityMail(mail);
+    }
+
+    public FacultyMember findByPhone(String phone) {
+        return this.facultyMemberRepository.findByPhone(phone);
+    }
 }

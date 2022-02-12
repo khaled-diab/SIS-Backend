@@ -4,28 +4,76 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.entities.FacultyMember;
 import com.sis.entities.mapper.FacultyMemberMapper;
+import com.sis.exception.FacultyMemberFieldNotUniqueException;
 import com.sis.service.FacultyMemberService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static java.nio.file.Files.copy;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/facultyMembers")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = ("*"))
 @AllArgsConstructor
 public class FacultyMemberController extends BaseController<FacultyMember, FacultyMemberDTO> {
 
 
     private final FacultyMemberService facultyMemberService;
+
     private final FacultyMemberMapper facultyMemberMapper;
+
+    public static final String DIRECTORY = System.getProperty("user.home") + "/resources/FacultyMemberImages/";
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFiles) throws IOException {
+        List<String> filenames = new ArrayList<>();
+        for (MultipartFile file : multipartFiles) {
+            String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+            Path fileStorage = Paths.get(DIRECTORY, filename).toAbsolutePath().normalize();
+            copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
+            filenames.add(filename);
+        }
+        return ResponseEntity.ok().body(filenames);
+    }
+
+    @RequestMapping(value = "/download/{filename}", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename) throws IOException {
+        Path filePath = Paths.get(DIRECTORY).toAbsolutePath().normalize().resolve(filename);
+        if (!Files.exists(filePath)) {
+            throw new FileNotFoundException(filename + " was not found on the server");
+        }
+        Resource resource = new UrlResource(filePath.toUri());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("File-Name", filename);
+        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
+                .headers(httpHeaders).body(resource);
+    }
 
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
@@ -37,6 +85,18 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
 
     @RequestMapping(value = "/saveFacultyMember", method = RequestMethod.PUT)
     public MessageResponse update(@RequestBody @Valid FacultyMemberDTO dto) {
+        FacultyMember facultyMemberByNationalID = this.facultyMemberService.findByNationalID(dto.getNationalID());
+        FacultyMember facultyMemberByUniversityMail = this.facultyMemberService.findByUniversityMail(dto.getUniversityMail());
+        FacultyMember facultyMemberByPhone = this.facultyMemberService.findByPhone(dto.getPhone());
+        if (facultyMemberByNationalID != null && facultyMemberByNationalID.getId() != dto.getId()) {
+            throw new FacultyMemberFieldNotUniqueException("nationalId", "NationalID Id Already Exists");
+        }
+        if (facultyMemberByUniversityMail != null && facultyMemberByUniversityMail.getId() != dto.getId()) {
+            throw new FacultyMemberFieldNotUniqueException("universityMail", "University Mail Already Exists");
+        }
+        if (facultyMemberByPhone != null && facultyMemberByPhone.getId() != dto.getId()) {
+            throw new FacultyMemberFieldNotUniqueException("phone", "Phone Number Already Exists");
+        }
         facultyMemberService.save(facultyMemberMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
