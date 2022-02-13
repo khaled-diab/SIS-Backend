@@ -70,7 +70,7 @@ public class StudentDTO extends BaseDTO {
     @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
 
-    @NotNull
+//    @NotNull
     private AcademicProgramDTO academicProgramDTO;
 
 

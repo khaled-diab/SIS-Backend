@@ -21,7 +21,7 @@ public class AcademicProgramMapper implements Mapper<AcademicProgram,AcademicPro
     private DepartmentMapper departmentMapper ;
 
     @Autowired
-    private CollegeMapper collegeMapper ;
+    private CollegeMapper collegeMapper;
 
     @Override
     public AcademicProgramDTO toDTO(AcademicProgram entity) {
@@ -30,8 +30,12 @@ public class AcademicProgramMapper implements Mapper<AcademicProgram,AcademicPro
         academicProgramDTO.setName_ar(entity.getNameAr());
         academicProgramDTO.setName_en(entity.getNameEn());
         academicProgramDTO.setId(entity.getId());
-        academicProgramDTO.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
-        academicProgramDTO.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartmentId()));
+        if(entity.getCollegeId()!=null) {
+            academicProgramDTO.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
+        }
+        if(entity.getDepartmentId()!=null) {
+            academicProgramDTO.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartmentId()));
+        }
         return academicProgramDTO;
     }
 
