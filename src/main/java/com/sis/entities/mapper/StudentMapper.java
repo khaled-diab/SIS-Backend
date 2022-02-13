@@ -82,6 +82,7 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 			entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 		}
 		if(dto.getDepartmentDTO()!=null) {
+			System.out.println("hdddddddddd");
 			entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
 
 		}
