@@ -9,6 +9,11 @@ public class SectionRequestDTO {
     private String searchValue;
     private Long filterCollege;
     private Long filterDepartment;
+    private Long filterAcademicYear;
+    private Long filterAcademicTerm;
+    private Long filterCourse;
+    private Long filterStudyType;
+    private Long filterSectionNumber;
     private String sortDirection;
     private String sortBy;
 
