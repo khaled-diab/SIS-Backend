@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sis.dto.LoginDTO;
 import com.sis.dto.RegisterDTO;
 import com.sis.dto.UserDTO;
-import com.sis.entities.User;
+import com.sis.entities.security.User;
 import com.sis.service.UserService;
 
 @RestController

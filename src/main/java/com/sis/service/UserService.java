@@ -8,7 +8,7 @@ import com.sis.dao.UserRepository;
 import com.sis.dto.LoginDTO;
 import com.sis.dto.RegisterDTO;
 import com.sis.dto.UserDTO;
-import com.sis.entities.User;
+import com.sis.entities.security.User;
 import com.sis.entities.mapper.UserMapper;
 import com.sis.exception.InvalidUserNameOrPasswordException;
 import com.sis.exception.UserNameOrEmailAlreadyExistException;
@@ -56,9 +56,7 @@ public class UserService  extends BaseServiceImp<User>{
      * @throws InvalidUserNameOrPasswordException
      */
 	public UserDTO login(final LoginDTO loginDTO) {		
-		User user = userRepository.findByUsername(loginDTO.getUsername());
-		if (user==null)
-			throw new InvalidUserNameOrPasswordException();
+		User user = userRepository.findByUsername(loginDTO.getUsername()).orElseThrow(InvalidUserNameOrPasswordException::new);
 		boolean isPasswordMatch = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
 		if (!isPasswordMatch)
 			throw new InvalidUserNameOrPasswordException();
