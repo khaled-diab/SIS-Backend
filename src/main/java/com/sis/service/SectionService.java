@@ -47,7 +47,9 @@ public class SectionService extends BaseServiceImp<Section> {
         Long filterSectionNumber = sectionRequestDTO.getFilterSectionNumber();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(sectionRequestDTO));
-        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null) {
+        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null ||
+                filterAcademicYear != null || filterAcademicTerm != null || filterCourse != null ||
+                filterStudyType != null || filterSectionNumber != null) {
             SectionSpecification sectionSpecification = new SectionSpecification(searchValue, filterCollege, filterDepartment,
                     filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterSectionNumber);
 

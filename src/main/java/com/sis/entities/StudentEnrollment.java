@@ -20,6 +20,14 @@ public class StudentEnrollment extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
+    private College college;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
+
+    @ManyToOne
     @JoinColumn(name = "academic_year_id", referencedColumnName = "id")
     private AcademicYear academicYear;
 
@@ -47,5 +55,13 @@ public class StudentEnrollment extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "student_enrollment_id",
                     referencedColumnName = "id"))
     private Collection<Section> section;
+
+    @ManyToOne
+    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    private Major major;
+
+    @ManyToOne
+    @JoinColumn(name = "study_type_id", referencedColumnName = "id")
+    private StudyType studyType;
 
 }
