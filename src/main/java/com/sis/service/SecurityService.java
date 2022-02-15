@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Optional;
 
-@AllArgsConstructor
 @Service
 public class SecurityService {
 
@@ -39,6 +38,18 @@ public class SecurityService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public SecurityService(UserRepository userRepository, AuthenticationManager authenticationManager,
+                           JwtProvider jwtProvider, StudentRepository studentRepository, FacultyMemberRepository facultyMemberRepository,
+                           StudentMapper studentMapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
+        this.studentRepository = studentRepository;
+        this.facultyMemberRepository = facultyMemberRepository;
+        this.studentMapper = studentMapper;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public ResponseEntity<StudentDTO> registerStudent(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -70,8 +81,7 @@ public class SecurityService {
 
     private void generateToken(LoginDTO loginDto, User user) {
         try {
-            authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         } catch (AuthenticationException authenticationException) {
             throw new InvalidUserNameOrPasswordException();
         }
