@@ -1,5 +1,6 @@
 package com.sis.entities.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sis.entities.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,8 +35,15 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "token")
+    private String token;
+
     @NotNull
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)

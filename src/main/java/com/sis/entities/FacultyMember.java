@@ -8,6 +8,8 @@ package com.sis.entities;
 import java.util.Date;
 import java.util.Optional;
 import javax.persistence.*;
+
+import com.sis.entities.security.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,5 +60,9 @@ public class FacultyMember extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 }

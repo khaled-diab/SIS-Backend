@@ -6,6 +6,7 @@
 package com.sis.entities;
 
 
+import com.sis.entities.security.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -69,6 +70,10 @@ public class Student extends BaseEntity {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
     private Department departmentId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 
    

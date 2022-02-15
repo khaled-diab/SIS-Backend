@@ -1,17 +1,14 @@
 package com.sis.dto;
 
 import com.sis.dto.college.CollegeDTO;
+import com.sis.entities.security.User;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 
 import javax.validation.constraints.*;
-import java.io.File;
-import java.sql.Blob;
 import java.util.Date;
 @Getter
 @Setter
@@ -19,7 +16,7 @@ import java.util.Date;
 public class StudentDTO extends BaseDTO {
 
     @NotNull(message = "Required")
-    private long UniversityId;
+    private long universityId;
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
@@ -39,9 +36,7 @@ public class StudentDTO extends BaseDTO {
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
     @Pattern(regexp= Constants.DIGITS_ONLY_14, message="must be 14 digits")
-
     private String nationalId;
-
     private Date birthDate;
 
     @NotEmpty(message = "Required")
@@ -59,12 +54,9 @@ public class StudentDTO extends BaseDTO {
 
     @Pattern(regexp=Constants.DIGITS_ONLY_11, message="Invalid Mobile Number")
     private String parentPhone;
-
     private  String level;
     private  String year;
     private  String photo;
-    /*Relations instances*/
-
     private  DepartmentDTO departmentDTO;
 
     @NotNull(message = "Required")
@@ -72,6 +64,8 @@ public class StudentDTO extends BaseDTO {
 
     @NotNull
     private AcademicProgramDTO academicProgramDTO;
+
+    private User user;
 
 
 }
