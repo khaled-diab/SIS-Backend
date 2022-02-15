@@ -1,5 +1,6 @@
 package com.sis.entities.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sis.entities.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class RoleScreen extends BaseEntity {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
