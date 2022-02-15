@@ -8,11 +8,11 @@ import com.sis.entities.FacultyMember;
 
 public class FacultyMemberSpecification implements Specification<FacultyMember> {
 
-    private String searchValue;
+    private final String searchValue;
 
-    private Long filterCollege;
+    private final Long filterCollege;
 
-    private Long filterDepartment;
+    private final Long filterDepartment;
 
     public FacultyMemberSpecification(String searchValue, Long filterCollege, Long filterDepartment) {
         this.searchValue = searchValue;

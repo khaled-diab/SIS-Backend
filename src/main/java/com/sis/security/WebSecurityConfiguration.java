@@ -26,7 +26,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Entry points
         http.authorizeRequests()
-                .antMatchers("/login", "/sign-up")
+                .antMatchers("/sign-in", "/register-student","register-faculty-member")
                 .permitAll().anyRequest().authenticated();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

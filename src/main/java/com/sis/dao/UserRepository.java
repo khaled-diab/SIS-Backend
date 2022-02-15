@@ -20,6 +20,6 @@ public interface UserRepository extends BaseDao<User> {
      * @param username
      * @return User
      */
-    User findByEmailOrUsername(String email, String username);
+    Optional<User> findByEmailOrUsername(String email, String username);
 
 }

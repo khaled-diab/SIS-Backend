@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.sis.dao.UserRepository;
-import com.sis.dto.LoginDTO;
-import com.sis.dto.RegisterDTO;
+import com.sis.dto.security.LoginDTO;
+import com.sis.dto.security.RegisterDTO;
 import com.sis.dto.UserDTO;
 import com.sis.entities.security.User;
 import com.sis.entities.mapper.UserMapper;
@@ -49,12 +49,7 @@ public class UserService  extends BaseServiceImp<User>{
 		//Save user
 		return userMapper.toDTO(userRepository.save(user));
 	}
-    /**
-     * login
-     * @param loginDTO (username , password )
-     * @return
-     * @throws InvalidUserNameOrPasswordException
-     */
+
 	public UserDTO login(final LoginDTO loginDTO) {		
 		User user = userRepository.findByUsername(loginDTO.getUsername()).orElseThrow(InvalidUserNameOrPasswordException::new);
 		boolean isPasswordMatch = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
