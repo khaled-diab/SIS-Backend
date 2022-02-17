@@ -26,6 +26,6 @@ public class StudentEnrollmentDTO extends BaseDTO {
 
 	private Collection<CourseDTO> courseDTO;
 
-	private Collection<SectionDTO> sectionDTO;
+	private SectionDTO sectionDTO;
 
 }

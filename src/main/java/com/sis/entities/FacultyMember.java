@@ -7,7 +7,6 @@ package com.sis.entities;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,6 +62,6 @@ public class FacultyMember extends BaseEntity {
     @ManyToMany(mappedBy = "facultyMembers")
     private Collection<Timetable> timetables;
 
-    @ManyToMany(mappedBy = "facultyMembers")
-    private Collection<FacultyMemberEnrollment> facultyMemberEnrollments;
+    @OneToMany(mappedBy = "facultyMember")
+    private Collection<FacultyMemberEnrollment> facultyMemberCourses;
 }

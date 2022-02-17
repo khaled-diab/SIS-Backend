@@ -62,12 +62,10 @@ public class Section extends BaseEntity {
                     referencedColumnName = "id"))
     private Collection<Course> courses;
 
-    @ManyToMany(mappedBy = "sections")
+    @OneToMany(mappedBy = "section")
     private Collection<StudentEnrollment> studentEnrollments;
 
     @ManyToMany(mappedBy = "sections")
     private Collection<Timetable> timetables;
 
-//    @ManyToMany(mappedBy = "sections")
-//    private Collection<FacultyMemberEnrollment> facultyMemberEnrollments;
 }

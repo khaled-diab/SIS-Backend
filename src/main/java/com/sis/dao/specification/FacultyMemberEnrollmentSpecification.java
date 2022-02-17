@@ -52,7 +52,7 @@ public class FacultyMemberEnrollmentSpecification implements Specification<Facul
     @Override
     public Predicate toPredicate(Root<FacultyMemberEnrollment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Join<FacultyMemberEnrollment, Course> studentEnrollmentStudentJoin = root.join("courses");
-        Join<FacultyMemberEnrollment, FacultyMember> facultyMemberEnrollmentFacultyMemberJoin = root.join("facultyMembers");
+        Join<FacultyMemberEnrollment, FacultyMember> facultyMemberEnrollmentFacultyMemberJoin = root.join("facultyMember");
         if (searchValue != null) {
             Predicate searchPredicate = criteriaBuilder.or(
                     criteriaBuilder.like(studentEnrollmentStudentJoin.get("code"), "%" + searchValue + "%"),
@@ -75,7 +75,7 @@ public class FacultyMemberEnrollmentSpecification implements Specification<Facul
         Join<FacultyMemberEnrollment, Department> facultyMemberEnrollmentDepartmentJoin = root.join("department");
         Join<FacultyMemberEnrollment, AcademicYear> facultyMemberEnrollmentAcademicYearJoin = root.join("academicYear");
         Join<FacultyMemberEnrollment, AcademicTerm> facultyMemberEnrollmentAcademicTermJoin = root.join("academicTerm");
-        Join<FacultyMemberEnrollment, FacultyMember> facultyMemberEnrollmentFacultyMemberJoin = root.join("facultyMembers");
+        Join<FacultyMemberEnrollment, FacultyMember> facultyMemberEnrollmentFacultyMemberJoin = root.join("facultyMember");
 
         Predicate college;
         if (filterCollege != null)
@@ -102,8 +102,7 @@ public class FacultyMemberEnrollmentSpecification implements Specification<Facul
             facultyMember = criteriaBuilder.equal(facultyMemberEnrollmentFacultyMemberJoin.get("id"), filterFacultyMember);
         else facultyMember = criteriaBuilder.notEqual(facultyMemberEnrollmentFacultyMemberJoin.get("id"), -1);
 
-        return criteriaBuilder.and(college, department, academicYear,
-                academicTerm, facultyMember);
+        return criteriaBuilder.and(college, department, academicYear, academicTerm, facultyMember);
     }
 
 }

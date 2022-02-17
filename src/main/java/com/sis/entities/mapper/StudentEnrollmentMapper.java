@@ -58,8 +58,8 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
         if (entity.getCourses() != null) {
             dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
         }
-        if (entity.getSections() != null) {
-            dto.setSectionDTO(sectionMapper.toDTOs(entity.getSections()));
+        if (entity.getSection() != null) {
+            dto.setSectionDTO(sectionMapper.toDTO(entity.getSection()));
         }
 
         return dto;
@@ -88,7 +88,7 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
             entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
         }
         if (dto.getSectionDTO() != null) {
-            entity.setSections(sectionMapper.toEntities(dto.getSectionDTO()));
+            entity.setSection(sectionMapper.toEntity(dto.getSectionDTO()));
         }
 
         return entity;
