@@ -35,12 +35,9 @@ public class FacultyMemberEnrollment extends BaseEntity {
     @JoinColumn(name = "academic_term_id", referencedColumnName = "id")
     private AcademicTerm academicTerm;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "faculty_member_enrollment_faculty_member",
-            joinColumns = @JoinColumn(name = "faculty_member_enrollment_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "faculty_member_id",
-                    referencedColumnName = "id"))
-    private Collection<FacultyMember> facultyMembers;
+    @ManyToOne
+    @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
+    private FacultyMember facultyMember;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "faculty_member_enrollment_course",
@@ -48,12 +45,5 @@ public class FacultyMemberEnrollment extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "course_id",
                     referencedColumnName = "id"))
     private Collection<Course> courses;
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "faculty_member_enrollment_section",
-//            joinColumns = @JoinColumn(name = "faculty_member_enrollment_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "section_id",
-//                    referencedColumnName = "id"))
-//    private Collection<Section> sections;
 
 }

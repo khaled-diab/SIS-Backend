@@ -54,15 +54,12 @@ public class FacultyMemberEnrollmentMapper implements Mapper<FacultyMemberEnroll
         if (entity.getAcademicTerm() != null) {
             dto.setAcademicTermDTO(academicTermMapper.toDTO(entity.getAcademicTerm()));
         }
-        if (entity.getFacultyMembers() != null) {
-            dto.setFacultyMemberDTO(facultyMemberMapper.toDTOs(entity.getFacultyMembers()));
+        if (entity.getFacultyMember() != null) {
+            dto.setFacultyMemberDTO(facultyMemberMapper.toDTO(entity.getFacultyMember()));
         }
         if (entity.getCourses() != null) {
             dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
         }
-//        if (entity.getSections() != null) {
-//            dto.setSectionDTO(sectionMapper.toDTOs(entity.getSections()));
-//        }
 
         return dto;
     }
@@ -84,14 +81,11 @@ public class FacultyMemberEnrollmentMapper implements Mapper<FacultyMemberEnroll
             entity.setAcademicTerm(academicTermMapper.toEntity(dto.getAcademicTermDTO()));
         }
         if (dto.getFacultyMemberDTO() != null) {
-            entity.setFacultyMembers(facultyMemberMapper.toEntities(dto.getFacultyMemberDTO()));
+            entity.setFacultyMember(facultyMemberMapper.toEntity(dto.getFacultyMemberDTO()));
         }
         if (dto.getCourseDTO() != null) {
             entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
         }
-//        if (dto.getSectionDTO() != null) {
-//            entity.setSections(sectionMapper.toEntities(dto.getSectionDTO()));
-//        }
 
         return entity;
     }

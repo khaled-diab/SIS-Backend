@@ -8,7 +8,6 @@ import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
-import com.sis.dto.section.SectionDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,10 +25,8 @@ public class FacultyMemberEnrollmentDTO extends BaseDTO {
 
 	private AcademicTermDTO academicTermDTO;
 
-	private Collection<FacultyMemberDTO> facultyMemberDTO;
+	private FacultyMemberDTO facultyMemberDTO;
 
 	private Collection<CourseDTO> courseDTO;
-
-//	private Collection<SectionDTO> sectionDTO;
 
 }
