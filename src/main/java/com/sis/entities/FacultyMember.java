@@ -5,7 +5,9 @@
  */
 package com.sis.entities;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.*;
 import lombok.Getter;
@@ -58,5 +60,10 @@ public class FacultyMember extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
+
+    @OneToMany(mappedBy = "facultyMemberId")
+    private List<Lecture> lectures;
+
+
 
 }

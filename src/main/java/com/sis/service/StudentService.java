@@ -1,8 +1,8 @@
 package com.sis.service;
 
 import com.sis.dao.StudentRepository;
-import com.sis.dto.StudentDTO;
-import com.sis.dto.StudentFilterDTO;
+import com.sis.dto.student.StudentDTO;
+import com.sis.dto.student.StudentFilterDTO;
 import com.sis.entities.Student;
 import com.sis.entities.mapper.StudentMapper;
 import com.sis.util.PageQueryUtil;

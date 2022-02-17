@@ -1,6 +1,6 @@
 package com.sis.entities.mapper;
 
-import com.sis.dto.StudentDTO;
+import com.sis.dto.student.StudentDTO;
 import com.sis.entities.Student;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,32 +63,34 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 	public Student toEntity(StudentDTO dto) {
 
 		Student entity=new Student();
-		entity.setId(dto.getId());
-		entity.setAlternativeMail(dto.getAlternativeMail());
-		entity.setLevel(dto.getLevel());
-		entity.setYear(dto.getYear());
-		entity.setBirthDate(dto.getBirthDate());
-		entity.setNationality(dto.getNationality());
-		entity.setNameEn(dto.getNameEn());
-		entity.setNameAr(dto.getNameAr());
-		entity.setParentPhone(dto.getParentPhone());
-		entity.setPhone(dto.getPhone());
-		entity.setPhoto(dto.getPhoto());
-		System.out.println(dto.getUniversityId());
-		entity.setUniversityId(dto.getUniversityId());
-		entity.setNationalId(dto.getNationalId());
-		entity.setUniversityMail(dto.getUniversityMail());
-		if(dto.getCollegeDTO()!=null) {
-			entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
-		}
-		if(dto.getDepartmentDTO()!=null) {
-			System.out.println("hdddddddddd");
-			entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+		if(dto != null) {
+			entity.setId(dto.getId());
+			entity.setAlternativeMail(dto.getAlternativeMail());
+			entity.setLevel(dto.getLevel());
+			entity.setYear(dto.getYear());
+			entity.setBirthDate(dto.getBirthDate());
+			entity.setNationality(dto.getNationality());
+			entity.setNameEn(dto.getNameEn());
+			entity.setNameAr(dto.getNameAr());
+			entity.setParentPhone(dto.getParentPhone());
+			entity.setPhone(dto.getPhone());
+			entity.setPhoto(dto.getPhoto());
+			System.out.println(dto.getUniversityId());
+			entity.setUniversityId(dto.getUniversityId());
+			entity.setNationalId(dto.getNationalId());
+			entity.setUniversityMail(dto.getUniversityMail());
+			if (dto.getCollegeDTO() != null) {
+				entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
+			}
+			if (dto.getDepartmentDTO() != null) {
 
-		}
-		if(dto.getAcademicProgramDTO()!=null) {
+				entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
 
-			entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
+			}
+			if (dto.getAcademicProgramDTO() != null) {
+
+				entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
+			}
 		}
 		return entity;
 

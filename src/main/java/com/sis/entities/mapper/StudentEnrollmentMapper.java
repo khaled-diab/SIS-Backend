@@ -2,7 +2,7 @@ package com.sis.entities.mapper;
 
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.AcademicYearDTO;
-import com.sis.dto.StudentDTO;
+import com.sis.dto.student.StudentDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
