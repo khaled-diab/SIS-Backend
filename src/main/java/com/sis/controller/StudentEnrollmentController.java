@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Validated
+//@Validated
 @RequestMapping(value = "/api/studentEnrollment")
-@CrossOrigin(origins = ("*"))
-@AllArgsConstructor
+//@CrossOrigin(origins = ("*"))
+//@AllArgsConstructor
 public class StudentEnrollmentController extends BaseController<StudentEnrollment, StudentEnrollmentDTO> {
 
 

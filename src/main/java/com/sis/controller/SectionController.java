@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@Validated
+//@Validated
 @RequestMapping(value = "/api/sections")
-@CrossOrigin(origins = ("*"))
-@AllArgsConstructor
+//@AllArgsConstructor
 public class SectionController extends BaseController<Section, SectionDTO> {
 
 

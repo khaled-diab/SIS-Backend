@@ -50,8 +50,11 @@ public class Timetable extends BaseEntity {
     @JoinColumn(name = "academic_term_id", referencedColumnName = "id")
     private AcademicTerm academicTerm;
 
-    @OneToMany
-    @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "timetable_faculty_member",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "faculty_member_id",
+                    referencedColumnName = "id"))
     private Collection<FacultyMember> facultyMember;
 
     @ManyToMany(cascade = CascadeType.ALL)

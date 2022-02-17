@@ -7,10 +7,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Validated
+//@Validated
 @RequestMapping(value = "/api/timetables")
-@CrossOrigin(origins = ("*"))
-@AllArgsConstructor
+//@CrossOrigin(origins = ("*"))
+//@AllArgsConstructor
 public class TimetableController extends BaseController<Timetable, TimetableDTO> {
 
 
