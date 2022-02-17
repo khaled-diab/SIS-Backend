@@ -5,6 +5,7 @@
  */
 package com.sis.entities;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import javax.persistence.*;
@@ -59,4 +60,9 @@ public class FacultyMember extends BaseEntity {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
+    @ManyToMany(mappedBy = "facultyMembers")
+    private Collection<Timetable> timetables;
+
+    @ManyToMany(mappedBy = "facultyMembers")
+    private Collection<FacultyMemberEnrollment> facultyMemberEnrollments;
 }

@@ -25,7 +25,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
 
     @Override
     public JpaRepository<StudentEnrollment, Long> Repository() {
-        return null;
+        return studentEnrollmentRepository;
     }
 
     public PageResult<StudentEnrollmentDTO> search(PageQueryUtil pageUtil, StudentEnrollmentRequestDTO studentEnrollmentRequestDTO) {

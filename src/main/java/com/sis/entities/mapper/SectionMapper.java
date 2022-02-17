@@ -1,13 +1,11 @@
 package com.sis.entities.mapper;
 
-import com.sis.dto.*;
-import com.sis.dto.college.CollegeDTO;
-import com.sis.dto.course.CourseDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.entities.*;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -43,39 +41,31 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
     @Override
     public SectionDTO toDTO(Section entity) {
         SectionDTO dto = new SectionDTO();
-        CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
-        DepartmentDTO departmentDTO = departmentMapper.toDTO(entity.getDepartment());
-        AcademicYearDTO academicYearDTO = academicYearMapper.toDTO(entity.getAcademicYear());
-        AcademicTermDTO academicTermDTO = academicTermMapper.toDTO(entity.getAcademicTerm());
-        CourseDTO courseDTO = courseMapper.toDTO((Course) entity.getCourse());
-        MajorDTO majorDTO = majorMapper.toDTO(entity.getMajor());
-        StudyTypeDTO studyTypeDTO = studyTypeMapper.toDTO(entity.getStudyType());
-
         dto.setId(entity.getId());
         dto.setSectionNumber(entity.getSectionNumber());
         dto.setTheoreticalLectures(entity.getTheoreticalLectures());
         dto.setPracticalLectures(entity.getPracticalLectures());
         dto.setExercisesLectures(entity.getExercisesLectures());
         if (entity.getCollege() != null) {
-            dto.setCollegeDTO(collegeDTO);
+            dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollege()));
         }
         if (entity.getDepartment() != null) {
-            dto.setDepartmentDTO(departmentDTO);
+            dto.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartment()));
         }
         if (entity.getAcademicYear() != null) {
-            dto.setAcademicYearDTO(academicYearDTO);
+            dto.setAcademicYearDTO(academicYearMapper.toDTO(entity.getAcademicYear()));
         }
         if (entity.getAcademicTerm() != null) {
-            dto.setAcademicTermDTO(academicTermDTO);
+            dto.setAcademicTermDTO(academicTermMapper.toDTO(entity.getAcademicTerm()));
         }
-        if (entity.getCourse() != null) {
-            dto.setCourseDTO(courseDTO);
+        if (entity.getCourses() != null) {
+            dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
         }
         if (entity.getMajor() != null) {
-            dto.setMajorDTO(majorDTO);
+            dto.setMajorDTO(majorMapper.toDTO(entity.getMajor()));
         }
         if (entity.getStudyType() != null) {
-            dto.setStudyTypeDTO(studyTypeDTO);
+            dto.setStudyTypeDTO(studyTypeMapper.toDTO(entity.getStudyType()));
         }
 
         return dto;
@@ -84,39 +74,31 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
     @Override
     public Section toEntity(SectionDTO dto) {
         Section entity = new Section();
-        College college = collegeMapper.toEntity(dto.getCollegeDTO());
-        Department department = departmentMapper.toEntity(dto.getDepartmentDTO());
-        AcademicYear academicYear = academicYearMapper.toEntity(dto.getAcademicYearDTO());
-        AcademicTerm academicTerm = academicTermMapper.toEntity(dto.getAcademicTermDTO());
-        Course course = courseMapper.toEntity(dto.getCourseDTO());
-        Major major = majorMapper.toEntity(dto.getMajorDTO());
-        StudyType studyType = studyTypeMapper.toEntity(dto.getStudyTypeDTO());
-
         entity.setId(dto.getId());
         entity.setSectionNumber(dto.getSectionNumber());
         entity.setTheoreticalLectures(dto.getTheoreticalLectures());
         entity.setPracticalLectures(dto.getPracticalLectures());
         entity.setExercisesLectures(dto.getExercisesLectures());
         if (dto.getCollegeDTO() != null) {
-            entity.setCollege(college);
+            entity.setCollege(collegeMapper.toEntity(dto.getCollegeDTO()));
         }
         if (dto.getDepartmentDTO() != null) {
-            entity.setDepartment(department);
+            entity.setDepartment(departmentMapper.toEntity(dto.getDepartmentDTO()));
         }
         if (dto.getAcademicYearDTO() != null) {
-            entity.setAcademicYear(academicYear);
+            entity.setAcademicYear(academicYearMapper.toEntity(dto.getAcademicYearDTO()));
         }
         if (dto.getAcademicTermDTO() != null) {
-            entity.setAcademicTerm(academicTerm);
+            entity.setAcademicTerm(academicTermMapper.toEntity(dto.getAcademicTermDTO()));
         }
         if (dto.getCourseDTO() != null) {
-            entity.setCourse((Collection<Course>) course);
+            entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
         }
         if (dto.getMajorDTO() != null) {
-            entity.setMajor(major);
+            entity.setMajor(majorMapper.toEntity(dto.getMajorDTO()));
         }
         if (dto.getStudyTypeDTO() != null) {
-            entity.setStudyType(studyType);
+            entity.setStudyType(studyTypeMapper.toEntity(dto.getStudyTypeDTO()));
         }
 
         return entity;

@@ -64,7 +64,7 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
 
     @Override
     public Predicate toPredicate(Root<StudentEnrollment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("student");
+        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("students");
         if (searchValue != null) {
             Predicate searchPredicate = criteriaBuilder.or(
                     criteriaBuilder.like(studentEnrollmentStudentJoin.get("nameAr"), "%" + searchValue + "%"),
@@ -82,52 +82,49 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
     }
 
     private Predicate getFilterPredicate(Root<StudentEnrollment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<StudentEnrollment, College> sectionCollegeJoin = root.join("college");
-        Join<StudentEnrollment, Department> sectionDepartmentJoin = root.join("department");
-        Join<StudentEnrollment, AcademicYear> sectionAcademicYearJoin = root.join("academicYear");
-        Join<StudentEnrollment, AcademicTerm> sectionAcademicTermJoin = root.join("academicTerm");
-        Join<StudentEnrollment, Course> sectionCourseJoin = root.join("course");
-        Join<StudentEnrollment, Section> sectionSectionJoin = root.join("sectionNumber");
-        Join<StudentEnrollment, StudyType> sectionStudyTypeJoin = root.join("studyType");
+        Join<StudentEnrollment, College> studentEnrollmentCollegeJoin = root.join("college");
+        Join<StudentEnrollment, Department> studentEnrollmentDepartmentJoin = root.join("department");
+        Join<StudentEnrollment, AcademicYear> studentEnrollmentAcademicYearJoin = root.join("academicYear");
+        Join<StudentEnrollment, AcademicTerm> studentEnrollmentAcademicTermJoin = root.join("academicTerm");
+        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("course");
+        Join<StudentEnrollment, Section> studentEnrollmentSectionJoin = root.join("sectionNumber");
+        Join<StudentEnrollment, StudyType> studentEnrollmentStudyTypeJoin = root.join("studyType");
         Join<StudentEnrollment, Major> studentEnrollmentMajorJoin = root.join("major");
-
-//        System.out.println(filterCollege);
-//        System.out.println(filterDepartment);
 
         Predicate college;
         if (filterCollege != null)
-            college = criteriaBuilder.equal(sectionCollegeJoin.get("id"), filterCollege);
-        else college = criteriaBuilder.notEqual(sectionCollegeJoin.get("id"), -1);
+            college = criteriaBuilder.equal(studentEnrollmentCollegeJoin.get("id"), filterCollege);
+        else college = criteriaBuilder.notEqual(studentEnrollmentCollegeJoin.get("id"), -1);
 
         Predicate department;
         if (filterDepartment != null)
-            department = criteriaBuilder.equal(sectionDepartmentJoin.get("id"), filterDepartment);
-        else department = criteriaBuilder.notEqual(sectionDepartmentJoin.get("id"), -1);
+            department = criteriaBuilder.equal(studentEnrollmentDepartmentJoin.get("id"), filterDepartment);
+        else department = criteriaBuilder.notEqual(studentEnrollmentDepartmentJoin.get("id"), -1);
 
         Predicate academicYear;
         if (filterAcademicYear != null)
-            academicYear = criteriaBuilder.equal(sectionAcademicYearJoin.get("id"), filterAcademicYear);
-        else academicYear = criteriaBuilder.notEqual(sectionAcademicYearJoin.get("id"), -1);
+            academicYear = criteriaBuilder.equal(studentEnrollmentAcademicYearJoin.get("id"), filterAcademicYear);
+        else academicYear = criteriaBuilder.notEqual(studentEnrollmentAcademicYearJoin.get("id"), -1);
 
         Predicate academicTerm;
         if (filterAcademicTerm != null)
-            academicTerm = criteriaBuilder.equal(sectionAcademicTermJoin.get("id"), filterAcademicTerm);
-        else academicTerm = criteriaBuilder.notEqual(sectionAcademicTermJoin.get("id"), -1);
+            academicTerm = criteriaBuilder.equal(studentEnrollmentAcademicTermJoin.get("id"), filterAcademicTerm);
+        else academicTerm = criteriaBuilder.notEqual(studentEnrollmentAcademicTermJoin.get("id"), -1);
 
         Predicate course;
         if (filterCourse != null)
-            course = criteriaBuilder.equal(sectionCourseJoin.get("id"), filterCourse);
-        else course = criteriaBuilder.notEqual(sectionCourseJoin.get("id"), -1);
+            course = criteriaBuilder.equal(studentEnrollmentCourseJoin.get("id"), filterCourse);
+        else course = criteriaBuilder.notEqual(studentEnrollmentCourseJoin.get("id"), -1);
 
         Predicate section;
         if (filterSection != null)
-            section = criteriaBuilder.equal(sectionSectionJoin.get("id"), filterSection);
-        else section = criteriaBuilder.notEqual(sectionSectionJoin.get("id"), -1);
+            section = criteriaBuilder.equal(studentEnrollmentSectionJoin.get("id"), filterSection);
+        else section = criteriaBuilder.notEqual(studentEnrollmentSectionJoin.get("id"), -1);
 
         Predicate studyType;
         if (filterStudyType != null)
-            studyType = criteriaBuilder.equal(sectionStudyTypeJoin.get("id"), filterStudyType);
-        else studyType = criteriaBuilder.notEqual(sectionStudyTypeJoin.get("id"), -1);
+            studyType = criteriaBuilder.equal(studentEnrollmentStudyTypeJoin.get("id"), filterStudyType);
+        else studyType = criteriaBuilder.notEqual(studentEnrollmentStudyTypeJoin.get("id"), -1);
 
         Predicate major;
         if (filterMajor != null)

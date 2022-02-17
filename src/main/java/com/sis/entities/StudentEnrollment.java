@@ -37,24 +37,24 @@ public class StudentEnrollment extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "student_enrollment_student",
-            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "student_enrollment_id",
+            joinColumns = @JoinColumn(name = "student_enrollment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id",
                     referencedColumnName = "id"))
-    private Collection<Student> student;
+    private Collection<Student> students;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "student_enrollment_course",
-            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "student_enrollment_id",
+            joinColumns = @JoinColumn(name = "student_enrollment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id",
                     referencedColumnName = "id"))
-    private Collection<Course> course;
+    private Collection<Course> courses;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "student_enrollment_section",
-            joinColumns = @JoinColumn(name = "section_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "student_enrollment_id",
+            joinColumns = @JoinColumn(name = "student_enrollment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "section_id",
                     referencedColumnName = "id"))
-    private Collection<Section> section;
+    private Collection<Section> sections;
 
     @ManyToOne
     @JoinColumn(name = "major_id", referencedColumnName = "id")

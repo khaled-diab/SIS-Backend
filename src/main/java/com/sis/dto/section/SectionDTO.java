@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collection;
+
 @Getter
 @Setter
 @Validated
@@ -32,6 +34,6 @@ public class SectionDTO extends BaseDTO {
 
     private AcademicTermDTO academicTermDTO;
 
-    private CourseDTO courseDTO;
+    private Collection<CourseDTO> courseDTO;
 
 }

@@ -7,6 +7,7 @@ package com.sis.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -38,7 +39,6 @@ public class Section extends BaseEntity {
     @JoinColumn(name = "study_type_id", referencedColumnName = "id")
     private StudyType studyType;
 
-
     @ManyToOne
     @JoinColumn(name = "college_id", referencedColumnName = "id")
     private College college;
@@ -57,9 +57,17 @@ public class Section extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "section_course",
-            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "section_id",
+            joinColumns = @JoinColumn(name = "section_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id",
                     referencedColumnName = "id"))
-    private Collection<Course> course;
+    private Collection<Course> courses;
 
+    @ManyToMany(mappedBy = "sections")
+    private Collection<StudentEnrollment> studentEnrollments;
+
+    @ManyToMany(mappedBy = "sections")
+    private Collection<Timetable> timetables;
+
+//    @ManyToMany(mappedBy = "sections")
+//    private Collection<FacultyMemberEnrollment> facultyMemberEnrollments;
 }

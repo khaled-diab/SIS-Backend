@@ -9,6 +9,7 @@ package com.sis.entities;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -70,6 +71,7 @@ public class Student extends BaseEntity {
     @ManyToOne
     private Department departmentId;
 
-
+    @ManyToMany(mappedBy = "students")
+    private Collection<StudentEnrollment> studentEnrollments;
    
 }
