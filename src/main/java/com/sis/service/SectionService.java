@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SectionService extends BaseServiceImp<Section> {
 
-    @Override
-    public JpaRepository<Section, Long> Repository() {
-        return null;
-    }
-
     private final SectionRepository sectionRepository;
     private final SectionMapper sectionMapper;
+
+    @Override
+    public JpaRepository<Section, Long> Repository() {
+        return sectionRepository;
+    }
 
     public PageResult<SectionDTO> search(PageQueryUtil pageUtil, SectionRequestDTO sectionRequestDTO) {
         Page<Section> sectionPage;

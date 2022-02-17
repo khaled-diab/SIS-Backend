@@ -9,12 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "building")
@@ -41,4 +36,7 @@ public class Building extends BaseEntity {
 
     @OneToMany(mappedBy = "building")
     private Collection<Classroom> classroomCollection;
+
+    @ManyToMany(mappedBy = "buildings")
+    private Collection<Timetable> timetables;
 }

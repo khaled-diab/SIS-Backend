@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalTime;
+import java.util.Collection;
+
 @Getter
 @Setter
 @Validated
@@ -17,11 +20,11 @@ public class TimetableDTO extends BaseDTO {
 
     private String day;
 
-    private Float startTime;
+    private LocalTime startTime;
 
-    private Float endTime;
+    private LocalTime endTime;
 
-    private LectureTypeDTO lectureTypeDTO;
+    private Collection<LectureTypeDTO> lectureTypeDTO;
 
     private CollegeDTO collegeDTO;
 
@@ -31,14 +34,14 @@ public class TimetableDTO extends BaseDTO {
 
     private AcademicTermDTO academicTermDTO;
 
-    private FacultyMemberDTO facultyMemberDTO;
+    private Collection<FacultyMemberDTO> facultyMemberDTO;
 
-    private CourseDTO courseDTO;
+    private Collection<CourseDTO> courseDTO;
 
-    private SectionDTO sectionDTO;
+    private Collection<SectionDTO> sectionDTO;
 
-    private BuildingDTO buildingDTO;
+    private Collection<BuildingDTO> buildingDTO;
 
-    private ClassroomDTO classroomDTO;
+    private Collection<ClassroomDTO> classroomDTO;
 
 }

@@ -7,7 +7,9 @@ package com.sis.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Collection;
 
 @Entity
@@ -20,19 +22,19 @@ public class Timetable extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "timetable_lecture_type",
-            joinColumns = @JoinColumn(name = "lecture_type_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "timetable_id",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "lecture_type_id",
                     referencedColumnName = "id"))
-    private Collection<LectureType> lectureType;
+    private Collection<LectureType> lectureTypes;
 
     @Column(name = "day")
     private String day;
 
     @Column(name = "start_time")
-    private Float startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time")
-    private Float endTime;
+    private LocalTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "college_id", referencedColumnName = "id")
@@ -50,33 +52,39 @@ public class Timetable extends BaseEntity {
     @JoinColumn(name = "academic_term_id", referencedColumnName = "id")
     private AcademicTerm academicTerm;
 
-    @OneToMany
-    @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
-    private Collection<FacultyMember> facultyMember;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "timetable_faculty_member",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "faculty_member_id",
+                    referencedColumnName = "id"))
+    private Collection<FacultyMember> facultyMembers;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "timetable_course",
-            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "timetable_id",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id",
                     referencedColumnName = "id"))
-    private Collection<Course> course;
+    private Collection<Course> courses;
 
-    @OneToMany
-    @JoinColumn(name = "section_id", referencedColumnName = "id")
-    private Collection<Section> section;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "timetable_section",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "section_id",
+                    referencedColumnName = "id"))
+    private Collection<Section> sections;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "timetable_building",
-            joinColumns = @JoinColumn(name = "building_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "timetable_id",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "building_id",
                     referencedColumnName = "id"))
-    private Collection<Building> building;
+    private Collection<Building> buildings;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "timetable_classroom",
-            joinColumns = @JoinColumn(name = "classroom_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "timetable_id",
+            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "classroom_id",
                     referencedColumnName = "id"))
-    private Collection<Classroom> classroom;
+    private Collection<Classroom> classrooms;
 
 }

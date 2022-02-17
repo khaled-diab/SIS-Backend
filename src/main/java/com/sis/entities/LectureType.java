@@ -10,7 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -26,4 +28,6 @@ public class LectureType extends BaseEntity {
     @Column(name = "name_en")
     private String nameEn;
 
+    @ManyToMany(mappedBy = "lectureTypes")
+    private Collection<Timetable> timetables;
 }

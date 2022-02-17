@@ -1,12 +1,6 @@
 package com.sis.entities.mapper;
 
-import com.sis.dto.*;
-import com.sis.dto.building.BuildingDTO;
-import com.sis.dto.course.CourseDTO;
-import com.sis.dto.facultyMember.FacultyMemberDTO;
-import com.sis.dto.section.SectionDTO;
 import com.sis.dto.timetable.TimetableDTO;
-import com.sis.dto.college.CollegeDTO;
 import com.sis.entities.*;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -50,50 +44,39 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
     @Override
     public TimetableDTO toDTO(Timetable entity) {
         TimetableDTO dto = new TimetableDTO();
-        LectureTypeDTO lectureTypeDTO = lectureTypeMapper.toDTO((LectureType) entity.getLectureType());
-        CollegeDTO collegeDTO = collegeMapper.toDTO(entity.getCollege());
-        DepartmentDTO departmentDTO = departmentMapper.toDTO(entity.getDepartment());
-        AcademicYearDTO academicYearDTO = academicYearMapper.toDTO(entity.getAcademicYear());
-        AcademicTermDTO academicTermDTO = academicTermMapper.toDTO(entity.getAcademicTerm());
-        FacultyMemberDTO facultyMemberDTO = facultyMemberMapper.toDTO((FacultyMember) entity.getFacultyMember());
-        CourseDTO courseDTO = courseMapper.toDTO((Course) entity.getCourse());
-        SectionDTO sectionDTO = sectionMapper.toDTO((Section) entity.getSection());
-        BuildingDTO buildingDTO = buildingMapper.toDTO((Building) entity.getBuilding());
-        ClassroomDTO classroomDTO = classroomMapper.toDTO((Classroom) entity.getClassroom());
-
         dto.setId(entity.getId());
         dto.setDay(entity.getDay());
         dto.setStartTime(entity.getStartTime());
         dto.setEndTime(entity.getEndTime());
-        if (entity.getLectureType() != null) {
-            dto.setLectureTypeDTO(lectureTypeDTO);
+        if (entity.getLectureTypes() != null) {
+            dto.setLectureTypeDTO(lectureTypeMapper.toDTOs(entity.getLectureTypes()));
         }
         if (entity.getCollege() != null) {
-            dto.setCollegeDTO(collegeDTO);
+            dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollege()));
         }
         if (entity.getDepartment() != null) {
-            dto.setDepartmentDTO(departmentDTO);
+            dto.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartment()));
         }
         if (entity.getAcademicYear() != null) {
-            dto.setAcademicYearDTO(academicYearDTO);
+            dto.setAcademicYearDTO(academicYearMapper.toDTO(entity.getAcademicYear()));
         }
         if (entity.getAcademicTerm() != null) {
-            dto.setAcademicTermDTO(academicTermDTO);
+            dto.setAcademicTermDTO(academicTermMapper.toDTO(entity.getAcademicTerm()));
         }
-        if (entity.getFacultyMember() != null) {
-            dto.setFacultyMemberDTO(facultyMemberDTO);
+        if (entity.getFacultyMembers() != null) {
+            dto.setFacultyMemberDTO(facultyMemberMapper.toDTOs(entity.getFacultyMembers()));
         }
-        if (entity.getCourse() != null) {
-            dto.setCourseDTO(courseDTO);
+        if (entity.getCourses() != null) {
+            dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
         }
-        if (entity.getSection() != null) {
-            dto.setSectionDTO(sectionDTO);
+        if (entity.getSections() != null) {
+            dto.setSectionDTO(sectionMapper.toDTOs(entity.getSections()));
         }
-        if (entity.getBuilding() != null) {
-            dto.setBuildingDTO(buildingDTO);
+        if (entity.getBuildings() != null) {
+            dto.setBuildingDTO(buildingMapper.toDTOs(entity.getBuildings()));
         }
-        if (entity.getClassroom() != null) {
-            dto.setClassroomDTO(classroomDTO);
+        if (entity.getClassrooms() != null) {
+            dto.setClassroomDTO(classroomMapper.toDTOs(entity.getClassrooms()));
         }
 
         return dto;
@@ -102,50 +85,39 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
     @Override
     public Timetable toEntity(TimetableDTO dto) {
         Timetable entity = new Timetable();
-        LectureType lectureType = lectureTypeMapper.toEntity(dto.getLectureTypeDTO());
-        College college = collegeMapper.toEntity(dto.getCollegeDTO());
-        Department department = departmentMapper.toEntity(dto.getDepartmentDTO());
-        AcademicYear academicYear = academicYearMapper.toEntity(dto.getAcademicYearDTO());
-        AcademicTerm academicTerm = academicTermMapper.toEntity(dto.getAcademicTermDTO());
-        FacultyMember facultyMember = facultyMemberMapper.toEntity(dto.getFacultyMemberDTO());
-        Course course = courseMapper.toEntity(dto.getCourseDTO());
-        Section section = sectionMapper.toEntity(dto.getSectionDTO());
-        Building building = buildingMapper.toEntity(dto.getBuildingDTO());
-        Classroom classroom = classroomMapper.toEntity(dto.getClassroomDTO());
-
         entity.setId(dto.getId());
         entity.setDay(dto.getDay());
         entity.setStartTime(dto.getStartTime());
         entity.setEndTime(dto.getEndTime());
         if (dto.getLectureTypeDTO() != null) {
-            entity.setLectureType((Collection<LectureType>) lectureType);
+            entity.setLectureTypes(lectureTypeMapper.toEntities(dto.getLectureTypeDTO()));
         }
         if (dto.getCollegeDTO() != null) {
-            entity.setCollege(college);
+            entity.setCollege(collegeMapper.toEntity(dto.getCollegeDTO()));
         }
         if (dto.getDepartmentDTO() != null) {
-            entity.setDepartment(department);
+            entity.setDepartment(departmentMapper.toEntity(dto.getDepartmentDTO()));
         }
         if (dto.getAcademicYearDTO() != null) {
-            entity.setAcademicYear(academicYear);
+            entity.setAcademicYear(academicYearMapper.toEntity(dto.getAcademicYearDTO()));
         }
         if (dto.getAcademicTermDTO() != null) {
-            entity.setAcademicTerm(academicTerm);
+            entity.setAcademicTerm(academicTermMapper.toEntity(dto.getAcademicTermDTO()));
         }
         if (dto.getFacultyMemberDTO() != null) {
-            entity.setFacultyMember((Collection<FacultyMember>) facultyMember);
+            entity.setFacultyMembers(facultyMemberMapper.toEntities(dto.getFacultyMemberDTO()));
         }
         if (dto.getCourseDTO() != null) {
-            entity.setCourse((Collection<Course>) course);
+            entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
         }
         if (dto.getSectionDTO() != null) {
-            entity.setSection((Collection<Section>) section);
+            entity.setSections(sectionMapper.toEntities(dto.getSectionDTO()));
         }
         if (dto.getBuildingDTO() != null) {
-            entity.setBuilding((Collection<Building>) building);
+            entity.setBuildings(buildingMapper.toEntities(dto.getBuildingDTO()));
         }
         if (dto.getClassroomDTO() != null) {
-            entity.setClassroom((Collection<Classroom>) classroom);
+            entity.setClassrooms(classroomMapper.toEntities(dto.getClassroomDTO()));
         }
 
         return entity;
