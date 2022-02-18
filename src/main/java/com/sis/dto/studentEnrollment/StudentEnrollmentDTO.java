@@ -5,6 +5,7 @@ import com.sis.dto.*;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.section.SectionDTO;
+import com.sis.dto.student.StudentDTO;
 import lombok.Getter;
 import lombok.Setter;
 

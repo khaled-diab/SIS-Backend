@@ -44,16 +44,16 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
 
         Long filterStudyType = studentEnrollmentRequestDTO.getFilterStudyType();
 
-        Long filterSectionNumber = studentEnrollmentRequestDTO.getFilterSectionNumber();
+        Long filterSection = studentEnrollmentRequestDTO.getFilterSectionNumber();
 
         Long filterMajor = studentEnrollmentRequestDTO.getFilterMajor();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(studentEnrollmentRequestDTO));
         if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null ||
                 filterAcademicYear != null || filterAcademicTerm != null || filterCourse != null ||
-                filterStudyType != null || filterSectionNumber != null || filterMajor != null) {
+                filterStudyType != null || filterSection != null || filterMajor != null) {
             StudentEnrollmentSpecification studentEnrollmentSpecification = new StudentEnrollmentSpecification(searchValue, filterCollege, filterDepartment,
-                    filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterSectionNumber, filterMajor);
+                    filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterSection, filterMajor);
 
             studentEnrollmentPage = studentEnrollmentRepository.findAll(studentEnrollmentSpecification, pageable);
         } else {

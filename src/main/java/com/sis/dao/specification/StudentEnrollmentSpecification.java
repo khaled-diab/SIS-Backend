@@ -69,7 +69,7 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
             Predicate searchPredicate = criteriaBuilder.or(
                     criteriaBuilder.like(studentEnrollmentStudentJoin.get("nameAr"), "%" + searchValue + "%"),
                     criteriaBuilder.like(studentEnrollmentStudentJoin.get("nameEn"), "%" + searchValue + "%"),
-                    criteriaBuilder.like(studentEnrollmentStudentJoin.get("universityId"), "%" + searchValue + "%")
+                    criteriaBuilder.equal(studentEnrollmentStudentJoin.get("universityId"), searchValue)
             );
             if (filterCollege == null && filterDepartment == null && filterAcademicYear == null
                     && filterAcademicTerm == null && filterCourse == null && filterSection == null
@@ -86,8 +86,8 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
         Join<StudentEnrollment, Department> studentEnrollmentDepartmentJoin = root.join("department");
         Join<StudentEnrollment, AcademicYear> studentEnrollmentAcademicYearJoin = root.join("academicYear");
         Join<StudentEnrollment, AcademicTerm> studentEnrollmentAcademicTermJoin = root.join("academicTerm");
-        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("course");
-        Join<StudentEnrollment, Section> studentEnrollmentSectionJoin = root.join("sectionNumber");
+        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("courses");
+        Join<StudentEnrollment, Section> studentEnrollmentSectionJoin = root.join("section");
         Join<StudentEnrollment, StudyType> studentEnrollmentStudyTypeJoin = root.join("studyType");
         Join<StudentEnrollment, Major> studentEnrollmentMajorJoin = root.join("major");
 

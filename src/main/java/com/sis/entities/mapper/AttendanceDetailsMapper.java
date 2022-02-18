@@ -1,12 +1,9 @@
 package com.sis.entities.mapper;
 
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
-import com.sis.dto.lecture.LectureDTO;
 import com.sis.entities.AttendanceDetails;
-import com.sis.entities.Lecture;
-import com.sis.entities.Student;
 import com.sis.util.PageResult;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,13 +12,10 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Component
+@AllArgsConstructor
+public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, AttendanceDetailsDTO> {
 
-public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, AttendanceDetailsDTO>{
-
-    @Autowired
     private StudentMapper studentMapper;
-
-    @Autowired
     private LectureMapper lectureMapper;
 
     @Override
@@ -46,23 +40,22 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
 
     @Override
     public AttendanceDetails toEntity(AttendanceDetailsDTO dto) {
-            AttendanceDetails attendanceDetails = new AttendanceDetails();
-            if(dto != null) {
-                attendanceDetails.setAttendanceStatus(dto.getAttendanceStatus());
-                attendanceDetails.setAttendanceDate(dto.getAttendanceDate());
-                attendanceDetails.setLectureStartTime(dto.getLectureStartTime());
-                attendanceDetails.setLectureEndTime(dto.getLectureEndTime());
-                attendanceDetails.setId(dto.getId());
-                if (dto.getStudentDTOs() != null) {
-                    attendanceDetails.setStudents(this.studentMapper.toEntities(dto.getStudentDTOs()));
-                }
-                if (dto.getLectureDTOs() != null) {
-                    attendanceDetails.setLectures(this.lectureMapper.toEntities(dto.getLectureDTOs()));
-                }
-
+        AttendanceDetails attendanceDetails = new AttendanceDetails();
+        if (dto != null) {
+            attendanceDetails.setAttendanceStatus(dto.getAttendanceStatus());
+            attendanceDetails.setAttendanceDate(dto.getAttendanceDate());
+            attendanceDetails.setLectureStartTime(dto.getLectureStartTime());
+            attendanceDetails.setLectureEndTime(dto.getLectureEndTime());
+            attendanceDetails.setId(dto.getId());
+            if (dto.getStudentDTOs() != null) {
+                attendanceDetails.setStudents(this.studentMapper.toEntities(dto.getStudentDTOs()));
             }
-            return attendanceDetails;
+            if (dto.getLectureDTOs() != null) {
+                attendanceDetails.setLectures(this.lectureMapper.toEntities(dto.getLectureDTOs()));
+            }
         }
+        return attendanceDetails;
+    }
 
     @Override
     public ArrayList<AttendanceDetailsDTO> toDTOs(Collection<AttendanceDetails> attendanceDetails) {
