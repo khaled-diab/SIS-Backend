@@ -60,7 +60,7 @@ public class FacultyMemberEnrollmentService extends BaseServiceImp<FacultyMember
 
     private Sort constructSortObject(FacultyMemberEnrollmentRequestDTO facultyMemberEnrollmentRequestDTO) {
         if (facultyMemberEnrollmentRequestDTO.getSortDirection() == null) {
-            return Sort.by(Sort.Direction.ASC, "nameAr");
+            return Sort.by(Sort.Direction.ASC, "college");
         }
         return Sort.by(Sort.Direction.valueOf(facultyMemberEnrollmentRequestDTO.getSortDirection()), facultyMemberEnrollmentRequestDTO.getSortBy());
     }

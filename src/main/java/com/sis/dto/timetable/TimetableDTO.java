@@ -24,7 +24,7 @@ public class TimetableDTO extends BaseDTO {
 
     private LocalTime endTime;
 
-    private Collection<LectureTypeDTO> lectureTypeDTO;
+    private LectureTypeDTO lectureTypeDTO;
 
     private CollegeDTO collegeDTO;
 
@@ -34,14 +34,14 @@ public class TimetableDTO extends BaseDTO {
 
     private AcademicTermDTO academicTermDTO;
 
-    private Collection<FacultyMemberDTO> facultyMemberDTO;
+    private FacultyMemberDTO facultyMemberDTO;
 
-    private Collection<CourseDTO> courseDTO;
+    private CourseDTO courseDTO;
 
     private Collection<SectionDTO> sectionDTO;
 
-    private Collection<BuildingDTO> buildingDTO;
+    private BuildingDTO buildingDTO;
 
-    private Collection<ClassroomDTO> classroomDTO;
+    private ClassroomDTO classroomDTO;
 
 }

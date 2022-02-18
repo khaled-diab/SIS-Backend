@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Setter
 public class Building extends BaseEntity {
     private static final long serialVersionUID = 1L;
-   
+
     @Column(name = "code")
     private String code;
 
@@ -37,6 +37,6 @@ public class Building extends BaseEntity {
     @OneToMany(mappedBy = "building")
     private Collection<Classroom> classroomCollection;
 
-    @ManyToMany(mappedBy = "buildings")
+    @OneToMany(mappedBy = "building")
     private Collection<Timetable> timetables;
 }

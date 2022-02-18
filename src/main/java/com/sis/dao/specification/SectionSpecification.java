@@ -21,11 +21,11 @@ public class SectionSpecification implements Specification<Section> {
 
     private Long filterStudyType;
 
-    private Long filterSectionNumber;
+    private String filterSectionNumber;
 
     public SectionSpecification(String searchValue, Long filterCollege, Long filterDepartment,
                                 Long filterAcademicYear, Long filterAcademicTerm, Long filterCourse,
-                                Long filterStudyType, Long filterSectionNumber) {
+                                Long filterStudyType, String filterSectionNumber) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
         this.filterDepartment = filterDepartment;
@@ -59,13 +59,16 @@ public class SectionSpecification implements Specification<Section> {
 
     @Override
     public Predicate toPredicate(Root<Section> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        Join<Section, Course> sectionCourseJoin = root.join("courses");
         if (searchValue != null) {
             Predicate searchPredicate = criteriaBuilder.or(
-                    criteriaBuilder.like(root.get("course"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(sectionCourseJoin.get("code"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(sectionCourseJoin.get("nameAr"), "%" + searchValue + "%"),
+                    criteriaBuilder.like(sectionCourseJoin.get("nameEn"), "%" + searchValue + "%"),
                     criteriaBuilder.like(root.get("sectionNumber"), "%" + searchValue + "%")
             );
             if (filterCollege == null && filterDepartment == null && filterAcademicYear == null
-                    && filterAcademicTerm == null && filterCourse == null && filterSectionNumber == null
+                    && filterAcademicTerm == null && filterCourse == null && filterSectionNumber.isEmpty()
                     && filterStudyType == null) {
                 return searchPredicate;
             }
@@ -79,8 +82,8 @@ public class SectionSpecification implements Specification<Section> {
         Join<Section, Department> sectionDepartmentJoin = root.join("department");
         Join<Section, AcademicYear> sectionAcademicYearJoin = root.join("academicYear");
         Join<Section, AcademicTerm> sectionAcademicTermJoin = root.join("academicTerm");
-        Join<Section, Course> sectionCourseJoin = root.join("course");
-        Join<Section, Section> sectionSectionJoin = root.join("sectionNumber");
+        Join<Section, Course> sectionCourseJoin = root.join("courses");
+        Path<Object> sectionSectionJoin = root.get("sectionNumber");
         Join<Section, StudyType> sectionStudyTypeJoin = root.join("studyType");
 
 //        System.out.println(filterCollege);
@@ -112,9 +115,9 @@ public class SectionSpecification implements Specification<Section> {
         else course = criteriaBuilder.notEqual(sectionCourseJoin.get("id"), -1);
 
         Predicate sectionNumber;
-        if (filterSectionNumber != null)
+        if (!filterSectionNumber.isEmpty())
             sectionNumber = criteriaBuilder.equal(sectionSectionJoin.get("id"), filterSectionNumber);
-        else sectionNumber = criteriaBuilder.notEqual(sectionSectionJoin.get("id"), -1);
+        else sectionNumber = criteriaBuilder.notEqual(sectionSectionJoin.get("id"), "");
 
         Predicate studyType;
         if (filterStudyType != null)

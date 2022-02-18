@@ -20,7 +20,7 @@ import java.util.Collection;
 public class Classroom extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-   
+
     @Column(name = "code")
     private String code;
 
@@ -44,6 +44,6 @@ public class Classroom extends BaseEntity {
     @ManyToOne
     private Building building;
 
-    @ManyToMany(mappedBy = "classrooms")
+    @OneToMany(mappedBy = "classroom")
     private Collection<Timetable> timetables;
 }

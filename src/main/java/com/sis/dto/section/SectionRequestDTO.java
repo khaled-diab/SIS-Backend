@@ -13,7 +13,7 @@ public class SectionRequestDTO {
     private Long filterAcademicTerm;
     private Long filterCourse;
     private Long filterStudyType;
-    private Long filterSectionNumber;
+    private String filterSectionNumber;
     private String sortDirection;
     private String sortBy;
 
