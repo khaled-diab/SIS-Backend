@@ -5,8 +5,9 @@
  */
 package com.sis.entities;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

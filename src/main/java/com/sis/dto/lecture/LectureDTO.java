@@ -3,16 +3,13 @@ package com.sis.dto.lecture;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.AcademicYearDTO;
 import com.sis.dto.BaseDTO;
-import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.section.SectionDTO;
-import com.sis.entities.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -26,9 +23,7 @@ public class LectureDTO extends BaseDTO {
 
     private Date lectureDate;
 
-
     private LocalTime lectureStartTime;
-
 
     private LocalTime lectureEndTime;
 
@@ -36,20 +31,14 @@ public class LectureDTO extends BaseDTO {
 
     private LocalTime attendanceCodeExpiringTime;
 
-
     private FacultyMemberDTO facultyMemberDTO;
-
 
     private CourseDTO courseDTO;
 
-
     private AcademicTermDTO academicTermDTO;
-
 
     private AcademicYearDTO academicYearDTO;
 
-
     private List<SectionDTO> sectionDTOs;
 
-    private List<AttendanceDetailsDTO> attendanceDetailsDTOs;
 }

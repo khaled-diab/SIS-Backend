@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/studentEnrollment")
+@RequestMapping(value = "/api/studentEnrollments")
 @CrossOrigin(origins = ("*"))
 @AllArgsConstructor
 public class StudentEnrollmentController extends BaseController<StudentEnrollment, StudentEnrollmentDTO> {
