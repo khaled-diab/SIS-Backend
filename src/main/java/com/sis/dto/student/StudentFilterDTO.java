@@ -1,4 +1,4 @@
-package com.sis.dto;
+package com.sis.dto.student;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -19,7 +19,6 @@ public class DepartmentController extends BaseController<Department, DepartmentD
     @Autowired
     private DepartmentMapper departmentMapper;
     @Autowired
-    private DepartmentDao departmentDao ;
-
+    private DepartmentDao departmentDao;
 
 }

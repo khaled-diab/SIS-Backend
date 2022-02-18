@@ -5,10 +5,9 @@
  */
 package com.sis.entities;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,4 +64,10 @@ public class FacultyMember extends BaseEntity {
 
     @OneToMany(mappedBy = "facultyMember")
     private Collection<FacultyMemberEnrollment> facultyMemberCourses;
+
+    @OneToMany(mappedBy = "facultyMemberId")
+    private List<Lecture> lectures;
+
+
+
 }
