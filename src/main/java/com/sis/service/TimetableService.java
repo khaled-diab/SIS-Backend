@@ -40,11 +40,19 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
         Long filterAcademicTerm = timetableRequestDTO.getFilterAcademicTerm();
 
+        Long filterFacultyMember = timetableRequestDTO.getFilterFacultyMember();
+
+        Long filterCourse = timetableRequestDTO.getFilterCourse();
+
+        Long filterSection = timetableRequestDTO.getFilterSection();
+
+        String filterDay = timetableRequestDTO.getFilterDay();
+
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(timetableRequestDTO));
         if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null ||
                 filterAcademicYear != null || filterAcademicTerm != null) {
             TimetableSpecification timetableSpecification = new TimetableSpecification(searchValue, filterCollege, filterDepartment,
-                    filterAcademicYear, filterAcademicTerm);
+                    filterAcademicYear, filterAcademicTerm, filterFacultyMember, filterCourse, filterSection, filterDay);
 
             timetablePage = timetableRepository.findAll(timetableSpecification, pageable);
         } else {
@@ -58,7 +66,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     private Sort constructSortObject(TimetableRequestDTO timetableRequestDTO) {
         if (timetableRequestDTO.getSortDirection() == null) {
-            return Sort.by(Sort.Direction.ASC, "nameAr");
+            return Sort.by(Sort.Direction.ASC, "day");
         }
         return Sort.by(Sort.Direction.valueOf(timetableRequestDTO.getSortDirection()), timetableRequestDTO.getSortBy());
     }

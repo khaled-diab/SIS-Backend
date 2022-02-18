@@ -20,12 +20,9 @@ public class Timetable extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "timetable_lecture_type",
-            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "lecture_type_id",
-                    referencedColumnName = "id"))
-    private Collection<LectureType> lectureTypes;
+    @ManyToOne
+    @JoinColumn(name = "lecture_type_id", referencedColumnName = "id")
+    private LectureType lectureType;
 
     @Column(name = "day")
     private String day;
@@ -52,19 +49,13 @@ public class Timetable extends BaseEntity {
     @JoinColumn(name = "academic_term_id", referencedColumnName = "id")
     private AcademicTerm academicTerm;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "timetable_faculty_member",
-            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "faculty_member_id",
-                    referencedColumnName = "id"))
-    private Collection<FacultyMember> facultyMembers;
+    @ManyToOne
+    @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
+    private FacultyMember facultyMember;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "timetable_course",
-            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id",
-                    referencedColumnName = "id"))
-    private Collection<Course> courses;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private Course course;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "timetable_section",
@@ -73,18 +64,12 @@ public class Timetable extends BaseEntity {
                     referencedColumnName = "id"))
     private Collection<Section> sections;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "timetable_building",
-            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "building_id",
-                    referencedColumnName = "id"))
-    private Collection<Building> buildings;
+    @ManyToOne
+    @JoinColumn(name = "building_id", referencedColumnName = "id")
+    private Building building;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "timetable_classroom",
-            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "classroom_id",
-                    referencedColumnName = "id"))
-    private Collection<Classroom> classrooms;
+    @ManyToOne
+    @JoinColumn(name = "classroom_id", referencedColumnName = "id")
+    private Classroom classroom;
 
 }

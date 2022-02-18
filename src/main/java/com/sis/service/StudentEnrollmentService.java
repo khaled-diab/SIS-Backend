@@ -67,7 +67,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
 
     private Sort constructSortObject(StudentEnrollmentRequestDTO studentEnrollmentRequestDTO) {
         if (studentEnrollmentRequestDTO.getSortDirection() == null) {
-            return Sort.by(Sort.Direction.ASC, "nameAr");
+            return Sort.by(Sort.Direction.ASC, "college");
         }
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }

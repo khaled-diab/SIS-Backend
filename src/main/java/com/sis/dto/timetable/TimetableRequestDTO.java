@@ -11,6 +11,10 @@ public class TimetableRequestDTO {
     private Long filterDepartment;
     private Long filterAcademicYear;
     private Long filterAcademicTerm;
+    private Long filterFacultyMember;
+    private Long filterCourse;
+    private Long filterSection;
+    private String filterDay;
     private String sortDirection;
     private String sortBy;
 

@@ -44,7 +44,7 @@ public class SectionService extends BaseServiceImp<Section> {
 
         Long filterStudyType = sectionRequestDTO.getFilterStudyType();
 
-        Long filterSectionNumber = sectionRequestDTO.getFilterSectionNumber();
+        String filterSectionNumber = sectionRequestDTO.getFilterSectionNumber();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(sectionRequestDTO));
         if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null ||
@@ -65,7 +65,7 @@ public class SectionService extends BaseServiceImp<Section> {
 
     private Sort constructSortObject(SectionRequestDTO sectionRequestDTO) {
         if (sectionRequestDTO.getSortDirection() == null) {
-            return Sort.by(Sort.Direction.ASC, "nameAr");
+            return Sort.by(Sort.Direction.ASC, "sectionNumber");
         }
         return Sort.by(Sort.Direction.valueOf(sectionRequestDTO.getSortDirection()), sectionRequestDTO.getSortBy());
     }

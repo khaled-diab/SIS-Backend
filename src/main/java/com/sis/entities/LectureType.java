@@ -8,10 +8,7 @@ package com.sis.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -28,6 +25,6 @@ public class LectureType extends BaseEntity {
     @Column(name = "name_en")
     private String nameEn;
 
-    @ManyToMany(mappedBy = "lectureTypes")
+    @OneToMany(mappedBy = "lectureType")
     private Collection<Timetable> timetables;
 }
