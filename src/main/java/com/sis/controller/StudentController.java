@@ -1,7 +1,7 @@
 package com.sis.controller;
 
-import com.sis.dto.StudentDTO;
-import com.sis.dto.StudentFilterDTO;
+import com.sis.dto.student.StudentDTO;
+import com.sis.dto.student.StudentFilterDTO;
 import com.sis.entities.Student;
 import com.sis.entities.mapper.StudentMapper;
 import com.sis.exception.StudentFieldNotUniqueException;
@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,6 +35,7 @@ import java.util.Objects;
 import static java.nio.file.Files.copy;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
+
 @RestController
 @Validated
 @RequestMapping(value = "/api/students")
@@ -51,7 +51,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @Autowired
     private HttpServletRequest request;
 
-    public static final String DIRECTORY = System.getProperty("user.home") + "/resources/StudentImages/";
+    public static final String DIRECTORY = System.getProperty("user.home") + "/Resourcess/StudentImages/";
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();

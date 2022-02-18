@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -67,5 +68,11 @@ public class Section extends BaseEntity {
 
     @ManyToMany(mappedBy = "sections")
     private Collection<Timetable> timetables;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "section_lecture",
+            joinColumns = @JoinColumn(name = "section_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "lecture_id",referencedColumnName = "id"))
+    private List<Lecture> lectures;
 
 }

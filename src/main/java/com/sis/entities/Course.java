@@ -8,9 +8,9 @@ package com.sis.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Getter
@@ -67,11 +67,8 @@ public class Course extends BaseEntity {
     @JoinColumn(name = "departmentId", referencedColumnName = "id")
     private Department department;
 
-    @ManyToMany(mappedBy = "courses")
-    private Collection<Section> sections;
-
-    @ManyToMany(mappedBy = "courses")
-    private Collection<StudentEnrollment> studentEnrollments;
+    @OneToMany(mappedBy = "courseId")
+    private List<Lecture> lectures;
 
     @OneToMany(mappedBy = "course")
     private Collection<Timetable> timetables;

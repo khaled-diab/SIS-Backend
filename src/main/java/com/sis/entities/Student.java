@@ -9,7 +9,6 @@ package com.sis.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -71,7 +70,13 @@ public class Student extends BaseEntity {
     @ManyToOne
     private Department departmentId;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "student_attendance",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "attendance_details_id",referencedColumnName = "id"))
+    private List<AttendanceDetails> attendanceDetailsId;
+
     @ManyToMany(mappedBy = "students")
     private Collection<StudentEnrollment> studentEnrollments;
-   
+
 }
