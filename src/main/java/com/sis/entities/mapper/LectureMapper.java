@@ -30,6 +30,7 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
                 .lectureEndTime(entity.getLectureEndTime())
                 .attendanceCode(entity.getAttendanceCode())
                 .attendanceCodeExpiringTime(entity.getAttendanceCodeExpiringTime())
+                .attendanceType(entity.getAttendanceType())
                 .build();
         lectureDTO.setId(entity.getId());
         if (entity.getFacultyMemberId() != null) {
@@ -60,6 +61,7 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
             lecture.setLectureEndTime(dto.getLectureEndTime());
             lecture.setAttendanceCode(dto.getAttendanceCode());
             lecture.setAttendanceCodeExpiringTime(dto.getAttendanceCodeExpiringTime());
+            lecture.setAttendanceType(dto.getAttendanceType());
             lecture.setId(dto.getId());
             if (dto.getFacultyMemberDTO() != null) {
                 lecture.setFacultyMemberId(this.facultyMemberMapper.toEntity(dto.getFacultyMemberDTO()));

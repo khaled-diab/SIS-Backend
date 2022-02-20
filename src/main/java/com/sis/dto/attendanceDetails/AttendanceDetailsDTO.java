@@ -3,16 +3,14 @@ package com.sis.dto.attendanceDetails;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.student.StudentDTO;
-import com.sis.entities.Lecture;
-import com.sis.entities.Student;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
+
 
 @Getter
 @Setter
@@ -20,19 +18,16 @@ import java.util.List;
 public class AttendanceDetailsDTO extends BaseDTO {
 
 
-    private List<StudentDTO> studentDTOs;
+    private StudentDTO studentDTO;
 
-
-    private List<LectureDTO> lectureDTOs;
-
+    private LectureDTO lectureDTO;
 
     private String attendanceStatus;
 
-
     private Date attendanceDate;
-
 
     private LocalTime lectureStartTime;
 
     private LocalTime lectureEndTime;
+
 }

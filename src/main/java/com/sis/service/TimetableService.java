@@ -4,6 +4,7 @@ import com.sis.dao.TimetableRepository;
 import com.sis.dao.specification.TimetableSpecification;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
+import com.sis.entities.FacultyMemberEnrollment;
 import com.sis.entities.Timetable;
 import com.sis.entities.mapper.TimetableMapper;
 import com.sis.util.PageQueryUtil;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 @AllArgsConstructor
@@ -70,4 +73,9 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         }
         return Sort.by(Sort.Direction.valueOf(timetableRequestDTO.getSortDirection()), timetableRequestDTO.getSortBy());
     }
+
+    public Collection<Timetable> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
+        return this.timetableRepository.findTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
+    }
+
 }

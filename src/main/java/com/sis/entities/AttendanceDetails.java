@@ -17,19 +17,14 @@ import java.util.List;
 public class AttendanceDetails extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @ManyToMany
-    @JoinTable(name = "student_attendance",
-            joinColumns = @JoinColumn(name = "attendance_details_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id",referencedColumnName = "id"))
-    private List<Student> students;
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
 
-    @NotNull
-    @ManyToMany
-    @JoinTable(name = "attendance_lecture",
-            joinColumns = @JoinColumn(name = "attendance_details_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "lecture_id",referencedColumnName = "id"))
-    private List<Lecture> lectures;
+
+    @ManyToOne
+    @JoinColumn(name = "lecture_id", referencedColumnName = "id")
+    private Lecture lecture;
 
     @NotNull
     @Column(name = "attendance_status")
