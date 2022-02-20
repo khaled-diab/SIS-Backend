@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class Lecture extends BaseEntity{
 //    @NotNull
     @Column(name = "lecture_day")
     private String lectureDay;
+
+    @Column(name = "attendance_type")
+    private String attendanceType;
 
 //    @NotNull
     @Column(name = "lecture_date")
@@ -64,10 +68,8 @@ public class Lecture extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "section_id",referencedColumnName = "id"))
     private List<Section>  sections;
 
-//    @NotNull
-    @ManyToMany
-    @JoinTable(name = "attendance_lecture",
-            joinColumns = @JoinColumn(name = "lecture_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "attendance_details_id",referencedColumnName = "id"))
-    private List<AttendanceDetails> attendanceDetails;
+
+@OneToMany(mappedBy = "lecture")
+private Collection<AttendanceDetails> attendanceDetails;
+
 }

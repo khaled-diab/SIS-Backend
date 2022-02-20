@@ -3,6 +3,7 @@ package com.sis.dto.student;
 import com.sis.dto.AcademicProgramDTO;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.DepartmentDTO;
+import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
 
+import java.util.Collection;
 import java.util.Date;
 @Getter
 @Setter
@@ -73,6 +75,7 @@ public class StudentDTO extends BaseDTO {
 
 //    @NotNull
     private AcademicProgramDTO academicProgramDTO;
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.sis.dto.lecture;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.AcademicYearDTO;
 import com.sis.dto.BaseDTO;
@@ -11,15 +12,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LectureDTO extends BaseDTO {
 
     private String lectureDay;
+
+    private String attendanceType;
 
     private Date lectureDate;
 
@@ -39,6 +44,6 @@ public class LectureDTO extends BaseDTO {
 
     private AcademicYearDTO academicYearDTO;
 
-    private List<SectionDTO> sectionDTOs;
+    private Collection<SectionDTO> sectionDTOs;
 
 }

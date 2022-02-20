@@ -40,6 +40,7 @@ public class AcademicTermMapper implements  Mapper<AcademicTerm , AcademicTermDT
         academicTerm.setId(dto.getId());
         academicTerm.setStartDate(dto.getStart_date());
         academicTerm.setEndDate(dto.getEnd_date());
+        System.out.println(dto.getYear_id());
         academicTerm.setAcademicYear(academicYearService.findById(dto.getYear_id()));
         return academicTerm;
     }

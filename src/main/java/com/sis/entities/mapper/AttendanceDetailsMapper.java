@@ -28,11 +28,11 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
                 .build();
         attendanceDetailsDTO.setId(entity.getId());
 
-        if (entity.getStudents() != null) {
-            attendanceDetailsDTO.setStudentDTOs(this.studentMapper.toDTOs(entity.getStudents()));
+        if (entity.getStudent() != null) {
+            attendanceDetailsDTO.setStudentDTO(this.studentMapper.toDTO(entity.getStudent()));
         }
-        if (entity.getLectures() != null) {
-            attendanceDetailsDTO.setLectureDTOs(this.lectureMapper.toDTOs(entity.getLectures()));
+        if (entity.getLecture() != null) {
+            attendanceDetailsDTO.setLectureDTO(this.lectureMapper.toDTO(entity.getLecture()));
         }
 
         return attendanceDetailsDTO;
@@ -47,11 +47,11 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
             attendanceDetails.setLectureStartTime(dto.getLectureStartTime());
             attendanceDetails.setLectureEndTime(dto.getLectureEndTime());
             attendanceDetails.setId(dto.getId());
-            if (dto.getStudentDTOs() != null) {
-                attendanceDetails.setStudents(this.studentMapper.toEntities(dto.getStudentDTOs()));
+            if (dto.getStudentDTO() != null) {
+                attendanceDetails.setStudent(this.studentMapper.toEntity(dto.getStudentDTO()));
             }
-            if (dto.getLectureDTOs() != null) {
-                attendanceDetails.setLectures(this.lectureMapper.toEntities(dto.getLectureDTOs()));
+            if (dto.getLectureDTO() != null) {
+                attendanceDetails.setLecture(this.lectureMapper.toEntity(dto.getLectureDTO()));
             }
         }
         return attendanceDetails;

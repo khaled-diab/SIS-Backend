@@ -1,6 +1,8 @@
 package com.sis.entities.mapper;
 
+import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Student;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 
 	@Autowired
 	private AcademicProgramMapper academicProgramMapper;
+
 
 	@Override
 	public StudentDTO toDTO(Student entity) {

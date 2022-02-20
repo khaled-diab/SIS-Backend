@@ -16,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class FacultyMemberEnrollmentService extends BaseServiceImp<FacultyMemberEnrollment> {
@@ -64,4 +66,9 @@ public class FacultyMemberEnrollmentService extends BaseServiceImp<FacultyMember
         }
         return Sort.by(Sort.Direction.valueOf(facultyMemberEnrollmentRequestDTO.getSortDirection()), facultyMemberEnrollmentRequestDTO.getSortBy());
     }
+
+    public FacultyMemberEnrollment findByFacultyMember(long academicYearId, long academicTermId, long facultyMemberId){
+        return this.facultyMemberEnrollmentRepository.findByFacultyMember(academicYearId, academicTermId, facultyMemberId);
+    }
+
 }
