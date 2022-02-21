@@ -14,11 +14,11 @@ import lombok.Setter;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+
 
 @Getter
 @Setter
-@Builder
+//@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LectureDTO extends BaseDTO {
 

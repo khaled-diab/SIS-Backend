@@ -21,17 +21,17 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
     private AcademicYearMapper academicYearMapper;
     private SectionMapper sectionMapper;
 
-    @Override
+//    @Override
     public LectureDTO toDTO(Lecture entity) {
-        LectureDTO lectureDTO = LectureDTO.builder()
-                .lectureDay(entity.getLectureDay())
-                .lectureDate(entity.getLectureDate())
-                .lectureStartTime(entity.getLectureStartTime())
-                .lectureEndTime(entity.getLectureEndTime())
-                .attendanceCode(entity.getAttendanceCode())
-                .attendanceCodeExpiringTime(entity.getAttendanceCodeExpiringTime())
-                .attendanceType(entity.getAttendanceType())
-                .build();
+        LectureDTO lectureDTO = new LectureDTO();
+        lectureDTO.setLectureDay(entity.getLectureDay());
+        lectureDTO.setLectureDate(entity.getLectureDate());
+        lectureDTO.setLectureStartTime(entity.getLectureStartTime());
+        lectureDTO.setLectureEndTime(entity.getLectureEndTime());
+        lectureDTO.setAttendanceCode(entity.getAttendanceCode());
+        lectureDTO.setAttendanceCodeExpiringTime(entity.getAttendanceCodeExpiringTime());
+        lectureDTO.setAttendanceType(entity.getAttendanceType());
+
         lectureDTO.setId(entity.getId());
         if (entity.getFacultyMemberId() != null) {
             lectureDTO.setFacultyMemberDTO(this.facultyMemberMapper.toDTO(entity.getFacultyMemberId()));
@@ -50,7 +50,6 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
         }
         return lectureDTO;
     }
-
     @Override
     public Lecture toEntity(LectureDTO dto) {
         Lecture lecture = new Lecture();
