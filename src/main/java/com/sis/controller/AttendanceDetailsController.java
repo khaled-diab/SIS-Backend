@@ -1,6 +1,9 @@
 package com.sis.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.student.StudentDTO;
@@ -15,6 +18,7 @@ import com.sis.util.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -44,12 +48,11 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     private StudentMapper studentMapper;
 
     @RequestMapping(value="/addAttendance/{attendanceCode}/{studentId}/{lectureId}", method = RequestMethod.GET)
-    public ResponseEntity<AttendanceDetailsDTO> addAttendance( @PathVariable long studentId, @PathVariable long lectureId
-    ,@PathVariable long attendanceCode) {
+    public ResponseEntity<AttendanceDetailsDTO> addAttendance(@PathVariable long attendanceCode , @PathVariable long studentId,
+                                                              @PathVariable long lectureId){
 
         LectureDTO lectureDTO = this .lectureMapper.toDTO(this.lectureService.findById(lectureId));
         StudentDTO studentDTO = this .studentMapper.toDTO(this.studentService.findById(studentId));
-
         LocalTime now = LocalTime.now();
         AttendanceDetailsDTO attendanceDetailsDTO = AttendanceDetailsDTO.builder()
                 .studentDTO(studentDTO)
@@ -60,14 +63,17 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
                 .lectureEndTime(lectureDTO.getLectureEndTime())
                 .build();
 
-        System.out.println(lectureDTO.getAttendanceCode());
         System.out.println(attendanceCode);
+        System.out.println(lectureDTO.getAttendanceCode());
+        System.out.println(lectureDTO.getAttendanceCodeExpiringTime());
         System.out.println(now);
 
-        if( (lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getLectureEndTime().isAfter(now)) ){
+        if( (lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceCodeExpiringTime().isAfter(now)) ){
                 attendanceDetailsDTO.setAttendanceStatus("Present");
         }
         this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
         return new ResponseEntity<>(attendanceDetailsDTO,HttpStatus.OK);
     }
+
+
 }

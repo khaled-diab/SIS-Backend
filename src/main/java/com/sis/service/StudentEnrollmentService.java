@@ -2,19 +2,27 @@ package com.sis.service;
 
 import com.sis.dao.StudentEnrollmentRepository;
 import com.sis.dao.specification.StudentEnrollmentSpecification;
+import com.sis.dto.section.SectionDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
+import com.sis.entities.Section;
 import com.sis.entities.StudentEnrollment;
+import com.sis.entities.mapper.SectionMapper;
 import com.sis.entities.mapper.StudentEnrollmentMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +30,12 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
 
     private final StudentEnrollmentRepository studentEnrollmentRepository;
     private final StudentEnrollmentMapper studentEnrollmentMapper;
+
+    @Autowired
+    private SectionMapper sectionMapper;
+
+
+
 
     @Override
     public JpaRepository<StudentEnrollment, Long> Repository() {
@@ -70,5 +84,17 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
             return Sort.by(Sort.Direction.ASC, "college");
         }
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
+    }
+
+    public Collection<Section> findSections( long academicYearId, long academicTermId, long studentId){
+        Collection<Long> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentsByStudent(studentId);
+        Collection<Section> sectionDTOs=new ArrayList<>();
+        for(long id : studentEnrollments){
+            StudentEnrollment studentEnrollment = this.findById(id);
+            if(studentEnrollment.getAcademicTerm().getId() == academicTermId && studentEnrollment.getAcademicYear().getId() == academicYearId ) {
+                sectionDTOs.add(studentEnrollment.getSection());
+            }
+        }
+        return  sectionDTOs;
     }
 }

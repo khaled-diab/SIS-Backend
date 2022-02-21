@@ -26,20 +26,20 @@ public class AttendanceDetails extends BaseEntity {
     @JoinColumn(name = "lecture_id", referencedColumnName = "id")
     private Lecture lecture;
 
-    @NotNull
+
     @Column(name = "attendance_status")
     private String attendanceStatus;
 
-    @NotNull
+
     @Column(name = "attendance_date")
     @Temporal(TemporalType.DATE)
     private Date attendanceDate;
 
-    @NotNull
+
     @Column(name = "lecture_start_time")
     private LocalTime lectureStartTime;
 
-    @NotNull
+
     @Column(name = "lecture_end_time")
     private LocalTime lectureEndTime;
 
