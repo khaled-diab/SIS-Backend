@@ -4,7 +4,6 @@ import com.sis.dao.TimetableRepository;
 import com.sis.dao.specification.TimetableSpecification;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
-import com.sis.entities.FacultyMemberEnrollment;
 import com.sis.entities.Timetable;
 import com.sis.entities.mapper.TimetableMapper;
 import com.sis.util.PageQueryUtil;
@@ -31,7 +30,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         return timetableRepository;
     }
 
-    public PageResult<TimetableDTO> search(PageQueryUtil pageUtil, TimetableRequestDTO timetableRequestDTO) {
+    public PageResult<TimetableDTO> filter(PageQueryUtil pageUtil, TimetableRequestDTO timetableRequestDTO) {
         Page<Timetable> timetablePage;
         String searchValue = timetableRequestDTO.getSearchValue();
 

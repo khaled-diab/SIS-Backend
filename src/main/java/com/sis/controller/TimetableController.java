@@ -19,11 +19,11 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
 
     private final TimetableService timetableService;
 
-    @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
-    public ResponseEntity<PageResult<TimetableDTO>> search(@PathVariable int pageNumber,
+    @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<TimetableDTO>> filter(@PathVariable int pageNumber,
                                                                    @PathVariable int size,
                                                                    @RequestBody TimetableRequestDTO timetableRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
-        return new ResponseEntity<>(timetableService.search(pageUtil, timetableRequestDTO), HttpStatus.OK);
+        return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
     }
 }
