@@ -52,11 +52,11 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
         if (entity.getAcademicTerm() != null) {
             dto.setAcademicTermDTO(academicTermMapper.toDTO(entity.getAcademicTerm()));
         }
-        if (entity.getStudents() != null) {
-            dto.setStudentDTO(studentMapper.toDTOs(entity.getStudents()));
+        if (entity.getStudent() != null) {
+            dto.setStudentDTO(studentMapper.toDTO(entity.getStudent()));
         }
-        if (entity.getCourses() != null) {
-            dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
+        if (entity.getCourse() != null) {
+            dto.setCourseDTO(courseMapper.toDTO(entity.getCourse()));
         }
         if (entity.getSection() != null) {
             dto.setSectionDTO(sectionMapper.toDTO(entity.getSection()));
@@ -82,10 +82,10 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
             entity.setAcademicTerm(academicTermMapper.toEntity(dto.getAcademicTermDTO()));
         }
         if (dto.getStudentDTO() != null) {
-            entity.setStudents(studentMapper.toEntities(dto.getStudentDTO()));
+            entity.setStudent(studentMapper.toEntity(dto.getStudentDTO()));
         }
         if (dto.getCourseDTO() != null) {
-            entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
+            entity.setCourse(courseMapper.toEntity(dto.getCourseDTO()));
         }
         if (dto.getSectionDTO() != null) {
             entity.setSection(sectionMapper.toEntity(dto.getSectionDTO()));

@@ -58,8 +58,8 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
         if (entity.getAcademicTerm() != null) {
             dto.setAcademicTermDTO(academicTermMapper.toDTO(entity.getAcademicTerm()));
         }
-        if (entity.getCourses() != null) {
-            dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
+        if (entity.getCourse() != null) {
+            dto.setCourseDTO(courseMapper.toDTO(entity.getCourse()));
         }
         if (entity.getMajor() != null) {
             dto.setMajorDTO(majorMapper.toDTO(entity.getMajor()));
@@ -92,7 +92,7 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
             entity.setAcademicTerm(academicTermMapper.toEntity(dto.getAcademicTermDTO()));
         }
         if (dto.getCourseDTO() != null) {
-            entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
+            entity.setCourse(courseMapper.toEntity(dto.getCourseDTO()));
         }
         if (dto.getMajorDTO() != null) {
             entity.setMajor(majorMapper.toEntity(dto.getMajorDTO()));

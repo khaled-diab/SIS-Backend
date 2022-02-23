@@ -2,7 +2,6 @@ package com.sis.service;
 
 import com.sis.dao.StudentEnrollmentRepository;
 import com.sis.dao.specification.StudentEnrollmentSpecification;
-import com.sis.dto.section.SectionDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
 import com.sis.entities.Section;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,8 +31,6 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
 
     @Autowired
     private SectionMapper sectionMapper;
-
-
 
 
     @Override
@@ -56,18 +52,20 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
 
         Long filterCourse = studentEnrollmentRequestDTO.getFilterCourse();
 
+        Long filterStudent = studentEnrollmentRequestDTO.getFilterStudent();
+
         Long filterStudyType = studentEnrollmentRequestDTO.getFilterStudyType();
 
-        Long filterSection = studentEnrollmentRequestDTO.getFilterSectionNumber();
+        Long filterSection = studentEnrollmentRequestDTO.getFilterSection();
 
         Long filterMajor = studentEnrollmentRequestDTO.getFilterMajor();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(studentEnrollmentRequestDTO));
-        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null ||
-                filterAcademicYear != null || filterAcademicTerm != null || filterCourse != null ||
-                filterStudyType != null || filterSection != null || filterMajor != null) {
-            StudentEnrollmentSpecification studentEnrollmentSpecification = new StudentEnrollmentSpecification(searchValue, filterCollege, filterDepartment,
-                    filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterSection, filterMajor);
+        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null || filterAcademicYear != null || filterAcademicTerm != null ||
+                filterCourse != null || filterStudent != null || filterStudyType != null || filterSection != null || filterMajor != null) {
+            StudentEnrollmentSpecification studentEnrollmentSpecification = new StudentEnrollmentSpecification(searchValue,
+                    filterCollege, filterDepartment, filterAcademicYear, filterAcademicTerm, filterCourse,
+                    filterStudent, filterStudyType, filterSection, filterMajor);
 
             studentEnrollmentPage = studentEnrollmentRepository.findAll(studentEnrollmentSpecification, pageable);
         } else {
@@ -86,15 +84,17 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }
 
-    public Collection<Section> findSections( long academicYearId, long academicTermId, long studentId){
+    public Collection<Section> findSections(long academicYearId, long academicTermId, long studentId) {
         Collection<Long> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentsByStudent(studentId);
-        Collection<Section> sectionDTOs=new ArrayList<>();
-        for(long id : studentEnrollments){
+        Collection<Section> sectionDTOs = new ArrayList<>();
+        for (long id : studentEnrollments) {
             StudentEnrollment studentEnrollment = this.findById(id);
-            if(studentEnrollment.getAcademicTerm().getId() == academicTermId && studentEnrollment.getAcademicYear().getId() == academicYearId ) {
+            if (studentEnrollment.getAcademicTerm().getId() == academicTermId && studentEnrollment.getAcademicYear().getId() == academicYearId) {
                 sectionDTOs.add(studentEnrollment.getSection());
             }
         }
-        return  sectionDTOs;
+        return sectionDTOs;
     }
+
+
 }

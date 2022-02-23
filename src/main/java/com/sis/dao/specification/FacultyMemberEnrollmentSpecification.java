@@ -51,7 +51,7 @@ public class FacultyMemberEnrollmentSpecification implements Specification<Facul
 
     @Override
     public Predicate toPredicate(Root<FacultyMemberEnrollment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<FacultyMemberEnrollment, Course> studentEnrollmentStudentJoin = root.join("courses");
+        Join<FacultyMemberEnrollment, Course> studentEnrollmentStudentJoin = root.join("course");
         Join<FacultyMemberEnrollment, FacultyMember> facultyMemberEnrollmentFacultyMemberJoin = root.join("facultyMember");
         if (searchValue != null) {
             Predicate searchPredicate = criteriaBuilder.or(

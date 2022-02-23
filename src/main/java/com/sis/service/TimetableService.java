@@ -52,7 +52,8 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(timetableRequestDTO));
         if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null ||
-                filterAcademicYear != null || filterAcademicTerm != null) {
+                filterAcademicYear != null || filterAcademicTerm != null || filterFacultyMember != null ||
+                filterCourse != null || filterSection != null || (filterDay!= null && !filterDay.trim().isEmpty())) {
             TimetableSpecification timetableSpecification = new TimetableSpecification(searchValue, filterCollege, filterDepartment,
                     filterAcademicYear, filterAcademicTerm, filterFacultyMember, filterCourse, filterSection, filterDay);
 

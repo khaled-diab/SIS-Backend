@@ -56,12 +56,9 @@ public class Section extends BaseEntity {
     @JoinColumn(name = "academic_term", referencedColumnName = "id")
     private AcademicTerm academicTerm;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "section_course",
-            joinColumns = @JoinColumn(name = "section_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id",
-                    referencedColumnName = "id"))
-    private Collection<Course> courses;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private Course course;
 
     @OneToMany(mappedBy = "section")
     private Collection<StudentEnrollment> studentEnrollments;

@@ -34,6 +34,6 @@ public class SectionDTO extends BaseDTO {
 
     private AcademicTermDTO academicTermDTO;
 
-    private Collection<CourseDTO> courseDTO;
+    private CourseDTO courseDTO;
 
 }

@@ -23,9 +23,9 @@ public class StudentEnrollmentDTO extends BaseDTO {
 
 	private AcademicTermDTO academicTermDTO;
 
-	private Collection<StudentDTO> studentDTO;
+	private StudentDTO studentDTO;
 
-	private Collection<CourseDTO> courseDTO;
+	private CourseDTO courseDTO;
 
 	private SectionDTO sectionDTO;
 

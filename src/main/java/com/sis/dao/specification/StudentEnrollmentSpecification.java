@@ -19,22 +19,25 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
 
     private Long filterCourse;
 
+    private Long filterStudent;
+
     private Long filterStudyType;
 
     private Long filterSection;
 
     private Long filterMajor;
 
-    public StudentEnrollmentSpecification(String searchValue, Long filterCollege,
-                                          Long filterDepartment, Long filterAcademicYear,
-                                          Long filterAcademicTerm, Long filterCourse, Long filterStudyType,
-                                          Long filterSection, Long filterMajor) {
+    public StudentEnrollmentSpecification(String searchValue, Long filterCollege, Long filterDepartment,
+                                          Long filterAcademicYear, Long filterAcademicTerm, Long filterCourse,
+                                          Long filterStudent, Long filterStudyType, Long filterSection,
+                                          Long filterMajor) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
         this.filterDepartment = filterDepartment;
         this.filterAcademicYear = filterAcademicYear;
         this.filterAcademicTerm = filterAcademicTerm;
         this.filterCourse = filterCourse;
+        this.filterStudent = filterStudent;
         this.filterStudyType = filterStudyType;
         this.filterSection = filterSection;
         this.filterMajor = filterMajor;
@@ -47,6 +50,7 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
         this.filterAcademicYear = null;
         this.filterAcademicTerm = null;
         this.filterCourse = null;
+        this.filterStudent = null;
         this.filterStudyType = null;
         this.filterSection = null;
         this.filterMajor = null;
@@ -64,15 +68,20 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
 
     @Override
     public Predicate toPredicate(Root<StudentEnrollment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("students");
+        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("student");
         if (searchValue != null) {
             Predicate searchPredicate = criteriaBuilder.or(
                     criteriaBuilder.like(studentEnrollmentStudentJoin.get("nameAr"), "%" + searchValue + "%"),
-                    criteriaBuilder.like(studentEnrollmentStudentJoin.get("nameEn"), "%" + searchValue + "%"),
-                    criteriaBuilder.equal(studentEnrollmentStudentJoin.get("universityId"), searchValue)
+                    criteriaBuilder.like(studentEnrollmentStudentJoin.get("nameEn"), "%" + searchValue + "%")
             );
+            try {
+                searchPredicate = criteriaBuilder.or(searchPredicate,
+                        criteriaBuilder.equal(studentEnrollmentStudentJoin.get("universityId"), Long.parseLong(searchValue))
+                );
+            } catch (NumberFormatException e) {
+            }
             if (filterCollege == null && filterDepartment == null && filterAcademicYear == null
-                    && filterAcademicTerm == null && filterCourse == null && filterSection == null
+                    && filterAcademicTerm == null && filterCourse == null && filterStudent == null && filterSection == null
                     && filterStudyType == null && filterMajor == null) {
                 return searchPredicate;
             }
@@ -86,7 +95,8 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
         Join<StudentEnrollment, Department> studentEnrollmentDepartmentJoin = root.join("department");
         Join<StudentEnrollment, AcademicYear> studentEnrollmentAcademicYearJoin = root.join("academicYear");
         Join<StudentEnrollment, AcademicTerm> studentEnrollmentAcademicTermJoin = root.join("academicTerm");
-        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("courses");
+        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("course");
+        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("student");
         Join<StudentEnrollment, Section> studentEnrollmentSectionJoin = root.join("section");
         Join<StudentEnrollment, StudyType> studentEnrollmentStudyTypeJoin = root.join("studyType");
         Join<StudentEnrollment, Major> studentEnrollmentMajorJoin = root.join("major");
@@ -116,6 +126,11 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
             course = criteriaBuilder.equal(studentEnrollmentCourseJoin.get("id"), filterCourse);
         else course = criteriaBuilder.notEqual(studentEnrollmentCourseJoin.get("id"), -1);
 
+        Predicate student;
+        if (filterStudent != null)
+            student = criteriaBuilder.equal(studentEnrollmentStudentJoin.get("id"), filterStudent);
+        else student = criteriaBuilder.notEqual(studentEnrollmentStudentJoin.get("id"), -1);
+
         Predicate section;
         if (filterSection != null)
             section = criteriaBuilder.equal(studentEnrollmentSectionJoin.get("id"), filterSection);
@@ -132,7 +147,7 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
         else major = criteriaBuilder.notEqual(studentEnrollmentMajorJoin.get("id"), -1);
 
         return criteriaBuilder.and(college, department, academicYear,
-                academicTerm, course, studyType, section, major);
+                academicTerm, course, student, studyType, section, major);
     }
 
 }

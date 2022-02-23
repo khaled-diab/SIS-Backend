@@ -59,7 +59,7 @@ public class SectionSpecification implements Specification<Section> {
 
     @Override
     public Predicate toPredicate(Root<Section> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<Section, Course> sectionCourseJoin = root.join("courses");
+        Join<Section, Course> sectionCourseJoin = root.join("course");
         if (searchValue != null) {
             Predicate searchPredicate = criteriaBuilder.or(
                     criteriaBuilder.like(sectionCourseJoin.get("code"), "%" + searchValue + "%"),
@@ -82,7 +82,7 @@ public class SectionSpecification implements Specification<Section> {
         Join<Section, Department> sectionDepartmentJoin = root.join("department");
         Join<Section, AcademicYear> sectionAcademicYearJoin = root.join("academicYear");
         Join<Section, AcademicTerm> sectionAcademicTermJoin = root.join("academicTerm");
-        Join<Section, Course> sectionCourseJoin = root.join("courses");
+        Join<Section, Course> sectionCourseJoin = root.join("course");
         Path<Object> sectionSectionJoin = root.get("sectionNumber");
         Join<Section, StudyType> sectionStudyTypeJoin = root.join("studyType");
 
