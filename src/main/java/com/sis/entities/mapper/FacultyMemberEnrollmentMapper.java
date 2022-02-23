@@ -57,8 +57,8 @@ public class FacultyMemberEnrollmentMapper implements Mapper<FacultyMemberEnroll
         if (entity.getFacultyMember() != null) {
             dto.setFacultyMemberDTO(facultyMemberMapper.toDTO(entity.getFacultyMember()));
         }
-        if (entity.getCourses() != null) {
-            dto.setCourseDTO(courseMapper.toDTOs(entity.getCourses()));
+        if (entity.getCourse() != null) {
+            dto.setCourseDTO(courseMapper.toDTO(entity.getCourse()));
         }
 
         return dto;
@@ -84,7 +84,7 @@ public class FacultyMemberEnrollmentMapper implements Mapper<FacultyMemberEnroll
             entity.setFacultyMember(facultyMemberMapper.toEntity(dto.getFacultyMemberDTO()));
         }
         if (dto.getCourseDTO() != null) {
-            entity.setCourses(courseMapper.toEntities(dto.getCourseDTO()));
+            entity.setCourse(courseMapper.toEntity(dto.getCourseDTO()));
         }
 
         return entity;

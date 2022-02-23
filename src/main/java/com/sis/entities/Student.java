@@ -11,7 +11,6 @@ import lombok.Setter;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -73,7 +72,7 @@ public class Student extends BaseEntity {
     private Department departmentId;
 
 
-    @ManyToMany(mappedBy = "students")
+    @OneToMany(mappedBy = "student")
     private Collection<StudentEnrollment> studentEnrollments;
 
     @OneToMany(mappedBy = "student")
