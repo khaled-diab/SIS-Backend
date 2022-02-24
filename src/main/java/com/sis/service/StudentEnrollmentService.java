@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,16 +85,15 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }
 
-    public Collection<Section> findSections(long academicYearId, long academicTermId, long studentId) {
-        Collection<Long> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentsByStudent(studentId);
-        Collection<Section> sectionDTOs = new ArrayList<>();
-        for (long id : studentEnrollments) {
-            StudentEnrollment studentEnrollment = this.findById(id);
-            if (studentEnrollment.getAcademicTerm().getId() == academicTermId && studentEnrollment.getAcademicYear().getId() == academicYearId) {
-                sectionDTOs.add(studentEnrollment.getSection());
+    public Collection<Section> findStudentSections(long academicYearId, long academicTermId, long studentId) {
+        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentSections(academicYearId, academicTermId, studentId);
+        ArrayList<Section>sections = new ArrayList<>();
+        for(StudentEnrollment studentEnrollment:studentEnrollments){
+            if(studentEnrollment.getSection()!=null) {
+                sections.add(studentEnrollment.getSection());
             }
         }
-        return sectionDTOs;
+        return sections;
     }
 
 
