@@ -1,9 +1,5 @@
 package com.sis.controller;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.student.StudentDTO;
@@ -14,16 +10,11 @@ import com.sis.entities.mapper.StudentMapper;
 import com.sis.service.AttendanceDetailsService;
 import com.sis.service.LectureService;
 import com.sis.service.StudentService;
-import com.sis.util.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/api/attendanceDetails")

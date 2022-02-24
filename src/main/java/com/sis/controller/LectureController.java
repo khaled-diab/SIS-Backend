@@ -64,7 +64,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO>{
             @PathVariable long academicTermId,
             @PathVariable long facultyMemberId) {
 
-            Collection<CourseDTO> courseDTOS = this.lectureService.findCourses(
+            Collection<CourseDTO> courseDTOS = this.lectureService.findByFacultyMemberCourses(
                     academicYearId,
                     academicTermId,
                     facultyMemberId);
@@ -72,6 +72,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO>{
     }
 
 
+    /* Get timetables for certain faculty member. */
     @RequestMapping(
             value = "/timeTables/{academicYearId}/{academicTermId}/{facultyMemberId}/{courseId}",
             method = RequestMethod.GET
@@ -99,7 +100,6 @@ public ResponseEntity<LectureDTO> addLecture(@PathVariable long sectionId, @Requ
         Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
         if(lectureDTO.getAttendanceType() .equalsIgnoreCase("Manual")){
 
-
             this.lectureService.save(lecture);
         }else {
             Random rand = new Random();
@@ -117,7 +117,7 @@ public ResponseEntity<LectureDTO> addLecture(@PathVariable long sectionId, @Requ
         LocalTime now = LocalTime.now();
         String today = LocalDate.now().toString();
         String todays=today.replace('-','/');
-        Collection<Section> sections = this.lectureService.findSections(academicYearId,  academicTermId,studentId);
+        Collection<Section> sections = this.lectureService.findStudentSections(academicYearId,  academicTermId,studentId);
         Collection<LectureDTO> lectureDTOs = new ArrayList<>();
         for(Section sec: sections){
              lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));

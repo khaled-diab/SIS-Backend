@@ -33,7 +33,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         if (timetableRequestDTO.getFilterStudent() != null) {
 //            studentEnrollmentRequestDTO.setFilterStudent(timetableRequestDTO.getFilterStudent());
-            Collection <Section> sections = studentEnrollmentService.findSections(timetableRequestDTO.getFilterAcademicYear(),
+            Collection <Section> sections = studentEnrollmentService.findStudentSections(timetableRequestDTO.getFilterAcademicYear(),
                     timetableRequestDTO.getFilterAcademicTerm(), timetableRequestDTO.getFilterStudent());
 //            for (int i = 0; i < ; i++) {
 //

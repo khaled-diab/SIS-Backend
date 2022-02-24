@@ -7,10 +7,7 @@ import com.sis.dto.section.SectionDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.entities.*;
-import com.sis.entities.mapper.CourseMapper;
-import com.sis.entities.mapper.LectureMapper;
-import com.sis.entities.mapper.StudentEnrollmentMapper;
-import com.sis.entities.mapper.TimetableMapper;
+import com.sis.entities.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -45,23 +42,22 @@ public class LectureService  extends BaseServiceImp<Lecture>{
     private SectionService sectionService;
 
     @Autowired
-    private LectureMapper lectureMapper;
+    private SectionMapper sectionMapper;
+
     @Override
     public JpaRepository<Lecture, Long> Repository() {
         return this.lectureRepository;
     }
+//
+    public Collection<CourseDTO> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
 
-    public Collection<CourseDTO> findCourses(long academicYearId, long academicTermId, long facultyMemberId){
-
-        FacultyMemberEnrollment facultyMemberEnrollment = this.facultyMemberEnrollmentService.findByFacultyMember(academicYearId,
+        Collection<Course> facultyMemberCourses = this.facultyMemberEnrollmentService.findByFacultyMemberCourses(academicYearId,
                 academicTermId, facultyMemberId);
-        Collection<Course> courses=null;
-        if(facultyMemberEnrollment != null) {
-             courses = facultyMemberEnrollment.getCourses();
-        }else {
-            return null;
+        if(facultyMemberCourses != null) {
+           return  this.courseMapper.toDTOs(facultyMemberCourses);
         }
-        return this.courseMapper.toDTOs(courses);
+
+        return null;
     }
 
     public Collection<TimetableDTO> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
@@ -73,8 +69,8 @@ public class LectureService  extends BaseServiceImp<Lecture>{
         return  timetableDTOs;
     }
 
-    public Collection<Section> findSections(long academicYearId, long academicTermId,long studentId){
-        Collection<Section> sections = this.studentEnrollmentService.findSections(academicYearId, academicTermId,studentId);
+    public Collection<Section> findStudentSections(long academicYearId, long academicTermId,long studentId){
+        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYearId, academicTermId,studentId);
         return sections;
     }
 
