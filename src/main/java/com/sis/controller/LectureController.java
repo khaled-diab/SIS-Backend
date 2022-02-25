@@ -93,19 +93,19 @@ public class LectureController extends BaseController<Lecture, LectureDTO>{
     }
 
 
-@RequestMapping(value="/addLecture/{sectionId}", method = RequestMethod.POST)
-public ResponseEntity<LectureDTO> addLecture(@PathVariable long sectionId, @RequestBody LectureDTO lectureDTO) {
+@RequestMapping(value="/addLecture", method = RequestMethod.POST)
+public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO) {
 
 
         Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
         if(lectureDTO.getAttendanceType() .equalsIgnoreCase("Manual")){
-
-            this.lectureService.save(lecture);
         }else {
             Random rand = new Random();
-            lectureDTO.setAttendanceCode(rand.nextLong());
-            this.lectureService.save(this.lectureMapper.toEntity(lectureDTO));
+            lecture.setAttendanceCode(rand.nextLong());
+
         }
+         this.lectureService.save(lecture);
+
     return new ResponseEntity<>(lectureDTO, HttpStatus.OK);
 }
 
@@ -126,5 +126,18 @@ public ResponseEntity<LectureDTO> addLecture(@PathVariable long sectionId, @Requ
         lectureDTOs = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceCodeExpiringTime().isAfter(now) && todays.equals( dateFormat.format(lectureDTO.getLectureDate())) && lectureDTO.getAttendanceType().equalsIgnoreCase("Auto")).collect(Collectors.toList());
         return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
     }
+
+    @RequestMapping(value="/getFacultyMemberLectures/{sectionId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<LectureDTO>> getFacultyMemberLectures(@PathVariable long sectionId) {
+
+
+        ArrayList<Long> lectures = this.sectionService.findFacultyMemberLectures(sectionId);
+        ArrayList<LectureDTO> lectureDTOs = new ArrayList<>();
+        for(Long id: lectures){
+            lectureDTOs.add(this.lectureMapper.toDTO(this.lectureService.findById(id)));
+        }
+        return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
+    }
+
 
 }

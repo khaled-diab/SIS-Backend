@@ -16,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 @AllArgsConstructor
 public class SectionService extends BaseServiceImp<Section> {
@@ -68,5 +70,9 @@ public class SectionService extends BaseServiceImp<Section> {
             return Sort.by(Sort.Direction.ASC, "sectionNumber");
         }
         return Sort.by(Sort.Direction.valueOf(sectionRequestDTO.getSortDirection()), sectionRequestDTO.getSortBy());
+    }
+
+    public ArrayList<Long> findFacultyMemberLectures(long sectionId){
+        return this.sectionRepository.findFacultyMemberLectures(sectionId);
     }
 }

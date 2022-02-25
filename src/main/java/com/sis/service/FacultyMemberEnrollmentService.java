@@ -7,6 +7,7 @@ import com.sis.dto.FacultyMemberEnrollment.FacultyMemberEnrollmentRequestDTO;
 import com.sis.entities.Course;
 import com.sis.entities.FacultyMember;
 import com.sis.entities.FacultyMemberEnrollment;
+import com.sis.entities.StudentEnrollment;
 import com.sis.entities.mapper.FacultyMemberEnrollmentMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class FacultyMemberEnrollmentService extends BaseServiceImp<FacultyMember
         return Sort.by(Sort.Direction.valueOf(facultyMemberEnrollmentRequestDTO.getSortDirection()), facultyMemberEnrollmentRequestDTO.getSortBy());
     }
 
-    public Collection<Course> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
+    public ArrayList<FacultyMemberEnrollment> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
         return this.facultyMemberEnrollmentRepository.findByFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
     }
 

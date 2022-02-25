@@ -49,15 +49,16 @@ public class LectureService  extends BaseServiceImp<Lecture>{
         return this.lectureRepository;
     }
 //
-    public Collection<CourseDTO> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
+    public ArrayList<CourseDTO> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
 
-        Collection<Course> facultyMemberCourses = this.facultyMemberEnrollmentService.findByFacultyMemberCourses(academicYearId,
+        ArrayList<FacultyMemberEnrollment> facultyMemberCourses = this.facultyMemberEnrollmentService.findByFacultyMemberCourses(academicYearId,
                 academicTermId, facultyMemberId);
-        if(facultyMemberCourses != null) {
-           return  this.courseMapper.toDTOs(facultyMemberCourses);
+        ArrayList<CourseDTO> courses = new ArrayList<>();
+        for(FacultyMemberEnrollment studentEnrollment : facultyMemberCourses){
+            courses.add(this.courseMapper.toDTO(studentEnrollment.getCourse()));
         }
 
-        return null;
+        return courses;
     }
 
     public Collection<TimetableDTO> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
@@ -73,5 +74,12 @@ public class LectureService  extends BaseServiceImp<Lecture>{
         Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYearId, academicTermId,studentId);
         return sections;
     }
+    public Section findStudentSection(long academicYearId, long academicTermId,long studentId,long courseId){
+        Section section = this.studentEnrollmentService.findStudentSection(academicYearId, academicTermId,studentId, courseId);
+        return section;
+    }
 
+    public ArrayList<Long> findFacultyMemberLectures(long sectionId){
+        return this.sectionService.findFacultyMemberLectures(sectionId);
+    }
 }
