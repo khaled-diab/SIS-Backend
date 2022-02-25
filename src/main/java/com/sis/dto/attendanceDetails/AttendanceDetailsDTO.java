@@ -2,7 +2,9 @@ package com.sis.dto.attendanceDetails;
 
 import com.sis.dto.BaseDTO;
 import com.sis.dto.lecture.LectureDTO;
+import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.entities.Section;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +31,7 @@ public class AttendanceDetailsDTO extends BaseDTO {
     private LocalTime lectureStartTime;
 
     private LocalTime lectureEndTime;
+
+    private SectionDTO sectionDTO;
 
 }

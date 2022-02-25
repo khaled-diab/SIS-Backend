@@ -95,6 +95,15 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         }
         return sections;
     }
+    public Section findStudentSection(long academicYearId, long academicTermId, long studentId, long courseId) {
+        StudentEnrollment studentEnrollment = this.studentEnrollmentRepository.findStudentSection(academicYearId, academicTermId, studentId,courseId);
 
+            if(studentEnrollment!=null) {
+                if (studentEnrollment.getSection() != null) {
+                    return studentEnrollment.getSection();
+                }
+            }
+        return null;
+    }
 
 }
