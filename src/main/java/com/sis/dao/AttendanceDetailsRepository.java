@@ -9,6 +9,7 @@ import java.util.Collection;
 
 public interface AttendanceDetailsRepository extends BaseDao<AttendanceDetails>{
 
+
     @Query(value="SELECT * FROM attendance_details WHERE  student_id= :studentId and section_id=:sectionId ", nativeQuery = true)
     public ArrayList<AttendanceDetails> findStudentAttendances(long studentId, long sectionId);
 

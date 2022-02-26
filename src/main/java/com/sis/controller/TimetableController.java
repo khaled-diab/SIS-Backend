@@ -41,4 +41,24 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         }
         return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
     }
+
+    //UC011
+    @RequestMapping(
+            value = "/facultyMemberTimeTables/{academicYearId}/{academicTermId}/{facultyMemberId}/{courseId}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Collection<TimetableDTO>> getFacultyMemberTimeTables(
+            @PathVariable long academicYearId,
+            @PathVariable long academicTermId,
+            @PathVariable long facultyMemberId,
+            @PathVariable long courseId) {
+
+
+        Collection<TimetableDTO> timetableDTO = this.timetableService.findFacultyMemberTimeTables(
+                academicYearId,
+                academicTermId,
+                facultyMemberId,
+                courseId);
+        return new ResponseEntity<>(timetableDTO, HttpStatus.OK);
+    }
 }

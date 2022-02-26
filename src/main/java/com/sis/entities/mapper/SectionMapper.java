@@ -68,7 +68,6 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
             dto.setStudyTypeDTO(studyTypeMapper.toDTO(entity.getStudyType()));
         }
 
-
         return dto;
     }
 

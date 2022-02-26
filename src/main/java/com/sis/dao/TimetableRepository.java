@@ -9,6 +9,7 @@ import java.util.Collection;
 public interface TimetableRepository extends BaseDao<Timetable>{
 
 
+    //UC011
     @Query(value="SELECT * FROM timetable WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and faculty_member_id= :facultyMemberId  and course_id =:courseId", nativeQuery = true)
-    public Collection<Timetable> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId);
+    public Collection<Timetable> findFacultyMemberTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId);
 }

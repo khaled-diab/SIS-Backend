@@ -72,8 +72,10 @@ public class FacultyMemberEnrollmentService extends BaseServiceImp<FacultyMember
         return Sort.by(Sort.Direction.valueOf(facultyMemberEnrollmentRequestDTO.getSortDirection()), facultyMemberEnrollmentRequestDTO.getSortBy());
     }
 
-    public ArrayList<FacultyMemberEnrollment> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
-        return this.facultyMemberEnrollmentRepository.findByFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
+    //UC011
+    public ArrayList<FacultyMemberEnrollment> getFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
+        return this.facultyMemberEnrollmentRepository.findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
     }
+
 
 }
