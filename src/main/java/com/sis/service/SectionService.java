@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class SectionService extends BaseServiceImp<Section> {
 
     private final SectionRepository sectionRepository;
     private final SectionMapper sectionMapper;
+    private StudentEnrollmentService studentEnrollmentService;
 
     @Override
     public JpaRepository<Section, Long> Repository() {
@@ -72,7 +74,16 @@ public class SectionService extends BaseServiceImp<Section> {
         return Sort.by(Sort.Direction.valueOf(sectionRequestDTO.getSortDirection()), sectionRequestDTO.getSortBy());
     }
 
-    public ArrayList<Long> findFacultyMemberLectures(long sectionId){
-        return this.sectionRepository.findFacultyMemberLectures(sectionId);
+    //UC011
+    public Collection<Section> findStudentSections(long academicYearId, long academicTermId, long studentId){
+        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYearId, academicTermId,studentId);
+        return sections;
     }
+    //UC011
+    public Section findStudentSection(long academicYearId, long academicTermId,long studentId,long courseId){
+        Section section = this.studentEnrollmentService.findStudentSection(academicYearId, academicTermId,studentId, courseId);
+        return section;
+    }
+
+
 }

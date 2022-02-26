@@ -5,6 +5,7 @@ import com.sis.dao.specification.CourseSpecification;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
 import com.sis.entities.Course;
+import com.sis.entities.FacultyMemberEnrollment;
 import com.sis.entities.mapper.CourseMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -27,6 +29,11 @@ public class CourseService extends BaseServiceImp<Course> {
 
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired StudentEnrollmentService studentEnrollmentService;
+
+    @Autowired
+    private FacultyMemberEnrollmentService facultyMemberEnrollmentService;
 
     @Override
     public JpaRepository<Course, Long> Repository() {
@@ -71,5 +78,25 @@ public class CourseService extends BaseServiceImp<Course> {
             return Sort.by(Sort.Direction.ASC, "nameAr");
         }
         return Sort.by(Sort.Direction.valueOf(courseRequestDTO.getSortDirection()), courseRequestDTO.getSortBy());
+    }
+
+    //UC011
+    public ArrayList<CourseDTO> getFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
+
+        ArrayList<FacultyMemberEnrollment> facultyMemberCourses = this.facultyMemberEnrollmentService.getFacultyMemberCourses(academicYearId,
+                academicTermId, facultyMemberId);
+        ArrayList<CourseDTO> courses = new ArrayList<>();
+        for(FacultyMemberEnrollment studentEnrollment : facultyMemberCourses){
+            if(studentEnrollment!= null && studentEnrollment.getCourse() != null) {
+                courses.add(this.courseMapper.toDTO(studentEnrollment.getCourse()));
+            }
+        }
+
+        return courses;
+    }
+
+    //UC011
+    public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId){
+        return this.studentEnrollmentService.getStudentCourses(academicYearId,academicTermId,studentId);
     }
 }

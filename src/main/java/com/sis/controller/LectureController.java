@@ -45,52 +45,8 @@ public class LectureController extends BaseController<Lecture, LectureDTO>{
     private LectureMapper lectureMapper;
 
     @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private StudentMapper studentMapper;
-    @Autowired
     private SectionService sectionService;
 
-    @Autowired
-    private SectionMapper sectionMapper;
-
-    @RequestMapping(
-            value = "/courses/{academicYearId}/{academicTermId}/{facultyMemberId}",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<Collection<CourseDTO>> getCourses(
-            @PathVariable long academicYearId,
-            @PathVariable long academicTermId,
-            @PathVariable long facultyMemberId) {
-
-            Collection<CourseDTO> courseDTOS = this.lectureService.findByFacultyMemberCourses(
-                    academicYearId,
-                    academicTermId,
-                    facultyMemberId);
-        return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
-    }
-
-
-    /* Get timetables for certain faculty member. */
-    @RequestMapping(
-            value = "/timeTables/{academicYearId}/{academicTermId}/{facultyMemberId}/{courseId}",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<Collection<TimetableDTO>> getTimeTables(
-            @PathVariable long academicYearId,
-            @PathVariable long academicTermId,
-            @PathVariable long facultyMemberId,
-            @PathVariable long courseId) {
-
-
-        Collection<TimetableDTO> timetableDTO = this.lectureService.findTimeTables(
-                academicYearId,
-                academicTermId,
-                facultyMemberId,
-                courseId);
-        return new ResponseEntity<>(timetableDTO, HttpStatus.OK);
-    }
 
 
 @RequestMapping(value="/addLecture", method = RequestMethod.POST)
@@ -117,7 +73,7 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
         LocalTime now = LocalTime.now();
         String today = LocalDate.now().toString();
         String todays=today.replace('-','/');
-        Collection<Section> sections = this.lectureService.findStudentSections(academicYearId,  academicTermId,studentId);
+        Collection<Section> sections = this.sectionService.findStudentSections(academicYearId,  academicTermId,studentId);
         Collection<LectureDTO> lectureDTOs = new ArrayList<>();
         for(Section sec: sections){
              lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
@@ -130,12 +86,7 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
     @RequestMapping(value="/getFacultyMemberLectures/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<LectureDTO>> getFacultyMemberLectures(@PathVariable long sectionId) {
 
-
-        ArrayList<Long> lectures = this.sectionService.findFacultyMemberLectures(sectionId);
-        ArrayList<LectureDTO> lectureDTOs = new ArrayList<>();
-        for(Long id: lectures){
-            lectureDTOs.add(this.lectureMapper.toDTO(this.lectureService.findById(id)));
-        }
+        ArrayList<LectureDTO> lectureDTOs = this.lectureService.getFacultyMemberLectures(sectionId);
         return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
     }
 

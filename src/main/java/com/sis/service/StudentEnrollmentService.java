@@ -2,10 +2,14 @@ package com.sis.service;
 
 import com.sis.dao.StudentEnrollmentRepository;
 import com.sis.dao.specification.StudentEnrollmentSpecification;
+import com.sis.dto.course.CourseDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
+import com.sis.entities.Course;
+import com.sis.entities.FacultyMemberEnrollment;
 import com.sis.entities.Section;
 import com.sis.entities.StudentEnrollment;
+import com.sis.entities.mapper.CourseMapper;
 import com.sis.entities.mapper.SectionMapper;
 import com.sis.entities.mapper.StudentEnrollmentMapper;
 import com.sis.util.PageQueryUtil;
@@ -30,8 +34,9 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
     private final StudentEnrollmentRepository studentEnrollmentRepository;
     private final StudentEnrollmentMapper studentEnrollmentMapper;
 
-    @Autowired
+
     private SectionMapper sectionMapper;
+    private CourseMapper courseMapper;
 
 
     @Override
@@ -85,6 +90,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }
 
+    //UC011
     public Collection<Section> findStudentSections(long academicYearId, long academicTermId, long studentId) {
         Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentSections(academicYearId, academicTermId, studentId);
         ArrayList<Section>sections = new ArrayList<>();
@@ -95,6 +101,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         }
         return sections;
     }
+    //UC011
     public Section findStudentSection(long academicYearId, long academicTermId, long studentId, long courseId) {
         StudentEnrollment studentEnrollment = this.studentEnrollmentRepository.findStudentSection(academicYearId, academicTermId, studentId,courseId);
 
@@ -104,6 +111,16 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
                 }
             }
         return null;
+    }
+
+    //UC011
+    public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId){
+        ArrayList<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentCourses(academicYearId,academicTermId, studentId);
+        ArrayList<CourseDTO> courseDTOs = new ArrayList<>();
+        for(StudentEnrollment studentEnrollment : studentEnrollments){
+            courseDTOs.add(this.courseMapper.toDTO(studentEnrollment.getCourse()));
+        }
+        return courseDTOs;
     }
 
 }

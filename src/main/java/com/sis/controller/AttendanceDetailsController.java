@@ -5,6 +5,7 @@ import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.entities.AttendanceDetails;
+import com.sis.entities.Lecture;
 import com.sis.entities.Section;
 import com.sis.entities.mapper.AttendanceDetailsMapper;
 import com.sis.entities.mapper.LectureMapper;
@@ -56,7 +57,6 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         LectureDTO lectureDTO = this .lectureMapper.toDTO(this.lectureService.findById(lectureId));
         StudentDTO studentDTO = this .studentMapper.toDTO(this.studentService.findById(studentId));
         SectionDTO sectionDto = this .sectionMapper.toDTO(this.sectionService.findById(sectionId));
-
         LocalTime now = LocalTime.now();
         AttendanceDetailsDTO attendanceDetailsDTO = AttendanceDetailsDTO.builder()
                 .studentDTO(studentDTO)
@@ -67,12 +67,6 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
                 .lectureEndTime(lectureDTO.getLectureEndTime())
                 .sectionDTO(sectionDto)
                 .build();
-
-        System.out.println(attendanceCode);
-        System.out.println(lectureDTO.getAttendanceCode());
-        System.out.println(lectureDTO.getAttendanceCodeExpiringTime());
-        System.out.println(now);
-
         if( (lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceCodeExpiringTime().isAfter(now)) ){
                 attendanceDetailsDTO.setAttendanceStatus("Present");
         }

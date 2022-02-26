@@ -27,59 +27,24 @@ public class LectureService  extends BaseServiceImp<Lecture>{
     @Autowired
     private FacultyMemberEnrollmentService facultyMemberEnrollmentService;
 
-    @Autowired
-    private TimetableService timetableService;
+
 
     @Autowired
-    private CourseMapper courseMapper;
-
-    @Autowired
-    private TimetableMapper timetableMapper;
-
-    @Autowired
-    private StudentEnrollmentService studentEnrollmentService;
-    @Autowired
-    private SectionService sectionService;
-
-    @Autowired
-    private SectionMapper sectionMapper;
+    private LectureMapper lectureMapper;
 
     @Override
     public JpaRepository<Lecture, Long> Repository() {
         return this.lectureRepository;
     }
-//
-    public ArrayList<CourseDTO> findByFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
 
-        ArrayList<FacultyMemberEnrollment> facultyMemberCourses = this.facultyMemberEnrollmentService.findByFacultyMemberCourses(academicYearId,
-                academicTermId, facultyMemberId);
-        ArrayList<CourseDTO> courses = new ArrayList<>();
-        for(FacultyMemberEnrollment studentEnrollment : facultyMemberCourses){
-            courses.add(this.courseMapper.toDTO(studentEnrollment.getCourse()));
+    public ArrayList<LectureDTO> getFacultyMemberLectures(long sectionId){
+
+        ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
+        ArrayList<LectureDTO> LectureDTOs = new ArrayList<>();
+        for(Long id : lectureIds){
+            Lecture lecture = findById(id);
+            LectureDTOs.add(this.lectureMapper.toDTO(lecture));
         }
-
-        return courses;
-    }
-
-    public Collection<TimetableDTO> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
-        Collection<Timetable> timetables = this.timetableService.findTimeTables(academicYearId,  academicTermId,  facultyMemberId,  courseId);
-        Collection<TimetableDTO> timetableDTOs= null;
-        if(timetables != null){
-            timetableDTOs = this.timetableMapper.toDTOs(timetables);
-        }
-        return  timetableDTOs;
-    }
-
-    public Collection<Section> findStudentSections(long academicYearId, long academicTermId,long studentId){
-        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYearId, academicTermId,studentId);
-        return sections;
-    }
-    public Section findStudentSection(long academicYearId, long academicTermId,long studentId,long courseId){
-        Section section = this.studentEnrollmentService.findStudentSection(academicYearId, academicTermId,studentId, courseId);
-        return section;
-    }
-
-    public ArrayList<Long> findFacultyMemberLectures(long sectionId){
-        return this.sectionService.findFacultyMemberLectures(sectionId);
+        return LectureDTOs;
     }
 }

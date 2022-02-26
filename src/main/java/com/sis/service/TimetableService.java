@@ -74,8 +74,15 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         return Sort.by(Sort.Direction.valueOf(timetableRequestDTO.getSortDirection()), timetableRequestDTO.getSortBy());
     }
 
-    public Collection<Timetable> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
-        return this.timetableRepository.findTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
+    //UC011
+    public Collection<TimetableDTO> findFacultyMemberTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
+        Collection<Timetable> timetables = this.timetableRepository.findFacultyMemberTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
+        Collection<TimetableDTO> timetableDTOs= null;
+        if(timetables != null){
+            timetableDTOs = this.timetableMapper.toDTOs(timetables);
+        }
+        return  timetableDTOs;
     }
+
 
 }
