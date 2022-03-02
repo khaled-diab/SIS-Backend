@@ -1,24 +1,19 @@
 package com.sis.controller;
 
-import com.sis.dto.course.CourseDTO;
+import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.dto.section.SectionDTO;
-import com.sis.dto.student.StudentDTO;
-import com.sis.dto.student.StudentFilterDTO;
-import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
-import com.sis.dto.timetable.TimetableDTO;
+
+import com.sis.entities.AcademicTerm;
 import com.sis.entities.Lecture;
 import com.sis.entities.Section;
-import com.sis.entities.StudentEnrollment;
-import com.sis.entities.Timetable;
+
+import com.sis.entities.mapper.AcademicTermMapper;
 import com.sis.entities.mapper.LectureMapper;
-import com.sis.entities.mapper.SectionMapper;
-import com.sis.entities.mapper.StudentMapper;
+
+import com.sis.service.AcademicTermService;
 import com.sis.service.LectureService;
 import com.sis.service.SectionService;
-import com.sis.service.StudentService;
-import com.sis.util.MessageResponse;
-import com.sis.util.PageResult;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,7 +40,11 @@ public class LectureController extends BaseController<Lecture, LectureDTO>{
     @Autowired
     private SectionService sectionService;
 
+    @Autowired
+    private AcademicTermService academicTermService;
 
+    @Autowired
+    private AcademicTermMapper academicTermMapper;
 
 @RequestMapping(value="/addLecture", method = RequestMethod.POST)
 public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO) {
@@ -65,15 +62,15 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
     return new ResponseEntity<>(lectureDTO, HttpStatus.OK);
 }
 
-    @RequestMapping(value="/getCurrentLecture/{academicYearId}/{academicTermId}/{studentId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<LectureDTO>> getCurrentLectures(@PathVariable long academicYearId,
-                                                                 @PathVariable long academicTermId,
-                                                                 @PathVariable long studentId) {
+    @RequestMapping(value="/getCurrentLecture/courseId/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<LectureDTO>> getCurrentLectures( @PathVariable long studentId) {
 
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         LocalTime now = LocalTime.now();
         String today = LocalDate.now().toString();
         String todays=today.replace('-','/');
-        Collection<Section> sections = this.sectionService.findStudentSections(academicYearId,  academicTermId,studentId);
+        Collection<Section> sections = this.sectionService.findStudentSections(academicTermDTO.getYear_id(),academicTermDTO.getId(),studentId);
         Collection<LectureDTO> lectureDTOs = new ArrayList<>();
         for(Section sec: sections){
              lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
@@ -86,9 +83,12 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
     @RequestMapping(value="/getFacultyMemberLectures/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<LectureDTO>> getFacultyMemberLectures(@PathVariable long sectionId) {
 
-        ArrayList<LectureDTO> lectureDTOs = this.lectureService.getFacultyMemberLectures(sectionId);
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        ArrayList<LectureDTO> lectureDTOs = this.lectureService.getFacultyMemberLectures(academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionId);
         return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
     }
+
 
 
 }

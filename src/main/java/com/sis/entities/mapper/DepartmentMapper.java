@@ -22,7 +22,8 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
     private CollegeService collegeService ;
 
     @Autowired
-    private CollegeMapper collegeMapper ;
+    private CollegeMapper collegeMapper;
+
     @Override
     public DepartmentDTO toDTO(Department entity) {
         DepartmentDTO dto = new DepartmentDTO();

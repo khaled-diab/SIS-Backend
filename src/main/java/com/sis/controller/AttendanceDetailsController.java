@@ -1,16 +1,15 @@
 package com.sis.controller;
 
+import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.entities.AcademicTerm;
 import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
 import com.sis.entities.Section;
-import com.sis.entities.mapper.AttendanceDetailsMapper;
-import com.sis.entities.mapper.LectureMapper;
-import com.sis.entities.mapper.SectionMapper;
-import com.sis.entities.mapper.StudentMapper;
+import com.sis.entities.mapper.*;
 import com.sis.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,11 +43,18 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
 
     @Autowired
     private SectionService sectionService;
+
     @Autowired
     private SectionMapper sectionMapper;
 
     @Autowired
     private StudentEnrollmentService studentEnrollmentService;
+
+    @Autowired
+    private AcademicTermService academicTermService;
+
+    @Autowired
+    private AcademicTermMapper academicTermMapper;
 
     @RequestMapping(value="/addAttendance/{attendanceCode}/{studentId}/{lectureId}/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<AttendanceDetailsDTO> addAttendance(@PathVariable long attendanceCode , @PathVariable long studentId,
@@ -74,11 +80,12 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         return new ResponseEntity<>(attendanceDetailsDTO,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getAttendance/{academicYearId}/{academicTermId}/{studentId}/{courseId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance(@PathVariable long academicYearId ,  @PathVariable long academicTermId,
-                                                              @PathVariable long studentId, @PathVariable long courseId){
+    @RequestMapping(value="/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance( @PathVariable long studentId, @PathVariable long courseId){
 
-        Section section = this.studentEnrollmentService.findStudentSection(academicYearId,academicTermId,studentId,courseId);
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        Section section = this.studentEnrollmentService.findStudentSection(academicTermDTO.getYear_id(),academicTermDTO.getId(),studentId,courseId);
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.findStudentAttendances(studentId,section.getId());
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
