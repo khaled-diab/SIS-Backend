@@ -17,4 +17,9 @@ public class AcademicTermService extends BaseServiceImp<AcademicTerm> {
     public JpaRepository<AcademicTerm, Long> Repository() {
         return  academicTermRepository ;
     }
+
+    //UC011
+    public AcademicTerm getCurrentAcademicTerm(){
+        return this.academicTermRepository.getCurrentAcademicTerm();
+    }
 }
