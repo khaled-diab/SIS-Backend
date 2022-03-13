@@ -1,10 +1,15 @@
 package com.sis.controller;
 
+import com.sis.dto.AcademicTermDTO;
+import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.student.StudentFilterDTO;
+import com.sis.entities.AcademicTerm;
 import com.sis.entities.Student;
+import com.sis.entities.mapper.AcademicTermMapper;
 import com.sis.entities.mapper.StudentMapper;
 import com.sis.exception.StudentFieldNotUniqueException;
+import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageResult;
@@ -48,8 +53,13 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     private final StudentService studentService;
     //Autowired
     private final StudentMapper studentMapper;
+
+
     @Autowired
-    private HttpServletRequest request;
+    private AcademicTermService academicTermService;
+
+    @Autowired
+    private AcademicTermMapper academicTermMapper;
 
     public static final String DIRECTORY = System.getProperty("user.home") + "/Resourcess/StudentImages/";
     @PostMapping("/upload")
@@ -138,7 +148,21 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(
+            value = "/studentsBySection",
+            method = RequestMethod.POST
+    )
+    public ArrayList<StudentDTO> getStudentsBySection(@RequestBody ArrayList<SectionDTO> sectionDTOs) {
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        ArrayList<StudentDTO> studentDTOs=new ArrayList<>();
+       for(SectionDTO sectionDTO :sectionDTOs){
+           studentDTOs.addAll(this.studentService.findStudentsBySection(academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionDTO.getId()));
 
+       }
+       return studentDTOs;
+
+    }
 
 
 }
