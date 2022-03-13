@@ -34,7 +34,7 @@ public class LectureDTO extends BaseDTO {
 
     private long attendanceCode;
 
-    private LocalTime attendanceCodeExpiringTime;
+    private boolean attendanceStatus;
 
     private FacultyMemberDTO facultyMemberDTO;
 
@@ -46,4 +46,11 @@ public class LectureDTO extends BaseDTO {
 
     private Collection<SectionDTO> sectionDTOs;
 
+    public boolean getAttendanceStatus() {
+        return attendanceStatus;
+    }
+
+    public void setAttendanceStatus(boolean attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
+    }
 }

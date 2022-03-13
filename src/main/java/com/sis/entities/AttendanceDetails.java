@@ -24,12 +24,12 @@ public class AttendanceDetails extends BaseEntity {
     @JoinColumn(name = "lecture_id", referencedColumnName = "id")
     private Lecture lecture;
     @ManyToOne
-    @JoinColumn(name = "section_id", referencedColumnName = "id")
-    private Section section;
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private Course course;
 
 
     @Column(name = "attendance_status")
-    private String attendanceStatus;
+    private boolean attendanceStatus;
 
 
     @Column(name = "attendance_date")
@@ -43,5 +43,7 @@ public class AttendanceDetails extends BaseEntity {
 
     @Column(name = "lecture_end_time")
     private LocalTime lectureEndTime;
-
+public boolean getAttendanceStatus(){
+    return this.attendanceStatus;
+}
 }

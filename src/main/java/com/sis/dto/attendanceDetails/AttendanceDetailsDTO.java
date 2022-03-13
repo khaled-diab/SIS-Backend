@@ -1,6 +1,7 @@
 package com.sis.dto.attendanceDetails;
 
 import com.sis.dto.BaseDTO;
+import com.sis.dto.course.CourseDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
@@ -23,7 +24,7 @@ public class AttendanceDetailsDTO extends BaseDTO {
 
     private LectureDTO lectureDTO;
 
-    private String attendanceStatus;
+    private boolean attendanceStatus;
 
     private Date attendanceDate;
 
@@ -31,6 +32,8 @@ public class AttendanceDetailsDTO extends BaseDTO {
 
     private LocalTime lectureEndTime;
 
-    private SectionDTO sectionDTO;
-
+    private CourseDTO courseDTO;
+    public boolean getAttendanceStatus(){
+        return this.attendanceStatus;
+    }
 }
