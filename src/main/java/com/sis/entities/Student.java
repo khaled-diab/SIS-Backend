@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 public class Student extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-    @Column(name = "university_id", unique = true)
+    @Column(name = "university_id")
     private long universityId;
     @NotNull
     @Column(name = "name_ar")

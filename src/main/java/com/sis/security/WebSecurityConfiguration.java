@@ -48,13 +48,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         // Allow swagger to be accessed without authentication
-        web.ignoring().antMatchers("/v3/api-docs")//
+        web.ignoring().antMatchers("/v3/**")//
                 .antMatchers("/swagger-resources/**")//
                 .antMatchers("/swagger-ui-custom.html")//
                 .antMatchers("/configuration/**")//
                 .antMatchers("/webjars/**")//
                 .antMatchers("/public")
-                .antMatchers("/swagger-ui.html");
+                .antMatchers("/swagger-ui/**");
     }
 
     @Primary
