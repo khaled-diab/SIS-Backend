@@ -57,12 +57,9 @@ public class Timetable extends BaseEntity {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "timetable_section",
-            joinColumns = @JoinColumn(name = "timetable_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "section_id",
-                    referencedColumnName = "id"))
-    private Collection<Section> sections;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    private Section section;
 
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")

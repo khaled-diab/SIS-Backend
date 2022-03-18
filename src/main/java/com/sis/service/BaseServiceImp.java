@@ -40,6 +40,11 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
     public E save(E entity) {
         return Repository().save(entity);
     }
+    @Override
+    @Transactional(readOnly = false)
+    public List<E> saveAll(List<E> entities) {
+        return Repository().saveAll(entities);
+    }
 
     @Override
     @Transactional(readOnly = false)

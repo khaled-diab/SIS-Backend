@@ -44,7 +44,7 @@ public class LectureDTO extends BaseDTO {
 
     private AcademicYearDTO academicYearDTO;
 
-    private Collection<SectionDTO> sectionDTOs;
+    private SectionDTO sectionDTO;
 
     public boolean getAttendanceStatus() {
         return attendanceStatus;

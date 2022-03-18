@@ -19,6 +19,8 @@ public interface BaseService<E extends BaseEntity > {
 
 	public E save(E entity);
 
+	public List<E> saveAll(List<E> entities);
+
 	public void delete(E entity);
 	
 	public void deleteById(Long id);

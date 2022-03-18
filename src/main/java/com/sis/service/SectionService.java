@@ -4,11 +4,12 @@ import com.sis.dao.SectionRepository;
 import com.sis.dao.specification.SectionSpecification;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
-import com.sis.entities.Section;
+import com.sis.entities.*;
 import com.sis.entities.mapper.SectionMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 @Service
 @AllArgsConstructor
@@ -32,6 +34,8 @@ public class SectionService extends BaseServiceImp<Section> {
         return sectionRepository;
     }
 
+    @Autowired
+    private TimetableService timetableService;
     public PageResult<SectionDTO> search(PageQueryUtil pageUtil, SectionRequestDTO sectionRequestDTO) {
         Page<Section> sectionPage;
         String searchValue = sectionRequestDTO.getSearchValue();
@@ -75,14 +79,30 @@ public class SectionService extends BaseServiceImp<Section> {
     }
 
     //UC011
-    public Collection<Section> findStudentSections(long academicYearId, long academicTermId, long studentId){
-        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYearId, academicTermId,studentId);
+    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student){
+        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYear, academicTerm,student);
         return sections;
     }
     //UC011
     public Section findStudentSection(long academicYearId, long academicTermId,long studentId,long courseId){
         Section section = this.studentEnrollmentService.findStudentSection(academicYearId, academicTermId,studentId, courseId);
         return section;
+    }
+    //UC011
+    public ArrayList<SectionDTO> findFacultyMemberSections(long academicYearId, long academicTermId, long facultyMemberId){
+       ArrayList<Long> sectionIds= this.timetableService.findFacultyMemberSections(academicYearId,academicTermId,facultyMemberId);
+        ArrayList<Section> sections=new ArrayList<>();
+        ArrayList<SectionDTO> sectionDTOs=new ArrayList<>();
+
+        if(sectionIds!= null && sectionIds.size()>0){
+            for(long id : sectionIds){
+                Section section =this.findById(id);
+                sections.add(section);
+            }
+            sectionDTOs=this.sectionMapper.toDTOs(sections);
+            return sectionDTOs;
+        }
+        return null;
     }
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
     @RequestMapping("/api/attendanceDetails")
@@ -29,40 +30,56 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @Autowired
     private AttendanceDetailsMapper attendanceDetailsMapper;
 
+    @Autowired
+    private LectureMapper lectureMapper;
+
 
     @RequestMapping(value="/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode , @RequestBody StudentLecture studentLecture){
 
         StudentDTO studentDTO =studentLecture.getStudentDTO();
         LectureDTO lectureDTO =studentLecture.getLectureDTO();
-        System.out.println(lectureDTO.getAttendanceCode());
-        System.out.println(attendanceCode);
-        System.out.println(lectureDTO.getId());
-
-        AttendanceDetailsDTO attendanceDetailsDTO = AttendanceDetailsDTO.builder()
-                    .studentDTO(studentDTO)
-                    .lectureDTO(lectureDTO)
-                    .attendanceStatus(false)
-                    .attendanceDate(lectureDTO.getLectureDate())
-                    .lectureStartTime(lectureDTO.getLectureStartTime())
-                    .lectureEndTime(lectureDTO.getLectureEndTime())
-                    .courseDTO(lectureDTO.getCourseDTO())
-                    .build();
-            if ((lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceStatus())) {
-                attendanceDetailsDTO.setAttendanceStatus(true);
+        Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
+        AttendanceDetailsDTO attendanceDetailsDTO2=null;
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
+        for(AttendanceDetailsDTO attendanceDetailsDTO :attendanceDetailsDTOS){
+            if(attendanceDetailsDTO.getStudentDTO().getId() == studentDTO.getId()){
+                if ((lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceStatus())) {
+                    attendanceDetailsDTO.setAttendanceStatus("Present");
+                    this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
+                    attendanceDetailsDTO2= attendanceDetailsDTO;
+                    break;
+                }
             }
-            this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
+        }
+//        System.out.println(lectureDTO.getAttendanceCode());
+//        System.out.println(attendanceCode);
+//        System.out.println(lectureDTO.getId());
+//
+//        AttendanceDetailsDTO attendanceDetailsDTO = AttendanceDetailsDTO.builder()
+//                    .studentDTO(studentDTO)
+//                    .lectureDTO(lectureDTO)
+//                    .attendanceStatus(false)
+//                    .attendanceDate(lectureDTO.getLectureDate())
+//                    .lectureStartTime(lectureDTO.getLectureStartTime())
+//                    .lectureEndTime(lectureDTO.getLectureEndTime())
+//                    .courseDTO(lectureDTO.getCourseDTO())
+//                    .build();
+//        System.out.println(lectureDTO.getAttendanceCode());
+//        System.out.println(attendanceCode);
+//        System.out.println(lectureDTO.getAttendanceStatus());
 
-        return new ResponseEntity<>(attendanceDetailsDTO,HttpStatus.OK);
+
+          //  this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
+
+        return new ResponseEntity<>(attendanceDetailsDTO2,HttpStatus.OK);
     }
     @RequestMapping(value="/addManualAttendance", method = RequestMethod.POST)
-    public MessageResponse addManualAttendance(@RequestBody ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs){
+    public ResponseEntity<Collection<AttendanceDetailsDTO>> addManualAttendance(@RequestBody ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs){
 
-        for(AttendanceDetailsDTO attendanceDetailsDTO: attendanceDetailsDTOs) {
-            this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
-        }
+        List<AttendanceDetails> returnedAttendanceDetails =  this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
 
-        return new MessageResponse("Item has been deleted successfully");
+        return new ResponseEntity<>(this.attendanceDetailsMapper.toDTOs(returnedAttendanceDetails),HttpStatus.OK);
         }
 
     @RequestMapping(value="/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)

@@ -1,9 +1,6 @@
 package com.sis.dao;
 
-import com.sis.entities.FacultyMemberEnrollment;
-import com.sis.entities.Section;
-import com.sis.entities.Student;
-import com.sis.entities.StudentEnrollment;
+import com.sis.entities.*;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
@@ -12,8 +9,8 @@ import java.util.Collection;
 public interface StudentEnrollmentRepository extends BaseDao<StudentEnrollment>{
 
     //UC011
-    @Query(value="SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and  student_id= :studentId  ", nativeQuery = true)
-    public ArrayList<StudentEnrollment> findStudentSections(long academicYearId, long academicTermId, long studentId);
+   // @Query(value="SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and  student_id= :studentId  ", nativeQuery = true)
+    public ArrayList<StudentEnrollment> findStudentEnrollmentByAcademicYearAndAcademicTermAndStudent(AcademicYear academicYear, AcademicTerm academicTerm, Student student);
 
     //UC011
     @Query(value="SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and  student_id= :studentId and course_id=:courseId ", nativeQuery = true)
@@ -26,7 +23,6 @@ public interface StudentEnrollmentRepository extends BaseDao<StudentEnrollment>{
     //UC011
     @Query(value="SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and section_id= :sectionId  ", nativeQuery = true)
     public ArrayList<StudentEnrollment> findStudentsBySection(long academicYearId, long academicTermId, long sectionId);
-
 
 
 }

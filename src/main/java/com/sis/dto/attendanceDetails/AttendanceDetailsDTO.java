@@ -24,7 +24,7 @@ public class AttendanceDetailsDTO extends BaseDTO {
 
     private LectureDTO lectureDTO;
 
-    private boolean attendanceStatus;
+    private String attendanceStatus;
 
     private Date attendanceDate;
 
@@ -32,8 +32,5 @@ public class AttendanceDetailsDTO extends BaseDTO {
 
     private LocalTime lectureEndTime;
 
-    private CourseDTO courseDTO;
-    public boolean getAttendanceStatus(){
-        return this.attendanceStatus;
-    }
+    private SectionDTO sectionDTO;
 }

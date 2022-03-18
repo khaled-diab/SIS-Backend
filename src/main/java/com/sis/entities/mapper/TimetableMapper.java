@@ -69,8 +69,8 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
         if (entity.getCourse() != null) {
             dto.setCourseDTO(courseMapper.toDTO(entity.getCourse()));
         }
-        if (entity.getSections() != null) {
-            dto.setSectionDTO(sectionMapper.toDTOs(entity.getSections()));
+        if (entity.getSection() != null) {
+            dto.setSectionDTO(sectionMapper.toDTO(entity.getSection()));
         }
         if (entity.getBuilding() != null) {
             dto.setBuildingDTO(buildingMapper.toDTO(entity.getBuilding()));
@@ -111,7 +111,7 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
             entity.setCourse(courseMapper.toEntity(dto.getCourseDTO()));
         }
         if (dto.getSectionDTO() != null) {
-            entity.setSections(sectionMapper.toEntities(dto.getSectionDTO()));
+            entity.setSection(sectionMapper.toEntity(dto.getSectionDTO()));
         }
         if (dto.getBuildingDTO() != null) {
             entity.setBuilding(buildingMapper.toEntity(dto.getBuildingDTO()));
