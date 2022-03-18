@@ -43,7 +43,6 @@ public class User extends BaseEntity {
 
     @NotNull
     @Column(name = "password")
-    @JsonIgnore
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
