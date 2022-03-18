@@ -62,14 +62,12 @@ public class Lecture extends BaseEntity{
     private AcademicYear academicYearId;
 
 
-    @ManyToMany
-    @JoinTable(name = "section_lecture",
-            joinColumns = @JoinColumn(name = "lecture_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "section_id",referencedColumnName = "id"))
-    private List<Section>  sections;
+    @JoinColumn(name = "section_id",referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Section section;
 
 
-@OneToMany(mappedBy = "lecture")
+@OneToMany(mappedBy = "lecture" )
 private Collection<AttendanceDetails> attendanceDetails;
 
     public boolean getAttendanceStatus() {

@@ -17,7 +17,7 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
 
     private StudentMapper studentMapper;
     private LectureMapper lectureMapper;
-    private CourseMapper courseMapper;
+    private SectionMapper sectionMapper;
 
     @Override
     public AttendanceDetailsDTO toDTO(AttendanceDetails entity) {
@@ -35,8 +35,8 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
         if (entity.getLecture() != null) {
             attendanceDetailsDTO.setLectureDTO(this.lectureMapper.toDTO(entity.getLecture()));
         }
-        if (entity.getCourse() != null) {
-            attendanceDetailsDTO.setCourseDTO(this.courseMapper.toDTO(entity.getCourse()));
+        if (entity.getSection() != null) {
+            attendanceDetailsDTO.setSectionDTO(this.sectionMapper.toDTO(entity.getSection()));
         }
 
         return attendanceDetailsDTO;
@@ -57,8 +57,8 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
             if (dto.getLectureDTO() != null) {
                 attendanceDetails.setLecture(this.lectureMapper.toEntity(dto.getLectureDTO()));
             }
-            if (dto.getStudentDTO() != null) {
-                attendanceDetails.setCourse(this.courseMapper.toEntity(dto.getCourseDTO()));
+            if (dto.getSectionDTO() != null) {
+                attendanceDetails.setSection(this.sectionMapper.toEntity(dto.getSectionDTO()));
             }
         }
         return attendanceDetails;

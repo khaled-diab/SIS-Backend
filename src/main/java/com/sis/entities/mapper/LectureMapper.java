@@ -45,8 +45,8 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
         if (entity.getAcademicYearId() != null) {
             lectureDTO.setAcademicYearDTO(this.academicYearMapper.toDTO(entity.getAcademicYearId()));
         }
-        if (entity.getSections() != null) {
-            lectureDTO.setSectionDTOs(this.sectionMapper.toDTOs(entity.getSections()));
+        if (entity.getSection() != null) {
+            lectureDTO.setSectionDTO(this.sectionMapper.toDTO(entity.getSection()));
         }
         return lectureDTO;
     }
@@ -74,8 +74,8 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
             if (dto.getAcademicYearDTO() != null) {
                 lecture.setAcademicYearId(this.academicYearMapper.toEntity(dto.getAcademicYearDTO()));
             }
-            if (dto.getSectionDTOs() != null) {
-                lecture.setSections(this.sectionMapper.toEntities(dto.getSectionDTOs()));
+            if (dto.getSectionDTO() != null) {
+                lecture.setSection(this.sectionMapper.toEntity(dto.getSectionDTO()));
             }
         }
         return lecture;

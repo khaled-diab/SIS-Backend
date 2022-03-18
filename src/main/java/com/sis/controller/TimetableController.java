@@ -45,8 +45,8 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         if (timetableRequestDTO.getFilterStudent() != null) {
 //            studentEnrollmentRequestDTO.setFilterStudent(timetableRequestDTO.getFilterStudent());
-            Collection <Section> sections = studentEnrollmentService.findStudentSections(timetableRequestDTO.getFilterAcademicYear(),
-                    timetableRequestDTO.getFilterAcademicTerm(), timetableRequestDTO.getFilterStudent());
+//            Collection <Section> sections = studentEnrollmentService.findStudentSections(timetableRequestDTO.getFilterAcademicYear(),
+//                    timetableRequestDTO.getFilterAcademicTerm(), timetableRequestDTO.getFilterStudent());
 //            for (int i = 0; i < ; i++) {
 //
 //            }
@@ -72,5 +72,22 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
                 facultyMemberId,
                 courseId);
         return new ResponseEntity<>(timetableDTO, HttpStatus.OK);
+    }
+
+    //UC011
+    @RequestMapping(
+            value = "/getSectionTimeTables/{sectionId}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Collection<TimetableDTO>> getSectionTimeTables(@PathVariable long sectionId){
+
+
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        Collection<TimetableDTO> timetableDTOs = this.timetableService.getSectionTimeTables(
+                academicTermDTO.getYear_id(),
+                academicTermDTO.getId(),
+                sectionId);
+        return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);
     }
 }

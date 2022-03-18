@@ -38,7 +38,7 @@ public class TimetableDTO extends BaseDTO {
 
     private CourseDTO courseDTO;
 
-    private Collection<SectionDTO> sectionDTO;
+    private SectionDTO sectionDTO;
 
     private BuildingDTO buildingDTO;
 

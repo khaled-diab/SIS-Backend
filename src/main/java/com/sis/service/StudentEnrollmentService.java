@@ -5,10 +5,7 @@ import com.sis.dao.specification.StudentEnrollmentSpecification;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
-import com.sis.entities.Course;
-import com.sis.entities.FacultyMemberEnrollment;
-import com.sis.entities.Section;
-import com.sis.entities.StudentEnrollment;
+import com.sis.entities.*;
 import com.sis.entities.mapper.CourseMapper;
 import com.sis.entities.mapper.SectionMapper;
 import com.sis.entities.mapper.StudentEnrollmentMapper;
@@ -91,8 +88,8 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
     }
 
     //UC011
-    public Collection<Section> findStudentSections(long academicYearId, long academicTermId, long studentId) {
-        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentSections(academicYearId, academicTermId, studentId);
+    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student) {
+        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentByAcademicYearAndAcademicTermAndStudent(academicYear, academicTerm, student);
         ArrayList<Section>sections = new ArrayList<>();
         for(StudentEnrollment studentEnrollment:studentEnrollments){
             if(studentEnrollment.getSection()!=null) {

@@ -52,26 +52,26 @@ public class Section extends BaseEntity {
     @JoinColumn(name = "academic_year", referencedColumnName = "id")
     private AcademicYear academicYear;
 
-    @ManyToOne
     @JoinColumn(name = "academic_term", referencedColumnName = "id")
+    @ManyToOne
     private AcademicTerm academicTerm;
 
-    @ManyToOne
+
     @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @ManyToOne
     private Course course;
 
     @OneToMany(mappedBy = "section")
     private Collection<StudentEnrollment> studentEnrollments;
 
-    @ManyToMany(mappedBy = "sections")
+    @OneToMany(mappedBy = "section")
     private Collection<Timetable> timetables;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "section_lecture",
-            joinColumns = @JoinColumn(name = "section_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "lecture_id",referencedColumnName = "id"))
+    @OneToMany(mappedBy = "section",fetch = FetchType.LAZY)
     private List<Lecture> lectures;
 
+    @OneToMany(mappedBy = "section")
+    private Collection<AttendanceDetails> attendanceDetails;
 
 
 }
