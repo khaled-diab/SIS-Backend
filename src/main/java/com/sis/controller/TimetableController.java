@@ -29,13 +29,11 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
 
     private final TimetableService timetableService;
 
-    //UC011
-    private StudentEnrollmentService studentEnrollmentService;
 
-    //UC011
+    //Abdo.Amr
     private AcademicTermService academicTermService;
 
-    //UC011
+    //Abdo.Amr
     private AcademicTermMapper academicTermMapper;
 
     @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
@@ -54,7 +52,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
     }
 
-    //UC011
+    //Abdo.Amr
     @RequestMapping(
             value = "/facultyMemberTimeTables/{facultyMemberId}/{courseId}",
             method = RequestMethod.GET
@@ -74,7 +72,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         return new ResponseEntity<>(timetableDTO, HttpStatus.OK);
     }
 
-    //UC011
+    //Abdo.Amr
     @RequestMapping(
             value = "/getSectionTimeTables/{sectionId}",
             method = RequestMethod.GET

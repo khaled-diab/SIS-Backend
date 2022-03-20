@@ -28,8 +28,6 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
     @Autowired
     private  StudentService studentService;
 
-    @Autowired
-    private  StudentMapper studentMapper;
 
     @Override
     public JpaRepository<AttendanceDetails, Long> Repository() {

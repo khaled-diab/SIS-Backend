@@ -61,7 +61,7 @@ public class CourseController extends BaseController<Course, CourseDTO> {
         return new MessageResponse("Item has been updated successfully");
     }
 
-    //UC011
+    //Abdo.Amr
     @RequestMapping(
             value = "/facultyMemberCourses/{facultyMemberId}",
             method = RequestMethod.GET
@@ -77,7 +77,7 @@ public class CourseController extends BaseController<Course, CourseDTO> {
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
     }
 
-    //UC011
+    //Abdo.Amr
     @RequestMapping(
             value = "/studentCourses/{studentId}",
             method = RequestMethod.GET

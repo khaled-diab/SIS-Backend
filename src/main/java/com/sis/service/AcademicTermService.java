@@ -18,7 +18,7 @@ public class AcademicTermService extends BaseServiceImp<AcademicTerm> {
         return  academicTermRepository ;
     }
 
-    //UC011
+    //Abdo.Amr
     public AcademicTerm getCurrentAcademicTerm(){
         return this.academicTermRepository.getCurrentAcademicTerm();
     }

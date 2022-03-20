@@ -56,7 +56,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO>{
 
     @RequestMapping(value="/addLecture", method = RequestMethod.POST)
 public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO) {
-
+        System.out.println("id= "+lectureDTO.getAttendanceType());
         Course course = this.courseMapper.toEntity(lectureDTO.getCourseDTO());
         FacultyMember facultyMember = this.facultyMemberMapper.toEntity(lectureDTO.getFacultyMemberDTO());
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
@@ -65,27 +65,24 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
         lectureDTO.setAcademicTermDTO(academicTermDTO);
         lectureDTO.setAcademicYearDTO(this.academicYearMapper.toDTO(academicTerm.getAcademicYear()));
 
-        if(!lectureDTO.getAttendanceType() .equalsIgnoreCase("Manual")){
+        if(!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")){
             Random rand = new Random();
             lectureDTO.setAttendanceCode(rand.nextInt());
         }
         boolean isFound=true;
-            LectureDTO lectureDTO1 =this.lectureService.searchLecture(lectureDTO.getLectureDate(),course,facultyMember,lectureDTO.getLectureStartTime(),lectureDTO.getLectureEndTime());
-
-            if(lectureDTO1==null){
-                lectureDTO1=lectureDTO;
-                System.out.println("nullll");
+        LectureDTO lectureDTO1 =this.lectureService.searchLecture(lectureDTO.getLectureDate(),course,facultyMember,lectureDTO.getLectureStartTime(),lectureDTO.getLectureEndTime());
+        if(lectureDTO1==null){
                 isFound = false;
             }else {
-                System.out.println("foundd");
-                return new ResponseEntity<>(lectureDTO1, HttpStatus.OK);
+            lectureDTO.setId(lectureDTO1.getId());
             }
 
-            Lecture lecture = this.lectureMapper.toEntity(lectureDTO1);
+            Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
             LectureDTO lectureDTO2 = this.lectureMapper.toDTO(this.lectureService.save(lecture));
-
+        System.out.println(isFound);
+            if(!isFound) {
                 this.attendanceDetailsService.saveAttendances(lectureDTO2);
-
+            }
     return new ResponseEntity<>(lectureDTO2, HttpStatus.OK);
 }
 
