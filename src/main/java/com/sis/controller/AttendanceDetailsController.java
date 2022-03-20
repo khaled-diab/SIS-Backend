@@ -1,13 +1,16 @@
 package com.sis.controller;
 
+import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.dto.lecture.LectureDTO;
+import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
-
+import com.sis.entities.AcademicTerm;
 import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
+import com.sis.entities.Section;
 import com.sis.entities.mapper.*;
 import com.sis.service.*;
 import com.sis.util.MessageResponse;
@@ -21,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-    @RequestMapping("/api/attendanceDetails")
+@RequestMapping("/api/attendanceDetails")
 public class AttendanceDetailsController extends BaseController<AttendanceDetails, AttendanceDetailsDTO> {
 
     @Autowired
@@ -31,8 +34,25 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     private AttendanceDetailsMapper attendanceDetailsMapper;
 
     @Autowired
+    private LectureService lectureService;
+
+    @Autowired
     private LectureMapper lectureMapper;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private StudentMapper studentMapper;
+
+    @Autowired
+    private SectionService sectionService;
+
+    @Autowired
+    private SectionMapper sectionMapper;
+
+    @Autowired
+    private StudentEnrollmentService studentEnrollmentService;
 
     @RequestMapping(value="/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode , @RequestBody StudentLecture studentLecture){
@@ -94,6 +114,14 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
-
+    // this function is written by Abdo Ramadan
+    @RequestMapping(value="/getAttendanceByLecture/{lectureId}"
+            , method = RequestMethod.GET)
+    public ResponseEntity<AttendanceReportDTO>
+    getAttendanceByLecture( @PathVariable long lectureId){
+        AttendanceReportDTO attendanceReportDTOS =
+                this.attendanceDetailsService.findAttendanceReportDTOByLecture(lectureId);
+        return new ResponseEntity<>(attendanceReportDTOS,HttpStatus.OK);
+    }
 
 }

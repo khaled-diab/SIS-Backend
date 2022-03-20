@@ -5,6 +5,7 @@ import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
 import com.sis.entities.mapper.AttendanceDetailsMapper;
@@ -18,6 +19,7 @@ import java.util.Collection;
 
 @Service
 public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
+
 
     @Autowired
     private AttendanceDetailsRepository attendanceDetailsRepository;
@@ -40,6 +42,16 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
             return this.attendanceDetailsMapper.toDTOs(attendanceDetails);
         }
         return null;
+    }
+    // this function is written by Abdo Ramadan
+    public AttendanceReportDTO findAttendanceReportDTOByLecture(Long lectureId){
+        ArrayList<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.
+                findAttendanceDetailsByLectureId(lectureId);
+        AttendanceReportDTO attendanceReportDTO = new AttendanceReportDTO();
+        if(attendanceDetails!= null){
+            attendanceReportDTO.setAttendanceDetailsDTOs(this.attendanceDetailsMapper.toDTOs(attendanceDetails));
+        }
+        return  attendanceReportDTO;
     }
 
     public ArrayList<AttendanceDetailsDTO> getAttendanceDetailsByLecture(Lecture lecture){

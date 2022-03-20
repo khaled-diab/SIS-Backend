@@ -1,6 +1,7 @@
 package com.sis.controller;
 
 import com.sis.dto.AcademicTermDTO;
+import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.lecture.LectureDTO;
 
@@ -97,7 +98,8 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
         for(Section sec: sections){
              lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
         }
-        lectureDTOs = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceStatus() && lectureDTO.getAttendanceType().equalsIgnoreCase("Automatic")).collect(Collectors.toList());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        lectureDTOs = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceCodeExpiringTime().isAfter(now) && todays.equals( dateFormat.format(lectureDTO.getLectureDate())) && lectureDTO.getAttendanceType().equalsIgnoreCase("Auto")).collect(Collectors.toList());
         return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
     }
 
@@ -106,10 +108,21 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
 
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
-        ArrayList<LectureDTO> lectureDTOs = this.lectureService.getFacultyMemberLectures(academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionId);
+        ArrayList<LectureDTO> lectureDTOs = this.lectureService.
+                getFacultyMemberLectures(academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionId);
         return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
     }
-
+    // this function is written by Abdo Ramadan
+    @RequestMapping(value="/getFacultyMemberLecturesToReport/{sectionId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<FacultyMemberLecturesDTO>> getFacultyMemberLecturesToReport(@PathVariable
+        long sectionId) {
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        ArrayList<FacultyMemberLecturesDTO> facultyMemberLecturesDTOS =
+                this.lectureService.getFacultyMemberLecturesToReport(
+                        academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionId);
+        return new ResponseEntity<>(facultyMemberLecturesDTOS, HttpStatus.OK);
+    }
 
 
 }
