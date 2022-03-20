@@ -102,9 +102,10 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return sections;
     }
     //UC011
-    public Section findStudentSection(long academicYearId, long academicTermId, long studentId, long courseId) {
-        StudentEnrollment studentEnrollment = this.studentEnrollmentRepository.findStudentSection(academicYearId, academicTermId, studentId,courseId);
-
+    public Section findStudentSection(long academicYearId, long academicTermId,
+                                      long studentId, long courseId) {
+        StudentEnrollment studentEnrollment = this.studentEnrollmentRepository
+                .findStudentSection(academicYearId, academicTermId, studentId,courseId);
             if(studentEnrollment!=null) {
                 if (studentEnrollment.getSection() != null) {
                     return studentEnrollment.getSection();
@@ -112,6 +113,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
             }
         return null;
     }
+
 
     //UC011
     public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId){

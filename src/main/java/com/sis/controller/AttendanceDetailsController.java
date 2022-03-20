@@ -2,6 +2,7 @@ package com.sis.controller;
 
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
+import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
@@ -56,9 +57,10 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @Autowired
     private AcademicTermMapper academicTermMapper;
 
-    @RequestMapping(value="/addAttendance/{attendanceCode}/{studentId}/{lectureId}/{sectionId}", method = RequestMethod.GET)
+    @RequestMapping(value="/addAttendance/{attendanceCode}" +
+            "/{studentId}/{lectureId}/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<AttendanceDetailsDTO> addAttendance(@PathVariable long attendanceCode , @PathVariable long studentId,
-                                                              @PathVariable long lectureId,   @PathVariable long sectionId){
+                                                              @PathVariable long lectureId, @PathVariable long sectionId){
 
         LectureDTO lectureDTO = this .lectureMapper.toDTO(this.lectureService.findById(lectureId));
         StudentDTO studentDTO = this .studentMapper.toDTO(this.studentService.findById(studentId));
@@ -80,15 +82,25 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         return new ResponseEntity<>(attendanceDetailsDTO,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance( @PathVariable long studentId, @PathVariable long courseId){
-
+    @RequestMapping(value="/getAttendance/{studentId}/{courseId}"
+            , method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>>
+    getAttendance( @PathVariable long studentId, @PathVariable long courseId){
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         Section section = this.studentEnrollmentService.findStudentSection(academicTermDTO.getYear_id(),academicTermDTO.getId(),studentId,courseId);
-        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.findStudentAttendances(studentId,section.getId());
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS =
+                this.attendanceDetailsService.findStudentAttendances(studentId,section.getId());
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
-
+    // this function is written by Abdo Ramadan
+    @RequestMapping(value="/getAttendanceByLecture/{lectureId}"
+            , method = RequestMethod.GET)
+    public ResponseEntity<AttendanceReportDTO>
+    getAttendanceByLecture( @PathVariable long lectureId){
+        AttendanceReportDTO attendanceReportDTOS =
+                this.attendanceDetailsService.findAttendanceReportDTOByLecture(lectureId);
+        return new ResponseEntity<>(attendanceReportDTOS,HttpStatus.OK);
+    }
 
 }

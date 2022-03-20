@@ -1,6 +1,7 @@
 package com.sis.service;
 
 import com.sis.dao.LectureRepository;
+import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
 
 import com.sis.entities.*;
@@ -27,17 +28,41 @@ public class LectureService  extends BaseServiceImp<Lecture>{
         return this.lectureRepository;
     }
 
-    public ArrayList<LectureDTO> getFacultyMemberLectures(long academicYearId, long academicTermId, long sectionId){
+    public ArrayList<LectureDTO> getFacultyMemberLectures(long academicYearId,
+                                                          long academicTermId,
+                                                          long sectionId){
 
         ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
         ArrayList<LectureDTO> LectureDTOs = new ArrayList<>();
         for(Long id : lectureIds){
             Lecture lecture = findById(id);
-            if(lecture.getAcademicTermId().getId() == academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
+            if(lecture.getAcademicTermId().getId() ==
+                    academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
                 LectureDTOs.add(this.lectureMapper.toDTO(lecture));
             }
         }
         return LectureDTOs;
+    }
+    //this function is written by Abdo Ramadan
+    public ArrayList<FacultyMemberLecturesDTO> getFacultyMemberLecturesToReport(long academicYearId,
+                                                                        long academicTermId,
+                                                                        long sectionId){
+        ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
+        ArrayList<FacultyMemberLecturesDTO> facultyMemberLecturesDTOS = new ArrayList<>();
+        for(Long id : lectureIds){
+            Lecture lecture = findById(id);
+            if(lecture.getAcademicTermId().getId() ==
+                    academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
+                FacultyMemberLecturesDTO facultyMemberLecturesDTO  =new FacultyMemberLecturesDTO();
+                facultyMemberLecturesDTO.setLectureEndTime(lecture.getLectureEndTime());
+                facultyMemberLecturesDTO.setLectureDay(lecture.getLectureDay());
+                facultyMemberLecturesDTO.setLectureStartTime(lecture.getLectureStartTime());
+                facultyMemberLecturesDTO.setLectureDate(lecture.getLectureDate());
+                facultyMemberLecturesDTO.setId(lecture.getId());
+                facultyMemberLecturesDTOS.add(facultyMemberLecturesDTO);
+            }
+        }
+        return facultyMemberLecturesDTOS;
     }
 
 }

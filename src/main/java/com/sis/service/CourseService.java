@@ -81,9 +81,12 @@ public class CourseService extends BaseServiceImp<Course> {
     }
 
     //UC011
-    public ArrayList<CourseDTO> getFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
+    public ArrayList<CourseDTO> getFacultyMemberCourses(long academicYearId,
+                                                        long academicTermId,
+                                                        long facultyMemberId){
 
-        ArrayList<FacultyMemberEnrollment> facultyMemberCourses = this.facultyMemberEnrollmentService.getFacultyMemberCourses(academicYearId,
+        ArrayList<FacultyMemberEnrollment> facultyMemberCourses =
+                this.facultyMemberEnrollmentService.getFacultyMemberCourses(academicYearId,
                 academicTermId, facultyMemberId);
         ArrayList<CourseDTO> courses = new ArrayList<>();
         for(FacultyMemberEnrollment studentEnrollment : facultyMemberCourses){
