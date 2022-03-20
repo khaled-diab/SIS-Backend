@@ -62,12 +62,13 @@ public class CourseController extends BaseController<Course, CourseDTO> {
     }
 
     //UC011
+    // abdo ramadan use this function
     @RequestMapping(
             value = "/facultyMemberCourses/{facultyMemberId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<Collection<CourseDTO>> getFacultyMemberCourses( @PathVariable long facultyMemberId) {
 
+    public ResponseEntity<Collection<CourseDTO>> getFacultyMemberCourses( @PathVariable long facultyMemberId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         Collection<CourseDTO> courseDTOS = this.courseService.getFacultyMemberCourses(

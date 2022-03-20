@@ -68,8 +68,7 @@ public class Lecture extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "section_id",referencedColumnName = "id"))
     private List<Section>  sections;
 
-
-@OneToMany(mappedBy = "lecture")
-private Collection<AttendanceDetails> attendanceDetails;
+    @OneToMany(mappedBy = "lecture")
+    private Collection<AttendanceDetails> attendanceDetails;
 
 }

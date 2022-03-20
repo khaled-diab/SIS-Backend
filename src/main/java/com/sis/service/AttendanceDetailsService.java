@@ -2,7 +2,9 @@ package com.sis.service;
 
 import com.sis.dao.AttendanceDetailsRepository;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
+import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.entities.AttendanceDetails;
+import com.sis.entities.Lecture;
 import com.sis.entities.mapper.AttendanceDetailsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,6 +35,16 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
             return this.attendanceDetailsMapper.toDTOs(attendanceDetails);
         }
         return null;
+    }
+    // this function is written by Abdo Ramadan
+    public AttendanceReportDTO findAttendanceReportDTOByLecture(Long lectureId){
+        ArrayList<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.
+                findAttendanceDetailsByLectureId(lectureId);
+        AttendanceReportDTO attendanceReportDTO = new AttendanceReportDTO();
+        if(attendanceDetails!= null){
+            attendanceReportDTO.setAttendanceDetailsDTOs(this.attendanceDetailsMapper.toDTOs(attendanceDetails));
+        }
+        return  attendanceReportDTO;
     }
 
 }
