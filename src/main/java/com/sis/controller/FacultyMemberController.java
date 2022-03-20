@@ -30,7 +30,8 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
                                                                @PathVariable int size,
-                                                               @RequestBody FacultyMemberRequestDTO facultyMemberRequestDTO) {
+                                                               @RequestBody FacultyMemberRequestDTO
+                                                                           facultyMemberRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         return new ResponseEntity<>(facultyMemberService.search(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
     }

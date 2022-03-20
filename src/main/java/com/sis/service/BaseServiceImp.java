@@ -32,6 +32,7 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
 
     @Override
     public E findById(Long id) {
+
         return Repository().findById(id).orElseThrow(() -> new ItemNotFoundException(id));
     }
 

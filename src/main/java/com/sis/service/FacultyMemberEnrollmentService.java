@@ -73,7 +73,8 @@ public class FacultyMemberEnrollmentService extends BaseServiceImp<FacultyMember
     }
 
     //UC011
-    public ArrayList<FacultyMemberEnrollment> getFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
+    public ArrayList<FacultyMemberEnrollment> getFacultyMemberCourses(long academicYearId, long
+            academicTermId, long facultyMemberId){
         return this.facultyMemberEnrollmentRepository.findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
     }
 

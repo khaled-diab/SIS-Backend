@@ -41,8 +41,8 @@ public class Lecture extends BaseEntity{
     @Column(name = "attendance_code")
     private long attendanceCode;
 
-    @Column(name = "attendance_status")
-    private boolean attendanceStatus;
+    @Column(name = "attendance_code_expiring_time")
+    private LocalTime attendanceCodeExpiringTime;
 
     @NotNull
     @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")

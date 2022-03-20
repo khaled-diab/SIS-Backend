@@ -61,7 +61,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @Autowired
     private AcademicTermMapper academicTermMapper;
 
-    public static final String DIRECTORY = System.getProperty("user.home") + "/Resourcess/StudentImages/";
+    public static final String DIRECTORY =
+            System.getProperty("user.home") + "/Resourcess/StudentImages/";
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();
