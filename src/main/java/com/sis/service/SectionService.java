@@ -78,17 +78,17 @@ public class SectionService extends BaseServiceImp<Section> {
         return Sort.by(Sort.Direction.valueOf(sectionRequestDTO.getSortDirection()), sectionRequestDTO.getSortBy());
     }
 
-    //UC011
+    //Abdo.Amr
     public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student){
         Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYear, academicTerm,student);
         return sections;
     }
-    //UC011
+    //Abdo.Amr
     public Section findStudentSection(long academicYearId, long academicTermId,long studentId,long courseId){
         Section section = this.studentEnrollmentService.findStudentSection(academicYearId, academicTermId,studentId, courseId);
         return section;
     }
-    //UC011
+    //Abdo.Amr
     public ArrayList<SectionDTO> findFacultyMemberSections(long academicYearId, long academicTermId, long facultyMemberId){
        ArrayList<Long> sectionIds= this.timetableService.findFacultyMemberSections(academicYearId,academicTermId,facultyMemberId);
         ArrayList<Section> sections=new ArrayList<>();

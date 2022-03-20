@@ -80,7 +80,7 @@ public class CourseService extends BaseServiceImp<Course> {
         return Sort.by(Sort.Direction.valueOf(courseRequestDTO.getSortDirection()), courseRequestDTO.getSortBy());
     }
 
-    //UC011
+    //Abdo.Amr
     public ArrayList<CourseDTO> getFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId){
 
         ArrayList<FacultyMemberEnrollment> facultyMemberCourses = this.facultyMemberEnrollmentService.getFacultyMemberCourses(academicYearId,
@@ -95,7 +95,7 @@ public class CourseService extends BaseServiceImp<Course> {
         return courses;
     }
 
-    //UC011
+    //Abdo.Amr
     public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId){
         return this.studentEnrollmentService.getStudentCourses(academicYearId,academicTermId,studentId);
     }

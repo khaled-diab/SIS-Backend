@@ -72,10 +72,10 @@ public class Student extends BaseEntity {
     private Department departmentId;
 
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     private Collection<StudentEnrollment> studentEnrollments;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Collection<AttendanceDetails> attendanceDetails;
 
 }

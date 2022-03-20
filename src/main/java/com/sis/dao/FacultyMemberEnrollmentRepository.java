@@ -14,7 +14,7 @@ import java.util.List;
 public interface FacultyMemberEnrollmentRepository extends BaseDao<FacultyMemberEnrollment>{
 
 
-    //UC011
+    //Abdo.Amr
     @Query(value="SELECT * FROM faculty_member_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and faculty_member_id= :facultyMemberId  ", nativeQuery = true)
     public ArrayList<FacultyMemberEnrollment> findFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId);
 

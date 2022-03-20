@@ -87,7 +87,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }
 
-    //UC011
+    //Abdo.Amr
     public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student) {
         Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentByAcademicYearAndAcademicTermAndStudent(academicYear, academicTerm, student);
         ArrayList<Section>sections = new ArrayList<>();
@@ -98,7 +98,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         }
         return sections;
     }
-    //UC011
+    //Abdo.Amr
     public Section findStudentSection(long academicYearId, long academicTermId, long studentId, long courseId) {
         StudentEnrollment studentEnrollment = this.studentEnrollmentRepository.findStudentSection(academicYearId, academicTermId, studentId,courseId);
 
@@ -110,7 +110,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return null;
     }
 
-    //UC011
+    //Abdo.Amr
     public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId){
         ArrayList<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentCourses(academicYearId,academicTermId, studentId);
         ArrayList<CourseDTO> courseDTOs = new ArrayList<>();

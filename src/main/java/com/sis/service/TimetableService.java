@@ -78,7 +78,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         return Sort.by(Sort.Direction.valueOf(timetableRequestDTO.getSortDirection()), timetableRequestDTO.getSortBy());
     }
 
-    //UC011
+    //Abdo.Amr
     public Collection<TimetableDTO> findFacultyMemberTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
         Collection<Timetable> timetables = this.timetableRepository.findFacultyMemberTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
         Collection<TimetableDTO> timetableDTOs= null;
@@ -87,6 +87,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         }
         return  timetableDTOs;
     }
+    //Abdo.Amr
     public ArrayList<Long> findFacultyMemberSections(long academicYearId, long academicTermId, long facultyMemberId){
         return this.timetableRepository.findFacultyMemberSections(academicYearId,academicTermId,facultyMemberId);
 
