@@ -29,7 +29,7 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
         lectureDTO.setLectureStartTime(entity.getLectureStartTime());
         lectureDTO.setLectureEndTime(entity.getLectureEndTime());
         lectureDTO.setAttendanceCode(entity.getAttendanceCode());
-        lectureDTO.setAttendanceCodeExpiringTime(entity.getAttendanceCodeExpiringTime());
+        lectureDTO.setAttendanceStatus(entity.getAttendanceStatus());
         lectureDTO.setAttendanceType(entity.getAttendanceType());
 
         lectureDTO.setId(entity.getId());
@@ -45,8 +45,8 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
         if (entity.getAcademicYearId() != null) {
             lectureDTO.setAcademicYearDTO(this.academicYearMapper.toDTO(entity.getAcademicYearId()));
         }
-        if (entity.getSections() != null) {
-            lectureDTO.setSectionDTOs(this.sectionMapper.toDTOs(entity.getSections()));
+        if (entity.getSection() != null) {
+            lectureDTO.setSectionDTO(this.sectionMapper.toDTO(entity.getSection()));
         }
         return lectureDTO;
     }
@@ -59,7 +59,7 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
             lecture.setLectureStartTime(dto.getLectureStartTime());
             lecture.setLectureEndTime(dto.getLectureEndTime());
             lecture.setAttendanceCode(dto.getAttendanceCode());
-            lecture.setAttendanceCodeExpiringTime(dto.getAttendanceCodeExpiringTime());
+            lecture.setAttendanceStatus(dto.getAttendanceStatus());
             lecture.setAttendanceType(dto.getAttendanceType());
             lecture.setId(dto.getId());
             if (dto.getFacultyMemberDTO() != null) {
@@ -74,8 +74,8 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
             if (dto.getAcademicYearDTO() != null) {
                 lecture.setAcademicYearId(this.academicYearMapper.toEntity(dto.getAcademicYearDTO()));
             }
-            if (dto.getSectionDTOs() != null) {
-                lecture.setSections(this.sectionMapper.toEntities(dto.getSectionDTOs()));
+            if (dto.getSectionDTO() != null) {
+                lecture.setSection(this.sectionMapper.toEntity(dto.getSectionDTO()));
             }
         }
         return lecture;

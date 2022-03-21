@@ -4,9 +4,7 @@ import com.sis.dao.SectionRepository;
 import com.sis.dao.specification.SectionSpecification;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
-import com.sis.entities.College;
-import com.sis.entities.Department;
-import com.sis.entities.Section;
+import com.sis.entities.*;
 import com.sis.entities.mapper.SectionMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -18,13 +16,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 @Service
 @AllArgsConstructor
 public class SectionService extends BaseServiceImp<Section> {
 
     private final SectionRepository sectionRepository;
     private final SectionMapper sectionMapper;
-
+    private TimetableService timetableService;
     private final StudentEnrollmentService studentEnrollmentService;
 
     @Override
@@ -82,5 +84,36 @@ public class SectionService extends BaseServiceImp<Section> {
     public int countBySection(Section section) {
         return this.studentEnrollmentService.countBySection(section);
     }
+
+
+    //Abdo.Amr
+    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student) {
+        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYear, academicTerm, student);
+        return sections;
+    }
+
+    //Abdo.Amr
+    public Section findStudentSection(long academicYearId, long academicTermId, long studentId, long courseId) {
+        Section section = this.studentEnrollmentService.findStudentSection(academicYearId, academicTermId, studentId, courseId);
+        return section;
+    }
+
+    //Abdo.Amr
+    public ArrayList<SectionDTO> findFacultyMemberSections(long academicYearId, long academicTermId, long facultyMemberId) {
+        ArrayList<Long> sectionIds = this.timetableService.findFacultyMemberSections(academicYearId, academicTermId, facultyMemberId);
+        ArrayList<Section> sections = new ArrayList<>();
+        ArrayList<SectionDTO> sectionDTOs = new ArrayList<>();
+
+        if (sectionIds != null && sectionIds.size() > 0) {
+            for (long id : sectionIds) {
+                Section section = this.findById(id);
+                sections.add(section);
+            }
+            sectionDTOs = this.sectionMapper.toDTOs(sections);
+            return sectionDTOs;
+        }
+        return null;
+    }
+
 
 }

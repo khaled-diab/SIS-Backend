@@ -4,6 +4,7 @@ import com.sis.dao.TimetableRepository;
 import com.sis.dao.specification.TimetableSpecification;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
+import com.sis.entities.Section;
 import com.sis.entities.Timetable;
 import com.sis.entities.mapper.TimetableMapper;
 import com.sis.util.PageQueryUtil;
@@ -16,7 +17,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.List;
 
 @Service
@@ -74,11 +78,35 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         return Sort.by(Sort.Direction.valueOf(timetableRequestDTO.getSortDirection()), timetableRequestDTO.getSortBy());
     }
 
-    public Collection<Timetable> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
-        return this.timetableRepository.findTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
-    }
-
     public void saveAll(List<Timetable> timetableDTOList){
         this.timetableRepository.saveAll(timetableDTOList);
     }
+
+    //Abdo.Amr
+    public Collection<TimetableDTO> findFacultyMemberTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
+        Collection<Timetable> timetables = this.timetableRepository.findFacultyMemberTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
+        Collection<TimetableDTO> timetableDTOs= null;
+        if(timetables != null){
+            timetableDTOs = this.timetableMapper.toDTOs(timetables);
+        }
+        return  timetableDTOs;
+    }
+    //Abdo.Amr
+    public ArrayList<Long> findFacultyMemberSections(long academicYearId, long academicTermId, long facultyMemberId){
+        return this.timetableRepository.findFacultyMemberSections(academicYearId,academicTermId,facultyMemberId);
+
+    }
+    public ArrayList<TimetableDTO> getSectionTimeTables(long academicYearId, long academicTermId,long sectionId){
+        ArrayList<Timetable> timetables= this.timetableRepository.findTimetableBySection(academicYearId,academicTermId,sectionId);
+        ArrayList<TimetableDTO> timetableDTOs= new ArrayList<>();
+
+        if(timetables!=null){
+            timetableDTOs=this.timetableMapper.toDTOs(timetables);
+        }
+        return timetableDTOs;
+    }
+
+
+
+
 }

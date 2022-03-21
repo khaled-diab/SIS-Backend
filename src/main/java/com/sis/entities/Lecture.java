@@ -18,31 +18,31 @@ import java.util.List;
 public class Lecture extends BaseEntity{
     private static final long serialVersionUID = 1L;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "lecture_day")
     private String lectureDay;
 
     @Column(name = "attendance_type")
     private String attendanceType;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "lecture_date")
     @Temporal(TemporalType.DATE)
     private Date lectureDate;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "lecture_start_time")
     private LocalTime lectureStartTime;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "lecture_end_time")
     private LocalTime lectureEndTime;
 
     @Column(name = "attendance_code")
     private long attendanceCode;
 
-    @Column(name = "attendance_code_expiring_time")
-    private LocalTime attendanceCodeExpiringTime;
+    @Column(name = "attendance_status")
+    private boolean attendanceStatus;
 
     @NotNull
     @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
@@ -62,14 +62,19 @@ public class Lecture extends BaseEntity{
     private AcademicYear academicYearId;
 
 
-    @ManyToMany
-    @JoinTable(name = "section_lecture",
-            joinColumns = @JoinColumn(name = "lecture_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "section_id",referencedColumnName = "id"))
-    private List<Section>  sections;
+    @JoinColumn(name = "section_id",referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Section section;
 
 
-@OneToMany(mappedBy = "lecture")
-private Collection<AttendanceDetails> attendanceDetails;
+    @OneToMany(mappedBy = "lecture" )
+    private Collection<AttendanceDetails> attendanceDetails;
 
+    public boolean getAttendanceStatus() {
+        return attendanceStatus;
+    }
+
+    public void setAttendanceStatus(boolean attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
+    }
 }

@@ -1,81 +1,81 @@
 package com.sis.service;
 
 import com.sis.dao.LectureRepository;
-import com.sis.dto.course.CourseDTO;
+import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.dto.section.SectionDTO;
-import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
-import com.sis.dto.timetable.TimetableDTO;
+
 import com.sis.entities.*;
-import com.sis.entities.mapper.CourseMapper;
-import com.sis.entities.mapper.LectureMapper;
-import com.sis.entities.mapper.StudentEnrollmentMapper;
-import com.sis.entities.mapper.TimetableMapper;
+import com.sis.entities.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Date;
+
 
 @Service
-public class LectureService  extends BaseServiceImp<Lecture>{
+public class LectureService  extends BaseServiceImp<Lecture> {
 
 
     @Autowired
     private LectureRepository lectureRepository;
 
     @Autowired
-    private FacultyMemberEnrollmentService facultyMemberEnrollmentService;
-
-    @Autowired
-    private TimetableService timetableService;
-
-    @Autowired
-    private CourseMapper courseMapper;
-
-    @Autowired
-    private TimetableMapper timetableMapper;
-
-    @Autowired
-    private StudentEnrollmentService studentEnrollmentService;
-    @Autowired
-    private SectionService sectionService;
-
-    @Autowired
     private LectureMapper lectureMapper;
+
     @Override
     public JpaRepository<Lecture, Long> Repository() {
         return this.lectureRepository;
     }
 
-    public Collection<CourseDTO> findCourses(long academicYearId, long academicTermId, long facultyMemberId){
+    public ArrayList<LectureDTO> getFacultyMemberLectures(long academicYearId, long academicTermId, long sectionId) {
 
-        FacultyMemberEnrollment facultyMemberEnrollment = this.facultyMemberEnrollmentService.findByFacultyMember(academicYearId,
-                academicTermId, facultyMemberId);
-        Collection<Course> courses=null;
-        if(facultyMemberEnrollment != null) {
-             courses = facultyMemberEnrollment.getCourses();
-        }else {
+        ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
+        ArrayList<LectureDTO> LectureDTOs = new ArrayList<>();
+        for (Long id : lectureIds) {
+            Lecture lecture = findById(id);
+            if (lecture.getAcademicTermId().getId() == academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
+                LectureDTOs.add(this.lectureMapper.toDTO(lecture));
+            }
+        }
+        return LectureDTOs;
+    }
+    //this function is written by Abdo Ramadan
+    public ArrayList<FacultyMemberLecturesDTO> getFacultyMemberLecturesToReport(long academicYearId,
+                                                                        long academicTermId,
+                                                                        long sectionId){
+        ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
+        ArrayList<FacultyMemberLecturesDTO> facultyMemberLecturesDTOS = new ArrayList<>();
+        for(Long id : lectureIds){
+            Lecture lecture = findById(id);
+            if(lecture.getAcademicTermId().getId() ==
+                    academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
+                FacultyMemberLecturesDTO facultyMemberLecturesDTO  =new FacultyMemberLecturesDTO();
+                facultyMemberLecturesDTO.setLectureEndTime(lecture.getLectureEndTime());
+                facultyMemberLecturesDTO.setLectureDay(lecture.getLectureDay());
+                facultyMemberLecturesDTO.setLectureStartTime(lecture.getLectureStartTime());
+                facultyMemberLecturesDTO.setLectureDate(lecture.getLectureDate());
+                facultyMemberLecturesDTO.setId(lecture.getId());
+                facultyMemberLecturesDTOS.add(facultyMemberLecturesDTO);
+            }
+        }
+        return facultyMemberLecturesDTOS;
+    }
+
+    public LectureDTO searchLecture(Date lectureDate, Course course, FacultyMember facultyMember, LocalTime lectureStartTime, LocalTime lectureEndTime)
+    {
+
+            ArrayList<Lecture> lectures = this.lectureRepository.findLectureByLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime(lectureDate,
+                    course,
+                    facultyMember,
+                    lectureStartTime,
+                    lectureEndTime);
+            if (lectures!=null && lectures.size()>0) {
+                return this.lectureMapper.toDTO(lectures.get(0));
+            }
             return null;
         }
-        return this.courseMapper.toDTOs(courses);
-    }
-
-    public Collection<TimetableDTO> findTimeTables(long academicYearId, long academicTermId, long facultyMemberId, long courseId){
-        Collection<Timetable> timetables = this.timetableService.findTimeTables(academicYearId,  academicTermId,  facultyMemberId,  courseId);
-        Collection<TimetableDTO> timetableDTOs= null;
-        if(timetables != null){
-            timetableDTOs = this.timetableMapper.toDTOs(timetables);
-        }
-        return  timetableDTOs;
-    }
-
-    public Collection<Section> findSections(long academicYearId, long academicTermId,long studentId){
-        Collection<Section> sections = this.studentEnrollmentService.findSections(academicYearId, academicTermId,studentId);
-        return sections;
-    }
 
 }
