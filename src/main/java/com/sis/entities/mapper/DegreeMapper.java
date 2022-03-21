@@ -45,12 +45,14 @@ public class DegreeMapper implements Mapper<Degree, DegreeDTO> {
 	@Override
 	public Degree toEntity(DegreeDTO dto) {
 		Degree entity=new Degree();
-		entity.setId(dto.getId());
-		entity.setNameAr(dto.getNameAr());
-		entity.setNameEn(dto.getNameEn());
+		if(dto != null) {
+			entity.setId(dto.getId());
+			entity.setNameAr(dto.getNameAr());
+			entity.setNameEn(dto.getNameEn());
 //		if(dto.getFacultyMemberDTO()!=null) {
 //			entity.setFacultyMemberCollection(this.facultyMemberMapper.toEntity(dto.getFacultyMemberDTO()));
 //		}
+		}
 		return entity;
 	}
 

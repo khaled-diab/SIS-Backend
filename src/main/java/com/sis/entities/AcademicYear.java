@@ -7,6 +7,7 @@ package com.sis.entities;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -37,6 +38,9 @@ public class AcademicYear extends BaseEntity {
 
     @OneToMany(mappedBy = "academicYear")
     private Collection<AcademicTerm> academicTermCollection;
+
+    @OneToMany(mappedBy = "academicYearId")
+    private List<Lecture> lectures;
 
     public String getCode() {
         return code;
@@ -79,4 +83,11 @@ public class AcademicYear extends BaseEntity {
         this.academicTermCollection = academicTermCollection;
     }
 
+    public List<Lecture> getLectures() {
+        return lectures;
+    }
+
+    public void setLectures(List<Lecture> lectures) {
+        this.lectures = lectures;
+    }
 }

@@ -1,0 +1,64 @@
+package com.sis.controller;
+
+import com.sis.dto.student.StudentDTO;
+import com.sis.dto.studentEnrollment.StudentArray;
+import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
+import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
+import com.sis.entities.StudentEnrollment;
+import com.sis.entities.mapper.StudentEnrollmentMapper;
+import com.sis.service.StudentEnrollmentService;
+import com.sis.util.MessageResponse;
+import com.sis.util.PageQueryUtil;
+import com.sis.util.PageResult;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+
+@RestController
+@RequestMapping(value = "/api/studentEnrollments")
+@CrossOrigin(origins = ("*"))
+@AllArgsConstructor
+@Validated
+public class StudentEnrollmentController extends BaseController<StudentEnrollment, StudentEnrollmentDTO> {
+
+    private final StudentEnrollmentService studentEnrollmentService;
+    private final StudentEnrollmentMapper studentEnrollmentMapper;
+
+    @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<StudentEnrollmentDTO>> search(@PathVariable int pageNumber,
+                                                                   @PathVariable int size,
+                                                                   @RequestBody StudentEnrollmentRequestDTO studentEnrollmentRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(studentEnrollmentService.search(pageUtil, studentEnrollmentRequestDTO), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public MessageResponse update(@RequestBody @Valid StudentEnrollmentDTO dto) {
+        studentEnrollmentService.save(studentEnrollmentMapper.toEntity(dto));
+        return new MessageResponse("Item has been updated successfully");
+    }
+
+    @RequestMapping(value="/save", method = RequestMethod.PUT)
+    public MessageResponse save(@RequestBody StudentArray dto){
+        for(StudentDTO studentDTO: dto.getStudentDTOS()) {
+            StudentEnrollmentDTO studentEnrollmentDTO = new StudentEnrollmentDTO();
+            studentEnrollmentDTO.setAcademicYearDTO(dto.getStudentEnrollmentDTO().getAcademicYearDTO());
+            studentEnrollmentDTO.setAcademicTermDTO(dto.getStudentEnrollmentDTO().getAcademicTermDTO());
+            studentEnrollmentDTO.setCollegeDTO(dto.getStudentEnrollmentDTO().getCollegeDTO());
+            studentEnrollmentDTO.setDepartmentDTO(dto.getStudentEnrollmentDTO().getDepartmentDTO());
+            studentEnrollmentDTO.setMajorDTO(dto.getStudentEnrollmentDTO().getMajorDTO());
+            studentEnrollmentDTO.setStudyTypeDTO(dto.getStudentEnrollmentDTO().getStudyTypeDTO());
+            studentEnrollmentDTO.setCourseDTO(dto.getStudentEnrollmentDTO().getCourseDTO());
+            studentEnrollmentDTO.setSectionDTO(dto.getStudentEnrollmentDTO().getSectionDTO());
+            studentEnrollmentDTO.setStudentDTO(studentDTO);
+            this.studentEnrollmentService.save(this.studentEnrollmentMapper.toEntity(studentEnrollmentDTO));
+        }
+        return new MessageResponse("Item has been saved successfully");
+    }
+
+}
