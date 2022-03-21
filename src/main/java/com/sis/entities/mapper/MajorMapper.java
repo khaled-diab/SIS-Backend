@@ -15,6 +15,10 @@ import static java.util.stream.Collectors.toCollection;
 @AllArgsConstructor
 public class MajorMapper implements Mapper<Major, MajorDTO> {
 
+    private CollegeMapper collegeMapper;
+
+    private DepartmentMapper departmentMapper;
+
     @Override
     public ArrayList<MajorDTO> toDTOs(Collection<Major> entities) {
         return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<MajorDTO>::new));
@@ -36,7 +40,12 @@ public class MajorMapper implements Mapper<Major, MajorDTO> {
         dto.setId(entity.getId());
         dto.setNameAr(entity.getNameAr());
         dto.setNameEn(entity.getNameEn());
-
+        if(entity.getCollege()!=null) {
+            dto.setCollegeDTO(this.collegeMapper.toDTO(entity.getCollege()));
+        }
+        if(entity.getDepartment()!=null) {
+            dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartment()));
+        }
         return dto;
     }
 
@@ -46,7 +55,13 @@ public class MajorMapper implements Mapper<Major, MajorDTO> {
         entity.setId(dto.getId());
         entity.setNameAr(dto.getNameAr());
         entity.setNameEn(dto.getNameEn());
+        if(dto.getCollegeDTO()!=null) {
+            entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
+        }
+        if(dto.getDepartmentDTO()!=null) {
 
+            entity.setDepartment(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+        }
         return entity;
     }
 

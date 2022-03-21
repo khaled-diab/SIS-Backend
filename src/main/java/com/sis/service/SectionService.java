@@ -4,6 +4,8 @@ import com.sis.dao.SectionRepository;
 import com.sis.dao.specification.SectionSpecification;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
+import com.sis.entities.College;
+import com.sis.entities.Department;
 import com.sis.entities.Section;
 import com.sis.entities.mapper.SectionMapper;
 import com.sis.util.PageQueryUtil;
@@ -22,6 +24,8 @@ public class SectionService extends BaseServiceImp<Section> {
 
     private final SectionRepository sectionRepository;
     private final SectionMapper sectionMapper;
+
+    private final StudentEnrollmentService studentEnrollmentService;
 
     @Override
     public JpaRepository<Section, Long> Repository() {
@@ -44,14 +48,14 @@ public class SectionService extends BaseServiceImp<Section> {
 
         Long filterStudyType = sectionRequestDTO.getFilterStudyType();
 
-        String filterSectionNumber = sectionRequestDTO.getFilterSectionNumber();
+        Long filterMajor = sectionRequestDTO.getFilterMajor();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(sectionRequestDTO));
-        if (( searchValue != null && !searchValue.trim().isEmpty() ) || filterCollege != null || filterDepartment != null ||
-                filterAcademicYear != null || filterAcademicTerm != null || filterCourse != null ||
-                filterStudyType != null || filterSectionNumber != null) {
+        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null ||
+                filterDepartment != null || filterAcademicYear != null || filterAcademicTerm != null ||
+                filterCourse != null || filterStudyType != null || filterMajor != null) {
             SectionSpecification sectionSpecification = new SectionSpecification(searchValue, filterCollege, filterDepartment,
-                    filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterSectionNumber);
+                    filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterMajor);
 
             sectionPage = sectionRepository.findAll(sectionSpecification, pageable);
         } else {
@@ -65,8 +69,18 @@ public class SectionService extends BaseServiceImp<Section> {
 
     private Sort constructSortObject(SectionRequestDTO sectionRequestDTO) {
         if (sectionRequestDTO.getSortDirection() == null) {
-            return Sort.by(Sort.Direction.ASC, "sectionNumber");
+            return Sort.by(Sort.Direction.ASC, "college");
         }
         return Sort.by(Sort.Direction.valueOf(sectionRequestDTO.getSortDirection()), sectionRequestDTO.getSortBy());
     }
+
+    public Section findSection(String sectionNumber, College college, Department department) {
+        return this.sectionRepository.findSectionBySectionNumberAndCollegeAndDepartment(
+                sectionNumber, college, department);
+    }
+
+    public int countBySection(Section section) {
+        return this.studentEnrollmentService.countBySection(section);
+    }
+
 }

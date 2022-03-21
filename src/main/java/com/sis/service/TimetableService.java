@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +33,6 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     public PageResult<TimetableDTO> filter(PageQueryUtil pageUtil, TimetableRequestDTO timetableRequestDTO) {
         Page<Timetable> timetablePage;
-        String searchValue = timetableRequestDTO.getSearchValue();
 
         Long filterCollege = timetableRequestDTO.getFilterCollege();
 
@@ -51,10 +51,10 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         String filterDay = timetableRequestDTO.getFilterDay();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(timetableRequestDTO));
-        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null ||
+        if (filterCollege != null || filterDepartment != null ||
                 filterAcademicYear != null || filterAcademicTerm != null || filterFacultyMember != null ||
                 filterCourse != null || filterSection != null || (filterDay!= null && !filterDay.trim().isEmpty())) {
-            TimetableSpecification timetableSpecification = new TimetableSpecification(searchValue, filterCollege, filterDepartment,
+            TimetableSpecification timetableSpecification = new TimetableSpecification(filterCollege, filterDepartment,
                     filterAcademicYear, filterAcademicTerm, filterFacultyMember, filterCourse, filterSection, filterDay);
 
             timetablePage = timetableRepository.findAll(timetableSpecification, pageable);
@@ -78,4 +78,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         return this.timetableRepository.findTimeTables( academicYearId,  academicTermId,  facultyMemberId,  courseId);
     }
 
+    public void saveAll(List<Timetable> timetableDTOList){
+        this.timetableRepository.saveAll(timetableDTOList);
+    }
 }

@@ -96,5 +96,8 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return sectionDTOs;
     }
 
+    public int countBySection(Section section){
+        return this.studentEnrollmentRepository.countAllBySection(section);
+    }
 
 }

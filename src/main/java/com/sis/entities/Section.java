@@ -63,7 +63,7 @@ public class Section extends BaseEntity {
     @OneToMany(mappedBy = "section")
     private Collection<StudentEnrollment> studentEnrollments;
 
-    @ManyToMany(mappedBy = "sections")
+    @OneToMany(mappedBy = "section")
     private Collection<Timetable> timetables;
 
     @ManyToMany(cascade = CascadeType.ALL)

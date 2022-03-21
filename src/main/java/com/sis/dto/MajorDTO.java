@@ -1,6 +1,6 @@
 package com.sis.dto;
 
-
+import com.sis.dto.college.CollegeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +8,8 @@ import lombok.Setter;
 @Setter
 public class MajorDTO extends BaseDTO {
 
-	private String nameAr;
-	private String nameEn;
-
+    private String nameAr;
+    private String nameEn;
+    private CollegeDTO collegeDTO;
+    private DepartmentDTO departmentDTO;
 }

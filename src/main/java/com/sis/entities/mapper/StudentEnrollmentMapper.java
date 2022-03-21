@@ -20,6 +20,8 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
     private StudentMapper studentMapper;
     private CourseMapper courseMapper;
     private SectionMapper sectionMapper;
+    private MajorMapper majorMapper;
+    private StudyTypeMapper studyTypeMapper;
 
     @Override
     public ArrayList<StudentEnrollmentDTO> toDTOs(Collection<StudentEnrollment> entities) {
@@ -61,6 +63,12 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
         if (entity.getSection() != null) {
             dto.setSectionDTO(sectionMapper.toDTO(entity.getSection()));
         }
+        if (entity.getMajor() != null) {
+            dto.setMajorDTO(majorMapper.toDTO(entity.getMajor()));
+        }
+        if (entity.getStudyType() != null) {
+            dto.setStudyTypeDTO(studyTypeMapper.toDTO(entity.getStudyType()));
+        }
 
         return dto;
     }
@@ -89,6 +97,12 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
         }
         if (dto.getSectionDTO() != null) {
             entity.setSection(sectionMapper.toEntity(dto.getSectionDTO()));
+        }
+        if (dto.getMajorDTO() != null) {
+            entity.setMajor(majorMapper.toEntity(dto.getMajorDTO()));
+        }
+        if (dto.getStudyTypeDTO() != null) {
+            entity.setStudyType(studyTypeMapper.toEntity(dto.getStudyTypeDTO()));
         }
 
         return entity;
