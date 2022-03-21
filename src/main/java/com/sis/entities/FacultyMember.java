@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,12 +64,7 @@ public class FacultyMember extends BaseEntity {
     @OneToMany(mappedBy = "facultyMember")
     private Collection<Timetable> timetables;
 
-    @OneToMany(mappedBy = "facultyMember")
-    private Collection<FacultyMemberEnrollment> facultyMemberCourses;
-
     @OneToMany(mappedBy = "facultyMemberId")
     private List<Lecture> lectures;
-
-
-
+    
 }

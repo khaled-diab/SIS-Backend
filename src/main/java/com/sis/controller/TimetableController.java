@@ -52,7 +52,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
 
     @RequestMapping(value = "/saveAll", method = RequestMethod.PUT)
     public MessageResponse saveAll(@RequestBody @Valid List<TimetableDTO> dtos) {
-        timetableService.saveAll(timetableMapper.toEntities(dtos));
+        timetableService.saveAllTimetable(timetableMapper.toEntities(dtos));
         return new MessageResponse("Item has been updated successfully");
     }
 
@@ -66,7 +66,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         Collection<TimetableDTO> timetableDTO = this.timetableService.findFacultyMemberTimeTables(
-                academicTermDTO.getYear_id(),
+                academicTermDTO.getAcademicYearDTO().getId(),
                 academicTermDTO.getId(),
                 facultyMemberId,
                 courseId);
@@ -82,7 +82,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         Collection<TimetableDTO> timetableDTOs = this.timetableService.getSectionTimeTables(
-                academicTermDTO.getYear_id(),
+                academicTermDTO.getAcademicYearDTO().getId(),
                 academicTermDTO.getId(),
                 sectionId);
         return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);

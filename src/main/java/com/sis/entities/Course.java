@@ -75,9 +75,6 @@ public class Course extends BaseEntity {
     private Collection<Timetable> timetables;
 
     @OneToMany(mappedBy = "course")
-    private Collection<FacultyMemberEnrollment> facultyMemberEnrollments;
-
-    @OneToMany(mappedBy = "course")
     private Collection<StudentEnrollment> studentEnrollments;
 
     @OneToMany(mappedBy = "course")

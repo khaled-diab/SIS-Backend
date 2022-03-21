@@ -1,24 +1,16 @@
 package com.sis.exception;
 
-import org.springframework.http.HttpHeaders;
+import com.sis.entities.Course;
 import org.springframework.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import org.springframework.web.context.request.WebRequest;
 import com.sis.util.MessageResponse;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 @ControllerAdvice
@@ -72,38 +64,39 @@ public class ControllerExceptionHandler {
                 HttpStatus.BAD_REQUEST);
 
     }
-	@ExceptionHandler(StudentFieldNotUniqueException.class)
-	public ResponseEntity<MessageResponse> globalExceptionHandler(StudentFieldNotUniqueException ex, WebRequest request) {
-		log.error(ex.getMessage());
-		return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(),ex.getMessage()),
-				HttpStatus.BAD_REQUEST);
-	}
+
+    @ExceptionHandler(StudentFieldNotUniqueException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(StudentFieldNotUniqueException ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(), ex.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(SectionFieldNotUniqueException.class)
     public ResponseEntity<MessageResponse> globalExceptionHandler(SectionFieldNotUniqueException ex, WebRequest request) {
         log.error(ex.getMessage());
-        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(),ex.getMessage()),
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(), ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(StudentEnrollmentFieldNotUniqueException.class)
     public ResponseEntity<MessageResponse> globalExceptionHandler(StudentEnrollmentFieldNotUniqueException ex, WebRequest request) {
         log.error(ex.getMessage());
-        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(),ex.getMessage()),
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(), ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(TimetableFieldNotUniqueException.class)
     public ResponseEntity<MessageResponse> globalExceptionHandler(TimetableFieldNotUniqueException ex, WebRequest request) {
         log.error(ex.getMessage());
-        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(),ex.getMessage()),
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(), ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(FacultyMemberEnrollmentFieldNotUniqueException.class)
-    public ResponseEntity<MessageResponse> globalExceptionHandler(FacultyMemberEnrollmentFieldNotUniqueException ex, WebRequest request) {
+    @ExceptionHandler(CourseFieldNotUniqueException.class)
+    public ResponseEntity<MessageResponse> globalExceptionHandler(CourseFieldNotUniqueException ex, WebRequest request) {
         log.error(ex.getMessage());
-        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(),ex.getMessage()),
+        return new ResponseEntity<MessageResponse>(new MessageResponse(ex.getField(), ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 

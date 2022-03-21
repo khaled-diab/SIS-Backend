@@ -47,17 +47,6 @@ public class SectionController extends BaseController<Section, SectionDTO> {
         return new ResponseEntity<>(sectionService.search(pageUtil, sectionRequestDTO), HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/save", method = RequestMethod.PUT)
-//    public MessageResponse update(@RequestBody @Valid SectionDTO dto) {
-//        if (this.sectionService.findSection(dto.getSectionNumber(),
-//                collegeMapper.toEntity(dto.getCollegeDTO()),
-//                departmentMapper.toEntity(dto.getDepartmentDTO())) != null) {
-//            throw new SectionFieldNotUniqueException("sectionNumber", "Section Already Exists");
-//        }
-//        sectionService.save(sectionMapper.toEntity(dto));
-//        return new MessageResponse("Item has been saved successfully");
-//    }
-
     @RequestMapping(value = "/save", method = RequestMethod.PUT)
     public ResponseEntity<SectionDTO> save(@RequestBody @Valid SectionDTO dto) {
         if (this.sectionService.findSection(dto.getSectionNumber(),
@@ -70,18 +59,18 @@ public class SectionController extends BaseController<Section, SectionDTO> {
     }
 
     @RequestMapping(value = "/countBySection/", method = RequestMethod.POST)
-    public ResponseEntity<Integer> count(@RequestBody SectionDTO dto){
+    public ResponseEntity<Integer> count(@RequestBody SectionDTO dto) {
         Section section = sectionMapper.toEntity(dto);
         return new ResponseEntity<>(sectionService.countBySection(section), HttpStatus.OK);
     }
 
-   // Abdo.Amr
+    // Abdo.Amr
     @RequestMapping(value = "/getFacultyMemberSections/{facultyMemberId}", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<SectionDTO>> getFacultyMemberSections(@PathVariable long facultyMemberId){
+    public ResponseEntity<ArrayList<SectionDTO>> getFacultyMemberSections(@PathVariable long facultyMemberId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
 
-        ArrayList<SectionDTO> sectionDTOs=this.sectionService.findFacultyMemberSections(academicTermDTO.getYear_id(),academicTermDTO.getId(),facultyMemberId);
+        ArrayList<SectionDTO> sectionDTOs = this.sectionService.findFacultyMemberSections(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
         return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
     }
 }
