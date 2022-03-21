@@ -2,7 +2,7 @@ package com.sis.controller;
 
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
-import com.sis.dto.course.CourseDTO;
+
 import com.sis.dto.lecture.LectureDTO;
 
 import com.sis.dto.student.StudentDTO;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -96,12 +95,12 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
         Collection<Section> sections = this.sectionService.findStudentSections(academicTerm.getAcademicYear(),academicTerm,student);
         Collection<LectureDTO> lectureDTOs = new ArrayList<>();
         for(Section sec: sections){
-             lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
+            lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
         }
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        lectureDTOs = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceCodeExpiringTime().isAfter(now) && todays.equals( dateFormat.format(lectureDTO.getLectureDate())) && lectureDTO.getAttendanceType().equalsIgnoreCase("Auto")).collect(Collectors.toList());
+        lectureDTOs = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceStatus() && lectureDTO.getAttendanceType().equalsIgnoreCase("Automatic")).collect(Collectors.toList());
         return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
     }
+
 
     @RequestMapping(value="/getFacultyMemberLectures/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<LectureDTO>> getFacultyMemberLectures(@PathVariable long sectionId) {
@@ -123,6 +122,5 @@ public ResponseEntity<LectureDTO> addLecture( @RequestBody LectureDTO lectureDTO
                         academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionId);
         return new ResponseEntity<>(facultyMemberLecturesDTOS, HttpStatus.OK);
     }
-
 
 }
