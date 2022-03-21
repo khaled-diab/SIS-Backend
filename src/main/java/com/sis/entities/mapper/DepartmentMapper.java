@@ -22,7 +22,8 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
     private CollegeService collegeService ;
 
     @Autowired
-    private CollegeMapper collegeMapper ;
+    private CollegeMapper collegeMapper;
+
     @Override
     public DepartmentDTO toDTO(Department entity) {
         DepartmentDTO dto = new DepartmentDTO();
@@ -31,22 +32,30 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
         dto.setNameAr(entity.getNameAr());
         dto.setNameEn(entity.getNameEn());
         dto.setId(entity.getId());
-        dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
+        if(entity.getCollegeId()!=null) {
+            dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
+        }
         return dto;
     }
 
     @Override
     public Department toEntity(DepartmentDTO dto) {
-        Department department =new Department() ;
-        department.setCode(dto.getCode());
-        department.setNameAr(dto.getNameAr());
-        department.setNameEn(dto.getNameEn());
-        department.setId(dto.getId());
-        College college = collegeService.findById(dto.getCollegeDTO().getId());
-        department.setCollegeId(college);
-        department.setAcademicProgramCollection(null);
-        department.setFacultyCollection(null);
-        department.setStudentCollection(null);
+        Department department = new Department();
+        if(dto!=null) {
+
+            department.setCode(dto.getCode());
+            department.setNameAr(dto.getNameAr());
+            department.setNameEn(dto.getNameEn());
+            department.setId(dto.getId());
+
+            if (dto.getCollegeDTO() != null) {
+                College college = collegeService.findById(dto.getCollegeDTO().getId());
+                department.setCollegeId(college);
+                department.setAcademicProgramCollection(null);
+                department.setFacultyCollection(null);
+                department.setStudentCollection(null);
+            }
+        }
         return  department;
     }
 

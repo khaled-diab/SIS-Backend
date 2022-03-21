@@ -8,9 +8,10 @@ package com.sis.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -66,6 +67,18 @@ public class Course extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "departmentId", referencedColumnName = "id")
     private Department department;
+
+    @OneToMany(mappedBy = "courseId")
+    private List<Lecture> lectures;
+
+    @OneToMany(mappedBy = "course")
+    private Collection<Timetable> timetables;
+
+    @OneToMany(mappedBy = "course")
+    private Collection<StudentEnrollment> studentEnrollments;
+
+    @OneToMany(mappedBy = "course")
+    private Collection<Section> studentSections;
 
 
 }

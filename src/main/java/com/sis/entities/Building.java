@@ -9,12 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "building")
@@ -22,7 +17,7 @@ import javax.persistence.Table;
 @Setter
 public class Building extends BaseEntity {
     private static final long serialVersionUID = 1L;
-   
+
     @Column(name = "code")
     private String code;
 
@@ -41,4 +36,7 @@ public class Building extends BaseEntity {
 
     @OneToMany(mappedBy = "building")
     private Collection<Classroom> classroomCollection;
+
+    @OneToMany(mappedBy = "building")
+    private Collection<Timetable> timetables;
 }

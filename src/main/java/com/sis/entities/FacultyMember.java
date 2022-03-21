@@ -5,9 +5,11 @@
  */
 package com.sis.entities;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,7 +47,7 @@ public class FacultyMember extends BaseEntity {
     private String phone;
 
     @Column(name = "photo")
-    private String photo ;
+    private String photo;
 
     @ManyToOne
     @JoinColumn(name = "degree_id", referencedColumnName = "id")
@@ -59,4 +61,10 @@ public class FacultyMember extends BaseEntity {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
+    @OneToMany(mappedBy = "facultyMember")
+    private Collection<Timetable> timetables;
+
+    @OneToMany(mappedBy = "facultyMemberId")
+    private List<Lecture> lectures;
+    
 }

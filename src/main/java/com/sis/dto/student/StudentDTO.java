@@ -1,17 +1,20 @@
-package com.sis.dto;
+package com.sis.dto.student;
 
+import com.sis.dto.AcademicProgramDTO;
+import com.sis.dto.BaseDTO;
+import com.sis.dto.DepartmentDTO;
+import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 
 
 import javax.validation.constraints.*;
-import java.io.File;
-import java.sql.Blob;
+
+import java.util.Collection;
 import java.util.Date;
 @Getter
 @Setter
@@ -65,13 +68,14 @@ public class StudentDTO extends BaseDTO {
     private  String photo;
     /*Relations instances*/
 
-    private  DepartmentDTO departmentDTO;
+    private DepartmentDTO departmentDTO;
 
     @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
 
-    @NotNull
+//    @NotNull
     private AcademicProgramDTO academicProgramDTO;
+
 
 
 }

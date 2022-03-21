@@ -9,11 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "classroom")
@@ -23,7 +20,7 @@ import javax.persistence.Table;
 public class Classroom extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-   
+
     @Column(name = "code")
     private String code;
 
@@ -46,4 +43,7 @@ public class Classroom extends BaseEntity {
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne
     private Building building;
+
+    @OneToMany(mappedBy = "classroom")
+    private Collection<Timetable> timetables;
 }
