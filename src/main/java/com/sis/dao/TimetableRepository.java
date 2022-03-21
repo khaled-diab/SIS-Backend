@@ -1,13 +1,10 @@
 package com.sis.dao;
 
-import com.sis.entities.FacultyMemberEnrollment;
-import com.sis.entities.Section;
 import com.sis.entities.Timetable;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 public interface TimetableRepository extends BaseDao<Timetable>{
 

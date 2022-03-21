@@ -158,7 +158,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         ArrayList<StudentDTO> studentDTOs=new ArrayList<>();
        for(SectionDTO sectionDTO :sectionDTOs){
-           studentDTOs.addAll(this.studentService.findStudentsBySection(academicTermDTO.getYear_id(),academicTermDTO.getId(),sectionDTO.getId()));
+           studentDTOs.addAll(this.studentService.findStudentsBySection(academicTermDTO.getAcademicYearDTO().getId(),academicTermDTO.getId(),sectionDTO.getId()));
        }
        return studentDTOs;
 

@@ -13,7 +13,6 @@ import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -49,12 +48,6 @@ public class CourseController extends BaseController<Course, CourseDTO> {
         return new ResponseEntity<>(courseService.search(pageUtil, courseRequestDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/updateCourse", method = RequestMethod.PUT)
-    public MessageResponse up(@RequestBody @Valid CourseDTO dto) {
-        courseService.update(dto);
-        return new MessageResponse("Item has been updated successfully");
-    }
-
     @RequestMapping(value = "/save", method = RequestMethod.PUT)
     public MessageResponse update(@RequestBody @Valid CourseDTO dto) {
         courseService.save(courseMapper.toEntity(dto));
@@ -63,31 +56,15 @@ public class CourseController extends BaseController<Course, CourseDTO> {
 
     //Abdo.Amr
     @RequestMapping(
-            value = "/facultyMemberCourses/{facultyMemberId}",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<Collection<CourseDTO>> getFacultyMemberCourses( @PathVariable long facultyMemberId) {
-
-        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
-        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
-        Collection<CourseDTO> courseDTOS = this.courseService.getFacultyMemberCourses(
-                academicTermDTO.getYear_id(),
-                academicTermDTO.getId(),
-                facultyMemberId);
-        return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
-    }
-
-    //Abdo.Amr
-    @RequestMapping(
             value = "/studentCourses/{studentId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<Collection<CourseDTO>> getStudentCourses( @PathVariable long studentId) {
+    public ResponseEntity<Collection<CourseDTO>> getStudentCourses(@PathVariable long studentId) {
 
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         Collection<CourseDTO> courseDTOS = this.courseService.getStudentCourses(
-                academicTermDTO.getYear_id(),
+                academicTermDTO.getAcademicYearDTO().getId(),
                 academicTermDTO.getId(),
                 studentId);
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
