@@ -4,6 +4,7 @@ import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 
 import com.sis.dto.attendanceDetails.StudentLecture;
+import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
