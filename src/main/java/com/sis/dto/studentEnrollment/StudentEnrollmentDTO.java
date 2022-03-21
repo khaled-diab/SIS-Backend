@@ -8,25 +8,41 @@ import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Getter
 @Setter
+@Validated
 public class StudentEnrollmentDTO extends BaseDTO {
 
-	private CollegeDTO collegeDTO;
+    @NotNull(message = "Required")
+    private CollegeDTO collegeDTO;
 
-	private DepartmentDTO departmentDTO;
+    @NotNull(message = "Required")
+    private DepartmentDTO departmentDTO;
 
-	private AcademicYearDTO academicYearDTO;
+    @NotNull(message = "Required")
+    private AcademicYearDTO academicYearDTO;
 
-	private AcademicTermDTO academicTermDTO;
+    @NotNull(message = "Required")
+    private AcademicTermDTO academicTermDTO;
 
-	private StudentDTO studentDTO;
+    @NotNull(message = "Required")
+    private StudentDTO studentDTO;
 
-	private CourseDTO courseDTO;
+    @NotNull(message = "Required")
+    private CourseDTO courseDTO;
 
-	private SectionDTO sectionDTO;
+    @NotNull(message = "Required")
+    private SectionDTO sectionDTO;
+
+    private MajorDTO majorDTO;
+
+    @NotNull(message = "Required")
+    private StudyTypeDTO studyTypeDTO;
 
 }

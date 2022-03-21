@@ -24,4 +24,12 @@ public class Major extends BaseEntity {
     @Column(name = "name_en")
     private String nameEn;
 
+    @ManyToOne
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
+    private College college;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
+
 }

@@ -4,11 +4,8 @@ import com.sis.entities.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
-import java.sql.Time;
 
 public class TimetableSpecification implements Specification<Timetable> {
-
-    private String searchValue;
 
     private Long filterCollege;
 
@@ -26,10 +23,9 @@ public class TimetableSpecification implements Specification<Timetable> {
 
     private String filterDay;
 
-    public TimetableSpecification(String searchValue, Long filterCollege, Long filterDepartment,
+    public TimetableSpecification(Long filterCollege, Long filterDepartment,
                                   Long filterAcademicYear, Long filterAcademicTerm, Long filterFacultyMember,
                                   Long filterCourse, Long filterSection, String filterDay) {
-        this.searchValue = searchValue;
         this.filterCollege = filterCollege;
         this.filterDepartment = filterDepartment;
         this.filterAcademicYear = filterAcademicYear;
@@ -41,7 +37,6 @@ public class TimetableSpecification implements Specification<Timetable> {
     }
 
     public TimetableSpecification() {
-        this.searchValue = null;
         this.filterCollege = null;
         this.filterDepartment = null;
         this.filterAcademicYear = null;
@@ -64,15 +59,6 @@ public class TimetableSpecification implements Specification<Timetable> {
 
     @Override
     public Predicate toPredicate(Root<Timetable> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-//        if (searchValue != null) {
-//            Predicate searchPredicate = criteriaBuilder.or();
-//            if (filterCollege == null && filterDepartment == null && filterAcademicYear == null
-//                    && filterAcademicTerm == null && filterFacultyMember == null
-//                    && filterCourse == null && filterSection == null && filterDay.isEmpty()) {
-//                return searchPredicate;
-//            }
-//            return criteriaBuilder.and(searchPredicate, getFilterPredicate(root, query, criteriaBuilder));
-//        }
         return getFilterPredicate(root, query, criteriaBuilder);
     }
 
@@ -83,8 +69,7 @@ public class TimetableSpecification implements Specification<Timetable> {
         Join<Timetable, AcademicTerm> timetableAcademicTermJoin = root.join("academicTerm");
         Join<Timetable, FacultyMember> timetableFacultyMemberJoin = root.join("facultyMember");
         Join<Timetable, Course> timetableCourseJoin = root.join("course");
-//        Join<Timetable, Section> timetableSectionJoin = root.join("sections");
-//        Path<Timetable> timetableTimetableJoin = root.get("id").get("day");
+        Join<Timetable, Section> timetableSectionJoin = root.join("section");
 
         Predicate college;
         if (filterCollege != null)
@@ -116,18 +101,18 @@ public class TimetableSpecification implements Specification<Timetable> {
             course = criteriaBuilder.equal(timetableCourseJoin.get("id"), filterCourse);
         else course = criteriaBuilder.notEqual(timetableCourseJoin.get("id"), -1);
 
-//        Predicate section;
-//        if (filterSection != null)
-//            section = criteriaBuilder.equal(timetableSectionJoin.get("id"), filterSection);
-//        else section = criteriaBuilder.notEqual(timetableSectionJoin.get("id"), -1);
-//
-//        Predicate day;
-//        if (filterDay!= null && !filterDay.trim().isEmpty())
-//            day = criteriaBuilder.equal(root.get("day"), filterDay);
-//        else day = criteriaBuilder.notEqual(root.get("day"), "");
+        Predicate section;
+        if (filterSection != null)
+            section = criteriaBuilder.equal(timetableSectionJoin.get("id"), filterSection);
+        else section = criteriaBuilder.notEqual(timetableSectionJoin.get("id"), -1);
+
+        Predicate day;
+        if (filterDay!= null && !filterDay.trim().isEmpty())
+            day = criteriaBuilder.equal(root.get("day"), filterDay);
+        else day = criteriaBuilder.notEqual(root.get("day"), "");
 
         return criteriaBuilder.and(college, department, academicYear, academicTerm,
-                facultyMember, course);
+                facultyMember, course, section, day);
     }
 
 }

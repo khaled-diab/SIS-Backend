@@ -21,11 +21,11 @@ public class SectionSpecification implements Specification<Section> {
 
     private Long filterStudyType;
 
-    private String filterSectionNumber;
+    private Long filterMajor;
 
     public SectionSpecification(String searchValue, Long filterCollege, Long filterDepartment,
                                 Long filterAcademicYear, Long filterAcademicTerm, Long filterCourse,
-                                Long filterStudyType, String filterSectionNumber) {
+                                Long filterStudyType, Long filterMajor) {
         this.searchValue = searchValue;
         this.filterCollege = filterCollege;
         this.filterDepartment = filterDepartment;
@@ -33,7 +33,7 @@ public class SectionSpecification implements Specification<Section> {
         this.filterAcademicTerm = filterAcademicTerm;
         this.filterCourse = filterCourse;
         this.filterStudyType = filterStudyType;
-        this.filterSectionNumber = filterSectionNumber;
+        this.filterMajor = filterMajor;
     }
 
     public SectionSpecification() {
@@ -44,7 +44,7 @@ public class SectionSpecification implements Specification<Section> {
         this.filterAcademicTerm = null;
         this.filterCourse = null;
         this.filterStudyType = null;
-        this.filterSectionNumber = null;
+        this.filterMajor = null;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class SectionSpecification implements Specification<Section> {
                     criteriaBuilder.like(root.get("sectionNumber"), "%" + searchValue + "%")
             );
             if (filterCollege == null && filterDepartment == null && filterAcademicYear == null
-                    && filterAcademicTerm == null && filterCourse == null && filterSectionNumber.isEmpty()
-                    && filterStudyType == null) {
+                    && filterAcademicTerm == null && filterCourse == null
+                    && filterStudyType == null && filterMajor == null) {
                 return searchPredicate;
             }
             return criteriaBuilder.and(searchPredicate, getFilterPredicate(root, query, criteriaBuilder));
@@ -83,11 +83,8 @@ public class SectionSpecification implements Specification<Section> {
         Join<Section, AcademicYear> sectionAcademicYearJoin = root.join("academicYear");
         Join<Section, AcademicTerm> sectionAcademicTermJoin = root.join("academicTerm");
         Join<Section, Course> sectionCourseJoin = root.join("course");
-        Path<Object> sectionSectionJoin = root.get("sectionNumber");
         Join<Section, StudyType> sectionStudyTypeJoin = root.join("studyType");
-
-//        System.out.println(filterCollege);
-//        System.out.println(filterDepartment);
+        Join<Section, Major> sectionMajorJoin = root.join("major");
 
         Predicate college;
         if (filterCollege != null)
@@ -114,18 +111,18 @@ public class SectionSpecification implements Specification<Section> {
             course = criteriaBuilder.equal(sectionCourseJoin.get("id"), filterCourse);
         else course = criteriaBuilder.notEqual(sectionCourseJoin.get("id"), -1);
 
-        Predicate sectionNumber;
-        if (!filterSectionNumber.isEmpty())
-            sectionNumber = criteriaBuilder.equal(sectionSectionJoin.get("id"), filterSectionNumber);
-        else sectionNumber = criteriaBuilder.notEqual(sectionSectionJoin.get("id"), "");
-
         Predicate studyType;
         if (filterStudyType != null)
             studyType = criteriaBuilder.equal(sectionStudyTypeJoin.get("id"), filterStudyType);
         else studyType = criteriaBuilder.notEqual(sectionStudyTypeJoin.get("id"), -1);
 
+        Predicate major;
+        if (filterMajor != null)
+            major = criteriaBuilder.equal(sectionMajorJoin.get("id"), filterMajor);
+        else major = criteriaBuilder.notEqual(sectionMajorJoin.get("id"), -1);
 
-        return criteriaBuilder.and(college, department, academicYear, academicTerm, course, studyType, sectionNumber);
+        return criteriaBuilder.and(college, department,
+                academicYear, academicTerm, course, studyType, major);
     }
 
 }

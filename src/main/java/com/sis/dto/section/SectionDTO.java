@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Getter
@@ -14,6 +15,7 @@ import java.util.Collection;
 @Validated
 public class SectionDTO extends BaseDTO {
 
+    @NotNull(message = "Required")
     private String sectionNumber;
 
     private int theoreticalLectures;
@@ -24,16 +26,21 @@ public class SectionDTO extends BaseDTO {
 
     private MajorDTO majorDTO;
 
+    @NotNull(message = "Required")
     private StudyTypeDTO studyTypeDTO;
 
+    @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
 
+    @NotNull(message = "Required")
     private DepartmentDTO departmentDTO;
 
+    @NotNull(message = "Required")
     private AcademicYearDTO academicYearDTO;
 
+    @NotNull(message = "Required")
     private AcademicTermDTO academicTermDTO;
 
+    @NotNull(message = "Required")
     private CourseDTO courseDTO;
-
 }
