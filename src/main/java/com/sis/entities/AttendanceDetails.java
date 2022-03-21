@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +23,9 @@ public class AttendanceDetails extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "lecture_id", referencedColumnName = "id")
     private Lecture lecture;
+    @ManyToOne
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    private Section section;
 
 
     @Column(name = "attendance_status")

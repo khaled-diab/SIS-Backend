@@ -1,12 +1,16 @@
 package com.sis.controller;
 
+import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
+import com.sis.entities.AcademicTerm;
 import com.sis.entities.Section;
+import com.sis.entities.mapper.AcademicTermMapper;
 import com.sis.entities.mapper.CollegeMapper;
 import com.sis.entities.mapper.DepartmentMapper;
 import com.sis.entities.mapper.SectionMapper;
 import com.sis.exception.SectionFieldNotUniqueException;
+import com.sis.service.AcademicTermService;
 import com.sis.service.SectionService;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -17,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(value = "/api/sections")
@@ -29,6 +34,9 @@ public class SectionController extends BaseController<Section, SectionDTO> {
     private final SectionMapper sectionMapper;
     private final CollegeMapper collegeMapper;
     private final DepartmentMapper departmentMapper;
+
+    private AcademicTermService academicTermService;
+    private AcademicTermMapper academicTermMapper;
 
 
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
@@ -67,4 +75,13 @@ public class SectionController extends BaseController<Section, SectionDTO> {
         return new ResponseEntity<>(sectionService.countBySection(section), HttpStatus.OK);
     }
 
+   // Abdo.Amr
+    @RequestMapping(value = "/getFacultyMemberSections/{facultyMemberId}", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<SectionDTO>> getFacultyMemberSections(@PathVariable long facultyMemberId){
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+
+        ArrayList<SectionDTO> sectionDTOs=this.sectionService.findFacultyMemberSections(academicTermDTO.getYear_id(),academicTermDTO.getId(),facultyMemberId);
+        return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
+    }
 }

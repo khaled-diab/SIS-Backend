@@ -1,9 +1,13 @@
 package com.sis.controller;
 
+import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
+import com.sis.entities.AcademicTerm;
 import com.sis.entities.Timetable;
+import com.sis.entities.mapper.AcademicTermMapper;
 import com.sis.entities.mapper.TimetableMapper;
+import com.sis.service.AcademicTermService;
 import com.sis.service.TimetableService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
@@ -15,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -27,6 +31,10 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
 
     private final TimetableService timetableService;
     private final TimetableMapper timetableMapper;
+
+    //Abdo.Amr
+    private AcademicTermService academicTermService;
+    private AcademicTermMapper academicTermMapper;
 
     @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<TimetableDTO>> filter(@PathVariable int pageNumber,
@@ -47,4 +55,37 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         timetableService.saveAll(timetableMapper.toEntities(dtos));
         return new MessageResponse("Item has been updated successfully");
     }
+
+    //Abdo.Amr
+    @RequestMapping(
+            value = "/facultyMemberTimeTables/{facultyMemberId}/{courseId}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Collection<TimetableDTO>> getFacultyMemberTimeTables(@PathVariable long facultyMemberId,
+                                                                               @PathVariable long courseId) {
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        Collection<TimetableDTO> timetableDTO = this.timetableService.findFacultyMemberTimeTables(
+                academicTermDTO.getYear_id(),
+                academicTermDTO.getId(),
+                facultyMemberId,
+                courseId);
+        return new ResponseEntity<>(timetableDTO, HttpStatus.OK);
+    }
+
+    //Abdo.Amr
+    @RequestMapping(
+            value = "/getSectionTimeTables/{sectionId}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Collection<TimetableDTO>> getSectionTimeTables(@PathVariable long sectionId) {
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        Collection<TimetableDTO> timetableDTOs = this.timetableService.getSectionTimeTables(
+                academicTermDTO.getYear_id(),
+                academicTermDTO.getId(),
+                sectionId);
+        return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.sis.service;
 
+import com.sis.dao.StudentEnrollmentRepository;
 import com.sis.dao.StudentRepository;
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.student.StudentFilterDTO;
 import com.sis.entities.Student;
+import com.sis.entities.StudentEnrollment;
 import com.sis.entities.mapper.StudentMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -16,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 
 
 @Service
@@ -26,6 +29,9 @@ public class StudentService extends BaseServiceImp<Student>{
 
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private StudentEnrollmentRepository studentEnrollmentRepository;
 
     @Override
     public JpaRepository<Student, Long> Repository() {
@@ -127,6 +133,17 @@ public class StudentService extends BaseServiceImp<Student>{
     }
     public Student findByUniversityMail(String mail){
         return this.studentRepository.findByUniversityMail(mail);
+    }
+    public ArrayList<StudentDTO> findStudentsBySection(long academicYearId, long academicTermId, long sectionId){
+        ArrayList<StudentEnrollment> studentEnrollments= this.studentEnrollmentRepository.findStudentsBySection(academicYearId,academicTermId,sectionId);
+        ArrayList<Student> students=new ArrayList<>();
+        if(studentEnrollments!=null) {
+            for(StudentEnrollment st:studentEnrollments) {
+                students.add(st.getStudent());
+            }
+            return this.studentMapper.toDTOs(students);
+        }
+        return null;
     }
 
 

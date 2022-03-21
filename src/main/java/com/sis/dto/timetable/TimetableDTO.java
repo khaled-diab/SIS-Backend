@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
-import java.util.Collection;
 
 @Getter
 @Setter
