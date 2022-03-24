@@ -9,6 +9,7 @@ import com.sis.entities.mapper.CourseMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,9 @@ public class CourseService extends BaseServiceImp<Course> {
     private CourseRepository courseRepository;
     private CourseMapper courseMapper;
     StudentEnrollmentService studentEnrollmentService;
+
+    @Autowired
+    private TimetableService timetableService;
 
     @Override
     public JpaRepository<Course, Long> Repository() {
@@ -65,4 +69,20 @@ public class CourseService extends BaseServiceImp<Course> {
     public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId) {
         return this.studentEnrollmentService.getStudentCourses(academicYearId, academicTermId, studentId);
     }
+    public ArrayList<CourseDTO> findFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId) {
+        ArrayList<Long> courseIds = this.timetableService. findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
+        ArrayList<Course> courses = new ArrayList<>();
+        ArrayList<CourseDTO> courseDTOs = new ArrayList<>();
+
+        if (courseIds != null && courseIds.size() > 0) {
+            for (long id : courseIds) {
+                Course course = this.findById(id);
+                courses.add(course);
+            }
+            courseDTOs = this.courseMapper.toDTOs(courses);
+            return courseDTOs;
+        }
+        return null;
+    }
+
 }
