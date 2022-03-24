@@ -69,6 +69,21 @@ public class CourseController extends BaseController<Course, CourseDTO> {
                 studentId);
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
     }
+    @RequestMapping(
+            value = "/facultyMemberCourses/{courseId}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Collection<CourseDTO>> findFacultyMemberCourses(@PathVariable long courseId) {
+
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        Collection<CourseDTO> courseDTOS = this.courseService.findFacultyMemberCourses(
+                academicTermDTO.getAcademicYearDTO().getId(),
+                academicTermDTO.getId(),
+                courseId);
+        return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
+    }
+
 }
 
 
