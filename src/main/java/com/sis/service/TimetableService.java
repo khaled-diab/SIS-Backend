@@ -95,6 +95,12 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     }
 
+    //Abdo.Amr
+    public ArrayList<Long> findFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId) {
+        return this.timetableRepository.findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
+
+    }
+
     public ArrayList<TimetableDTO> getSectionTimeTables(long academicYearId, long academicTermId, long sectionId) {
         ArrayList<Timetable> timetables = this.timetableRepository.findTimetableBySection(academicYearId, academicTermId, sectionId);
         ArrayList<TimetableDTO> timetableDTOs = new ArrayList<>();
