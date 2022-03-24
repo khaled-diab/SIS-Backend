@@ -4,11 +4,14 @@ import com.sis.dao.CourseRepository;
 import com.sis.dao.specification.CourseSpecification;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
+import com.sis.dto.section.SectionDTO;
 import com.sis.entities.Course;
+import com.sis.entities.Section;
 import com.sis.entities.mapper.CourseMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 @Service
@@ -30,6 +34,9 @@ public class CourseService extends BaseServiceImp<Course> {
     public JpaRepository<Course, Long> Repository() {
         return courseRepository;
     }
+
+    @Autowired
+    private TimetableService timetableService;
 
 
     public PageResult<CourseDTO> search(PageQueryUtil pageUtil, CourseRequestDTO courseRequestDTO) {
@@ -65,4 +72,23 @@ public class CourseService extends BaseServiceImp<Course> {
     public ArrayList<CourseDTO> getStudentCourses(long academicYearId, long academicTermId, long studentId) {
         return this.studentEnrollmentService.getStudentCourses(academicYearId, academicTermId, studentId);
     }
+
+    //Abdo.Amr
+    public ArrayList<CourseDTO> findFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId) {
+        ArrayList<Long> courseIds = this.timetableService. findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
+        ArrayList<Course> courses = new ArrayList<>();
+        ArrayList<CourseDTO> courseDTOs = new ArrayList<>();
+
+        if (courseIds != null && courseIds.size() > 0) {
+            for (long id : courseIds) {
+                Course course = this.findById(id);
+                courses.add(course);
+            }
+            courseDTOs = this.courseMapper.toDTOs(courses);
+            return courseDTOs;
+        }
+        return null;
+    }
+
+
 }

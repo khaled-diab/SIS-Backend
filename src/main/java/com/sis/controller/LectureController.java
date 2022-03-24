@@ -39,8 +39,6 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
     private AcademicYearMapper academicYearMapper;
 
-    private StudentMapper studentMapper;
-
     private AttendanceDetailsService attendanceDetailsService;
     private CourseMapper courseMapper;
     private FacultyMemberMapper facultyMemberMapper;
@@ -77,13 +75,11 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
         return new ResponseEntity<>(lectureDTO2, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getCurrentLecture", method = RequestMethod.POST)
-    public ResponseEntity<Collection<LectureDTO>> getCurrentLectures(@RequestBody StudentDTO studentDTO) {
+    @RequestMapping(value = "/getCurrentLecture/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<LectureDTO>> getCurrentLectures(@PathVariable long studentId) {
 
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
-        Student student = this.studentMapper.toEntity(studentDTO);
-//        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
-        Collection<Section> sections = this.sectionService.findStudentSections(academicTerm.getAcademicYear(), academicTerm, student);
+        Collection<Section> sections = this.sectionService.findStudentSections(academicTerm.getAcademicYear(), academicTerm, studentId);
         Collection<LectureDTO> lectureDTOs = new ArrayList<>();
         for (Section sec : sections) {
             lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));

@@ -3,6 +3,7 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
+import com.sis.dto.section.Section_Course;
 import com.sis.entities.AcademicTerm;
 import com.sis.entities.Section;
 import com.sis.entities.mapper.AcademicTermMapper;
@@ -71,6 +72,16 @@ public class SectionController extends BaseController<Section, SectionDTO> {
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
 
         ArrayList<SectionDTO> sectionDTOs = this.sectionService.findFacultyMemberSections(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
+        return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
+    }
+
+    // Abdo.Amr
+    @RequestMapping(value = "/getFacultyMemberSections_courses/{facultyMemberId}", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<Section_Course>> getFacultyMemberSections_Courses(@PathVariable long facultyMemberId) {
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+
+        ArrayList<Section_Course> sectionDTOs = this.sectionService.findFacultyMemberSections_courses(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
         return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
     }
 }

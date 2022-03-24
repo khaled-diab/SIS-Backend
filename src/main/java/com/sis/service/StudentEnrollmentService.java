@@ -92,8 +92,8 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
     }
 
     //Abdo.Amr
-    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student) {
-        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentByAcademicYearAndAcademicTermAndStudent(academicYear, academicTerm, student);
+    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, long studentId) {
+        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentByAcademicYearAndAcademicTermAndStudentId(academicYear, academicTerm, studentId);
         ArrayList<Section> sections = new ArrayList<>();
         for (StudentEnrollment studentEnrollment : studentEnrollments) {
             if (studentEnrollment.getSection() != null) {

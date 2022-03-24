@@ -53,4 +53,4 @@ public class LectureDTO extends BaseDTO {
     public void setAttendanceStatus(boolean attendanceStatus) {
         this.attendanceStatus = attendanceStatus;
     }
-}
+    }

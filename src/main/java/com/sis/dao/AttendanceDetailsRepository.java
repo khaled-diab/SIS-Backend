@@ -15,7 +15,7 @@ public interface AttendanceDetailsRepository extends BaseDao<AttendanceDetails>{
     public ArrayList<AttendanceDetails> findStudentAttendances(long studentId, long courseId);
 
     //@Query(value="SELECT * FROM attendance_details WHERE  lecture_id= :lectureId", nativeQuery = true)
-    public ArrayList<AttendanceDetails> findAttendanceDetailsByLecture(Lecture lecture);
+    public ArrayList<AttendanceDetails> findAttendanceDetailsByLectureId(long lectureId);
 
     // this function is written by Abdo Ramadan
     @Query(value="SELECT * FROM attendance_details WHERE  lecture_id= :lectureId", nativeQuery = true)
