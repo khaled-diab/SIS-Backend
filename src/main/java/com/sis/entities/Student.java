@@ -6,6 +6,7 @@
 package com.sis.entities;
 
 
+import com.sis.entities.security.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import javax.validation.constraints.NotNull;
 public class Student extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-    @Column(name = "university_id", unique = true)
+    @Column(name = "university_id")
     private long universityId;
     @NotNull
     @Column(name = "name_ar")
@@ -70,6 +71,10 @@ public class Student extends BaseEntity {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
     private Department departmentId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
