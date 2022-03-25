@@ -3,18 +3,13 @@ package com.sis.dto.student;
 import com.sis.dto.AcademicProgramDTO;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.DepartmentDTO;
-import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-
-
 import javax.validation.constraints.*;
-
-import java.util.Collection;
 import java.util.Date;
 @Getter
 @Setter
@@ -22,7 +17,7 @@ import java.util.Date;
 public class StudentDTO extends BaseDTO {
 
     @NotNull(message = "Required")
-    private long UniversityId;
+    private long universityId;
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
@@ -42,7 +37,6 @@ public class StudentDTO extends BaseDTO {
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
     @Pattern(regexp= Constants.DIGITS_ONLY_14, message="must be 14 digits")
-
     private String nationalId;
 
     private Date birthDate;

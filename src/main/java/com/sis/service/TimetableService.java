@@ -1,11 +1,11 @@
 package com.sis.service;
 
-import com.sis.dao.TimetableRepository;
-import com.sis.dao.specification.TimetableSpecification;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
 import com.sis.entities.Timetable;
 import com.sis.entities.mapper.TimetableMapper;
+import com.sis.repository.TimetableRepository;
+import com.sis.repository.specification.TimetableSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;

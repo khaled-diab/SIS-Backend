@@ -1,11 +1,11 @@
 package com.sis.service;
 
-import com.sis.dao.FacultyMemberRepository;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.entities.FacultyMember;
 import com.sis.entities.mapper.FacultyMemberMapper;
-import com.sis.dao.specification.FacultyMemberSpecification;
+import com.sis.repository.FacultyMemberRepository;
+import com.sis.repository.specification.FacultyMemberSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;

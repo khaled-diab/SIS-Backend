@@ -1,10 +1,10 @@
 package com.sis.service;
 
-import com.sis.dao.CollegeRepository;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.college.CollegeRequestDTO;
 import com.sis.entities.College;
 import com.sis.entities.mapper.CollegeMapper;
+import com.sis.repository.CollegeRepository;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

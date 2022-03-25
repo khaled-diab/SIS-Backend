@@ -5,13 +5,14 @@
  */
 package com.sis.entities;
 
+import com.sis.entities.security.User;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
@@ -66,5 +67,10 @@ public class FacultyMember extends BaseEntity {
 
     @OneToMany(mappedBy = "facultyMemberId")
     private List<Lecture> lectures;
-    
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+
 }

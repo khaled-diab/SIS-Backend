@@ -1,13 +1,10 @@
 package com.sis.service;
 
-import com.sis.dao.BuildingDao;
-import com.sis.dao.BuildingSpecification;
 import com.sis.entities.Building;
+import com.sis.repository.BuildingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BuildingService extends BaseServiceImp<Building> {

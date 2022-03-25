@@ -1,11 +1,11 @@
 package com.sis.service;
 
-import com.sis.dao.CourseRepository;
-import com.sis.dao.specification.CourseSpecification;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
 import com.sis.entities.Course;
 import com.sis.entities.mapper.CourseMapper;
+import com.sis.repository.CourseRepository;
+import com.sis.repository.specification.CourseSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;

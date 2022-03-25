@@ -1,21 +1,18 @@
 package com.sis.service;
 
-import com.sis.dao.AttendanceDetailsRepository;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
-import com.sis.dto.lecture.LectureDTO;
-import com.sis.dto.section.SectionDTO;
-import com.sis.dto.student.StudentDTO;
 import com.sis.dto.attendanceReport.AttendanceReportDTO;
+import com.sis.dto.lecture.LectureDTO;
+import com.sis.dto.student.StudentDTO;
 import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
 import com.sis.entities.mapper.AttendanceDetailsMapper;
-import com.sis.entities.mapper.StudentMapper;
+import com.sis.repository.AttendanceDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Service
 public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{

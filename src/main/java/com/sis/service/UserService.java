@@ -1,17 +1,17 @@
 package com.sis.service;
 
+import com.sis.dto.UserDTO;
+import com.sis.dto.security.LoginDTO;
+import com.sis.dto.security.RegisterDTO;
+import com.sis.entities.mapper.UserMapper;
+import com.sis.entities.security.User;
+import com.sis.exception.InvalidUserNameOrPasswordException;
+import com.sis.exception.UserNameOrEmailAlreadyExistException;
+import com.sis.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.sis.dao.UserRepository;
-import com.sis.dto.security.LoginDTO;
-import com.sis.dto.security.RegisterDTO;
-import com.sis.dto.UserDTO;
-import com.sis.entities.security.User;
-import com.sis.entities.mapper.UserMapper;
-import com.sis.exception.InvalidUserNameOrPasswordException;
-import com.sis.exception.UserNameOrEmailAlreadyExistException;
 
 @Service
 public class UserService  extends BaseServiceImp<User>{
