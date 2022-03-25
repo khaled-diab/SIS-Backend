@@ -57,7 +57,6 @@ public class ControllerExceptionHandler {
     public ResponseEntity<MessageResponse> globalExceptionHandler(MethodArgumentNotValidException ex, WebRequest request) {
         MessageResponse messageResponse = new MessageResponse(Objects.requireNonNull(ex.getFieldError()).getDefaultMessage());
         messageResponse.setField(ex.getFieldError().getField());
-
         log.error(ex.getFieldError());
         return new ResponseEntity<>(messageResponse,
                 HttpStatus.BAD_REQUEST);
