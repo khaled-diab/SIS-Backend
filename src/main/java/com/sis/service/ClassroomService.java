@@ -1,8 +1,8 @@
 package com.sis.service;
 
-import com.sis.dao.ClassroomDao;
-import com.sis.dao.ClassroomSpecification;
 import com.sis.entities.Classroom;
+import com.sis.repository.ClassroomDao;
+import com.sis.repository.ClassroomSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

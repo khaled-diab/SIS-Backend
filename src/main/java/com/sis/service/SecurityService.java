@@ -1,17 +1,17 @@
 package com.sis.service;
 
-import com.sis.dao.FacultyMemberRepository;
-import com.sis.dao.RoleRepository;
-import com.sis.dao.StudentRepository;
-import com.sis.dao.UserRepository;
-import com.sis.dto.StudentDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
+import com.sis.dto.student.StudentDTO;
 import com.sis.entities.BaseEntity;
 import com.sis.entities.Student;
 import com.sis.entities.mapper.StudentMapper;
 import com.sis.entities.security.User;
 import com.sis.exception.InvalidUserNameOrPasswordException;
+import com.sis.repository.FacultyMemberRepository;
+import com.sis.repository.RoleRepository;
+import com.sis.repository.StudentRepository;
+import com.sis.repository.UserRepository;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import lombok.AllArgsConstructor;
@@ -22,11 +22,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class SecurityService {
 
     private final UserRepository userRepository;
@@ -37,19 +39,6 @@ public class SecurityService {
     private final StudentMapper studentMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public SecurityService(UserRepository userRepository, AuthenticationManager authenticationManager,
-                           JwtProvider jwtProvider, StudentRepository studentRepository, FacultyMemberRepository facultyMemberRepository,
-                           StudentMapper studentMapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
-        this.studentRepository = studentRepository;
-        this.facultyMemberRepository = facultyMemberRepository;
-        this.studentMapper = studentMapper;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public ResponseEntity<StudentDTO> registerStudent(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -87,5 +76,9 @@ public class SecurityService {
         }
         user.setToken(Optional.of(jwtProvider.createToken(user.getUsername(), Collections.singletonList(user.getRole())))
                 .orElseThrow(InvalidUserNameOrPasswordException::new));
+    }
+
+    public ResponseEntity<StudentDTO> registerBulkStudents(MultipartFile file) {
+        return null;
     }
 }

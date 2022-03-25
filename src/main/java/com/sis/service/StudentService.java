@@ -1,12 +1,12 @@
 package com.sis.service;
 
-import com.sis.dao.StudentEnrollmentRepository;
-import com.sis.dao.StudentRepository;
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.student.StudentFilterDTO;
 import com.sis.entities.Student;
 import com.sis.entities.StudentEnrollment;
 import com.sis.entities.mapper.StudentMapper;
+import com.sis.repository.StudentEnrollmentRepository;
+import com.sis.repository.StudentRepository;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;

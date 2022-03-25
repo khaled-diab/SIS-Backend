@@ -4,12 +4,16 @@ import com.sis.dto.BaseDTO;
 import com.sis.dto.DegreeDTO;
 import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
+import com.sis.entities.security.User;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Getter
@@ -56,5 +60,7 @@ public class FacultyMemberDTO extends BaseDTO {
 
     @NotNull(message = "Required")
     private DepartmentDTO departmentDTO;
+
+    private User user;
 
 }
