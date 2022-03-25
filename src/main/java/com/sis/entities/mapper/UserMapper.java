@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.stereotype.Component;
 import com.sis.dto.UserDTO;
-import com.sis.entities.User;
+import com.sis.entities.security.User;
 import com.sis.util.PageResult;
 
 @Component
