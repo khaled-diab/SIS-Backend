@@ -95,7 +95,6 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
     @RequestMapping(value = "/getFacultyMemberLectures/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<LectureDTO>> getFacultyMemberLectures(@PathVariable long sectionId) {
-
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         ArrayList<LectureDTO> lectureDTOs = this.lectureService.
@@ -104,9 +103,10 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     }
 
     // this function is written by Abdo Ramadan
-    @RequestMapping(value = "/getFacultyMemberLecturesToReport/{sectionId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<FacultyMemberLecturesDTO>> getFacultyMemberLecturesToReport(@PathVariable
-                                                                                                         long sectionId) {
+    @RequestMapping(value = "/getFacultyMemberLecturesToReport/{sectionId}",
+            method = RequestMethod.GET)
+    public ResponseEntity<Collection<FacultyMemberLecturesDTO>> getFacultyMemberLecturesToReport(
+            @PathVariable long sectionId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         ArrayList<FacultyMemberLecturesDTO> facultyMemberLecturesDTOS =
