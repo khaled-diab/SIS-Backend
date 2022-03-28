@@ -47,7 +47,9 @@ import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 @AllArgsConstructor
 @CrossOrigin(origins = ("*"))
 
+
 public class StudentController extends BaseController<Student, StudentDTO> {
+
 
     //Autowired
     private final StudentService studentService;
@@ -145,7 +147,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(filterDTO.getFilterValue(),filterDTO.getCollegeId(), filterDTO.getDepartmentId(), page,limit,filterDTO);
+        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(filterDTO.getFilterValue(),filterDTO.getCollegeId(), filterDTO.getDepartmentId(),filterDTO.getLevel(), page,limit,filterDTO);
         return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
     }
 

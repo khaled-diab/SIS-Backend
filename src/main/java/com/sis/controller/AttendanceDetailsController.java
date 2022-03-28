@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/attendanceDetails")
 public class AttendanceDetailsController extends BaseController<AttendanceDetails, AttendanceDetailsDTO> {
 
@@ -67,7 +68,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.findStudentAttendances(studentId,courseId);
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
-    @RequestMapping(value="/getAttendancesByLecture/{lectureId}", method = RequestMethod.POST)
+    @RequestMapping(value="/getAttendancesByLecture/{lectureId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendancesByLecture( @PathVariable long lectureId){
 
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lectureId);

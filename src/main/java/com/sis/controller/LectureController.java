@@ -57,6 +57,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
         if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
             Random rand = new Random();
             lectureDTO.setAttendanceCode(rand.nextInt());
+            System.out.println(UUID.randomUUID().toString());
         }
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getLectureDate(), course, facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
