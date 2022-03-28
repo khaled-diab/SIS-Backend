@@ -29,7 +29,6 @@ public class FacultyMemberDTO extends BaseDTO {
 	@Email(message = "must be email")
 	private String universityMail;
 
-	@NotEmpty(message = "Required")
 	@Email(message = "must be email")
 	private String alternativeMail;
 
@@ -47,16 +46,16 @@ public class FacultyMemberDTO extends BaseDTO {
 //	@NotEmpty(message = "Required")
 	private String photo;
 
-	@NotEmpty(message = "Required")
+	@NotNull(message = "Required")
 	private Date birthDate;
 
-	@NotEmpty(message = "Required")
+	@NotNull(message = "Required")
 	private DegreeDTO degreeDTO;
 
-	@NotEmpty(message = "Required")
+	@NotNull(message = "Required")
 	private CollegeDTO collegeDTO;
 
-	@NotEmpty(message = "Required")
+	@NotNull(message = "Required")
 	private DepartmentDTO departmentDTO;
 
 }

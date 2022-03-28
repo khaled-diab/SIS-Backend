@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.persistence.criteria.Expression;
 
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
@@ -18,6 +19,7 @@ public class SisSystemApplication {
 	private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(SisSystemApplication.class, args);
+
 		log.info("SIS backend started successfully");		
 	}
 

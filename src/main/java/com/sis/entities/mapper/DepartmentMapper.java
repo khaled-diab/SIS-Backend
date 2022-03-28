@@ -6,6 +6,7 @@ import com.sis.entities.College;
 import com.sis.entities.Department;
 import com.sis.service.CollegeService;
 import com.sis.util.PageResult;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +17,13 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Component
-public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
+@AllArgsConstructor
+public class DepartmentMapper implements Mapper<Department, DepartmentDTO> {
 
-    @Autowired
-    private CollegeService collegeService ;
+    private CollegeService collegeService;
 
-    @Autowired
-    private CollegeMapper collegeMapper ;
+    private CollegeMapper collegeMapper;
+
     @Override
     public DepartmentDTO toDTO(Department entity) {
         DepartmentDTO dto = new DepartmentDTO();
@@ -30,39 +31,37 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
         dto.setCode(entity.getCode());
         dto.setNameAr(entity.getNameAr());
         dto.setNameEn(entity.getNameEn());
-        dto.setId(entity.getId());
         dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
         return dto;
     }
 
     @Override
     public Department toEntity(DepartmentDTO dto) {
-        Department department =new Department() ;
+        Department department = new Department();
         department.setCode(dto.getCode());
         department.setNameAr(dto.getNameAr());
         department.setNameEn(dto.getNameEn());
         department.setId(dto.getId());
-        College college = collegeService.findById(dto.getCollegeDTO().getId());
-        department.setCollegeId(college);
+        department.setCollegeId(collegeMapper.toEntity(dto.getCollegeDTO()));
         department.setAcademicProgramCollection(null);
         department.setFacultyCollection(null);
         department.setStudentCollection(null);
-        return  department;
+        return department;
     }
 
     @Override
-    public ArrayList<DepartmentDTO> toDTOs(Collection<Department> departements) {
-        return departements.stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<DepartmentDTO>::new));
+    public ArrayList<DepartmentDTO> toDTOs(Collection<Department> departments) {
+        return departments.stream().map(this::toDTO).collect(toCollection(ArrayList<DepartmentDTO>::new));
     }
 
     @Override
     public ArrayList<Department> toEntities(Collection<DepartmentDTO> departmentDTOS) {
-        return departmentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Department>::new));
+        return departmentDTOS.stream().map(this::toEntity).collect(toCollection(ArrayList<Department>::new));
     }
 
     @Override
     public PageResult<DepartmentDTO> toDataPage(PageResult<Department> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<DepartmentDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<DepartmentDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
 
     }
 
