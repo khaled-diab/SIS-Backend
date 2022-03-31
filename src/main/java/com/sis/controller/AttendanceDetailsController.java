@@ -120,7 +120,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     // this function is written by abdo ramadan
     @RequestMapping(value="/getAttendancesByLectureId/{lectureId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<AttendanceDetailsDTO>>
-    getAttendancesByLecture( @RequestBody Long lectureId){
+    getAttendancesByLecture( @PathVariable Long lectureId){
         Lecture lecture = lectureService.findById(lectureId);
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS =
                 this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
