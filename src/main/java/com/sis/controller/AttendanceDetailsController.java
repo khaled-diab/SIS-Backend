@@ -104,15 +104,26 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         }
 
     @RequestMapping(value="/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance( @PathVariable long studentId, @PathVariable long courseId){
+    public ResponseEntity<Collection<AttendanceDetailsDTO>>
+    getAttendance( @PathVariable long studentId, @PathVariable long courseId){
 
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.findStudentAttendances(studentId,courseId);
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
     @RequestMapping(value="/getAttendancesByLecture", method = RequestMethod.POST)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendancesByLecture( @RequestBody Lecture lecture){
+    public ResponseEntity<Collection<AttendanceDetailsDTO>>
+    getAttendancesByLecture( @RequestBody Lecture lecture){
 
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
+        return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
+    }
+    // this function is written by abdo ramadan
+    @RequestMapping(value="/getAttendancesByLectureId/{lectureId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>>
+    getAttendancesByLecture( @RequestBody Long lectureId){
+        Lecture lecture = lectureService.findById(lectureId);
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS =
+                this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
     // this function is written by Abdo Ramadan
