@@ -15,6 +15,8 @@ import com.sis.repository.UserRepository;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import lombok.AllArgsConstructor;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -79,6 +81,12 @@ public class SecurityService {
     }
 
     public ResponseEntity<StudentDTO> registerBulkStudents(MultipartFile file) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+        } catch (Exception e) {
+
+        }
         return null;
     }
 }
