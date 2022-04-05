@@ -136,4 +136,37 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         return new ResponseEntity<>(attendanceReportDTOS,HttpStatus.OK);
     }
 
+//    public ArrayList<AttendanceReportDTO>
+//    findFacultyMemberSections_courses(long academicYearId, long academicTermId,
+//                                      long facultyMemberId) {
+//        ArrayList<Long> sectionIds = this.timetableService.findFacultyMemberSections(
+//                academicYearId, academicTermId, facultyMemberId);
+//        ArrayList<AttendanceReportDTO> section_courses = new ArrayList<>();
+//
+//        if (sectionIds != null && sectionIds.size() > 0) {
+//            for (long id : sectionIds) {
+//                AttendanceReportDTO section_course = new AttendanceReportDTO();
+//                Section section = this.findById(id);
+//                section_course.setId(section.getId());
+//                section_course.setSectionNumber(section.getSectionNumber());
+//                section_course.setCourseName(section.getCourse().getNameEn());
+//                section_course.setLecturesNumber(section.getLectures().size());
+//                section_course.setStudentsNumber(section.getStudentEnrollments().size());
+//                for (Lecture lecture : section.getLectures()) {
+//                    ArrayList<AttendanceDetails> attendanceDetails =
+//                            lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+//                            attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
+//                                    "Present")).collect(toCollection(
+//                                            ArrayList<AttendanceDetails>::new));
+//                    section_course.setPresentsNumber(attendanceDetails.size());
+//                }
+//                section_courses.add(section_course);
+//
+//            }
+//            return section_courses;
+//        }
+//
+//        return null;
+//    }
+
 }
