@@ -21,6 +21,8 @@ public class FacultyMemberLecturesDTO extends BaseDTO {
 
     private int absentStudent;
 
+    private double rate ;
+
     private LocalTime lectureStartTime;
 
     private LocalTime lectureEndTime;
