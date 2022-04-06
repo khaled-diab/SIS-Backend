@@ -33,7 +33,6 @@ import java.util.Objects;
 
 import static java.nio.file.Files.copy;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 @RestController
 @Validated
@@ -47,7 +46,7 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
 
     private final FacultyMemberMapper facultyMemberMapper;
 
-    public static final String DIRECTORY = System.getProperty("user.home") + "/resources/FacultyMemberImages/";
+    public static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFiles) throws IOException {
@@ -68,18 +67,14 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
             throw new FileNotFoundException(filename + " was not found on the server");
         }
         Resource resource = new UrlResource(filePath.toUri());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("File-Name", filename);
-        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
-                .headers(httpHeaders).body(resource);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
                                                                @PathVariable int size,
                                                                @RequestBody FacultyMemberRequestDTO
-                                                                           facultyMemberRequestDTO) {
+                                                                       facultyMemberRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         return new ResponseEntity<>(facultyMemberService.search(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
     }
