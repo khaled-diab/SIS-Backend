@@ -19,7 +19,7 @@ public class SisSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SisSystemApplication.class, args);
 		log.info("SIS backend started successfully");
-		System.out.println(System.getProperty("user.dir"));
+
 	}
 
 //	@Bean

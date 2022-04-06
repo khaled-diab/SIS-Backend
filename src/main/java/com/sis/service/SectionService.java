@@ -116,7 +116,7 @@ public class SectionService extends BaseServiceImp<Section> {
             sectionDTOs = this.sectionMapper.toDTOs(sections);
             return sectionDTOs;
         }
-        System.out.println("noo");
+
         return null;
     }
 
