@@ -24,6 +24,8 @@ public class SectionDTO extends BaseDTO {
 
     private int exercisesLectures;
 
+    private int numberOfStudents;
+
     private MajorDTO majorDTO;
 
     @NotNull(message = "Required")
