@@ -18,7 +18,8 @@ public class SisSystemApplication {
 	private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(SisSystemApplication.class, args);
-		log.info("SIS backend started successfully");		
+		log.info("SIS backend started successfully");
+		System.out.println(System.getProperty("user.dir"));
 	}
 
 //	@Bean

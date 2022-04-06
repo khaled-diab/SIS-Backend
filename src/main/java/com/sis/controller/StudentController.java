@@ -64,7 +64,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     private AcademicTermMapper academicTermMapper;
 
     public static final String DIRECTORY =
-            System.getProperty("user.home") + "/Resourcess/StudentImages/";
+            System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();
@@ -83,11 +83,13 @@ public class StudentController extends BaseController<Student, StudentDTO> {
             throw new FileNotFoundException(filename + " was not found on the server");
         }
         Resource resource = new UrlResource(filePath.toUri());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("File-Name", filename);
-        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
-                .headers(httpHeaders).body(resource);
+//        System.out.println(filePath);
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.add("File-Name", filename);
+//        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
+//        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
+//                .headers(httpHeaders).body(resource);
+        return new ResponseEntity<>(resource,HttpStatus.OK);
     }
     @RequestMapping(value="/addStudent", method = RequestMethod.POST)
     public MessageResponse createStudent(@Valid @RequestBody  StudentDTO dto) {
@@ -147,8 +149,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(filterDTO.getFilterValue(),filterDTO.getCollegeId(), filterDTO.getDepartmentId(),filterDTO.getLevel(), page,limit,filterDTO);
-        return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
+        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO( page,limit,filterDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(
