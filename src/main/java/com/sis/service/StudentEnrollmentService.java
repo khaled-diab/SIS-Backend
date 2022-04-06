@@ -87,8 +87,20 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }
 
-    public int countBySection(Section section) {
-        return this.studentEnrollmentRepository.countAllBySection(section);
+    public int countBySection(long sectionId) {
+        return this.studentEnrollmentRepository.countAllBySectionId(sectionId);
+    }
+
+    public ArrayList<Section> getStudentSections(long studentId){
+        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository
+                .findStudentEnrollmentByStudentId(studentId);
+        ArrayList<Section> sections = new ArrayList<>();
+        for (StudentEnrollment studentEnrollment : studentEnrollments) {
+            if (studentEnrollment.getSection() != null) {
+                sections.add(studentEnrollment.getSection());
+            }
+        }
+        return sections;
     }
 
     //Abdo.Amr
