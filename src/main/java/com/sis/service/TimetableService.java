@@ -110,5 +110,9 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         }
         return timetableDTOs;
     }
+    public ArrayList<Long> findFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId) {
+        return this.timetableRepository.findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
+
+    }
 
 }
