@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toCollection;
 
 @Service
 @AllArgsConstructor
@@ -116,26 +119,37 @@ public class SectionService extends BaseServiceImp<Section> {
         System.out.println("noo");
         return null;
     }
+
     //Abdo.Amr
     public ArrayList<Section_Course> findFacultyMemberSections_courses(long academicYearId, long academicTermId, long facultyMemberId) {
         ArrayList<Long> sectionIds = this.timetableService.findFacultyMemberSections(academicYearId, academicTermId, facultyMemberId);
-        ArrayList<Section_Course> section_courses=new ArrayList<>();
+        ArrayList<Section_Course> section_courses = new ArrayList<>();
 
         if (sectionIds != null && sectionIds.size() > 0) {
             for (long id : sectionIds) {
-                Section_Course section_course =new Section_Course();
-                Section section=this.findById(id);
+                Section_Course section_course = new Section_Course();
+                Section section = this.findById(id);
+
                 section_course.setId(section.getId());
                 section_course.setSectionNumber(section.getSectionNumber());
                 section_course.setCourseName(section.getCourse().getNameEn());
+                section_course.setLecturesNumber(section.getLectures().size());
+                section_course.setStudentsNumber(section.getStudentEnrollments().size());
+                for (Lecture lecture : section.getLectures()) {
+                    ArrayList<AttendanceDetails> attendanceDetails = lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+                            attendanceDetails1.getAttendanceStatus().equalsIgnoreCase("Present")).collect(toCollection(ArrayList<AttendanceDetails>::new));
+                    section_course.setPresentsNumber(attendanceDetails.size());
+                }
                 section_courses.add(section_course);
-            }
 
+
+
+            }
             return section_courses;
         }
 
-        return null;
-    }
+            return null;
+        }
 
 
 }

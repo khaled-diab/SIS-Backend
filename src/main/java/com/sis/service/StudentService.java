@@ -41,8 +41,12 @@ public class StudentService extends BaseServiceImp<Student>{
 
 
 
-    public PageResult<Student> searchStudents(PageQueryUtil pageUtil, String attribute,long  collegeId,
-                                              long  departmentId,String level, @Nullable String sortField,@Nullable Sort.Direction sort) {
+    public PageResult<Student> searchStudents(PageQueryUtil pageUtil, StudentFilterDTO studentFilterDTO, @Nullable Sort.Direction sort) {
+        String attribute = studentFilterDTO.getFilterValue();
+        long collegeId = studentFilterDTO.getCollegeId();
+        long departmentId=studentFilterDTO.getDepartmentId();
+        String level = studentFilterDTO.getLevel();
+        String sortField = studentFilterDTO.getSortBy();
         if(attribute!=null && attribute.equals("")){
             attribute=null;
         }
@@ -72,7 +76,6 @@ public class StudentService extends BaseServiceImp<Student>{
 
         if(attribute!=null && collegeId==-1 && level ==null){
 
-            System.out.println("hhjh");
             page = this.studentRepository.searchStudent(attribute,num,pageable);
         }else if(attribute!=null && collegeId==-1 && level !=null){
             page=this.studentRepository.searchStudentByLevel(attribute, num,level,pageable);
@@ -128,8 +131,9 @@ public class StudentService extends BaseServiceImp<Student>{
                 pageUtil.getLimit(), pageUtil.getPage());
     }
 
-    public PageResult<StudentDTO> searchStudentsDTO(String attribute, long collegeId, long  departmentId,String level,
+    public PageResult<StudentDTO> searchStudentsDTO(
                                                     int page, int limit, StudentFilterDTO studentFilterDTO ){
+
         Sort.Direction direction=null;
 
         if(studentFilterDTO.getSortDirection()==null){
@@ -141,7 +145,7 @@ public class StudentService extends BaseServiceImp<Student>{
             direction= Sort.Direction.DESC;
         }
         PageQueryUtil pgq=new PageQueryUtil(page,limit);
-        PageResult<Student> students=this.searchStudents(pgq,attribute, collegeId,  departmentId,level,studentFilterDTO.getSortBy(),direction);
+        PageResult<Student> students=this.searchStudents(pgq,studentFilterDTO,direction);
         return this.studentMapper.toDataPage(students);
     }
 
