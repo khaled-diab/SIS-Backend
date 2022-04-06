@@ -1,25 +1,19 @@
 package com.sis.controller;
 
-import com.sis.dto.AcademicTermDTO;
+
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.dto.section.SectionDTO;
-import com.sis.dto.student.StudentDTO;
-import com.sis.entities.AcademicTerm;
 import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
-import com.sis.entities.Section;
 import com.sis.entities.mapper.*;
 import com.sis.service.*;
-import com.sis.util.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,37 +29,21 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @Autowired
     private AttendanceDetailsMapper attendanceDetailsMapper;
 
-    @Autowired
-    private LectureService lectureService;
 
     @Autowired
     private LectureMapper lectureMapper;
 
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private StudentMapper studentMapper;
-
-    @Autowired
-    private SectionService sectionService;
-
-    @Autowired
-    private SectionMapper sectionMapper;
-
-    @Autowired
-    private StudentEnrollmentService studentEnrollmentService;
 
     @RequestMapping(value="/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode , @RequestBody StudentLecture studentLecture){
 
-        StudentDTO studentDTO =studentLecture.getStudentDTO();
+        long studentId =studentLecture.getStudentId();
         LectureDTO lectureDTO =studentLecture.getLectureDTO();
         Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
         AttendanceDetailsDTO attendanceDetailsDTO2=null;
-        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture.getId());
         for(AttendanceDetailsDTO attendanceDetailsDTO :attendanceDetailsDTOS){
-            if(attendanceDetailsDTO.getStudentDTO().getId() == studentDTO.getId()){
+            if(attendanceDetailsDTO.getStudentDTO().getId() == studentId){
                 if ((lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceStatus())) {
                     attendanceDetailsDTO.setAttendanceStatus("Present");
                     this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
@@ -74,26 +52,6 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
                 }
             }
         }
-//        System.out.println(lectureDTO.getAttendanceCode());
-//        System.out.println(attendanceCode);
-//        System.out.println(lectureDTO.getId());
-//
-//        AttendanceDetailsDTO attendanceDetailsDTO = AttendanceDetailsDTO.builder()
-//                    .studentDTO(studentDTO)
-//                    .lectureDTO(lectureDTO)
-//                    .attendanceStatus(false)
-//                    .attendanceDate(lectureDTO.getLectureDate())
-//                    .lectureStartTime(lectureDTO.getLectureStartTime())
-//                    .lectureEndTime(lectureDTO.getLectureEndTime())
-//                    .courseDTO(lectureDTO.getCourseDTO())
-//                    .build();
-//        System.out.println(lectureDTO.getAttendanceCode());
-//        System.out.println(attendanceCode);
-//        System.out.println(lectureDTO.getAttendanceStatus());
-
-
-          //  this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
-
         return new ResponseEntity<>(attendanceDetailsDTO2,HttpStatus.OK);
     }
     @RequestMapping(value="/addManualAttendance", method = RequestMethod.POST)
@@ -102,7 +60,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         List<AttendanceDetails> returnedAttendanceDetails =  this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
 
         return new ResponseEntity<>(this.attendanceDetailsMapper.toDTOs(returnedAttendanceDetails),HttpStatus.OK);
-        }
+    }
 
     @RequestMapping(value="/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance( @PathVariable long studentId, @PathVariable long courseId){
@@ -112,19 +70,10 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     }
     @RequestMapping(value="/getAttendancesByLecture/{lectureId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendancesByLecture( @PathVariable long lectureId){
-
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lectureId);
         return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
     }
-    // this function is written by abdo ramadan
-    @RequestMapping(value="/getAttendancesByLectureId/{lectureId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>>
-    getAttendancesByLecture( @PathVariable Long lectureId){
-        Lecture lecture = lectureService.findById(lectureId);
-        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS =
-                this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
-        return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
-    }
+
     // this function is written by Abdo Ramadan
     @RequestMapping(value="/getAttendanceByLecture/{lectureId}"
             , method = RequestMethod.GET)
