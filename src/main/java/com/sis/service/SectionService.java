@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -88,11 +86,6 @@ public class SectionService extends BaseServiceImp<Section> {
     public int countBySection(long sectionId) {
         return this.studentEnrollmentService.countBySection(sectionId);
     }
-
-//    public ArrayList<Section> getStudentSections(long studentId) {
-//        ArrayList<Section> sections = this.studentEnrollmentService.getStudentSections(studentId);
-//        return sections;
-//    }
 
     //Abdo.Amr
     public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, long studentId) {

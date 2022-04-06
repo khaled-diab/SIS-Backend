@@ -6,24 +6,20 @@ import com.sis.dto.section.SectionRequestDTO;
 import com.sis.dto.section.Section_Course;
 import com.sis.entities.AcademicTerm;
 import com.sis.entities.Section;
-import com.sis.entities.Student;
 import com.sis.entities.mapper.*;
 import com.sis.exception.SectionFieldNotUniqueException;
 import com.sis.service.AcademicTermService;
 import com.sis.service.SectionService;
-import com.sis.service.StudentService;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -38,9 +34,6 @@ public class SectionController extends BaseController<Section, SectionDTO> {
 
     private AcademicTermService academicTermService;
     private AcademicTermMapper academicTermMapper;
-
-//    private final StudentMapper studentMapper;
-//    private final StudentService studentService;
 
     @RequestMapping(value = "/dataPage", method = RequestMethod.POST)
     public PageResult<SectionDTO> DataPage(@RequestBody PageQueryUtil pageUtil) {
@@ -76,13 +69,6 @@ public class SectionController extends BaseController<Section, SectionDTO> {
         SectionDTO section = sectionMapper.toDTO(sectionService.save(sectionMapper.toEntity(dto)));
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
-
-//    @RequestMapping(value = "/getStudentSections/{studentId}", method = RequestMethod.GET)
-//    public ResponseEntity<Collection<SectionDTO>> getStudentSections(@PathVariable long studentId) {
-//        Student student = this.studentService.findById(studentId);
-//        Collection<SectionDTO> sectionDTOs = this.sectionMapper.toDTOs(this.sectionService.getStudentSections(student.getId()));
-//        return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
-//    }
 
     // Abdo.Amr
     @RequestMapping(value = "/getFacultyMemberSections/{facultyMemberId}", method = RequestMethod.GET)
