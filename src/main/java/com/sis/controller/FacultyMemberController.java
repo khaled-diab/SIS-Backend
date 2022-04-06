@@ -46,7 +46,7 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
 
     private final FacultyMemberMapper facultyMemberMapper;
 
-    public static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
+    public static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/Images/facultyMemberImages/";
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFiles) throws IOException {
