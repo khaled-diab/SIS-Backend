@@ -11,5 +11,6 @@ public class StudentFilterDTO {
     private String sortBy;
     private long collegeId;
     private long departmentId;
+    private String level;
 
 }

@@ -10,7 +10,7 @@ public interface StudentEnrollmentRepository extends BaseDao<StudentEnrollment> 
 
     //Abdo.Amr
     // @Query(value="SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and  student_id= :studentId  ", nativeQuery = true)
-    public ArrayList<StudentEnrollment> findStudentEnrollmentByAcademicYearAndAcademicTermAndStudent(AcademicYear academicYear, AcademicTerm academicTerm, Student student);
+    public ArrayList<StudentEnrollment> findStudentEnrollmentByAcademicYearAndAcademicTermAndStudentId(AcademicYear academicYear, AcademicTerm academicTerm, long studentId);
 
     ArrayList<StudentEnrollment> findStudentEnrollmentByStudentId(long studentId);
 

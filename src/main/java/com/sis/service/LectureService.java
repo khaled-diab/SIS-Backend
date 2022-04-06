@@ -14,6 +14,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static java.util.stream.Collectors.toCollection;
+
 
 @Service
 public class LectureService  extends BaseServiceImp<Lecture> {
@@ -52,7 +54,20 @@ public class LectureService  extends BaseServiceImp<Lecture> {
             Lecture lecture = findById(id);
             if(lecture.getAcademicTermId().getId() ==
                     academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
+                ArrayList<AttendanceDetails> presentAttendanceDetails =
+                lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+                        attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
+                                "Present")).collect(toCollection(
+                        ArrayList<AttendanceDetails>::new));
+                ArrayList<AttendanceDetails> absetAttendance =
+                        lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+                        attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
+                                "Absent")).collect(toCollection(
+                        ArrayList<AttendanceDetails>::new));
                 FacultyMemberLecturesDTO facultyMemberLecturesDTO  =new FacultyMemberLecturesDTO();
+                facultyMemberLecturesDTO.setPresentStudent(presentAttendanceDetails.size());
+                facultyMemberLecturesDTO.setAbsentStudent(absetAttendance.size());
+                facultyMemberLecturesDTO.setRate(1.0*presentAttendanceDetails.size()/absetAttendance.size());
                 facultyMemberLecturesDTO.setLectureEndTime(lecture.getLectureEndTime());
                 facultyMemberLecturesDTO.setLectureDay(lecture.getLectureDay());
                 facultyMemberLecturesDTO.setLectureStartTime(lecture.getLectureStartTime());

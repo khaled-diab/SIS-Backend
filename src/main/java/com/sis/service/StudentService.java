@@ -41,8 +41,12 @@ public class StudentService extends BaseServiceImp<Student>{
 
 
 
-    public PageResult<Student> searchStudents(PageQueryUtil pageUtil, String attribute,long  collegeId,
-                                              long  departmentId, @Nullable String sortField,@Nullable Sort.Direction sort) {
+    public PageResult<Student> searchStudents(PageQueryUtil pageUtil, StudentFilterDTO studentFilterDTO, @Nullable Sort.Direction sort) {
+        String attribute = studentFilterDTO.getFilterValue();
+        long collegeId = studentFilterDTO.getCollegeId();
+        long departmentId=studentFilterDTO.getDepartmentId();
+        String level = studentFilterDTO.getLevel();
+        String sortField = studentFilterDTO.getSortBy();
         if(attribute!=null && attribute.equals("")){
             attribute=null;
         }
@@ -70,41 +74,66 @@ public class StudentService extends BaseServiceImp<Student>{
                 num = -1;
             }
 
-        if(attribute!=null && collegeId==-1){
-            System.out.println(11);
+        if(attribute!=null && collegeId==-1 && level ==null){
+
             page = this.studentRepository.searchStudent(attribute,num,pageable);
-        }else if(attribute!=null && collegeId!=-1 && departmentId!=-1){
-            System.out.println(22);
+        }else if(attribute!=null && collegeId==-1 && level !=null){
+            page=this.studentRepository.searchStudentByLevel(attribute, num,level,pageable);
+        }else if(attribute!=null && collegeId!=-1 && level !=null && departmentId==-1){
+            page=this.studentRepository.searchStudentByLevel(attribute, num,collegeId,level,pageable);
+        }
+        else if(attribute!=null && collegeId!=-1 && departmentId!=-1 && level ==null){
+
             page=this.studentRepository.searchStudent(attribute, num,collegeId, departmentId,pageable);
-        }else if(attribute!=null && collegeId!=-1 && departmentId==-1){
-            System.out.println(33);
-            System.out.println("abdo");
+        }else if(attribute!=null && collegeId!=-1 && departmentId==-1 && level ==null){
+
             page=this.studentRepository.searchStudent(attribute, num,collegeId ,pageable);
 
-        }else if(attribute==null && collegeId!=-1 && departmentId==-1){
-            System.out.println(44);
+        }else if(attribute!=null && collegeId!=-1 && departmentId!=-1 && level !=null){
+            page=this.studentRepository.searchStudent(attribute, num,collegeId,departmentId,level,pageable);
+
+        }
+        else if(attribute==null && collegeId!=-1 && departmentId==-1 && level ==null){
+
 //            s=Sort.by("name_ar").ascending();
             Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),s);
             page=this.studentRepository.findStudentsByCollage(collegeId,pageable2);
 
-        }else if(attribute==null && collegeId!=-1 && departmentId!=-1) {
-            System.out.println(55);
+        }else if(attribute==null && collegeId!=-1 && departmentId!=-1&& level ==null) {
+
             page=this.studentRepository.findStudentsByCollage(collegeId,departmentId,pageable);
 
-        }else{
-            System.out.println(66);
-            System.out.println("im hereee");
+        }else if(attribute==null && collegeId==-1 && departmentId==-1&& level !=null) {
+
+            Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),s);
+            page=this.studentRepository.findStudentByLevel(level,pageable2);
+
+        }
+        else if(attribute==null && collegeId!=-1 && departmentId==-1&& level !=null) {
+
+            Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),s);
+            page=this.studentRepository.CollegeIdLevel(collegeId,level,pageable2);
+
+        }
+        else if(attribute==null && collegeId!=-1 && departmentId!=-1&& level !=null) {
+
+            Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),s);
+            page=this.studentRepository.findByCollegeIdAndDepartmentIdAndLevel(collegeId,departmentId,level,pageable2);
+
+        }
+        else{
+
 //            page=this.studentRepository.findAll(pageable);
             page=this.studentRepository.findAllStudent(pageable);
         }
 
-        PageResult<Student> pageResult = new PageResult<Student>(page.getContent(), (int) page.getTotalElements(),
+        return new PageResult<Student>(page.getContent(), (int) page.getTotalElements(),
                 pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
     }
 
-    public PageResult<StudentDTO> searchStudentsDTO(String attribute, long collegeId, long  departmentId,
+    public PageResult<StudentDTO> searchStudentsDTO(
                                                     int page, int limit, StudentFilterDTO studentFilterDTO ){
+
         Sort.Direction direction=null;
 
         if(studentFilterDTO.getSortDirection()==null){
@@ -116,7 +145,7 @@ public class StudentService extends BaseServiceImp<Student>{
             direction= Sort.Direction.DESC;
         }
         PageQueryUtil pgq=new PageQueryUtil(page,limit);
-        PageResult<Student> students=this.searchStudents(pgq,attribute, collegeId,  departmentId,studentFilterDTO.getSortBy(),direction);
+        PageResult<Student> students=this.searchStudents(pgq,studentFilterDTO,direction);
         return this.studentMapper.toDataPage(students);
     }
 
@@ -131,9 +160,11 @@ public class StudentService extends BaseServiceImp<Student>{
     public Student findByNationalId(String id){
         return this.studentRepository.findByNationalId(id);
     }
+
     public Student findByUniversityMail(String mail){
         return this.studentRepository.findByUniversityMail(mail);
     }
+
     public ArrayList<StudentDTO> findStudentsBySection(long academicYearId, long academicTermId, long sectionId){
         ArrayList<StudentEnrollment> studentEnrollments= this.studentEnrollmentRepository.findStudentsBySection(academicYearId,academicTermId,sectionId);
         ArrayList<Student> students=new ArrayList<>();
