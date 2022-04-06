@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentLecture {
-    private StudentDTO studentDTO;
+    private Long studentId;
     private LectureDTO lectureDTO;
 }
