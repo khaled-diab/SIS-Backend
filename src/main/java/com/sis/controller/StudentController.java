@@ -17,16 +17,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,15 +38,12 @@ import java.util.Objects;
 
 import static java.nio.file.Files.copy;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/students")
 @AllArgsConstructor
 @CrossOrigin(origins = ("*"))
-
-
 public class StudentController extends BaseController<Student, StudentDTO> {
 
 
@@ -65,6 +61,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
 
     public static final String DIRECTORY =
             System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
+
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();
