@@ -12,6 +12,7 @@ import com.sis.exception.StudentFieldNotUniqueException;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.util.MessageResponse;
+import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,10 +66,11 @@ public class StudentController extends BaseController<Student, StudentDTO> {
 
     public static final String DIRECTORY =
             System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
+
     @PostMapping("/upload")
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
+    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();
-        for(MultipartFile file : multipartFiles) {
+        for (MultipartFile file : multipartFiles) {
             String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             Path fileStorage = Paths.get(DIRECTORY, filename).toAbsolutePath().normalize();
             copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
@@ -76,10 +78,11 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         }
         return ResponseEntity.ok().body(filenames);
     }
+
     @GetMapping("download/{filename}")
     public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename) throws IOException {
         Path filePath = Paths.get(DIRECTORY).toAbsolutePath().normalize().resolve(filename);
-        if(!Files.exists(filePath)) {
+        if (!Files.exists(filePath)) {
             throw new FileNotFoundException(filename + " was not found on the server");
         }
         Resource resource = new UrlResource(filePath.toUri());
@@ -89,44 +92,45 @@ public class StudentController extends BaseController<Student, StudentDTO> {
 //        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
 //        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
 //                .headers(httpHeaders).body(resource);
-        return new ResponseEntity<>(resource,HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
-    @RequestMapping(value="/addStudent", method = RequestMethod.POST)
-    public MessageResponse createStudent(@Valid @RequestBody  StudentDTO dto) {
+
+    @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
+    public MessageResponse createStudent(@Valid @RequestBody StudentDTO dto) {
 
 
-        if(this.studentService.findByuniversityId(dto.getUniversityId())!=null){
+        if (this.studentService.findByuniversityId(dto.getUniversityId()) != null) {
 
-            throw new StudentFieldNotUniqueException("universityId","University Id Already Exists");
+            throw new StudentFieldNotUniqueException("universityId", "University Id Already Exists");
         }
-        if(this.studentService.findByNationalId(dto.getNationalId())!=null){
-            throw new StudentFieldNotUniqueException("nationalId","NationalID Id Already Exists");
+        if (this.studentService.findByNationalId(dto.getNationalId()) != null) {
+            throw new StudentFieldNotUniqueException("nationalId", "NationalID Id Already Exists");
         }
-        if(this.studentService.findByUniversityMail(dto.getUniversityMail())!=null){
-            throw new StudentFieldNotUniqueException("universityMail","University Mail Already Exists");
+        if (this.studentService.findByUniversityMail(dto.getUniversityMail()) != null) {
+            throw new StudentFieldNotUniqueException("universityMail", "University Mail Already Exists");
         }
         this.studentService.save(this.studentMapper.toEntity(dto));
         return new MessageResponse("Item has been saved successfully");
     }
 
     @RequestMapping(value = "/updateStudent", method = RequestMethod.PUT)
-    public MessageResponse updateStudent( @Valid @RequestBody StudentDTO dto) {
+    public MessageResponse updateStudent(@Valid @RequestBody StudentDTO dto) {
 
         Student st = this.studentService.findById(dto.getId());
 
-        Student studentByuniversityID=this.studentService.findByuniversityId(dto.getUniversityId());
-        Student studentByNationalID=this.studentService.findByNationalId(dto.getNationalId());
-        Student studentByuniversityMail=this.studentService.findByUniversityMail(dto.getUniversityMail());
-        if(studentByuniversityID!=null && studentByuniversityID.getId() != dto.getId()){
-            System.out.println("dto= "+dto.getId());
-            System.out.println("entity = "+studentByuniversityID.getId());
-            throw new StudentFieldNotUniqueException("universityId","University Id Already Exists");
+        Student studentByuniversityID = this.studentService.findByuniversityId(dto.getUniversityId());
+        Student studentByNationalID = this.studentService.findByNationalId(dto.getNationalId());
+        Student studentByuniversityMail = this.studentService.findByUniversityMail(dto.getUniversityMail());
+        if (studentByuniversityID != null && studentByuniversityID.getId() != dto.getId()) {
+            System.out.println("dto= " + dto.getId());
+            System.out.println("entity = " + studentByuniversityID.getId());
+            throw new StudentFieldNotUniqueException("universityId", "University Id Already Exists");
         }
-        if(studentByNationalID!=null && studentByNationalID.getId() != dto.getId()){
-            throw new StudentFieldNotUniqueException("nationalId","NationalID Id Already Exists");
+        if (studentByNationalID != null && studentByNationalID.getId() != dto.getId()) {
+            throw new StudentFieldNotUniqueException("nationalId", "NationalID Id Already Exists");
         }
-        if(studentByuniversityMail!=null && studentByuniversityMail.getId() != dto.getId()){
-            throw new StudentFieldNotUniqueException("universityMail","University Mail Already Exists");
+        if (studentByuniversityMail != null && studentByuniversityMail.getId() != dto.getId()) {
+            throw new StudentFieldNotUniqueException("universityMail", "University Mail Already Exists");
         }
         this.studentService.save(this.studentMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
@@ -135,7 +139,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.DELETE)
     public MessageResponse delete(@PathVariable(value = "id") Long id) {
 
-        Student st=this.studentService.findById(id);
+        Student st = this.studentService.findById(id);
 
         this.studentService.deleteById(id);
 
@@ -147,9 +151,11 @@ public class StudentController extends BaseController<Student, StudentDTO> {
             method = RequestMethod.POST
     )
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
-                                                                    @RequestParam int page, @RequestParam int limit,
-                                                                    @RequestBody StudentFilterDTO filterDTO ) {
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO( page,limit,filterDTO);
+            @RequestParam int page, @RequestParam int limit,
+            @RequestBody StudentFilterDTO filterDTO) {
+        PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
+        System.out.println(filterDTO.toString());
+        PageResult<StudentDTO> result = this.studentService.search(queryUtil, filterDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -160,11 +166,11 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ArrayList<StudentDTO> getStudentsBySection(@RequestBody ArrayList<SectionDTO> sectionDTOs) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
-        ArrayList<StudentDTO> studentDTOs=new ArrayList<>();
-       for(SectionDTO sectionDTO :sectionDTOs){
-           studentDTOs.addAll(this.studentService.findStudentsBySection(academicTermDTO.getAcademicYearDTO().getId(),academicTermDTO.getId(),sectionDTO.getId()));
-       }
-       return studentDTOs;
+        ArrayList<StudentDTO> studentDTOs = new ArrayList<>();
+        for (SectionDTO sectionDTO : sectionDTOs) {
+            studentDTOs.addAll(this.studentService.findStudentsBySection(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), sectionDTO.getId()));
+        }
+        return studentDTOs;
 
     }
 
