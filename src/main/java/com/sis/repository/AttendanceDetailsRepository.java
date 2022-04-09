@@ -1,7 +1,7 @@
 package com.sis.repository;
 
-import com.sis.entities.AttendanceDetails;
-import com.sis.entities.Lecture;
+import com.sis.entity.AttendanceDetails;
+import com.sis.entity.Lecture;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;

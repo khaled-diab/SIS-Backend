@@ -1,8 +1,8 @@
 package com.sis.repository.specification;
 
-import com.sis.entities.College;
-import com.sis.entities.Department;
-import com.sis.entities.FacultyMember;
+import com.sis.entity.College;
+import com.sis.entity.Department;
+import com.sis.entity.FacultyMember;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;

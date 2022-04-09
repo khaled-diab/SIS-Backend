@@ -1,17 +1,19 @@
 package com.sis.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.sis.dto.BaseDTO;
-import com.sis.entities.BaseEntity;
-import com.sis.entities.mapper.Mapper;
+import com.sis.entity.BaseEntity;
+import com.sis.entity.mapper.Mapper;
 import com.sis.service.BaseServiceImp;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 
 public class BaseController <T extends BaseEntity, DTO extends BaseDTO>{

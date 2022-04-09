@@ -1,7 +1,7 @@
 package com.sis.service;
 
 
-import com.sis.entities.AcademicTerm;
+import com.sis.entity.AcademicTerm;
 import com.sis.repository.AcademicTermDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

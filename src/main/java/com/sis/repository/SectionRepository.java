@@ -1,8 +1,8 @@
 package com.sis.repository;
 
-import com.sis.entities.College;
-import com.sis.entities.Department;
-import com.sis.entities.Section;
+import com.sis.entity.College;
+import com.sis.entity.Department;
+import com.sis.entity.Section;
 
 public interface SectionRepository extends BaseDao<Section> {
 

@@ -2,9 +2,9 @@ package com.sis.service;
 
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.student.StudentFilterDTO;
-import com.sis.entities.Student;
-import com.sis.entities.StudentEnrollment;
-import com.sis.entities.mapper.StudentMapper;
+import com.sis.entity.Student;
+import com.sis.entity.StudentEnrollment;
+import com.sis.entity.mapper.StudentMapper;
 import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.StudentRepository;
 import com.sis.util.PageQueryUtil;

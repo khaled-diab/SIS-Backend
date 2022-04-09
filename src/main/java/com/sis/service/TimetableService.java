@@ -2,8 +2,8 @@ package com.sis.service;
 
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
-import com.sis.entities.Timetable;
-import com.sis.entities.mapper.TimetableMapper;
+import com.sis.entity.Timetable;
+import com.sis.entity.mapper.TimetableMapper;
 import com.sis.repository.TimetableRepository;
 import com.sis.repository.specification.TimetableSpecification;
 import com.sis.util.PageQueryUtil;

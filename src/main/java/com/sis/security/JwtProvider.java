@@ -1,8 +1,11 @@
 package com.sis.security;
 
 
-import com.sis.entities.security.Role;
-import io.jsonwebtoken.*;
+import com.sis.entity.security.Role;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

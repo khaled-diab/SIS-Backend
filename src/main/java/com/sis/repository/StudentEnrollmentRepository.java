@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.*;
+import com.sis.entity.*;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;

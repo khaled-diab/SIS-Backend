@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.College;
+import com.sis.entity.College;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;

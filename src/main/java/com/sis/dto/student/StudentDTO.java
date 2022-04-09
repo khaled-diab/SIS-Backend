@@ -4,6 +4,7 @@ import com.sis.dto.AcademicProgramDTO;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
+import com.sis.dto.security.UserDto;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+
 @Getter
 @Setter
 @Validated
@@ -21,12 +23,12 @@ public class StudentDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp= Constants.ARABIC_CHARACTERS,message="Arabic Letters only")
+    @Pattern(regexp = Constants.ARABIC_CHARACTERS, message = "Arabic Letters only")
     private String nameAr;
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp= Constants.ENGLISH_CHARACTERS, message="English Letters only")
+    @Pattern(regexp = Constants.ENGLISH_CHARACTERS, message = "English Letters only")
 
     private String nameEn;
 
@@ -36,7 +38,7 @@ public class StudentDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp= Constants.DIGITS_ONLY_14, message="must be 14 digits")
+    @Pattern(regexp = Constants.DIGITS_ONLY_14, message = "must be 14 digits")
     private String nationalId;
 
     private Date birthDate;
@@ -51,15 +53,15 @@ public class StudentDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
-    @Pattern(regexp= Constants.DIGITS_ONLY_11, message="Invalid Mobile Number")
+    @Pattern(regexp = Constants.DIGITS_ONLY_11, message = "Invalid Mobile Number")
     private String phone;
 
-    @Pattern(regexp=Constants.DIGITS_ONLY_11, message="Invalid Mobile Number")
+    @Pattern(regexp = Constants.DIGITS_ONLY_11, message = "Invalid Mobile Number")
     private String parentPhone;
 
-    private  String level;
-    private  String year;
-    private  String photo;
+    private String level;
+    private String year;
+    private String photo;
     /*Relations instances*/
 
     private DepartmentDTO departmentDTO;
@@ -67,9 +69,9 @@ public class StudentDTO extends BaseDTO {
     @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
 
-//    @NotNull
     private AcademicProgramDTO academicProgramDTO;
 
+    private UserDto user;
 
 
 }

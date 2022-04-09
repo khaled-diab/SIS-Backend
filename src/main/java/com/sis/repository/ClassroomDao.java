@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.Classroom;
+import com.sis.entity.Classroom;
 
 public interface ClassroomDao extends BaseDao<Classroom>{
 

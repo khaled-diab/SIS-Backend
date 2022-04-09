@@ -1,6 +1,6 @@
 package com.sis.service;
 
-import com.sis.entities.Classroom;
+import com.sis.entity.Classroom;
 import com.sis.repository.ClassroomDao;
 import com.sis.repository.ClassroomSpecification;
 import org.springframework.beans.factory.annotation.Autowired;

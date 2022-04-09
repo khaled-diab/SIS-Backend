@@ -1,8 +1,8 @@
 package com.sis.controller;
 
 import com.sis.dto.DepartmentDTO;
-import com.sis.entities.Department;
-import com.sis.entities.mapper.DepartmentMapper;
+import com.sis.entity.Department;
+import com.sis.entity.mapper.DepartmentMapper;
 import com.sis.repository.DepartmentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

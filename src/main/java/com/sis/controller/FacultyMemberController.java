@@ -2,8 +2,8 @@ package com.sis.controller;
 
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
-import com.sis.entities.FacultyMember;
-import com.sis.entities.mapper.FacultyMemberMapper;
+import com.sis.entity.FacultyMember;
+import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
 import com.sis.service.FacultyMemberService;
 import com.sis.util.MessageResponse;

@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.security.Role;
+import com.sis.entity.security.Role;
 import org.springframework.data.jpa.repository.Query;
 
 public interface RoleRepository extends BaseDao<Role> {

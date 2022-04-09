@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.AcademicTerm;
+import com.sis.entity.AcademicTerm;
 import org.springframework.data.jpa.repository.Query;
 
 public interface AcademicTermDao extends BaseDao<AcademicTerm>{

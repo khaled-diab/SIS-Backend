@@ -2,8 +2,8 @@ package com.sis.service;
 
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
-import com.sis.entities.Course;
-import com.sis.entities.mapper.CourseMapper;
+import com.sis.entity.Course;
+import com.sis.entity.mapper.CourseMapper;
 import com.sis.repository.CourseRepository;
 import com.sis.repository.specification.CourseSpecification;
 import com.sis.util.PageQueryUtil;
