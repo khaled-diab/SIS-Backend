@@ -13,8 +13,11 @@ import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
 import com.sis.entities.Section;
 import com.sis.entities.mapper.*;
+import com.sis.exception.ItemNotFoundException;
+import com.sis.exception.SectionFieldNotUniqueException;
 import com.sis.service.*;
 import com.sis.util.MessageResponse;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +58,18 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @Autowired
     private StudentEnrollmentService studentEnrollmentService;
 
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public ResponseEntity<AttendanceDetailsDTO> update(@RequestBody AttendanceDetailsDTO attendanceDetailsDTO){
+        AttendanceDetails attendanceDetails = attendanceDetailsMapper.toEntity(attendanceDetailsDTO);
+        if(attendanceDetails!=null){
+            attendanceDetailsService.save(attendanceDetails);
+            return new ResponseEntity<>(attendanceDetailsDTO,HttpStatus.OK);
+        }
+        else {
+            throw new ItemNotFoundException(attendanceDetailsDTO.getId());
+        }
+
+    }
     @RequestMapping(value="/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode , @RequestBody StudentLecture studentLecture){
 
@@ -136,37 +151,5 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         return new ResponseEntity<>(attendanceReportDTOS,HttpStatus.OK);
     }
 
-//    public ArrayList<AttendanceReportDTO>
-//    findFacultyMemberSections_courses(long academicYearId, long academicTermId,
-//                                      long facultyMemberId) {
-//        ArrayList<Long> sectionIds = this.timetableService.findFacultyMemberSections(
-//                academicYearId, academicTermId, facultyMemberId);
-//        ArrayList<AttendanceReportDTO> section_courses = new ArrayList<>();
-//
-//        if (sectionIds != null && sectionIds.size() > 0) {
-//            for (long id : sectionIds) {
-//                AttendanceReportDTO section_course = new AttendanceReportDTO();
-//                Section section = this.findById(id);
-//                section_course.setId(section.getId());
-//                section_course.setSectionNumber(section.getSectionNumber());
-//                section_course.setCourseName(section.getCourse().getNameEn());
-//                section_course.setLecturesNumber(section.getLectures().size());
-//                section_course.setStudentsNumber(section.getStudentEnrollments().size());
-//                for (Lecture lecture : section.getLectures()) {
-//                    ArrayList<AttendanceDetails> attendanceDetails =
-//                            lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
-//                            attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
-//                                    "Present")).collect(toCollection(
-//                                            ArrayList<AttendanceDetails>::new));
-//                    section_course.setPresentsNumber(attendanceDetails.size());
-//                }
-//                section_courses.add(section_course);
-//
-//            }
-//            return section_courses;
-//        }
-//
-//        return null;
-//    }
 
 }
