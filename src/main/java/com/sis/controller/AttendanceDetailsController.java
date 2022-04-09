@@ -1,25 +1,22 @@
 package com.sis.controller;
 
-import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
-
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
-import com.sis.entities.AcademicTerm;
-import com.sis.entities.AttendanceDetails;
-import com.sis.entities.Lecture;
-import com.sis.entities.Section;
-import com.sis.entities.mapper.*;
+import com.sis.entity.AttendanceDetails;
+import com.sis.entity.Lecture;
+import com.sis.entity.mapper.AttendanceDetailsMapper;
+import com.sis.entity.mapper.LectureMapper;
+import com.sis.entity.mapper.SectionMapper;
+import com.sis.entity.mapper.StudentMapper;
 import com.sis.service.*;
-import com.sis.util.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

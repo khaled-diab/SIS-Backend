@@ -2,8 +2,8 @@ package com.sis.service;
 
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
-import com.sis.entities.*;
-import com.sis.entities.mapper.SectionMapper;
+import com.sis.entity.*;
+import com.sis.entity.mapper.SectionMapper;
 import com.sis.repository.SectionRepository;
 import com.sis.repository.specification.SectionSpecification;
 import com.sis.util.PageQueryUtil;

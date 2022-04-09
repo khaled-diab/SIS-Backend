@@ -1,8 +1,8 @@
 package com.sis.repository;
 
-import com.sis.entities.Course;
-import com.sis.entities.FacultyMember;
-import com.sis.entities.Lecture;
+import com.sis.entity.Course;
+import com.sis.entity.FacultyMember;
+import com.sis.entity.Lecture;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalTime;

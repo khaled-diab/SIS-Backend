@@ -2,10 +2,10 @@ package com.sis.service;
 
 import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.entities.Course;
-import com.sis.entities.FacultyMember;
-import com.sis.entities.Lecture;
-import com.sis.entities.mapper.LectureMapper;
+import com.sis.entity.Course;
+import com.sis.entity.FacultyMember;
+import com.sis.entity.Lecture;
+import com.sis.entity.mapper.LectureMapper;
 import com.sis.repository.LectureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

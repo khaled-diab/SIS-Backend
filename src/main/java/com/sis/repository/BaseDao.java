@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.BaseEntity;
+import com.sis.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

@@ -1,6 +1,6 @@
 package com.sis.service;
 
-import com.sis.entities.Department;
+import com.sis.entity.Department;
 import com.sis.repository.DepartmentDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.sis.service;
 
-import com.sis.entities.Degree;
+import com.sis.entity.Degree;
 import com.sis.repository.DegreeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

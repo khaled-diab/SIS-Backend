@@ -1,6 +1,6 @@
 package com.sis.service;
 
-import com.sis.entities.Major;
+import com.sis.entity.Major;
 import com.sis.repository.MajorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

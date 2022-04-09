@@ -1,9 +1,8 @@
 package com.sis.controller;
 
 import com.sis.dto.ClassroomDTO;
-import com.sis.dto.building.BuildingDTO;
-import com.sis.entities.Classroom;
-import com.sis.entities.mapper.ClassroomMapper;
+import com.sis.entity.Classroom;
+import com.sis.entity.mapper.ClassroomMapper;
 import com.sis.service.ClassroomService;
 import com.sis.util.MessageResponse;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/classroom")

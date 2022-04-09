@@ -4,7 +4,7 @@ import com.sis.dto.BaseDTO;
 import com.sis.dto.DegreeDTO;
 import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
-import com.sis.entities.security.User;
+import com.sis.dto.security.UserDto;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +61,6 @@ public class FacultyMemberDTO extends BaseDTO {
     @NotNull(message = "Required")
     private DepartmentDTO departmentDTO;
 
-    private User user;
+    private UserDto user;
 
 }

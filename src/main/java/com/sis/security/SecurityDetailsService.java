@@ -1,6 +1,6 @@
 package com.sis.security;
 
-import com.sis.entities.security.User;
+import com.sis.entity.security.User;
 import com.sis.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

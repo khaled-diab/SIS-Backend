@@ -2,8 +2,8 @@ package com.sis.service;
 
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
-import com.sis.entities.FacultyMember;
-import com.sis.entities.mapper.FacultyMemberMapper;
+import com.sis.entity.FacultyMember;
+import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.repository.FacultyMemberRepository;
 import com.sis.repository.specification.FacultyMemberSpecification;
 import com.sis.util.PageQueryUtil;

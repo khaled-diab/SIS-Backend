@@ -1,6 +1,6 @@
 package com.sis.service;
 
-import com.sis.entities.AcademicProgram;
+import com.sis.entity.AcademicProgram;
 import com.sis.repository.AcademicPogramDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

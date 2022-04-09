@@ -2,8 +2,8 @@ package com.sis.controller;
 
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.college.CollegeRequestDTO;
-import com.sis.entities.College;
-import com.sis.entities.mapper.CollegeMapper;
+import com.sis.entity.College;
+import com.sis.entity.mapper.CollegeMapper;
 import com.sis.service.CollegeService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageResult;

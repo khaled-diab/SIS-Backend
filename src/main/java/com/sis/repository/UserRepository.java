@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.security.User;
+import com.sis.entity.security.User;
 
 import java.util.Optional;
 

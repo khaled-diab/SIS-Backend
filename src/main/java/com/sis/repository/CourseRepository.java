@@ -1,7 +1,7 @@
 package com.sis.repository;
 
 
-import com.sis.entities.Course;
+import com.sis.entity.Course;
 
 
 public interface CourseRepository extends BaseDao<Course> {

@@ -1,8 +1,6 @@
 package com.sis.dto;
 
 import com.sis.dto.college.CollegeDTO;
-import com.sis.entities.College;
-import com.sis.entities.Department;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.FacultyMember;
+import com.sis.entity.FacultyMember;
 
 import java.util.Optional;
 

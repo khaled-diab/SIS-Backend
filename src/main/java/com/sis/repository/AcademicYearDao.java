@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.AcademicYear;
+import com.sis.entity.AcademicYear;
 
 public interface AcademicYearDao extends BaseDao<AcademicYear> {
 

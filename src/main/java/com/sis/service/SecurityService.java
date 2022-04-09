@@ -1,12 +1,14 @@
 package com.sis.service;
 
+import com.sis.dto.BaseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.student.StudentDTO;
-import com.sis.entities.BaseEntity;
-import com.sis.entities.Student;
-import com.sis.entities.mapper.StudentMapper;
-import com.sis.entities.security.User;
+import com.sis.entity.FacultyMember;
+import com.sis.entity.Student;
+import com.sis.entity.mapper.FacultyMemberMapper;
+import com.sis.entity.mapper.StudentMapper;
+import com.sis.entity.security.User;
 import com.sis.exception.InvalidUserNameOrPasswordException;
 import com.sis.repository.FacultyMemberRepository;
 import com.sis.repository.RoleRepository;
@@ -41,6 +43,7 @@ public class SecurityService {
     private final StudentMapper studentMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FacultyMemberMapper facultyMemberMapper;
 
     public ResponseEntity<StudentDTO> registerStudent(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -55,18 +58,18 @@ public class SecurityService {
         return null;
     }
 
-    public ResponseEntity<BaseEntity> login(LoginDTO loginDto) {
+    public ResponseEntity<BaseDTO> login(LoginDTO loginDto) {
         User user = userRepository.findByEmailOrUsername(loginDto.getUsername(), loginDto.getUsername())
                 .orElseThrow(InvalidUserNameOrPasswordException::new);
         generateToken(loginDto, user);
         return collectUserData(user);
     }
 
-    private ResponseEntity<BaseEntity> collectUserData(User user) {
+    private ResponseEntity<BaseDTO> collectUserData(User user) {
         if (user.getType().equals(Constants.TYPE_STUDENT)) {
-            return new ResponseEntity<>(studentRepository.findByUser_Id(user.getId()).orElse(null), HttpStatus.OK);
+            return new ResponseEntity<>(studentMapper.toDTO(studentRepository.findByUser_Id(user.getId()).orElse(new Student())), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(facultyMemberRepository.findByUser_Id(user.getId()).orElse(null), HttpStatus.OK);
+            return new ResponseEntity<>(facultyMemberMapper.toDTO(facultyMemberRepository.findByUser_Id(user.getId()).orElse(new FacultyMember())), HttpStatus.OK);
         }
     }
 

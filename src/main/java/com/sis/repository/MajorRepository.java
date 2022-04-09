@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.Major;
+import com.sis.entity.Major;
 
 public interface MajorRepository extends BaseDao<Major>{
 

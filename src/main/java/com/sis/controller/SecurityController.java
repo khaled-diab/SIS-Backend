@@ -1,9 +1,9 @@
 package com.sis.controller;
 
+import com.sis.dto.BaseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.student.StudentDTO;
-import com.sis.entities.BaseEntity;
 import com.sis.service.SecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -36,7 +36,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<BaseEntity> login(@RequestBody final LoginDTO loginDto) {
+    public ResponseEntity<BaseDTO> login(@RequestBody final LoginDTO loginDto) {
         return securityService.login(loginDto);
     }
 }

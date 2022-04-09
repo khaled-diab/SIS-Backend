@@ -1,6 +1,6 @@
 package com.sis.service;
 
-import com.sis.entities.Building;
+import com.sis.entity.Building;
 import com.sis.repository.BuildingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

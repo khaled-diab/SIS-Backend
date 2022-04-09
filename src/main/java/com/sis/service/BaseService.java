@@ -1,35 +1,33 @@
 package com.sis.service;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.sis.entities.BaseEntity;
+import com.sis.entity.BaseEntity;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 
 public interface BaseService<E extends BaseEntity > {
-	
-	public List<E> findAll();
-	
-	public E findById(Long id);
 
-	public E save(E entity);
+    List<E> findAll();
 
-	public List<E> saveAll(List<E> entities);
+    E findById(Long id);
 
-	public void delete(E entity);
-	
-	public void deleteById(Long id);
-	
-	public PageResult<E> getDataPage(PageQueryUtil pageUtil);
-	
-	public PageResult<E> getDataPage(PageQueryUtil pageUtil, String sortField , Direction sortDirection);
-	
-	public JpaRepository<E, Long> Repository();
+    E save(E entity);
+
+    List<E> saveAll(List<E> entities);
+
+    void delete(E entity);
+
+    void deleteById(Long id);
+
+    PageResult<E> getDataPage(PageQueryUtil pageUtil);
+
+    PageResult<E> getDataPage(PageQueryUtil pageUtil, String sortField, Direction sortDirection);
+
+    JpaRepository<E, Long> Repository();
 
 
 }

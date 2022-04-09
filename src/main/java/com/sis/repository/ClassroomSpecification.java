@@ -1,6 +1,6 @@
 package com.sis.repository;
 
-import com.sis.entities.Classroom;
+import com.sis.entity.Classroom;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

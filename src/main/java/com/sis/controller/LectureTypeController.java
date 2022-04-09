@@ -1,7 +1,7 @@
 package com.sis.controller;
 
 import com.sis.dto.LectureTypeDTO;
-import com.sis.entities.LectureType;
+import com.sis.entity.LectureType;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

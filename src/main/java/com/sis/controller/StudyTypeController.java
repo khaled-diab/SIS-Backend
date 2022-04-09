@@ -1,7 +1,7 @@
 package com.sis.controller;
 
 import com.sis.dto.StudyTypeDTO;
-import com.sis.entities.StudyType;
+import com.sis.entity.StudyType;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
