@@ -79,10 +79,13 @@ public class LectureService  extends BaseServiceImp<Lecture> {
         return facultyMemberLecturesDTOS;
     }
 
-    public LectureDTO searchLecture(Date lectureDate, Course course, FacultyMember facultyMember, LocalTime lectureStartTime, LocalTime lectureEndTime)
+    public LectureDTO searchLecture(long sectionId ,Date lectureDate, Course  course, FacultyMember facultyMember,
+                                    LocalTime lectureStartTime, LocalTime lectureEndTime)
     {
 
-            ArrayList<Lecture> lectures = this.lectureRepository.findLectureByLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime(lectureDate,
+            ArrayList<Lecture> lectures = this.lectureRepository.findLectureBySectionIdAndLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime
+                    (sectionId,
+                    lectureDate,
                     course,
                     facultyMember,
                     lectureStartTime,
