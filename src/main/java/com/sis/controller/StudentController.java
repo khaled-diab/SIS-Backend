@@ -12,6 +12,7 @@ import com.sis.exception.StudentFieldNotUniqueException;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.util.MessageResponse;
+import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,12 +81,6 @@ public class StudentController extends BaseController<Student, StudentDTO> {
             throw new FileNotFoundException(filename + " was not found on the server");
         }
         Resource resource = new UrlResource(filePath.toUri());
-//        System.out.println(filePath);
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add("File-Name", filename);
-//        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
-//        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
-//                .headers(httpHeaders).body(resource);
         return new ResponseEntity<>(resource,HttpStatus.OK);
     }
     @RequestMapping(value="/addStudent", method = RequestMethod.POST)
@@ -109,14 +104,10 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @RequestMapping(value = "/updateStudent", method = RequestMethod.PUT)
     public MessageResponse updateStudent( @Valid @RequestBody StudentDTO dto) {
 
-        Student st = this.studentService.findById(dto.getId());
-
         Student studentByuniversityID=this.studentService.findByuniversityId(dto.getUniversityId());
         Student studentByNationalID=this.studentService.findByNationalId(dto.getNationalId());
         Student studentByuniversityMail=this.studentService.findByUniversityMail(dto.getUniversityMail());
         if(studentByuniversityID!=null && studentByuniversityID.getId() != dto.getId()){
-            System.out.println("dto= "+dto.getId());
-            System.out.println("entity = "+studentByuniversityID.getId());
             throw new StudentFieldNotUniqueException("universityId","University Id Already Exists");
         }
         if(studentByNationalID!=null && studentByNationalID.getId() != dto.getId()){
@@ -132,8 +123,6 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.DELETE)
     public MessageResponse delete(@PathVariable(value = "id") Long id) {
 
-        Student st=this.studentService.findById(id);
-
         this.studentService.deleteById(id);
 
         return new MessageResponse("Item has been deleted successfully");
@@ -146,8 +135,10 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO( page,limit,filterDTO);
+        PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
+        PageResult<StudentDTO> result = this.studentService.search(queryUtil, filterDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 
     @RequestMapping(

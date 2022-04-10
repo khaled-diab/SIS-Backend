@@ -9,8 +9,8 @@ public class StudentFilterDTO {
     private String filterValue;
     private String sortDirection;
     private String sortBy;
-    private long collegeId;
-    private long departmentId;
+    private Long collegeId;
+    private Long departmentId;
     private String level;
 
 }
