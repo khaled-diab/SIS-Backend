@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/lectures")
-@CrossOrigin
+@CrossOrigin()
 @AllArgsConstructor
 public class LectureController extends BaseController<Lecture, LectureDTO> {
 
