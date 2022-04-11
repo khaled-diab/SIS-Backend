@@ -1,6 +1,6 @@
-package com.sis.dao;
+package com.sis.repository;
 
-import com.sis.entities.Student;
+import com.sis.entity.Student;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -9,12 +9,12 @@ public interface StudentRepository extends BaseDao<Student> {
 
 
     @Query(value = "SELECT * FROM student s WHERE s.university_id= :id ", nativeQuery = true)
-    public Student findByUniversityId(long id);
+    Student findByUniversityId(long id);
 
     @Query(value = "SELECT * FROM student s WHERE s.nationalid= :id ", nativeQuery = true)
-    public Student findByNationalId(String id);
+    Student findByNationalId(String id);
 
     @Query(value = "SELECT * FROM student s WHERE s.university_mail= :mail ", nativeQuery = true)
-    public Student findByUniversityMail(String mail);
+    Student findByUniversityMail(String mail);
 
 }

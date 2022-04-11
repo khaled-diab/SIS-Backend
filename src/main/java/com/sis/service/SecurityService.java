@@ -1,5 +1,6 @@
 package com.sis.service;
 
+import com.sis.dao.StudentRepository;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
@@ -12,7 +13,6 @@ import com.sis.entity.security.User;
 import com.sis.exception.InvalidUserNameOrPasswordException;
 import com.sis.repository.FacultyMemberRepository;
 import com.sis.repository.RoleRepository;
-import com.sis.repository.StudentRepository;
 import com.sis.repository.UserRepository;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
