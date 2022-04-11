@@ -3,10 +3,12 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
-import com.sis.entity.AcademicTerm;
-import com.sis.entity.Course;
-import com.sis.entity.mapper.AcademicTermMapper;
-import com.sis.entity.mapper.CourseMapper;
+import com.sis.dto.section.SectionDTO;
+import com.sis.entities.AcademicTerm;
+import com.sis.entities.Course;
+import com.sis.entities.Section;
+import com.sis.entities.mapper.AcademicTermMapper;
+import com.sis.entities.mapper.CourseMapper;
 import com.sis.service.AcademicTermService;
 import com.sis.service.CourseService;
 import com.sis.util.MessageResponse;
@@ -19,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -69,7 +72,23 @@ public class CourseController extends BaseController<Course, CourseDTO> {
                 studentId);
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
     }
-}
+
+    //Abdo.Amr
+    @RequestMapping(
+            value = "/facultyMemberCourses/{courseId}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Collection<CourseDTO>> findFacultyMemberCourses(@PathVariable long courseId) {
+
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        Collection<CourseDTO> courseDTOS = this.courseService.findFacultyMemberCourses(
+                academicTermDTO.getAcademicYearDTO().getId(),
+                academicTermDTO.getId(),
+                courseId);
+        return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
+        }
+     }
 
 
 

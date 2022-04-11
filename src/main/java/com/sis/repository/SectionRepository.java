@@ -1,11 +1,9 @@
-package com.sis.repository;
+package com.sis.dao;
 
-import com.sis.entity.College;
-import com.sis.entity.Department;
-import com.sis.entity.Section;
+import com.sis.entities.Section;
 
 public interface SectionRepository extends BaseDao<Section> {
 
-    Section findSectionBySectionNumberAndCollegeAndDepartment(
-            String sectionNumber, College college, Department department);
+    Section findSectionBySectionNumberAndCollegeIdAndDepartmentId(
+            String sectionNumber, long college, long department);
 }

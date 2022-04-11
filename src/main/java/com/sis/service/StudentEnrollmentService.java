@@ -1,14 +1,13 @@
 package com.sis.service;
 
+import com.sis.dao.StudentEnrollmentRepository;
+import com.sis.dao.specification.StudentEnrollmentSpecification;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
-import com.sis.entity.*;
-import com.sis.entity.mapper.CourseMapper;
-import com.sis.entity.mapper.SectionMapper;
-import com.sis.entity.mapper.StudentEnrollmentMapper;
-import com.sis.repository.StudentEnrollmentRepository;
-import com.sis.repository.specification.StudentEnrollmentSpecification;
+import com.sis.entities.*;
+import com.sis.entities.mapper.CourseMapper;
+import com.sis.entities.mapper.StudentEnrollmentMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -29,10 +28,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
     private final StudentEnrollmentRepository studentEnrollmentRepository;
     private final StudentEnrollmentMapper studentEnrollmentMapper;
 
-
-    private SectionMapper sectionMapper;
     private CourseMapper courseMapper;
-
 
     @Override
     public JpaRepository<StudentEnrollment, Long> Repository() {
@@ -85,13 +81,13 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return Sort.by(Sort.Direction.valueOf(studentEnrollmentRequestDTO.getSortDirection()), studentEnrollmentRequestDTO.getSortBy());
     }
 
-    public int countBySection(Section section) {
-        return this.studentEnrollmentRepository.countAllBySection(section);
+    public int countBySection(long sectionId) {
+        return this.studentEnrollmentRepository.countAllBySectionId(sectionId);
     }
 
     //Abdo.Amr
-    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, Student student) {
-        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentByAcademicYearAndAcademicTermAndStudent(academicYear, academicTerm, student);
+    public Collection<Section> findStudentSections(AcademicYear academicYear, AcademicTerm academicTerm, long studentId) {
+        Collection<StudentEnrollment> studentEnrollments = this.studentEnrollmentRepository.findStudentEnrollmentByAcademicYearAndAcademicTermAndStudentId(academicYear, academicTerm, studentId);
         ArrayList<Section> sections = new ArrayList<>();
         for (StudentEnrollment studentEnrollment : studentEnrollments) {
             if (studentEnrollment.getSection() != null) {
