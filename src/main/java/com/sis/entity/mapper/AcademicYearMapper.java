@@ -39,14 +39,14 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
     }
 
     @Override
-    public ArrayList<AcademicYear> toEntities(Collection<AcademicYearDTO> academicYearDTOS) {
+    public ArrayList<AcademicYear> toentity(Collection<AcademicYearDTO> academicYearDTOS) {
         return academicYearDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AcademicYear>::new));
     }
 
     @Override
-    public PageResult<AcademicYearDTO> toDataPage(PageResult<AcademicYear> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity ->
-                toDTO(entity)).collect(toCollection(ArrayList<AcademicYearDTO>::new))
-                , entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<AcademicYearDTO> toDataPage(PageResult<AcademicYear> entity) {
+        return new PageResult<>(entity.getData().stream().map(academicYear ->
+                toDTO(academicYear)).collect(toCollection(ArrayList<AcademicYearDTO>::new))
+                , entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 }

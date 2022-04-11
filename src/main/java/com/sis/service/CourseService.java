@@ -1,13 +1,12 @@
 package com.sis.service;
 
-import com.sis.dao.CourseRepository;
-import com.sis.dao.specification.CourseSpecification;
+
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
-import com.sis.dto.section.SectionDTO;
-import com.sis.entities.Course;
-import com.sis.entities.Section;
-import com.sis.entities.mapper.CourseMapper;
+import com.sis.entity.Course;
+import com.sis.entity.mapper.CourseMapper;
+import com.sis.repository.CourseRepository;
+import com.sis.repository.specification.CourseSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 @Service

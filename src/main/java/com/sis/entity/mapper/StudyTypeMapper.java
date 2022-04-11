@@ -16,20 +16,23 @@ import static java.util.stream.Collectors.toCollection;
 public class StudyTypeMapper implements Mapper<StudyType, StudyTypeDTO> {
 
 	@Override
-	public ArrayList<StudyTypeDTO> toDTOs(Collection<StudyType> entities) {
-		return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<StudyTypeDTO>::new));
+	public ArrayList<StudyTypeDTO> toDTOs(Collection<StudyType> entity) {
+		return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<StudyTypeDTO>::new));
 	}
+
 	@Override
-	public PageResult<StudyTypeDTO> toDataPage(PageResult<StudyType> entities) {
-		return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<StudyTypeDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+	public PageResult<StudyTypeDTO> toDataPage(PageResult<StudyType> entity) {
+		return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<StudyTypeDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
 	}
+
 	@Override
-	public ArrayList<StudyType> toEntities(Collection<StudyTypeDTO> dtos) {
+	public ArrayList<StudyType> toentity(Collection<StudyTypeDTO> dtos) {
 		return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<StudyType>::new));
 	}
+
 	@Override
 	public StudyTypeDTO toDTO(StudyType entity) {
-		StudyTypeDTO dto=new StudyTypeDTO();
+		StudyTypeDTO dto = new StudyTypeDTO();
 		dto.setId(entity.getId());
 		dto.setNameAr(entity.getNameAr());
 		dto.setNameEn(entity.getNameEn());

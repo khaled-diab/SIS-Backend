@@ -70,12 +70,12 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
     }
 
     @Override
-    public ArrayList<AttendanceDetails> toEntities(Collection<AttendanceDetailsDTO> attendanceDetailsDTOS) {
+    public ArrayList<AttendanceDetails> toentity(Collection<AttendanceDetailsDTO> attendanceDetailsDTOS) {
         return attendanceDetailsDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AttendanceDetails>::new));
     }
 
     @Override
-    public PageResult<AttendanceDetailsDTO> toDataPage(PageResult<AttendanceDetails> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<AttendanceDetailsDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<AttendanceDetailsDTO> toDataPage(PageResult<AttendanceDetails> pageResult) {
+        return new PageResult<>(pageResult.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<AttendanceDetailsDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
     }
 }

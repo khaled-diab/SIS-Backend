@@ -13,18 +13,18 @@ import static java.util.stream.Collectors.toCollection;
 @Component
 public class UserMapper implements Mapper<User, UserDto> {
 	@Override
-	public ArrayList<UserDto> toDTOs(final Collection<User> entities) {
-		return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<UserDto>::new));
+	public ArrayList<UserDto> toDTOs(final Collection<User> entity) {
+		return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<UserDto>::new));
 	}
 
 	@Override
-	public PageResult<UserDto> toDataPage(PageResult<User> entities) {
-		return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<UserDto>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+	public PageResult<UserDto> toDataPage(PageResult<User> entity) {
+		return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<UserDto>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
 
 	}
 
 	@Override
-	public ArrayList<User> toEntities(Collection<UserDto> dtoCollection) {
+	public ArrayList<User> toentity(Collection<UserDto> dtoCollection) {
 		return dtoCollection.stream().map(this::toEntity).collect(toCollection(ArrayList<User>::new));
 	}
 
@@ -53,7 +53,8 @@ public class UserMapper implements Mapper<User, UserDto> {
 		entity.setFirstname(dto.getFirstname());
 		entity.setLastname(dto.getLastname());
 		entity.setEmail(dto.getEmail());
+		entity.setPassword(dto.getPassword());
 		return entity;
 	}
-	
+
 }

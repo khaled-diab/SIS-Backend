@@ -7,22 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
-public interface LectureRepository extends BaseDao<Lecture> {
-    @Query(value = "SELECT lecture_id FROM section_lecture WHERE  section_id= :sectionId  ", nativeQuery = true)
-    Collection<Long> findLecturesBySections(long sectionId);
+public interface LectureRepository extends Baserepository<Lecture> {
 
-
-    @Query(value = "SELECT lecture_id FROM section_lecture WHERE section_id =:sectionId", nativeQuery = true)
+    @Query(value = "SELECT id FROM lecture WHERE section_id =:sectionId", nativeQuery = true)
     ArrayList<Long> findFacultyMemberLectures(long sectionId);
 
-    ArrayList<Lecture> findLectureByLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime(Date lectureDate,
-                                                                                                                 Course course,
-                                                                                                                 FacultyMember facultyMember,
-                                                                                                                 LocalTime lectureStartTime,
-                                                                                                                 LocalTime lectureEndTime);
+    ArrayList<Lecture> findLectureBySectionIdAndLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime(long SectionId, Date lectureDate,
+                                                                                                                             Course course,
+                                                                                                                             FacultyMember facultyMember,
+                                                                                                                             LocalTime lectureStartTime,
+                                                                                                                             LocalTime lectureEndTime);
 
 
 }

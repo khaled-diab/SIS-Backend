@@ -58,13 +58,13 @@ public class AcademicProgramMapper implements Mapper<AcademicProgram,AcademicPro
     }
 
     @Override
-    public ArrayList<AcademicProgram> toEntities(Collection<AcademicProgramDTO> academicProgramDTOS ) {
+    public ArrayList<AcademicProgram> toentity(Collection<AcademicProgramDTO> academicProgramDTOS) {
         return academicProgramDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AcademicProgram>::new));
     }
 
     @Override
-    public PageResult<AcademicProgramDTO> toDataPage(PageResult<AcademicProgram> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<AcademicProgramDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<AcademicProgramDTO> toDataPage(PageResult<AcademicProgram> pageResult) {
+        return new PageResult<>(pageResult.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<AcademicProgramDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
 
     }
 

@@ -27,17 +27,17 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
     private ClassroomMapper classroomMapper;
 
     @Override
-    public ArrayList<TimetableDTO> toDTOs(Collection<Timetable> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<TimetableDTO>::new));
+    public ArrayList<TimetableDTO> toDTOs(Collection<Timetable> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<TimetableDTO>::new));
     }
 
     @Override
-    public PageResult<TimetableDTO> toDataPage(PageResult<Timetable> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<TimetableDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<TimetableDTO> toDataPage(PageResult<Timetable> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<TimetableDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<Timetable> toEntities(Collection<TimetableDTO> dtos) {
+    public ArrayList<Timetable> toentity(Collection<TimetableDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Timetable>::new));
     }
 

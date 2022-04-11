@@ -3,12 +3,10 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
-import com.sis.dto.section.SectionDTO;
-import com.sis.entities.AcademicTerm;
-import com.sis.entities.Course;
-import com.sis.entities.Section;
-import com.sis.entities.mapper.AcademicTermMapper;
-import com.sis.entities.mapper.CourseMapper;
+import com.sis.entity.AcademicTerm;
+import com.sis.entity.Course;
+import com.sis.entity.mapper.AcademicTermMapper;
+import com.sis.entity.mapper.CourseMapper;
 import com.sis.service.AcademicTermService;
 import com.sis.service.CourseService;
 import com.sis.util.MessageResponse;
@@ -21,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Collection;
 
 

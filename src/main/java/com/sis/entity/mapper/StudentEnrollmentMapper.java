@@ -26,17 +26,17 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
     private StudyTypeMapper studyTypeMapper;
 
     @Override
-    public ArrayList<StudentEnrollmentDTO> toDTOs(Collection<StudentEnrollment> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<StudentEnrollmentDTO>::new));
+    public ArrayList<StudentEnrollmentDTO> toDTOs(Collection<StudentEnrollment> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<StudentEnrollmentDTO>::new));
     }
 
     @Override
-    public PageResult<StudentEnrollmentDTO> toDataPage(PageResult<StudentEnrollment> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<StudentEnrollmentDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<StudentEnrollmentDTO> toDataPage(PageResult<StudentEnrollment> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<StudentEnrollmentDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<StudentEnrollment> toEntities(Collection<StudentEnrollmentDTO> dtos) {
+    public ArrayList<StudentEnrollment> toentity(Collection<StudentEnrollmentDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<StudentEnrollment>::new));
     }
 

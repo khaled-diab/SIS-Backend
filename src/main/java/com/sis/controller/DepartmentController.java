@@ -3,7 +3,7 @@ package com.sis.controller;
 import com.sis.dto.DepartmentDTO;
 import com.sis.entity.Department;
 import com.sis.entity.mapper.DepartmentMapper;
-import com.sis.repository.DepartmentDao;
+import com.sis.repository.Departmentrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +14,6 @@ public class DepartmentController extends BaseController<Department, DepartmentD
     @Autowired
     private DepartmentMapper departmentMapper;
     @Autowired
-    private DepartmentDao departmentDao;
+    private Departmentrepository departmentrepository;
 
 }

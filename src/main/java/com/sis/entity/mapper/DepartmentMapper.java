@@ -64,13 +64,13 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
     }
 
     @Override
-    public ArrayList<Department> toEntities(Collection<DepartmentDTO> departmentDTOS) {
+    public ArrayList<Department> toentity(Collection<DepartmentDTO> departmentDTOS) {
         return departmentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Department>::new));
     }
 
     @Override
-    public PageResult<DepartmentDTO> toDataPage(PageResult<Department> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<DepartmentDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<DepartmentDTO> toDataPage(PageResult<Department> pageResult) {
+        return new PageResult<>(pageResult.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<DepartmentDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
 
     }
 

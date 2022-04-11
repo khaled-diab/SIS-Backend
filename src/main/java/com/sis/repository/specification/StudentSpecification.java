@@ -1,21 +1,21 @@
-package com.sis.dao.specification;
+package com.sis.repository.specification;
 
-import com.sis.entities.College;
-import com.sis.entities.Department;
-import com.sis.entities.Student;
+import com.sis.entity.College;
+import com.sis.entity.Department;
+import com.sis.entity.Student;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 
 public class StudentSpecification implements Specification<Student> {
 
-    private String searchValue;
+    private final String searchValue;
 
-    private Long filterCollege;
+    private final Long filterCollege;
 
-    private Long filterDepartment;
+    private final Long filterDepartment;
 
-    private String filterLevel;
+    private final String filterLevel;
 
     public StudentSpecification(String searchValue, Long filterCollege, Long filterDepartment, String filterLevel) {
         this.searchValue = searchValue;

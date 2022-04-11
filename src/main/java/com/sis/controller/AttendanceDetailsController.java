@@ -2,15 +2,15 @@ package com.sis.controller;
 
 
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
-
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.entities.AttendanceDetails;
-import com.sis.entities.Lecture;
-import com.sis.entities.mapper.*;
+import com.sis.entity.AttendanceDetails;
+import com.sis.entity.Lecture;
+import com.sis.entity.mapper.AttendanceDetailsMapper;
+import com.sis.entity.mapper.LectureMapper;
 import com.sis.exception.ItemNotFoundException;
-import com.sis.service.*;
+import com.sis.service.AttendanceDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +71,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @RequestMapping(value = "/addManualAttendance", method = RequestMethod.POST)
     public ResponseEntity<Collection<AttendanceDetailsDTO>> addManualAttendance(@RequestBody ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs) {
 
-        List<AttendanceDetails> returnedAttendanceDetails = this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
+        List<AttendanceDetails> returnedAttendanceDetails = this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toentity(attendanceDetailsDTOs));
 
         return new ResponseEntity<>(this.attendanceDetailsMapper.toDTOs(returnedAttendanceDetails), HttpStatus.OK);
     }

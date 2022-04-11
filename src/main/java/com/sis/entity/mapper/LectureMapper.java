@@ -87,12 +87,12 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
     }
 
     @Override
-    public ArrayList<Lecture> toEntities(Collection<LectureDTO> lectureDTOS) {
+    public ArrayList<Lecture> toentity(Collection<LectureDTO> lectureDTOS) {
         return lectureDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Lecture>::new));
     }
 
     @Override
-    public PageResult<LectureDTO> toDataPage(PageResult<Lecture> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<LectureDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<LectureDTO> toDataPage(PageResult<Lecture> pageResult) {
+        return new PageResult<>(pageResult.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<LectureDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
     }
 }

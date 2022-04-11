@@ -20,8 +20,8 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
 
     @Override
     public List<E> findAll() {
-        List<E> entities = Repository().findAll();
-        return entities;
+        List<E> entity = Repository().findAll();
+        return entity;
     }
 
     @Override
@@ -35,10 +35,11 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
     public E save(E entity) {
         return Repository().save(entity);
     }
+
     @Override
     @Transactional(readOnly = false)
-    public List<E> saveAll(List<E> entities) {
-        return Repository().saveAll(entities);
+    public List<E> saveAll(List<E> entity) {
+        return Repository().saveAll(entity);
     }
 
     @Override
