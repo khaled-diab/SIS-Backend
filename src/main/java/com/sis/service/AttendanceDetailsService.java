@@ -51,8 +51,8 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         return  attendanceReportDTO;
     }
 
-    public ArrayList<AttendanceDetailsDTO> getAttendanceDetailsByLecture(Lecture lecture){
-        ArrayList<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.findAttendanceDetailsByLecture(lecture);
+    public ArrayList<AttendanceDetailsDTO> getAttendanceDetailsByLecture(long lectureId){
+        ArrayList<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.findAttendanceDetailsByLectureId(lectureId);
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs = new ArrayList<>();
         if(attendanceDetails!= null){
             attendanceDetailsDTOs=  this.attendanceDetailsMapper.toDTOs(attendanceDetails);

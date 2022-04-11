@@ -12,14 +12,15 @@ import com.sis.exception.StudentFieldNotUniqueException;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.util.MessageResponse;
+import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
@@ -38,15 +39,14 @@ import java.util.Objects;
 
 import static java.nio.file.Files.copy;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/students")
 @AllArgsConstructor
 @CrossOrigin(origins = ("*"))
-
 public class StudentController extends BaseController<Student, StudentDTO> {
+
 
     //Autowired
     private final StudentService studentService;
@@ -61,7 +61,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     private AcademicTermMapper academicTermMapper;
 
     public static final String DIRECTORY =
-            System.getProperty("user.home") + "/Resourcess/StudentImages/";
+            System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
+
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
         List<String> filenames = new ArrayList<>();
@@ -80,11 +81,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
             throw new FileNotFoundException(filename + " was not found on the server");
         }
         Resource resource = new UrlResource(filePath.toUri());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("File-Name", filename);
-        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
-                .headers(httpHeaders).body(resource);
+        return new ResponseEntity<>(resource,HttpStatus.OK);
     }
     @RequestMapping(value="/addStudent", method = RequestMethod.POST)
     public MessageResponse createStudent(@Valid @RequestBody  StudentDTO dto) {
@@ -107,14 +104,10 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @RequestMapping(value = "/updateStudent", method = RequestMethod.PUT)
     public MessageResponse updateStudent( @Valid @RequestBody StudentDTO dto) {
 
-        Student st = this.studentService.findById(dto.getId());
-
         Student studentByuniversityID=this.studentService.findByuniversityId(dto.getUniversityId());
         Student studentByNationalID=this.studentService.findByNationalId(dto.getNationalId());
         Student studentByuniversityMail=this.studentService.findByUniversityMail(dto.getUniversityMail());
         if(studentByuniversityID!=null && studentByuniversityID.getId() != dto.getId()){
-            System.out.println("dto= "+dto.getId());
-            System.out.println("entity = "+studentByuniversityID.getId());
             throw new StudentFieldNotUniqueException("universityId","University Id Already Exists");
         }
         if(studentByNationalID!=null && studentByNationalID.getId() != dto.getId()){
@@ -130,8 +123,6 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.DELETE)
     public MessageResponse delete(@PathVariable(value = "id") Long id) {
 
-        Student st=this.studentService.findById(id);
-
         this.studentService.deleteById(id);
 
         return new MessageResponse("Item has been deleted successfully");
@@ -144,8 +135,10 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
-        PageResult<StudentDTO> result=this.studentService.searchStudentsDTO(filterDTO.getFilterValue(),filterDTO.getCollegeId(), filterDTO.getDepartmentId(), page,limit,filterDTO);
-        return new ResponseEntity<PageResult<StudentDTO>>(result, HttpStatus.OK);
+        PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
+        PageResult<StudentDTO> result = this.studentService.search(queryUtil, filterDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 
     @RequestMapping(
