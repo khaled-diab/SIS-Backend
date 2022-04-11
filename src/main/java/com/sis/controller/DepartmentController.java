@@ -7,6 +7,7 @@ import com.sis.entities.mapper.DepartmentMapper;
 import com.sis.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/departments")
+@CrossOrigin("")
 public class DepartmentController extends BaseController<Department, DepartmentDTO>{
     @Autowired
     private DepartmentMapper departmentMapper;
