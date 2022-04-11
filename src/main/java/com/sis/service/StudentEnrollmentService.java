@@ -1,13 +1,17 @@
 package com.sis.service;
 
-import com.sis.dao.StudentEnrollmentRepository;
-import com.sis.dao.specification.StudentEnrollmentSpecification;
+
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
-import com.sis.entities.*;
-import com.sis.entities.mapper.CourseMapper;
-import com.sis.entities.mapper.StudentEnrollmentMapper;
+import com.sis.entity.AcademicTerm;
+import com.sis.entity.AcademicYear;
+import com.sis.entity.Section;
+import com.sis.entity.StudentEnrollment;
+import com.sis.entity.mapper.CourseMapper;
+import com.sis.entity.mapper.StudentEnrollmentMapper;
+import com.sis.repository.StudentEnrollmentRepository;
+import com.sis.repository.specification.StudentEnrollmentSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;

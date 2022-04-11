@@ -18,20 +18,23 @@ public class DegreeMapper implements Mapper<Degree, DegreeDTO> {
 //	private FacultyMemberMapper facultyMemberMapper;
 
 	@Override
-	public ArrayList<DegreeDTO> toDTOs(Collection<Degree> entities) {
-		return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<DegreeDTO>::new));
+	public ArrayList<DegreeDTO> toDTOs(Collection<Degree> entity) {
+		return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<DegreeDTO>::new));
 	}
+
 	@Override
-	public PageResult<DegreeDTO> toDataPage(PageResult<Degree> entities) {
-		return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<DegreeDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+	public PageResult<DegreeDTO> toDataPage(PageResult<Degree> entity) {
+		return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<DegreeDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
 	}
+
 	@Override
-	public ArrayList<Degree> toEntities(Collection<DegreeDTO> dtos) {
+	public ArrayList<Degree> toentity(Collection<DegreeDTO> dtos) {
 		return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Degree>::new));
 	}
+
 	@Override
 	public DegreeDTO toDTO(Degree entity) {
-		DegreeDTO dto=new DegreeDTO();
+		DegreeDTO dto = new DegreeDTO();
 		dto.setId(entity.getId());
 		dto.setNameAr(entity.getNameAr());
 		dto.setNameEn(entity.getNameEn());

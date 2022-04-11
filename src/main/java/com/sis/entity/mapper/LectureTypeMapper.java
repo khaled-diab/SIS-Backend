@@ -16,17 +16,17 @@ import static java.util.stream.Collectors.toCollection;
 public class LectureTypeMapper implements Mapper<LectureType, LectureTypeDTO> {
 
     @Override
-    public ArrayList<LectureTypeDTO> toDTOs(Collection<LectureType> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<LectureTypeDTO>::new));
+    public ArrayList<LectureTypeDTO> toDTOs(Collection<LectureType> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<LectureTypeDTO>::new));
     }
 
     @Override
-    public PageResult<LectureTypeDTO> toDataPage(PageResult<LectureType> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<LectureTypeDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<LectureTypeDTO> toDataPage(PageResult<LectureType> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<LectureTypeDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<LectureType> toEntities(Collection<LectureTypeDTO> dtos) {
+    public ArrayList<LectureType> toentity(Collection<LectureTypeDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<LectureType>::new));
     }
 

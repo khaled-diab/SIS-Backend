@@ -1,12 +1,12 @@
 package com.sis.service;
 
-import com.sis.dao.SectionRepository;
-import com.sis.dao.specification.SectionSpecification;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
 import com.sis.dto.section.Section_Course;
-import com.sis.entities.*;
-import com.sis.entities.mapper.SectionMapper;
+import com.sis.entity.*;
+import com.sis.entity.mapper.SectionMapper;
+import com.sis.repository.SectionRepository;
+import com.sis.repository.specification.SectionSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;

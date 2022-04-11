@@ -2,23 +2,25 @@ package com.sis.service;
 
 
 import com.sis.entity.AcademicTerm;
-import com.sis.repository.AcademicTermDao;
+import com.sis.repository.AcademicTermrepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AcademicTermService extends BaseServiceImp<AcademicTerm> {
-    private final AcademicTermDao academicTermRepository;
-    public AcademicTermService(AcademicTermDao academicTermRepository){
-        this.academicTermRepository = academicTermRepository ;
+    private final AcademicTermrepository academicTermRepository;
+
+    public AcademicTermService(AcademicTermrepository academicTermRepository) {
+        this.academicTermRepository = academicTermRepository;
     }
+
     @Override
     public JpaRepository<AcademicTerm, Long> Repository() {
-        return  academicTermRepository ;
+        return academicTermRepository;
     }
 
     //Abdo.Amr
-    public AcademicTerm getCurrentAcademicTerm(){
+    public AcademicTerm getCurrentAcademicTerm() {
         return this.academicTermRepository.getCurrentAcademicTerm();
     }
 }

@@ -5,7 +5,6 @@ import com.sis.dto.attendanceReport.AttendanceReportDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.entity.AttendanceDetails;
-import com.sis.entity.Lecture;
 import com.sis.entity.mapper.AttendanceDetailsMapper;
 import com.sis.repository.AttendanceDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +78,7 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
                     .build();
             attendanceDetailsDTOs.add(attendanceDetailsDTO);
         }
-        this.attendanceDetailsRepository.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
+        this.attendanceDetailsRepository.saveAll(this.attendanceDetailsMapper.toentity(attendanceDetailsDTOs));
     }
 
 

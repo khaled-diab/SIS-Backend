@@ -24,17 +24,17 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
     private StudyTypeMapper studyTypeMapper;
 
     @Override
-    public ArrayList<SectionDTO> toDTOs(Collection<Section> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<SectionDTO>::new));
+    public ArrayList<SectionDTO> toDTOs(Collection<Section> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<SectionDTO>::new));
     }
 
     @Override
-    public PageResult<SectionDTO> toDataPage(PageResult<Section> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<SectionDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<SectionDTO> toDataPage(PageResult<Section> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<SectionDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<Section> toEntities(Collection<SectionDTO> dtos) {
+    public ArrayList<Section> toentity(Collection<SectionDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Section>::new));
     }
 

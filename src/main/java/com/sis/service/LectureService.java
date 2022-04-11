@@ -2,6 +2,7 @@ package com.sis.service;
 
 import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
+import com.sis.entity.AttendanceDetails;
 import com.sis.entity.Course;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.Lecture;

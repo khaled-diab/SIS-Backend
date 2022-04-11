@@ -19,17 +19,17 @@ public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
     private final DepartmentMapper departmentMapper;
 
     @Override
-    public ArrayList<ClassroomDTO> toDTOs(Collection<Classroom> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<ClassroomDTO>::new));
+    public ArrayList<ClassroomDTO> toDTOs(Collection<Classroom> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<ClassroomDTO>::new));
     }
 
     @Override
-    public PageResult<ClassroomDTO> toDataPage(PageResult<Classroom> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<ClassroomDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<ClassroomDTO> toDataPage(PageResult<Classroom> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<ClassroomDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<Classroom> toEntities(Collection<ClassroomDTO> dtos) {
+    public ArrayList<Classroom> toentity(Collection<ClassroomDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Classroom>::new));
     }
 

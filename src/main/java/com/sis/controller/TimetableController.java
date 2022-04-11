@@ -3,11 +3,11 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
-import com.sis.entities.AcademicTerm;
-import com.sis.entities.Student;
-import com.sis.entities.Timetable;
-import com.sis.entities.mapper.AcademicTermMapper;
-import com.sis.entities.mapper.TimetableMapper;
+import com.sis.entity.AcademicTerm;
+import com.sis.entity.Student;
+import com.sis.entity.Timetable;
+import com.sis.entity.mapper.AcademicTermMapper;
+import com.sis.entity.mapper.TimetableMapper;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.service.TimetableService;
@@ -56,7 +56,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
 
     @RequestMapping(value = "/saveAll", method = RequestMethod.PUT)
     public MessageResponse saveAll(@RequestBody @Valid List<TimetableDTO> dtos) {
-        timetableService.saveAllTimetable(timetableMapper.toEntities(dtos));
+        timetableService.saveAllTimetable(timetableMapper.toentity(dtos));
         return new MessageResponse("Item has been updated successfully");
     }
 

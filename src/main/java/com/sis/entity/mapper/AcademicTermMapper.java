@@ -51,14 +51,14 @@ public class AcademicTermMapper implements Mapper<AcademicTerm, AcademicTermDTO>
     }
 
     @Override
-    public ArrayList<AcademicTerm> toEntities(Collection<AcademicTermDTO> academicTermDTOS) {
+    public ArrayList<AcademicTerm> toentity(Collection<AcademicTermDTO> academicTermDTOS) {
         return academicTermDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AcademicTerm>::new));
     }
 
     @Override
-    public PageResult<AcademicTermDTO> toDataPage(PageResult<AcademicTerm> entities) {
-        return new PageResult<>(entities.getData().stream().map(entity ->
-                toDTO(entity)).collect(toCollection(ArrayList<AcademicTermDTO>::new))
-                , entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<AcademicTermDTO> toDataPage(PageResult<AcademicTerm> entity) {
+        return new PageResult<>(entity.getData().stream().map(academicTerm ->
+                toDTO(academicTerm)).collect(toCollection(ArrayList<AcademicTermDTO>::new))
+                , entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 }

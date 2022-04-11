@@ -20,17 +20,17 @@ public class MajorMapper implements Mapper<Major, MajorDTO> {
     private DepartmentMapper departmentMapper;
 
     @Override
-    public ArrayList<MajorDTO> toDTOs(Collection<Major> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<MajorDTO>::new));
+    public ArrayList<MajorDTO> toDTOs(Collection<Major> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<MajorDTO>::new));
     }
 
     @Override
-    public PageResult<MajorDTO> toDataPage(PageResult<Major> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<MajorDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<MajorDTO> toDataPage(PageResult<Major> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<MajorDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<Major> toEntities(Collection<MajorDTO> dtos) {
+    public ArrayList<Major> toentity(Collection<MajorDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Major>::new));
     }
 

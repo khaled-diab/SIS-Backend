@@ -25,17 +25,17 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
     private UserMapper userMapper;
 
     @Override
-    public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entities) {
-        return entities.stream().map(this::toDTO).collect(toCollection(ArrayList<FacultyMemberDTO>::new));
+    public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entity) {
+        return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<FacultyMemberDTO>::new));
     }
 
     @Override
-    public PageResult<FacultyMemberDTO> toDataPage(PageResult<FacultyMember> entities) {
-        return new PageResult<>(entities.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<FacultyMemberDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
+    public PageResult<FacultyMemberDTO> toDataPage(PageResult<FacultyMember> entity) {
+        return new PageResult<>(entity.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<FacultyMemberDTO>::new)), entity.getTotalCount(), entity.getPageSize(), entity.getCurrPage());
     }
 
     @Override
-    public ArrayList<FacultyMember> toEntities(Collection<FacultyMemberDTO> dtos) {
+    public ArrayList<FacultyMember> toentity(Collection<FacultyMemberDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<FacultyMember>::new));
     }
 

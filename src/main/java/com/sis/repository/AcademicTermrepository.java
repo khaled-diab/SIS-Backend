@@ -3,7 +3,7 @@ package com.sis.repository;
 import com.sis.entity.AcademicTerm;
 import org.springframework.data.jpa.repository.Query;
 
-public interface AcademicTermDao extends BaseDao<AcademicTerm>{
+public interface AcademicTermrepository extends Baserepository<AcademicTerm> {
 
 
     //Abdo.Amr
