@@ -9,17 +9,19 @@ import com.sis.dto.lecture.LectureDTO;
 import com.sis.entities.AttendanceDetails;
 import com.sis.entities.Lecture;
 import com.sis.entities.mapper.*;
+import com.sis.exception.ItemNotFoundException;
 import com.sis.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("/api/attendanceDetails")
 public class AttendanceDetailsController extends BaseController<AttendanceDetails, AttendanceDetailsDTO> {
 
@@ -33,55 +35,78 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @Autowired
     private LectureMapper lectureMapper;
 
+    // by abdo ramadan
+    @RequestMapping(value = "/updateReport", method = RequestMethod.PUT)
+    public ResponseEntity<AttendanceDetailsDTO> update(@RequestBody AttendanceDetailsDTO attendanceDetailsDTO) {
+        AttendanceDetails attendanceDetails = attendanceDetailsMapper.toEntity(attendanceDetailsDTO);
+        if (attendanceDetails != null) {
+            attendanceDetailsService.save(attendanceDetails);
+            return new ResponseEntity<>(attendanceDetailsDTO, HttpStatus.OK);
+        } else {
+            throw new ItemNotFoundException(attendanceDetailsDTO.getId());
+        }
+    }
 
-    @RequestMapping(value="/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
-    public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode , @RequestBody StudentLecture studentLecture){
+    @RequestMapping(value = "/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
+    public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode, @RequestBody StudentLecture studentLecture) {
 
-        long studentId =studentLecture.getStudentId();
-        LectureDTO lectureDTO =studentLecture.getLectureDTO();
+        long studentId = studentLecture.getStudentId();
+        LectureDTO lectureDTO = studentLecture.getLectureDTO();
         Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
-        AttendanceDetailsDTO attendanceDetailsDTO2=null;
+        AttendanceDetailsDTO attendanceDetailsDTO2 = null;
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture.getId());
-        for(AttendanceDetailsDTO attendanceDetailsDTO :attendanceDetailsDTOS){
-            if(attendanceDetailsDTO.getStudentDTO().getId() == studentId){
+        for (AttendanceDetailsDTO attendanceDetailsDTO : attendanceDetailsDTOS) {
+            if (attendanceDetailsDTO.getStudentDTO().getId() == studentId) {
                 if ((lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceStatus())) {
                     attendanceDetailsDTO.setAttendanceStatus("Present");
                     this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
-                    attendanceDetailsDTO2= attendanceDetailsDTO;
+                    attendanceDetailsDTO2 = attendanceDetailsDTO;
                     break;
                 }
             }
         }
-        return new ResponseEntity<>(attendanceDetailsDTO2,HttpStatus.OK);
+        return new ResponseEntity<>(attendanceDetailsDTO2, HttpStatus.OK);
     }
-    @RequestMapping(value="/addManualAttendance", method = RequestMethod.POST)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> addManualAttendance(@RequestBody ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs){
 
-        List<AttendanceDetails> returnedAttendanceDetails =  this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
+    @RequestMapping(value = "/addManualAttendance", method = RequestMethod.POST)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>> addManualAttendance(@RequestBody ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs) {
 
-        return new ResponseEntity<>(this.attendanceDetailsMapper.toDTOs(returnedAttendanceDetails),HttpStatus.OK);
-        }
+        List<AttendanceDetails> returnedAttendanceDetails = this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
 
-    @RequestMapping(value="/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance( @PathVariable long studentId, @PathVariable long courseId){
-
-        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.findStudentAttendances(studentId,courseId);
-        return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
+        return new ResponseEntity<>(this.attendanceDetailsMapper.toDTOs(returnedAttendanceDetails), HttpStatus.OK);
     }
-    @RequestMapping(value="/getAttendancesByLecture/{lectureId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendancesByLecture( @PathVariable long lectureId){
 
+    @RequestMapping(value = "/getAttendance/{studentId}/{courseId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendance(@PathVariable long studentId, @PathVariable long courseId) {
+
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.findStudentAttendances(studentId, courseId);
+        return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAttendancesByLecture/{lectureId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendancesByLecture(@PathVariable long lectureId) {
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lectureId);
-        return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
+        return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
     }
+
+//    // this function is written by abdo ramadan
+//    @RequestMapping(value="/getAttendancesByLectureId/{lectureId}", method = RequestMethod.GET)
+//    public ResponseEntity<Collection<AttendanceDetailsDTO>>
+//    getAttendancesByLecture( @PathVariable Long lectureId){
+//        Lecture lecture = lectureService.findById(lectureId);
+//        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS =
+//                this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture);
+//        return new ResponseEntity<>(attendanceDetailsDTOS,HttpStatus.OK);
+//    }
+
     // this function is written by Abdo Ramadan
-    @RequestMapping(value="/getAttendanceByLecture/{lectureId}"
+    @RequestMapping(value = "/getAttendanceByLecture/{lectureId}"
             , method = RequestMethod.GET)
     public ResponseEntity<AttendanceReportDTO>
-    getAttendanceByLecture( @PathVariable long lectureId){
+    getAttendanceByLecture(@PathVariable long lectureId) {
         AttendanceReportDTO attendanceReportDTOS =
                 this.attendanceDetailsService.findAttendanceReportDTOByLecture(lectureId);
-        return new ResponseEntity<>(attendanceReportDTOS,HttpStatus.OK);
+        return new ResponseEntity<>(attendanceReportDTOS, HttpStatus.OK);
     }
 
 }

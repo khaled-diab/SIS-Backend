@@ -30,13 +30,14 @@ public class CourseService extends BaseServiceImp<Course> {
     private CourseMapper courseMapper;
     StudentEnrollmentService studentEnrollmentService;
 
+    @Autowired
+    private TimetableService timetableService;
+
     @Override
     public JpaRepository<Course, Long> Repository() {
         return courseRepository;
     }
 
-    @Autowired
-    private TimetableService timetableService;
 
 
     public PageResult<CourseDTO> search(PageQueryUtil pageUtil, CourseRequestDTO courseRequestDTO) {
