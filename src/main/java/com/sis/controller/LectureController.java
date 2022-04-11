@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/lectures")
-@CrossOrigin
+@CrossOrigin()
 @AllArgsConstructor
 public class LectureController extends BaseController<Lecture, LectureDTO> {
 
@@ -40,14 +40,15 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     private AcademicYearMapper academicYearMapper;
 
     private AttendanceDetailsService attendanceDetailsService;
+
     private CourseMapper courseMapper;
     private FacultyMemberMapper facultyMemberMapper;
 
     @RequestMapping(value = "/addLecture", method = RequestMethod.POST)
     public ResponseEntity<LectureDTO> addLecture(@RequestBody LectureDTO lectureDTO) {
-        System.out.println("id= " + lectureDTO.getAttendanceType());
         Course course = this.courseMapper.toEntity(lectureDTO.getCourseDTO());
         FacultyMember facultyMember = this.facultyMemberMapper.toEntity(lectureDTO.getFacultyMemberDTO());
+
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
 
@@ -57,10 +58,11 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
         if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
             Random rand = new Random();
             lectureDTO.setAttendanceCode(rand.nextInt());
-            System.out.println(UUID.randomUUID().toString());
+
         }
         boolean isFound = true;
-        LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getLectureDate(), course, facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
+        LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
+                , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
         if (lectureDTO1 == null) {
             isFound = false;
         } else {
@@ -69,7 +71,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
         Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
         LectureDTO lectureDTO2 = this.lectureMapper.toDTO(this.lectureService.save(lecture));
-        System.out.println(isFound);
+
         if (!isFound) {
             this.attendanceDetailsService.saveAttendances(lectureDTO2);
         }
@@ -92,7 +94,6 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
     @RequestMapping(value = "/getFacultyMemberLectures/{sectionId}", method = RequestMethod.GET)
     public ResponseEntity<Collection<LectureDTO>> getFacultyMemberLectures(@PathVariable long sectionId) {
-
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         ArrayList<LectureDTO> lectureDTOs = this.lectureService.
@@ -101,9 +102,10 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     }
 
     // this function is written by Abdo Ramadan
-    @RequestMapping(value = "/getFacultyMemberLecturesToReport/{sectionId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<FacultyMemberLecturesDTO>> getFacultyMemberLecturesToReport(@PathVariable
-                                                                                                         long sectionId) {
+    @RequestMapping(value = "/getFacultyMemberLecturesToReport/{sectionId}",
+            method = RequestMethod.GET)
+    public ResponseEntity<Collection<FacultyMemberLecturesDTO>> getFacultyMemberLecturesToReport(
+            @PathVariable long sectionId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         ArrayList<FacultyMemberLecturesDTO> facultyMemberLecturesDTOS =

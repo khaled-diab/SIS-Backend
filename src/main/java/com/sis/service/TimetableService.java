@@ -2,9 +2,13 @@ package com.sis.service;
 
 import com.sis.dao.TimetableRepository;
 import com.sis.dao.specification.TimetableSpecification;
+import com.sis.dto.section.SectionDTO;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
+import com.sis.entities.AcademicTerm;
+import com.sis.entities.Section;
 import com.sis.entities.Timetable;
+import com.sis.entities.mapper.AcademicTermMapper;
 import com.sis.entities.mapper.TimetableMapper;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -26,6 +30,10 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     private final TimetableRepository timetableRepository;
     private final TimetableMapper timetableMapper;
+    private final StudentEnrollmentService studentEnrollmentService;
+
+    private AcademicTermService academicTermService;
+    private AcademicTermMapper academicTermMapper;
 
     @Override
     public JpaRepository<Timetable, Long> Repository() {
@@ -70,7 +78,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     private Sort constructSortObject(TimetableRequestDTO timetableRequestDTO) {
         if (timetableRequestDTO.getSortDirection() == null) {
-            return Sort.by(Sort.Direction.ASC, "day");
+            return Sort.by(Sort.Direction.ASC, "startTime");
         }
         return Sort.by(Sort.Direction.valueOf(timetableRequestDTO.getSortDirection()), timetableRequestDTO.getSortBy());
     }
@@ -108,6 +116,23 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         if (timetables != null) {
             timetableDTOs = this.timetableMapper.toDTOs(timetables);
         }
+        return timetableDTOs;
+    }
+
+    public ArrayList<TimetableDTO> getStudentTimetables(long studentId) {
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        Collection<Section> sections = this.studentEnrollmentService.
+                findStudentSections(academicTerm.getAcademicYear(), academicTerm, studentId);
+        ArrayList<TimetableDTO> timetableDTOs = new ArrayList<>();
+        for (Section section : sections) {
+            timetableDTOs.addAll(this.getSectionTimeTables(
+                    section.getAcademicYear().getId(), section.getAcademicTerm().getId(), section.getId()));
+        }
+        timetableDTOs.sort((timetableDTO, t1) -> {
+            if (t1.getStartTime().isAfter(timetableDTO.getStartTime())) return -1;
+            else if (t1.getStartTime().isBefore(timetableDTO.getStartTime())) return 1;
+            return 0;
+        });
         return timetableDTOs;
     }
 
