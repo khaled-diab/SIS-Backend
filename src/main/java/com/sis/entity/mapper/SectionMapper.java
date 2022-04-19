@@ -34,7 +34,7 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
     }
 
     @Override
-    public ArrayList<Section> toentity(Collection<SectionDTO> dtos) {
+    public ArrayList<Section> toEntities(Collection<SectionDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Section>::new));
     }
 

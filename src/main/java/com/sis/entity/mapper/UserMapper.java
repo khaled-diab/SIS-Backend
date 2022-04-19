@@ -24,9 +24,9 @@ public class UserMapper implements Mapper<User, UserDto> {
 	}
 
 	@Override
-	public ArrayList<User> toentity(Collection<UserDto> dtoCollection) {
-		return dtoCollection.stream().map(this::toEntity).collect(toCollection(ArrayList<User>::new));
-	}
+    public ArrayList<User> toEntities(Collection<UserDto> dtoCollection) {
+        return dtoCollection.stream().map(this::toEntity).collect(toCollection(ArrayList<User>::new));
+    }
 
 	@Override
 	public UserDto toDTO(final User entity) {

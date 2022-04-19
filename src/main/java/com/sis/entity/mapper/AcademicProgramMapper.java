@@ -58,7 +58,7 @@ public class AcademicProgramMapper implements Mapper<AcademicProgram,AcademicPro
     }
 
     @Override
-    public ArrayList<AcademicProgram> toentity(Collection<AcademicProgramDTO> academicProgramDTOS) {
+    public ArrayList<AcademicProgram> toEntities(Collection<AcademicProgramDTO> academicProgramDTOS) {
         return academicProgramDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AcademicProgram>::new));
     }
 

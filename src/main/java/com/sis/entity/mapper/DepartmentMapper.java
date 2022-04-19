@@ -64,7 +64,7 @@ public class DepartmentMapper implements Mapper<Department,DepartmentDTO>{
     }
 
     @Override
-    public ArrayList<Department> toentity(Collection<DepartmentDTO> departmentDTOS) {
+    public ArrayList<Department> toEntities(Collection<DepartmentDTO> departmentDTOS) {
         return departmentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Department>::new));
     }
 

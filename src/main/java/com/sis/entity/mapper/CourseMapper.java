@@ -32,9 +32,9 @@ public class CourseMapper implements Mapper<Course, CourseDTO> {
 	}
 
 	@Override
-	public ArrayList<Course> toentity(Collection<CourseDTO> dtos) {
-		return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Course>::new));
-	}
+    public ArrayList<Course> toEntities(Collection<CourseDTO> dtos) {
+        return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Course>::new));
+    }
 
 	@Override
 	public CourseDTO toDTO(Course entity) {

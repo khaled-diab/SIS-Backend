@@ -103,9 +103,9 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 	}
 
 	@Override
-	public ArrayList<Student> toentity(Collection<StudentDTO> studentDTOS) {
-		return studentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Student>::new));
-	}
+    public ArrayList<Student> toEntities(Collection<StudentDTO> studentDTOS) {
+        return studentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Student>::new));
+    }
 
 	@Override
 	public PageResult<StudentDTO> toDataPage(PageResult<Student> pageResult) {

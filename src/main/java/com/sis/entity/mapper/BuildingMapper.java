@@ -28,7 +28,7 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
     }
 
     @Override
-    public ArrayList<Building> toentity(Collection<BuildingDTO> dtos) {
+    public ArrayList<Building> toEntities(Collection<BuildingDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Building>::new));
     }
 

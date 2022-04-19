@@ -30,7 +30,7 @@ public class MajorMapper implements Mapper<Major, MajorDTO> {
     }
 
     @Override
-    public ArrayList<Major> toentity(Collection<MajorDTO> dtos) {
+    public ArrayList<Major> toEntities(Collection<MajorDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Major>::new));
     }
 

@@ -39,7 +39,7 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
     }
 
     @Override
-    public ArrayList<AcademicYear> toentity(Collection<AcademicYearDTO> academicYearDTOS) {
+    public ArrayList<AcademicYear> toEntities(Collection<AcademicYearDTO> academicYearDTOS) {
         return academicYearDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AcademicYear>::new));
     }
 

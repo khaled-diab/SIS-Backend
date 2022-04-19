@@ -11,7 +11,6 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "department")
-
 public class Department extends BaseEntity {
 
     private static final long serialVersionUID = 1L;   

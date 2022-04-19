@@ -26,9 +26,9 @@ public class StudyTypeMapper implements Mapper<StudyType, StudyTypeDTO> {
 	}
 
 	@Override
-	public ArrayList<StudyType> toentity(Collection<StudyTypeDTO> dtos) {
-		return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<StudyType>::new));
-	}
+    public ArrayList<StudyType> toEntities(Collection<StudyTypeDTO> dtos) {
+        return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<StudyType>::new));
+    }
 
 	@Override
 	public StudyTypeDTO toDTO(StudyType entity) {

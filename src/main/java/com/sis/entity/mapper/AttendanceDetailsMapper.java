@@ -70,7 +70,7 @@ public class AttendanceDetailsMapper implements Mapper<AttendanceDetails, Attend
     }
 
     @Override
-    public ArrayList<AttendanceDetails> toentity(Collection<AttendanceDetailsDTO> attendanceDetailsDTOS) {
+    public ArrayList<AttendanceDetails> toEntities(Collection<AttendanceDetailsDTO> attendanceDetailsDTOS) {
         return attendanceDetailsDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AttendanceDetails>::new));
     }
 

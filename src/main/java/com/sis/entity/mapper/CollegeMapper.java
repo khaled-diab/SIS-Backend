@@ -46,7 +46,7 @@ public class CollegeMapper implements Mapper<College, CollegeDTO> {
     }
 
     @Override
-    public ArrayList<College> toentity(Collection<CollegeDTO> collegeDTOS) {
+    public ArrayList<College> toEntities(Collection<CollegeDTO> collegeDTOS) {
         return (ArrayList<College>) collegeDTOS.
                 stream()
                 .map(this::toEntity)

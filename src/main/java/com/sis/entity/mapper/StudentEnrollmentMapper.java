@@ -36,7 +36,7 @@ public class StudentEnrollmentMapper implements Mapper<StudentEnrollment, Studen
     }
 
     @Override
-    public ArrayList<StudentEnrollment> toentity(Collection<StudentEnrollmentDTO> dtos) {
+    public ArrayList<StudentEnrollment> toEntities(Collection<StudentEnrollmentDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<StudentEnrollment>::new));
     }
 

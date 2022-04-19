@@ -78,7 +78,7 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
                     .build();
             attendanceDetailsDTOs.add(attendanceDetailsDTO);
         }
-        this.attendanceDetailsRepository.saveAll(this.attendanceDetailsMapper.toentity(attendanceDetailsDTOs));
+        this.attendanceDetailsRepository.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
     }
 
 

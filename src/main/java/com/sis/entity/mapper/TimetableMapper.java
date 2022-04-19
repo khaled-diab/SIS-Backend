@@ -37,7 +37,7 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
     }
 
     @Override
-    public ArrayList<Timetable> toentity(Collection<TimetableDTO> dtos) {
+    public ArrayList<Timetable> toEntities(Collection<TimetableDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Timetable>::new));
     }
 

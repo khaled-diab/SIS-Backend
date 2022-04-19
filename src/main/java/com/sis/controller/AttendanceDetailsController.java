@@ -71,7 +71,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @RequestMapping(value = "/addManualAttendance", method = RequestMethod.POST)
     public ResponseEntity<Collection<AttendanceDetailsDTO>> addManualAttendance(@RequestBody ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs) {
 
-        List<AttendanceDetails> returnedAttendanceDetails = this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toentity(attendanceDetailsDTOs));
+        List<AttendanceDetails> returnedAttendanceDetails = this.attendanceDetailsService.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
 
         return new ResponseEntity<>(this.attendanceDetailsMapper.toDTOs(returnedAttendanceDetails), HttpStatus.OK);
     }
