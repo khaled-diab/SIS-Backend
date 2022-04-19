@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
-public interface Mapper<Entity extends BaseEntity, DTO extends BaseDTO> {
-    DTO toDTO(final Entity entity);
+public interface Mapper<E extends BaseEntity, D extends BaseDTO> {
+    D toDTO(final E e);
 
-    Entity toEntity(final DTO dto);
+    E toEntity(final D d);
 
-    ArrayList<DTO> toDTOs(final Collection<Entity> entity);
+    ArrayList<D> toDTOs(final Collection<E> e);
 
-    ArrayList<Entity> toentity(final Collection<DTO> dtos);
+    ArrayList<E> toEntities(final Collection<D> ds);
 
-    PageResult<DTO> toDataPage(final PageResult<Entity> entity);
+    PageResult<D> toDataPage(final PageResult<E> entity);
 }

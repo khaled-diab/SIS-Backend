@@ -3,7 +3,6 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.dto.student.StudentDTO;
 import com.sis.entity.*;
 import com.sis.entity.mapper.*;
 import com.sis.service.AcademicTermService;

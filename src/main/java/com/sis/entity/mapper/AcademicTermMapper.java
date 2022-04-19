@@ -51,7 +51,7 @@ public class AcademicTermMapper implements Mapper<AcademicTerm, AcademicTermDTO>
     }
 
     @Override
-    public ArrayList<AcademicTerm> toentity(Collection<AcademicTermDTO> academicTermDTOS) {
+    public ArrayList<AcademicTerm> toEntities(Collection<AcademicTermDTO> academicTermDTOS) {
         return academicTermDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<AcademicTerm>::new));
     }
 

@@ -35,7 +35,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
     }
 
     @Override
-    public ArrayList<FacultyMember> toentity(Collection<FacultyMemberDTO> dtos) {
+    public ArrayList<FacultyMember> toEntities(Collection<FacultyMemberDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<FacultyMember>::new));
     }
 

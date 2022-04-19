@@ -87,7 +87,7 @@ public class LectureMapper implements Mapper<Lecture, LectureDTO> {
     }
 
     @Override
-    public ArrayList<Lecture> toentity(Collection<LectureDTO> lectureDTOS) {
+    public ArrayList<Lecture> toEntities(Collection<LectureDTO> lectureDTOS) {
         return lectureDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Lecture>::new));
     }
 

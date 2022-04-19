@@ -28,9 +28,9 @@ public class DegreeMapper implements Mapper<Degree, DegreeDTO> {
 	}
 
 	@Override
-	public ArrayList<Degree> toentity(Collection<DegreeDTO> dtos) {
-		return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Degree>::new));
-	}
+    public ArrayList<Degree> toEntities(Collection<DegreeDTO> dtos) {
+        return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Degree>::new));
+    }
 
 	@Override
 	public DegreeDTO toDTO(Degree entity) {

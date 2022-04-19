@@ -29,7 +29,7 @@ public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
     }
 
     @Override
-    public ArrayList<Classroom> toentity(Collection<ClassroomDTO> dtos) {
+    public ArrayList<Classroom> toEntities(Collection<ClassroomDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Classroom>::new));
     }
 

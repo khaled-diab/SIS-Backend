@@ -26,7 +26,7 @@ public class LectureTypeMapper implements Mapper<LectureType, LectureTypeDTO> {
     }
 
     @Override
-    public ArrayList<LectureType> toentity(Collection<LectureTypeDTO> dtos) {
+    public ArrayList<LectureType> toEntities(Collection<LectureTypeDTO> dtos) {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<LectureType>::new));
     }
 

@@ -56,7 +56,7 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
 
     @RequestMapping(value = "/saveAll", method = RequestMethod.PUT)
     public MessageResponse saveAll(@RequestBody @Valid List<TimetableDTO> dtos) {
-        timetableService.saveAllTimetable(timetableMapper.toentity(dtos));
+        timetableService.saveAllTimetable(timetableMapper.toEntities(dtos));
         return new MessageResponse("Item has been updated successfully");
     }
 
