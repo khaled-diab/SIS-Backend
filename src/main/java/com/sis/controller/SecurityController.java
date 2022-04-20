@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "/api/security")
 @AllArgsConstructor
 public class SecurityController {
-
-
     private final SecurityService securityService;
-
 
     @PostMapping(value = "/register-student")
     public ResponseEntity<StudentDTO> registerStudent(@RequestBody StudentDTO studentDTO) {

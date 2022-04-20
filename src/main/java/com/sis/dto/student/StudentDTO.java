@@ -6,8 +6,7 @@ import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.security.UserDto;
 import com.sis.util.Constants;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
@@ -16,6 +15,9 @@ import java.util.Date;
 @Getter
 @Setter
 @Validated
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudentDTO extends BaseDTO {
 
     @NotNull(message = "Required")
@@ -72,6 +74,8 @@ public class StudentDTO extends BaseDTO {
     private AcademicProgramDTO academicProgramDTO;
 
     private UserDto user;
+    private Long collegeID;
+    private Long departmentID;
 
 
 }

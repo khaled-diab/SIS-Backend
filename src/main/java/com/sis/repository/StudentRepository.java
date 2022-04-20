@@ -1,7 +1,9 @@
 package com.sis.repository;
 
 import com.sis.entity.Student;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Optional;
@@ -20,5 +22,14 @@ public interface StudentRepository extends Baserepository<Student> {
     Student findByUniversityMail(String mail);
 
     Optional<Student> findByUser_Id(Long userID);
+
+//    @Query(value = "INSERT INTO student ( name_ar, name_en, nationality,nationalid,birth_date,college_id,department_id)" +
+//            "VALUES (?1, ?2, ?3, ?4,?5,?6,?7); ", nativeQuery = true)
+//    void saveNativeStudent(String nameAR, String nameEN, String nationality, String nationalID, Date birthDate, Long collegeID, Long departmentID);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO student ( name_ar, name_en, nationality,nationalid,college_id,department_id) VALUES (?1, ?2, ?3, ?4,?5,?6) ", nativeQuery = true)
+    void saveNativeStudent(String nameAR, String nameEN, String nationality, String nationalID, Long collegeID, Long departmentID);
 
 }

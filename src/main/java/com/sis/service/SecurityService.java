@@ -17,8 +17,10 @@ import com.sis.repository.UserRepository;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import lombok.AllArgsConstructor;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,8 +30,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -44,6 +48,8 @@ public class SecurityService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final FacultyMemberMapper facultyMemberMapper;
+
+    private final RedisTemplate<String, Map<String, Long>> redisTemplate;
 
     public ResponseEntity<StudentDTO> registerStudent(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -84,12 +90,34 @@ public class SecurityService {
     }
 
     public ResponseEntity<StudentDTO> registerBulkStudents(MultipartFile file) {
+        Map<String, Long> departmentsMap = redisTemplate.opsForSet().pop(Constants.DEPARTMENTS_CASH_KEY);
+        Map<String, Long> collegesMap = redisTemplate.opsForSet().pop(Constants.COLLEGES_CASH_KEY);
         try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            XSSFSheet sheet = workbook.getSheetAt(0);
-
+            Sheet sheet = workbook.getSheetAt(0);
+            sheet.removeRow(sheet.iterator().next());
+            processRows(StreamSupport.stream(sheet.spliterator(), false).collect(Collectors.toList()), departmentsMap, collegesMap).
+                    forEach(studentDTO -> studentRepository
+                            .saveNativeStudent(studentDTO.getNameAr(), studentDTO.getNameEn(), studentDTO.getNationality(),
+                                    studentDTO.getNationalId(), studentDTO.getCollegeID(), studentDTO.getDepartmentID()));
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return null;
+    }
+
+    private List<StudentDTO> processRows(List<Row> collect, Map<String, Long> departmentsMap, Map<String, Long> collegesMap) {
+        List<StudentDTO> studentList = new ArrayList<>();
+        for (Row row : collect) {
+            studentList.add(StudentDTO.builder()
+                    .nameAr(row.getCell(0).getStringCellValue())
+                    .nameEn(row.getCell(1).getStringCellValue())
+                    .nationality(row.getCell(2).getStringCellValue())
+                    .nationalId(row.getCell(3).getStringCellValue())
+                    .birthDate(Date.from(Instant.now()))
+                    .collegeID(collegesMap.get(row.getCell(5).getStringCellValue()))
+                    .departmentID(departmentsMap.get(row.getCell(6).getStringCellValue()))
+                    .build());
+        }
+        return studentList;
     }
 }
