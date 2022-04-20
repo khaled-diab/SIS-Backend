@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @MappedSuperclass
-@SuppressWarnings("serial")
 @NoArgsConstructor
 public class BaseEntity implements Serializable  {
 

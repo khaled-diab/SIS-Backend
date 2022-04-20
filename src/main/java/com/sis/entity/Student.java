@@ -7,8 +7,7 @@ package com.sis.entity;
 
 
 import com.sis.entity.security.User;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +18,9 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "student")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -60,6 +62,7 @@ public class Student extends BaseEntity {
 
     @Column(name = "photo")
     private  String photo;
+
     @JoinColumn(name = "academic_program_id", referencedColumnName = "id")
     @ManyToOne
     private AcademicProgram programId;
