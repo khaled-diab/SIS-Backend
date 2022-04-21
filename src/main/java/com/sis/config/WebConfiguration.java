@@ -1,5 +1,6 @@
 package com.sis.config;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @Configuration
+@EnableCaching
 public class WebConfiguration {
 
 
