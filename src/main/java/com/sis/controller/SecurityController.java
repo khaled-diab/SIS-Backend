@@ -3,8 +3,10 @@ package com.sis.controller;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
+import com.sis.dto.security.RegisterDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.service.SecurityService;
+import com.sis.util.MessageResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,13 @@ public class SecurityController {
     private final SecurityService securityService;
 
     @PostMapping(value = "/register-student")
-    public ResponseEntity<StudentDTO> registerStudent(@RequestBody StudentDTO studentDTO) {
-        return securityService.registerStudent(studentDTO);
+    public ResponseEntity<MessageResponse> registerStudent(@RequestBody RegisterDTO registerDTO) {
+        return securityService.registerStudent(registerDTO);
+    }
+
+    @PostMapping(value = "/register-student1")
+    public ResponseEntity<StudentDTO> registerStudent1(@RequestBody StudentDTO studentDTO) {
+        return securityService.registerStudent1(studentDTO);
     }
 
     @PostMapping(value = "/register-bulk-students", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

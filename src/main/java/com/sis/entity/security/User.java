@@ -2,10 +2,7 @@ package com.sis.entity.security;
 
 import com.sis.entity.BaseEntity;
 import com.sis.entity.UserFile;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

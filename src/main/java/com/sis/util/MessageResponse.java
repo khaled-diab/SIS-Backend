@@ -1,34 +1,37 @@
 package com.sis.util;
 
-public class MessageResponse {
-	private String message;
-	private String field;
+import com.sis.dto.BaseDTO;
+import lombok.Builder;
+
+@Builder
+public class MessageResponse extends BaseDTO {
+    private String message;
+    private String field;
 
 
-	public MessageResponse(String field, String message) {
-		super();
-		this.message = message;
-		this.field=field;
-	}
-	public MessageResponse( String message) {
-		super();
-		this.message = message;
+    public MessageResponse(String message, String field) {
+        this.message = message;
+        this.field = field;
+    }
 
-	}
+    public MessageResponse(String message) {
+        this.message = message;
 
-	public String getMessage() {
-		return message;
-	}
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public String getField() {
-		return field;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public void setField(String field) {
-		this.field = field;
-	}
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
 }

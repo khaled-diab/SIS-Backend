@@ -16,7 +16,7 @@ public interface StudentRepository extends Baserepository<Student> {
     Student findByUniversityId(long id);
 
     @Query(value = "SELECT * FROM student s WHERE s.nationalid= :id ", nativeQuery = true)
-    Student findByNationalId(String id);
+    Student findByNationalIdNative(String id);
 
     @Query(value = "SELECT * FROM student s WHERE s.university_mail= :mail ", nativeQuery = true)
     Student findByUniversityMail(String mail);
@@ -29,7 +29,10 @@ public interface StudentRepository extends Baserepository<Student> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO student ( name_ar, name_en, nationality,nationalid,college_id,department_id) VALUES (?1, ?2, ?3, ?4,?5,?6) ", nativeQuery = true)
-    void saveNativeStudent(String nameAR, String nameEN, String nationality, String nationalID, Long collegeID, Long departmentID);
+    @Query(value = "INSERT INTO student ( name_ar, name_en, nationality,nationalid,college_id,department_id,university_id) VALUES (?1, ?2, ?3, ?4,?5,?6,?7) ",
+            nativeQuery = true)
+    void saveNativeStudent(String nameAR, String nameEN, String nationality, String nationalID, Long collegeID, Long departmentID, Long universityID);
+
+    Optional<Student> findByNationalId(String nationalID);
 
 }

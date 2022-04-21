@@ -44,7 +44,7 @@ public class StudentService extends BaseServiceImp<Student> {
     }
 
     public Student findByNationalId(String id) {
-        return this.studentRepository.findByNationalId(id);
+        return this.studentRepository.findByNationalIdNative(id);
     }
 
     public Student findByUniversityMail(String mail) {
