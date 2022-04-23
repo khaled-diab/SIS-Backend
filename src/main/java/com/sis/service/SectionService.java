@@ -68,7 +68,12 @@ public class SectionService extends BaseServiceImp<Section> {
         PageResult<Section> pageResult = new PageResult<>(sectionPage.getContent(), (int) sectionPage.getTotalElements(),
                 pageUtil.getLimit(), pageUtil.getPage());
 
-        return sectionMapper.toDataPage(pageResult);
+        PageResult<SectionDTO> sectionDTOsDtoPageResult = sectionMapper.toDataPage(pageResult);
+        for (SectionDTO section : sectionDTOsDtoPageResult.getData()) {
+            int students = this.countBySection(section.getId());
+            section.setNumberOfStudents(students);
+        }
+        return sectionDTOsDtoPageResult;
     }
 
     private Sort constructSortObject(SectionRequestDTO sectionRequestDTO) {
