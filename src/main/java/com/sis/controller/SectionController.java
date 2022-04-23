@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/sections")
@@ -34,17 +33,6 @@ public class SectionController extends BaseController<Section, SectionDTO> {
 
     private AcademicTermService academicTermService;
     private AcademicTermMapper academicTermMapper;
-
-    @RequestMapping(value = "/dataPage", method = RequestMethod.POST)
-    public PageResult<SectionDTO> DataPage(@RequestBody PageQueryUtil pageUtil) {
-        PageResult<SectionDTO> page = sectionMapper.toDataPage(this.sectionService.getDataPage(pageUtil));
-        List<SectionDTO> sectionDTOS = page.getData();
-        for (SectionDTO section : sectionDTOS) {
-            int students = this.sectionService.countBySection(section.getId());
-            section.setNumberOfStudents(students);
-        }
-        return page;
-    }
 
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<SectionDTO>> search(@PathVariable int pageNumber,
