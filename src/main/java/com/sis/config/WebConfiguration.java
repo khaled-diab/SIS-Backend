@@ -32,7 +32,7 @@ public class WebConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*", "http://**", "https://**", "http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("*", "http://**", "https://**", "http://localhost:8080/**", "http://localhost:9090/**", "http://graduation.westeurope.cloudapp.azure.com:8080//**"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
         // setAllowCredentials(true) is important, otherwise:
         // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableAsync
-@CrossOrigin(origins = ("http://localhost:4200"))
+@CrossOrigin(origins = ("**"))
 public class SisSystemApplication extends SpringBootServletInitializer {
 	private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
 
