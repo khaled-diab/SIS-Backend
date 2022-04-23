@@ -21,7 +21,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/studentEnrollments")
-@CrossOrigin(origins = ("*"))
 @AllArgsConstructor
 @Validated
 public class StudentEnrollmentController extends BaseController<StudentEnrollment, StudentEnrollmentDTO> {

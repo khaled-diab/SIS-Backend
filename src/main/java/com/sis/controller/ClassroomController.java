@@ -7,14 +7,16 @@ import com.sis.service.ClassroomService;
 import com.sis.util.MessageResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/classroom")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 @Validated
 public class ClassroomController extends BaseController<Classroom, ClassroomDTO> {
     private final ClassroomService classroomService;

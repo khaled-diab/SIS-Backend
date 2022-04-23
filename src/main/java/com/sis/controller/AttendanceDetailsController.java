@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/attendanceDetails")
 public class AttendanceDetailsController extends BaseController<AttendanceDetails, AttendanceDetailsDTO> {
 

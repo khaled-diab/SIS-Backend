@@ -35,7 +35,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @RestController
 @Validated
 @RequestMapping(value = "/api/facultyMembers")
-@CrossOrigin(origins = ("*"))
 @AllArgsConstructor
 public class FacultyMemberController extends BaseController<FacultyMember, FacultyMemberDTO> {
 
