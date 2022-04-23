@@ -100,7 +100,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
 //    }
 
     // this function is written by Abdo Ramadan
-    @RequestMapping(value = "/getAttendanceByLecture/{lectureId}"
+    @RequestMapping(value = "/getAttendancesByLectureId/{lectureId}"
             , method = RequestMethod.GET)
     public ResponseEntity<AttendanceReportDTO>
     getAttendanceByLecture(@PathVariable long lectureId) {
