@@ -6,10 +6,12 @@ import com.sis.entities.mapper.AcademicProgramMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/academicPrograms")
+@CrossOrigin("")
 public class AcademicPogramController extends BaseController<AcademicProgram , AcademicProgramDTO>{
     @Autowired
     private AcademicProgramMapper academicProgramMapper;
