@@ -24,7 +24,6 @@ import java.util.Collection;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "'http://localhost:4200")
 @RequestMapping(value = "/api/courses")
 @Validated
 public class CourseController extends BaseController<Course, CourseDTO> {

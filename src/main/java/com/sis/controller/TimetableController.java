@@ -27,7 +27,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/timetables")
-@CrossOrigin(origins = ("*"))
 @AllArgsConstructor
 @Validated
 public class TimetableController extends BaseController<Timetable, TimetableDTO> {

@@ -18,9 +18,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
@@ -44,7 +42,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Validated
 @RequestMapping(value = "/api/students")
 @AllArgsConstructor
-@CrossOrigin(origins = ("*"))
 public class StudentController extends BaseController<Student, StudentDTO> {
 
 

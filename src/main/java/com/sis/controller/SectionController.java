@@ -25,7 +25,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/sections")
-@CrossOrigin(origins = ("*"))
 @AllArgsConstructor
 @Validated
 public class SectionController extends BaseController<Section, SectionDTO> {
