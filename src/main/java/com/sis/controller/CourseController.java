@@ -47,7 +47,7 @@ public class CourseController extends BaseController<Course, CourseDTO> {
         return new ResponseEntity<>(courseService.search(pageUtil, courseRequestDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.PUT)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public MessageResponse update(@RequestBody @Valid CourseDTO dto) {
         courseService.save(courseMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");

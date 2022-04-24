@@ -22,7 +22,7 @@ public class ClassroomController extends BaseController<Classroom, ClassroomDTO>
     private final ClassroomService classroomService;
     private final ClassroomMapper classroomMapper;
 
-    @RequestMapping(value="/addOrUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     public MessageResponse addOrUpdate(@RequestBody @Valid ClassroomDTO dto) {
         classroomService.save(classroomMapper.toEntity(dto));
         return new MessageResponse("Item has been saved successfully");

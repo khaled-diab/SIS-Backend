@@ -45,7 +45,7 @@ public class BaseController <T extends BaseEntity, DTO extends BaseDTO>{
 		 return new MessageResponse("Item has been saved successfully");
 	}
 	
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public MessageResponse update(@PathVariable(value = "id") Long id, @RequestBody DTO dto) {
 		 baseService.save(mapper.toEntity(dto));
 		 return new MessageResponse("Item has been updated successfully");

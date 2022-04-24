@@ -98,7 +98,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         return new MessageResponse("Item has been saved successfully");
     }
 
-    @RequestMapping(value = "/updateStudent", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateStudent", method = RequestMethod.POST)
     public MessageResponse updateStudent( @Valid @RequestBody StudentDTO dto) {
 
         Student studentByuniversityID=this.studentService.findByuniversityId(dto.getUniversityId());

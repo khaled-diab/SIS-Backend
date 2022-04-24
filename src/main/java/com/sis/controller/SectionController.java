@@ -52,7 +52,7 @@ public class SectionController extends BaseController<Section, SectionDTO> {
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<SectionDTO> update(@RequestBody @Valid SectionDTO dto) {
         SectionDTO section = sectionMapper.toDTO(sectionService.save(sectionMapper.toEntity(dto)));
         return new ResponseEntity<>(section, HttpStatus.OK);
