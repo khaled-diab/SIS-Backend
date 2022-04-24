@@ -47,13 +47,13 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public MessageResponse update(@RequestBody @Valid TimetableDTO dto) {
         timetableService.save(timetableMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
 
-    @RequestMapping(value = "/saveAll", method = RequestMethod.PUT)
+    @RequestMapping(value = "/saveAll", method = RequestMethod.POST)
     public MessageResponse saveAll(@RequestBody @Valid List<TimetableDTO> dtos) {
         timetableService.saveAllTimetable(timetableMapper.toEntities(dtos));
         return new MessageResponse("Item has been updated successfully");

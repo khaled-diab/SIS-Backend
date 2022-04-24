@@ -36,13 +36,13 @@ public class StudentEnrollmentController extends BaseController<StudentEnrollmen
         return new ResponseEntity<>(studentEnrollmentService.search(pageUtil, studentEnrollmentRequestDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public MessageResponse update(@RequestBody @Valid StudentEnrollmentDTO dto) {
         studentEnrollmentService.save(studentEnrollmentMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.PUT)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public MessageResponse save(@RequestBody StudentArray dto){
         for(StudentDTO studentDTO: dto.getStudentDTOS()) {
             StudentEnrollmentDTO studentEnrollmentDTO = new StudentEnrollmentDTO();

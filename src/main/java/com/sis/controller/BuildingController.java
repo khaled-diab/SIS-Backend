@@ -23,7 +23,7 @@ public class BuildingController extends BaseController<Building, BuildingDTO> {
     private final BuildingService buildingService;
     private final BuildingMapper buildingMapper;
 
-    @RequestMapping(value="/addOrUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     public MessageResponse addOrUpdate(@Valid @RequestBody BuildingDTO dto) {
         buildingService.save(buildingMapper.toEntity(dto));
         System.out.println("entered");

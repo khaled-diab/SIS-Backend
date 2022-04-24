@@ -76,7 +76,7 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
         return new ResponseEntity<>(facultyMemberService.search(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/saveFacultyMember", method = RequestMethod.PUT)
+    @RequestMapping(value = "/saveFacultyMember", method = RequestMethod.POST)
     public MessageResponse update(@RequestBody @Valid FacultyMemberDTO dto) {
         FacultyMember facultyMemberByNationalID = this.facultyMemberService.findByNationalID(dto.getNationalID());
         FacultyMember facultyMemberByUniversityMail = this.facultyMemberService.findByUniversityMail(dto.getUniversityMail());

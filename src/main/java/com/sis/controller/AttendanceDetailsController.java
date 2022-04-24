@@ -35,7 +35,7 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     private LectureMapper lectureMapper;
 
     // by abdo ramadan
-    @RequestMapping(value = "/updateReport", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateReport", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> update(@RequestBody AttendanceDetailsDTO attendanceDetailsDTO) {
         AttendanceDetails attendanceDetails = attendanceDetailsMapper.toEntity(attendanceDetailsDTO);
         if (attendanceDetails != null) {

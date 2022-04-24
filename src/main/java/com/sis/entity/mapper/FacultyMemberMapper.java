@@ -62,7 +62,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         if (entity.getCollege() != null) {
             dto.setCollegeDTO(collegeDTO);
         }
-        dto.setUser(userMapper.toDTO(entity.getUser()));
+//        dto.setUser(userMapper.toDTO(entity.getUser()));
         return dto;
     }
 
@@ -89,7 +89,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         if (dto.getCollegeDTO() != null) {
             entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
         }
-        entity.setUser(userMapper.toEntity(dto.getUser()));
+//        entity.setUser(userMapper.toEntity(dto.getUser()));
         return entity;
     }
 
