@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "userFile")
+@Table(name = "user_file")
 @Getter
 @Setter
 @Builder
@@ -14,5 +14,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class UserFile extends BaseEntity {
 
-    private String fileLink;
+    private String directories;
+    private String fileName;
 }

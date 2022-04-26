@@ -16,6 +16,7 @@ public class Constants {
     public static final String TYPE_FACULTY_MEMBER = "FACULTY_MEMBER";
     public static final String COLLEGES_CASH_KEY = "COLLEGES";
     public static final String DEPARTMENTS_CASH_KEY = "DEPARTMENTS";
+    public static final String FILE_TYPE_PROFILE_PICTURE = "PROFILE_PICTURE";
 
 
     private Constants() {

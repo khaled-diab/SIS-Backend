@@ -1,7 +1,10 @@
 package com.sis.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sis.dto.AdminDto;
 import com.sis.dto.BaseDTO;
+import com.sis.dto.FileUploadDownLoadModel;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
@@ -20,18 +23,21 @@ import com.sis.repository.UserRepository;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import com.sis.util.MessageResponse;
-import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
@@ -40,9 +46,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-@AllArgsConstructor
 public class SecurityService {
 
+    private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
@@ -54,10 +60,34 @@ public class SecurityService {
     private final FacultyMemberMapper facultyMemberMapper;
     private final CollegeService collegeService;
     private final DepartmentService departmentService;
-
     private final UserMapper userMapper;
+    private final RestTemplate restTemplate;
+    Logger logger = LoggerFactory.getLogger(SecurityService.class);
+    @Value("${upload.picture.url}")
+    private String uploadProfilePictureUrl;
 
-    private final RedisTemplate<String, Map<String, Long>> redisTemplate;
+
+    public SecurityService(UserRepository userRepository, AuthenticationManager authenticationManager,
+                           JwtProvider jwtProvider, StudentRepository studentRepository,
+                           FacultyMemberRepository facultyMemberRepository, StudentMapper studentMapper,
+                           RoleRepository roleRepository, PasswordEncoder passwordEncoder,
+                           FacultyMemberMapper facultyMemberMapper, CollegeService collegeService,
+                           DepartmentService departmentService, UserMapper userMapper, ObjectMapper objectMapper, RestTemplate restTemplate) {
+        this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
+        this.studentRepository = studentRepository;
+        this.facultyMemberRepository = facultyMemberRepository;
+        this.studentMapper = studentMapper;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.facultyMemberMapper = facultyMemberMapper;
+        this.collegeService = collegeService;
+        this.departmentService = departmentService;
+        this.userMapper = userMapper;
+        this.objectMapper = objectMapper;
+        this.restTemplate = restTemplate;
+    }
 
     public ResponseEntity<StudentDTO> registerStudent1(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -159,5 +189,32 @@ public class SecurityService {
                     .build());
         }
         return studentList;
+    }
+
+    public MessageResponse uploadProfilePicture(MultipartFile file, String email) throws JsonProcessingException {
+        FileUploadDownLoadModel fileUploadDownLoadModel = constructUploadModelForPictureUpload(email, file.getOriginalFilename());
+        return uploadToDrive(file, fileUploadDownLoadModel);
+    }
+
+    private MessageResponse uploadToDrive(MultipartFile file, FileUploadDownLoadModel fileUploadDownLoadModel) throws JsonProcessingException {
+        try {
+            String fileUploadModel = objectMapper.writeValueAsString(fileUploadDownLoadModel);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("file", Base64.getEncoder().encodeToString(file.getBytes()));
+            body.add("fileUploadModel", fileUploadModel);
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+            String content = restTemplate.exchange(uploadProfilePictureUrl, HttpMethod.POST, requestEntity, String.class).getBody();
+            return objectMapper.readValue(content, MessageResponse.class);
+        } catch (Exception e) {
+            logger.error("error uploading file", e);
+            return new MessageResponse(500, "error Uploading file", null);
+        }
+    }
+
+    private FileUploadDownLoadModel constructUploadModelForPictureUpload(String email, String originalFilename) {
+        List<String> directories = Arrays.asList(email, "profile-picture");
+        return FileUploadDownLoadModel.builder().directories(directories).removeOthers(true).fileName(originalFilename).build();
     }
 }
