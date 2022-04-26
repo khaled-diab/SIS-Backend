@@ -1,13 +1,22 @@
 package com.sis.util;
 
-import com.sis.dto.BaseDTO;
 import lombok.Builder;
 
 @Builder
-public class MessageResponse extends BaseDTO {
+public class MessageResponse {
+
+    private Integer status;
     private String message;
     private String field;
 
+    public MessageResponse() {
+    }
+
+    public MessageResponse(Integer status, String message, String field) {
+        this.status = status;
+        this.message = message;
+        this.field = field;
+    }
 
     public MessageResponse(String message, String field) {
         this.message = message;
@@ -17,6 +26,14 @@ public class MessageResponse extends BaseDTO {
     public MessageResponse(String message) {
         this.message = message;
 
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getMessage() {

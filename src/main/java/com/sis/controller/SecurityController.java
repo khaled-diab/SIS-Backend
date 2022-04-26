@@ -1,5 +1,6 @@
 package com.sis.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
@@ -8,6 +9,7 @@ import com.sis.dto.student.StudentDTO;
 import com.sis.service.SecurityService;
 import com.sis.util.MessageResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +44,10 @@ public class SecurityController {
     @PostMapping(value = "/sign-in")
     public ResponseEntity<BaseDTO> login(@RequestBody final LoginDTO loginDto) {
         return securityService.login(loginDto);
+    }
+
+    @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email) throws JsonProcessingException {
+        return new ResponseEntity<>(securityService.uploadProfilePicture(file, email), HttpStatus.OK);
     }
 }
