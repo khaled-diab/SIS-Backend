@@ -10,4 +10,5 @@ import lombok.*;
 public class UserFileDto extends BaseDTO {
     private String directories;
     private String fileName;
+    private String type;
 }

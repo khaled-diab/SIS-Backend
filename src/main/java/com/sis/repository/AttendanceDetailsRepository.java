@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 
-public interface AttendanceDetailsRepository extends Baserepository<AttendanceDetails> {
+public interface AttendanceDetailsRepository extends BaseRepository<AttendanceDetails> {
 
 
     @Query(value = "SELECT * FROM attendance_details WHERE  student_id= :studentId and course_id=:courseId ", nativeQuery = true)

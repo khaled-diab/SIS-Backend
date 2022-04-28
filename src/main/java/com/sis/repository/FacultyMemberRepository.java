@@ -4,7 +4,7 @@ import com.sis.entity.FacultyMember;
 
 import java.util.Optional;
 
-public interface FacultyMemberRepository extends Baserepository<FacultyMember> {
+public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
     FacultyMember findByNationalID(String id);
 
     FacultyMember findByUniversityMail(String mail);

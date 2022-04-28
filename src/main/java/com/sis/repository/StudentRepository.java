@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
-public interface StudentRepository extends Baserepository<Student> {
+public interface StudentRepository extends BaseRepository<Student> {
 
 
     @Query(value = "SELECT * FROM student s WHERE s.university_id= :id ", nativeQuery = true)
