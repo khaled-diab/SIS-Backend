@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public interface LectureRepository extends Baserepository<Lecture> {
+public interface LectureRepository extends BaseRepository<Lecture> {
 
     @Query(value = "SELECT id FROM lecture WHERE section_id =:sectionId", nativeQuery = true)
     ArrayList<Long> findFacultyMemberLectures(long sectionId);

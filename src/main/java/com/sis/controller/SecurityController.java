@@ -47,7 +47,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email) throws JsonProcessingException {
-        return new ResponseEntity<>(securityService.uploadProfilePicture(file, email), HttpStatus.OK);
+    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email, @RequestParam("userID") Long userID) throws JsonProcessingException {
+        return new ResponseEntity<>(securityService.uploadProfilePicture(file, email, userID), HttpStatus.OK);
     }
 }

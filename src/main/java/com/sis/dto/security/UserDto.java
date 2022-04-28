@@ -1,8 +1,12 @@
 package com.sis.dto.security;
 
 import com.sis.dto.BaseDTO;
+import com.sis.dto.UserFileDto;
 import com.sis.entity.security.Role;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +23,6 @@ public class UserDto extends BaseDTO {
     private String token;
     private Role role;
     private String password;
+    private List<UserFileDto> userFileList = new ArrayList<>();
+
 }

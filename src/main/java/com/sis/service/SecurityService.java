@@ -1,6 +1,5 @@
 package com.sis.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sis.dto.AdminDto;
 import com.sis.dto.BaseDTO;
@@ -16,10 +15,7 @@ import com.sis.entity.mapper.StudentMapper;
 import com.sis.entity.mapper.UserMapper;
 import com.sis.entity.security.User;
 import com.sis.exception.InvalidUserNameOrPasswordException;
-import com.sis.repository.FacultyMemberRepository;
-import com.sis.repository.RoleRepository;
-import com.sis.repository.StudentRepository;
-import com.sis.repository.UserRepository;
+import com.sis.repository.*;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import com.sis.util.MessageResponse;
@@ -62,6 +58,8 @@ public class SecurityService {
     private final DepartmentService departmentService;
     private final UserMapper userMapper;
     private final RestTemplate restTemplate;
+
+    private final UserFileRepository userFileRepository;
     Logger logger = LoggerFactory.getLogger(SecurityService.class);
     @Value("${upload.picture.url}")
     private String uploadProfilePictureUrl;
@@ -72,7 +70,7 @@ public class SecurityService {
                            FacultyMemberRepository facultyMemberRepository, StudentMapper studentMapper,
                            RoleRepository roleRepository, PasswordEncoder passwordEncoder,
                            FacultyMemberMapper facultyMemberMapper, CollegeService collegeService,
-                           DepartmentService departmentService, UserMapper userMapper, ObjectMapper objectMapper, RestTemplate restTemplate) {
+                           DepartmentService departmentService, UserMapper userMapper, ObjectMapper objectMapper, RestTemplate restTemplate, UserFileRepository userFileRepository) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
@@ -87,6 +85,7 @@ public class SecurityService {
         this.userMapper = userMapper;
         this.objectMapper = objectMapper;
         this.restTemplate = restTemplate;
+        this.userFileRepository = userFileRepository;
     }
 
     public ResponseEntity<StudentDTO> registerStudent1(StudentDTO studentDTO) {
@@ -191,12 +190,12 @@ public class SecurityService {
         return studentList;
     }
 
-    public MessageResponse uploadProfilePicture(MultipartFile file, String email) throws JsonProcessingException {
+    public MessageResponse uploadProfilePicture(MultipartFile file, String email, Long userID) {
         FileUploadDownLoadModel fileUploadDownLoadModel = constructUploadModelForPictureUpload(email, file.getOriginalFilename());
-        return uploadToDrive(file, fileUploadDownLoadModel);
+        return uploadToDrive(file, fileUploadDownLoadModel, userID);
     }
 
-    private MessageResponse uploadToDrive(MultipartFile file, FileUploadDownLoadModel fileUploadDownLoadModel) throws JsonProcessingException {
+    private MessageResponse uploadToDrive(MultipartFile file, FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
         try {
             String fileUploadModel = objectMapper.writeValueAsString(fileUploadDownLoadModel);
             HttpHeaders headers = new HttpHeaders();
@@ -206,6 +205,7 @@ public class SecurityService {
             body.add("fileUploadModel", fileUploadModel);
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
             String content = restTemplate.exchange(uploadProfilePictureUrl, HttpMethod.POST, requestEntity, String.class).getBody();
+            saveFile(fileUploadDownLoadModel, userID);
             return objectMapper.readValue(content, MessageResponse.class);
         } catch (Exception e) {
             logger.error("error uploading file", e);
@@ -213,8 +213,12 @@ public class SecurityService {
         }
     }
 
+    private void saveFile(FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
+        userFileRepository.saveUserFile(String.join(Constants.ONE_SPACE_DELIMITER, fileUploadDownLoadModel.getDirectories()), fileUploadDownLoadModel.getFileName(), userID, Constants.FILE_TYPE_PROFILE_PICTURE);
+    }
+
     private FileUploadDownLoadModel constructUploadModelForPictureUpload(String email, String originalFilename) {
-        List<String> directories = Arrays.asList(email, "profile-picture");
+        List<String> directories = Arrays.asList(email, Constants.PROFILE_PICTURE_FOLDER_NAME);
         return FileUploadDownLoadModel.builder().directories(directories).removeOthers(true).fileName(originalFilename).build();
     }
 }

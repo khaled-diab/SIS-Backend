@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toCollection;
@@ -18,22 +20,32 @@ public class UserFileMapper implements Mapper<UserFile, UserFileDto> {
 
     @Override
     public UserFileDto toDTO(UserFile userFile) {
-        return UserFileDto.builder().directories(userFile.getDirectories()).fileName(userFile.getFileName()).build();
+        return UserFileDto.builder().directories(userFile.getDirectories()).fileName(userFile.getFileName()).type(userFile.getType()).build();
     }
 
     @Override
     public UserFile toEntity(UserFileDto userFileDto) {
-        return UserFile.builder().directories(userFileDto.getDirectories()).fileName(userFileDto.getFileName()).build();
+        return UserFile.builder().directories(userFileDto.getDirectories()).fileName(userFileDto.getFileName()).type(userFileDto.getType()).build();
     }
 
     @Override
     public ArrayList<UserFileDto> toDTOs(Collection<UserFile> e) {
-        return (ArrayList<UserFileDto>) e.stream().map(this::toDTO).collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     @Override
     public ArrayList<UserFile> toEntities(Collection<UserFileDto> userFileDtos) {
-        return (ArrayList<UserFile>) userFileDtos.stream().map(this::toEntity).collect(Collectors.toList());
+        return new ArrayList<>();
+    }
+
+
+    public List<UserFileDto> toDTOsOptional(Optional<Collection<UserFile>> userFiles) {
+        return userFiles.map(files -> files.stream().map(this::toDTO).collect(Collectors.toList())).orElse(null);
+    }
+
+
+    public List<UserFile> toEntitiesOptional(Optional<Collection<UserFileDto>> userFileDtos) {
+        return userFileDtos.map(files -> files.stream().map(this::toEntity).collect(Collectors.toList())).orElse(null);
     }
 
     @Override

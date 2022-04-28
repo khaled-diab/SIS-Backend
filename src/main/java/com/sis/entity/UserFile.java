@@ -16,4 +16,5 @@ public class UserFile extends BaseEntity {
 
     private String directories;
     private String fileName;
+    private String type;
 }

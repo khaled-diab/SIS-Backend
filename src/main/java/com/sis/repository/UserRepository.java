@@ -4,7 +4,7 @@ import com.sis.entity.security.User;
 
 import java.util.Optional;
 
-public interface UserRepository extends Baserepository<User> {
+public interface UserRepository extends BaseRepository<User> {
     /**
      * findByUsername
      *

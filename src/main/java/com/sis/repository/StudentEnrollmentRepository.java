@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 
-public interface StudentEnrollmentRepository extends Baserepository<StudentEnrollment> {
+public interface StudentEnrollmentRepository extends BaseRepository<StudentEnrollment> {
 
     //Abdo.Amr
     // @Query(value="SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and  student_id= :studentId  ", nativeQuery = true)

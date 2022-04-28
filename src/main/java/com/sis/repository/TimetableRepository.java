@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public interface TimetableRepository extends Baserepository<Timetable> {
+public interface TimetableRepository extends BaseRepository<Timetable> {
 
     //Abdo.Amr
     @Query(value = "SELECT * FROM timetable WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and faculty_member_id= :facultyMemberId  and course_id =:courseId", nativeQuery = true)

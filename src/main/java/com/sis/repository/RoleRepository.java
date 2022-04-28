@@ -3,7 +3,7 @@ package com.sis.repository;
 import com.sis.entity.security.Role;
 import org.springframework.data.jpa.repository.Query;
 
-public interface RoleRepository extends Baserepository<Role> {
+public interface RoleRepository extends BaseRepository<Role> {
 
     @Query(value = "select * from sis.role where role_name='ADMIN'", nativeQuery = true)
     Role getRoleAdmin();
