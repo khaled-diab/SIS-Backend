@@ -19,14 +19,14 @@ public class CollegeController extends BaseController<College, CollegeDTO> {
     private final CollegeMapper collegeMapper;
 
 
-    @RequestMapping(value = "/findAll/{page}/{size}", method = RequestMethod.POST)
+    @PostMapping(value = "/findAll/{page}/{size}")
     public PageResult<CollegeDTO> findAll(@PathVariable Integer page,
                                           @PathVariable Integer size,
                                           @RequestBody CollegeRequestDTO collegeRequestDTO) {
         return collegeService.getCollegesPage(page,size,collegeRequestDTO);
     }
 
-    @RequestMapping(value = "/deleteCollege/{id}", method = RequestMethod.DELETE)
+    @GetMapping(value = "/deleteCollege/{id}")
     public MessageResponse deleteCollege(@PathVariable(value = "id") Long id) {
         collegeService.deleteById(id);
         return new MessageResponse("Item has been deleted successfully");
