@@ -17,8 +17,8 @@ public class Constants {
     public static final String COLLEGES_CASH_KEY = "COLLEGES";
     public static final String DEPARTMENTS_CASH_KEY = "DEPARTMENTS";
     public static final String FILE_TYPE_PROFILE_PICTURE = "PROFILE_PICTURE";
-    public static final String PROFILE_PICTURE_FOLDER_NAME = "profile-picture";
-    public static final String ONE_SPACE_DELIMITER = " ";
+    public static final String PROFILE_PICTURE_FOLDER_NAME = "profilePicture";
+    public static final String DASH_DELIMITER = "-";
 
 
     private Constants() {

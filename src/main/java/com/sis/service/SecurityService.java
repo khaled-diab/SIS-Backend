@@ -214,7 +214,9 @@ public class SecurityService {
     }
 
     private void saveFile(FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
-        userFileRepository.saveUserFile(String.join(Constants.ONE_SPACE_DELIMITER, fileUploadDownLoadModel.getDirectories()), fileUploadDownLoadModel.getFileName(), userID, Constants.FILE_TYPE_PROFILE_PICTURE);
+        userFileRepository.saveUserFile(String.join(Constants.DASH_DELIMITER, fileUploadDownLoadModel.getDirectories()) +
+                        Constants.DASH_DELIMITER + fileUploadDownLoadModel.getFileName(),
+                fileUploadDownLoadModel.getFileName(), userID, Constants.FILE_TYPE_PROFILE_PICTURE);
     }
 
     private FileUploadDownLoadModel constructUploadModelForPictureUpload(String email, String originalFilename) {
