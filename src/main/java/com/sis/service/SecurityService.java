@@ -205,18 +205,24 @@ public class SecurityService {
             body.add("fileUploadModel", fileUploadModel);
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
             String content = restTemplate.exchange(uploadProfilePictureUrl, HttpMethod.POST, requestEntity, String.class).getBody();
-            saveFile(fileUploadDownLoadModel, userID);
-            return objectMapper.readValue(content, MessageResponse.class);
+            MessageResponse messageResponse = objectMapper.readValue(content, MessageResponse.class);
+            userFileRepository.deleteAllByType(Constants.FILE_TYPE_PROFILE_PICTURE);
+            fileUploadDownLoadModel.setFileName(messageResponse.getMessage());
+            String directories = saveFile(fileUploadDownLoadModel, userID);
+            messageResponse.setMessage(directories);
+            return messageResponse;
         } catch (Exception e) {
             logger.error("error uploading file", e);
             return new MessageResponse(500, "error Uploading file", null);
         }
     }
 
-    private void saveFile(FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
-        userFileRepository.saveUserFile(String.join(Constants.DASH_DELIMITER, fileUploadDownLoadModel.getDirectories()) +
-                        Constants.DASH_DELIMITER + fileUploadDownLoadModel.getFileName(),
+    private String saveFile(FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
+        String directories = String.join(Constants.DASH_DELIMITER, fileUploadDownLoadModel.getDirectories()) +
+                Constants.DASH_DELIMITER + fileUploadDownLoadModel.getFileName();
+        userFileRepository.saveUserFile(directories,
                 fileUploadDownLoadModel.getFileName(), userID, Constants.FILE_TYPE_PROFILE_PICTURE);
+        return directories;
     }
 
     private FileUploadDownLoadModel constructUploadModelForPictureUpload(String email, String originalFilename) {

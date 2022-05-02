@@ -11,4 +11,7 @@ public interface UserFileRepository extends BaseRepository<UserFile> {
     @Transactional
     @Query(value = "INSERT INTO user_file (directories, file_name, user_id, type) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
     void saveUserFile(String directories, String fileName, Long userID, String fileType);
+
+    @Transactional
+    void deleteAllByType(String type);
 }
