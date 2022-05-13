@@ -1,7 +1,6 @@
 package com.sis.dto.attendanceDetails;
 
 import com.sis.dto.BaseDTO;
-import com.sis.dto.course.CourseDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
