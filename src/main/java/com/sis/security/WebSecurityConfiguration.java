@@ -38,7 +38,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Entry points
         http.authorizeRequests()
-                .antMatchers("/api/security/**")
+                .antMatchers("/", "/api/security/**")
                 .permitAll().anyRequest().authenticated();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
