@@ -35,7 +35,7 @@ public class SisSystemApplication extends SpringBootServletInitializer {
 
 
 	@GetMapping("/")
-	public ResponseEntity<?> getServiceName() {
+	public ResponseEntity<?> health() {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
