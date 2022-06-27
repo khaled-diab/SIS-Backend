@@ -92,7 +92,9 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 
 				entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
 			}
-			entity.setUser(userMapper.toEntity(dto.getUser()));
+			if(dto.getUser()!=null) {
+				entity.setUser(userMapper.toEntity(dto.getUser()));
+			}
 		}
 		return entity;
 	}
