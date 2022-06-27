@@ -27,10 +27,10 @@ public class Timetable extends BaseEntity {
     private String day;
 
     @Column(name = "start_time")
-    private LocalTime startTime;
+    private String startTime;
 
     @Column(name = "end_time")
-    private LocalTime endTime;
+    private String endTime;
 
     @ManyToOne
     @JoinColumn(name = "college_id", referencedColumnName = "id")

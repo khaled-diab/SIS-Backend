@@ -23,10 +23,10 @@ public class TimetableDTO extends BaseDTO {
     private String day;
 
 //    @NotEmpty(message = "Required")
-    private LocalTime startTime;
+    private String startTime;
 
 //    @NotEmpty(message = "Required")
-    private LocalTime endTime;
+    private String endTime;
 
     @NotNull(message = "Required")
     private LectureTypeDTO lectureTypeDTO;

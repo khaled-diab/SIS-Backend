@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -58,6 +59,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
             lectureDTO.setAttendanceCode(rand.nextInt());
 
         }
+        System.out.println(lectureDTO.getLectureStartTime() + " lectureDTO.startTime");
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
                 , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());

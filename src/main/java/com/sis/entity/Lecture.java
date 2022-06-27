@@ -30,11 +30,11 @@ public class Lecture extends BaseEntity{
 
     //    @NotNull
     @Column(name = "lecture_start_time")
-    private LocalTime lectureStartTime;
+    private String lectureStartTime;
 
     //    @NotNull
     @Column(name = "lecture_end_time")
-    private LocalTime lectureEndTime;
+    private String lectureEndTime;
 
     @Column(name = "attendance_code")
     private long attendanceCode;
