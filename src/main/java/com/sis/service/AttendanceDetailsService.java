@@ -73,8 +73,8 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
                     .lectureDTO(lectureDTO)
                     .attendanceStatus("Absent")
                     .attendanceDate(lectureDTO.getLectureDate())
-                    .lectureStartTime(lectureDTO.getLectureStartTime().toLocalTime())
-                    .lectureEndTime(lectureDTO.getLectureEndTime().toLocalTime())
+                    .lectureStartTime(lectureDTO.getLectureStartTime())
+                    .lectureEndTime(lectureDTO.getLectureEndTime())
                     .sectionDTO(lectureDTO.getSectionDTO())
                     .build();
             attendanceDetailsDTOs.add(attendanceDetailsDTO);
