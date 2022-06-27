@@ -12,13 +12,16 @@ import com.sis.repository.specification.TimetableSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -93,6 +96,10 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         if (timetables != null) {
             timetableDTOs = this.timetableMapper.toDTOs(timetables);
         }
+        for (Timetable timetable : timetables){
+            System.out.println(timetable.getStartTime() + " start");
+            System.out.println(timetable.getEndTime() + " end");
+        }
         return timetableDTOs;
     }
 
@@ -128,8 +135,8 @@ public class TimetableService extends BaseServiceImp<Timetable> {
                     section.getAcademicYear().getId(), section.getAcademicTerm().getId(), section.getId()));
         }
         timetableDTOs.sort((timetableDTO, t1) -> {
-            if (t1.getStartTime().toLocalTime().isAfter(timetableDTO.getStartTime().toLocalTime())) return -1;
-            else if (t1.getStartTime().toLocalTime().isBefore(timetableDTO.getStartTime().toLocalTime())) return 1;
+            if (LocalTime.parse(t1.getStartTime()).isAfter(LocalTime.parse(timetableDTO.getStartTime()))) return -1;
+            else if (LocalTime.parse(t1.getStartTime()).isBefore(LocalTime.parse(timetableDTO.getStartTime()))) return 1;
             return 0;
         });
         return timetableDTOs;

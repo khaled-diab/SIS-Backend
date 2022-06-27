@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -132,6 +133,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
+        LocalTime lt = LocalTime.parse("09:08:30");
+        System.out.println(lt + "LT");
         PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
         PageResult<StudentDTO> result = this.studentService.search(queryUtil, filterDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
