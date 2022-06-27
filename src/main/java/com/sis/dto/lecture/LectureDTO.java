@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
@@ -28,9 +29,9 @@ public class LectureDTO extends BaseDTO {
 
     private Date lectureDate;
 
-    private LocalTime lectureStartTime;
+    private Time lectureStartTime;
 
-    private LocalTime lectureEndTime;
+    private Time lectureEndTime;
 
     private long attendanceCode;
 

@@ -7,8 +7,11 @@ package com.sis.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -27,10 +30,10 @@ public class Timetable extends BaseEntity {
     private String day;
 
     @Column(name = "start_time")
-    private LocalTime startTime;
+    private Time startTime;
 
     @Column(name = "end_time")
-    private LocalTime endTime;
+    private Time endTime;
 
     @ManyToOne
     @JoinColumn(name = "college_id", referencedColumnName = "id")

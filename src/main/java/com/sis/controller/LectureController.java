@@ -60,7 +60,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
         }
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
-                , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
+                , facultyMember, lectureDTO.getLectureStartTime().toLocalTime(), lectureDTO.getLectureEndTime().toLocalTime());
         if (lectureDTO1 == null) {
             isFound = false;
         } else {
