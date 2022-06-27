@@ -8,29 +8,25 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.section.SectionDTO;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.sql.Time;
 import java.time.LocalTime;
 
 @Getter
 @Setter
 @Validated
-
 public class TimetableDTO extends BaseDTO {
 
     @NotEmpty(message = "Required")
     private String day;
 
 //    @NotEmpty(message = "Required")
-    private Time startTime;
+    private String startTime;
 
 //    @NotEmpty(message = "Required")
-    private Time endTime;
+    private String endTime;
 
     @NotNull(message = "Required")
     private LectureTypeDTO lectureTypeDTO;

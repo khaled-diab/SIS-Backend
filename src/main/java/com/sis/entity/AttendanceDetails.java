@@ -37,10 +37,10 @@ public class AttendanceDetails extends BaseEntity {
 
 
     @Column(name = "lecture_start_time")
-    private LocalTime lectureStartTime;
+    private String lectureStartTime;
 
 
     @Column(name = "lecture_end_time")
-    private LocalTime lectureEndTime;
+    private String lectureEndTime;
 
 }

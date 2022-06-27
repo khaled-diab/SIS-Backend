@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
@@ -29,9 +28,9 @@ public class LectureDTO extends BaseDTO {
 
     private Date lectureDate;
 
-    private Time lectureStartTime;
+    private String lectureStartTime;
 
-    private Time lectureEndTime;
+    private String lectureEndTime;
 
     private long attendanceCode;
 
@@ -54,4 +53,4 @@ public class LectureDTO extends BaseDTO {
     public void setAttendanceStatus(boolean attendanceStatus) {
         this.attendanceStatus = attendanceStatus;
     }
-    }
+}

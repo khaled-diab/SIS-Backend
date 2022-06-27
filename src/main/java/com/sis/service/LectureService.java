@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.toCollection;
 
 
 @Service
-public class LectureService  extends BaseServiceImp<Lecture> {
+public class LectureService extends BaseServiceImp<Lecture> {
 
 
     @Autowired
@@ -46,33 +46,34 @@ public class LectureService  extends BaseServiceImp<Lecture> {
         }
         return LectureDTOs;
     }
+
     //this function is written by Abdo Ramadan
     public ArrayList<FacultyMemberLecturesDTO> getFacultyMemberLecturesToReport(long academicYearId,
-                                                                        long academicTermId,
-                                                                        long sectionId){
+                                                                                long academicTermId,
+                                                                                long sectionId) {
         ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
         ArrayList<FacultyMemberLecturesDTO> facultyMemberLecturesDTOS = new ArrayList<>();
-        for(Long id : lectureIds){
+        for (Long id : lectureIds) {
             Lecture lecture = findById(id);
-            if(lecture.getAcademicTermId().getId() ==
+            if (lecture.getAcademicTermId().getId() ==
                     academicTermId && lecture.getAcademicYearId().getId() == academicYearId) {
                 ArrayList<AttendanceDetails> presentAttendanceDetails =
-                lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
-                        attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
-                                "Present")).collect(toCollection(
-                        ArrayList<AttendanceDetails>::new));
+                        lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+                                attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
+                                        "Present")).collect(toCollection(
+                                ArrayList<AttendanceDetails>::new));
                 ArrayList<AttendanceDetails> absetAttendance =
                         lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
-                        attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
-                                "Absent")).collect(toCollection(
-                        ArrayList<AttendanceDetails>::new));
-                FacultyMemberLecturesDTO facultyMemberLecturesDTO  =new FacultyMemberLecturesDTO();
+                                attendanceDetails1.getAttendanceStatus().equalsIgnoreCase(
+                                        "Absent")).collect(toCollection(
+                                ArrayList<AttendanceDetails>::new));
+                FacultyMemberLecturesDTO facultyMemberLecturesDTO = new FacultyMemberLecturesDTO();
                 facultyMemberLecturesDTO.setPresentStudent(presentAttendanceDetails.size());
                 facultyMemberLecturesDTO.setAbsentStudent(absetAttendance.size());
-                facultyMemberLecturesDTO.setRate(1.0*presentAttendanceDetails.size()/(absetAttendance.size()+presentAttendanceDetails.size()));
-                facultyMemberLecturesDTO.setLectureEndTime(lecture.getLectureEndTime().toLocalTime());
+                facultyMemberLecturesDTO.setRate(1.0 * presentAttendanceDetails.size() / (absetAttendance.size() + presentAttendanceDetails.size()));
+                facultyMemberLecturesDTO.setLectureEndTime(LocalTime.parse(lecture.getLectureEndTime()));
                 facultyMemberLecturesDTO.setLectureDay(lecture.getLectureDay());
-                facultyMemberLecturesDTO.setLectureStartTime(lecture.getLectureStartTime().toLocalTime());
+                facultyMemberLecturesDTO.setLectureStartTime(LocalTime.parse(lecture.getLectureStartTime()));
                 facultyMemberLecturesDTO.setLectureDate(lecture.getLectureDate());
                 facultyMemberLecturesDTO.setId(lecture.getId());
                 facultyMemberLecturesDTOS.add(facultyMemberLecturesDTO);
@@ -81,21 +82,21 @@ public class LectureService  extends BaseServiceImp<Lecture> {
         return facultyMemberLecturesDTOS;
     }
 
-    public LectureDTO searchLecture(long sectionId ,Date lectureDate, Course  course, FacultyMember facultyMember,
-                                    LocalTime lectureStartTime, LocalTime lectureEndTime)
-    {
+    public LectureDTO searchLecture(long sectionId, Date lectureDate, Course course, FacultyMember facultyMember,
+                                    String lectureStartTime, String lectureEndTime) {
 
-            ArrayList<Lecture> lectures = this.lectureRepository.findLectureBySectionIdAndLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime
-                    (sectionId,
-                    lectureDate,
-                    course,
-                    facultyMember,
-                    lectureStartTime,
-                    lectureEndTime);
-            if (lectures!=null && lectures.size()>0) {
-                return this.lectureMapper.toDTO(lectures.get(0));
-            }
-            return null;
+        System.out.println(sectionId + " sectionId " + lectureDate + " lectureDate " + lectureStartTime + " lectureStartTime " + lectureEndTime + " lectureEndTime ");
+        ArrayList<Lecture> lectures = this.lectureRepository.findLectureBySectionIdAndLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime
+                (sectionId,
+                        lectureDate,
+                        course,
+                        facultyMember,
+                        lectureStartTime,
+                        lectureEndTime);
+        if (lectures != null && lectures.size() > 0) {
+            return this.lectureMapper.toDTO(lectures.get(0));
         }
+        return null;
+    }
 
 }

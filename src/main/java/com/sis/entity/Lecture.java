@@ -2,11 +2,9 @@ package com.sis.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
@@ -32,12 +30,11 @@ public class Lecture extends BaseEntity{
 
     //    @NotNull
     @Column(name = "lecture_start_time")
-    @DateTimeFormat(pattern = "HH:mm:ss")
-    private Time lectureStartTime;
+    private String lectureStartTime;
 
     //    @NotNull
     @Column(name = "lecture_end_time")
-    private Time lectureEndTime;
+    private String lectureEndTime;
 
     @Column(name = "attendance_code")
     private long attendanceCode;
