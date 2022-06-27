@@ -28,9 +28,9 @@ public class LectureDTO extends BaseDTO {
 
     private Date lectureDate;
 
-    private LocalTime lectureStartTime;
+    private String lectureStartTime;
 
-    private LocalTime lectureEndTime;
+    private String lectureEndTime;
 
     private long attendanceCode;
 
@@ -53,4 +53,4 @@ public class LectureDTO extends BaseDTO {
     public void setAttendanceStatus(boolean attendanceStatus) {
         this.attendanceStatus = attendanceStatus;
     }
-    }
+}

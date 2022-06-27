@@ -17,8 +17,8 @@ public interface LectureRepository extends BaseRepository<Lecture> {
     ArrayList<Lecture> findLectureBySectionIdAndLectureDateAndCourseIdAndFacultyMemberIdAndLectureStartTimeAndLectureEndTime(long SectionId, Date lectureDate,
                                                                                                                              Course course,
                                                                                                                              FacultyMember facultyMember,
-                                                                                                                             LocalTime lectureStartTime,
-                                                                                                                             LocalTime lectureEndTime);
+                                                                                                                             String lectureStartTime,
+                                                                                                                             String lectureEndTime);
 
 
 }
