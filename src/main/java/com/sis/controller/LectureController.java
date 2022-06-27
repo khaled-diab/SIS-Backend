@@ -12,6 +12,7 @@ import com.sis.service.SectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
@@ -44,7 +45,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     private FacultyMemberMapper facultyMemberMapper;
 
     @RequestMapping(value = "/addLecture", method = RequestMethod.POST)
-    public ResponseEntity<LectureDTO> addLecture(@RequestBody LectureDTO lectureDTO) {
+    public ResponseEntity<LectureDTO> addLecture(@Validated  @RequestBody LectureDTO lectureDTO) {
         Course course = this.courseMapper.toEntity(lectureDTO.getCourseDTO());
         FacultyMember facultyMember = this.facultyMemberMapper.toEntity(lectureDTO.getFacultyMemberDTO());
 
@@ -62,7 +63,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
         System.out.println(lectureDTO.getLectureStartTime() + " lectureDTO.startTime");
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
-                , facultyMember, lectureDTO.getLectureStartTime().toLocalTime(), lectureDTO.getLectureEndTime().toLocalTime());
+                , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
         if (lectureDTO1 == null) {
             isFound = false;
         } else {
