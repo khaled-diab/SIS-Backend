@@ -99,7 +99,7 @@ public class SecurityService {
 
     public ResponseEntity<MessageResponse> registerStudent(RegisterDTO registerDTO) {
         Optional<Student> optionalStudent = studentRepository.findByNationalId(registerDTO.getNationalityID());
-        if (optionalStudent.isEmpty()) {
+        if (optionalStudent.isPresent()) {
             // the student is not in the system
             return new ResponseEntity<>(MessageResponse.builder().message("You are not in the system contact The administrator").build(), HttpStatus.BAD_REQUEST);
         } else if (optionalStudent.get().getUser() != null) {

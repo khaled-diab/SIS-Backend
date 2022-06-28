@@ -11,6 +11,9 @@ public class PageQueryUtil extends LinkedHashMap<String, Object> {
    
     private int limit;
 
+    public PageQueryUtil(){
+
+    }
     public PageQueryUtil(int page,int limit){
         this.page=page;
         this.limit=limit;
