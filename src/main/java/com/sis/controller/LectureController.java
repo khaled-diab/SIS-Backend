@@ -12,6 +12,7 @@ import com.sis.service.SectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     private FacultyMemberMapper facultyMemberMapper;
 
     @RequestMapping(value = "/addLecture", method = RequestMethod.POST)
-    public ResponseEntity<LectureDTO> addLecture(@RequestBody LectureDTO lectureDTO) {
+    public ResponseEntity<LectureDTO> addLecture(@Validated  @RequestBody LectureDTO lectureDTO) {
         Course course = this.courseMapper.toEntity(lectureDTO.getCourseDTO());
         FacultyMember facultyMember = this.facultyMemberMapper.toEntity(lectureDTO.getFacultyMemberDTO());
 
@@ -55,9 +56,10 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
         if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
             Random rand = new Random();
-            lectureDTO.setAttendanceCode(rand.nextInt());
+            lectureDTO.setAttendanceCode(Math.abs(rand.nextInt()));
 
         }
+        System.out.println(lectureDTO.getLectureStartTime() + " lectureDTO.startTime");
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
                 , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());

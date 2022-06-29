@@ -5,6 +5,8 @@
  */
 package com.sis.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -22,10 +24,11 @@ public class AcademicTerm extends BaseEntity {
 
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;
-
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 
     @JoinColumn(name = "academic_year", referencedColumnName = "id")

@@ -5,9 +5,7 @@ import com.sis.dto.course.CourseDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 import java.time.LocalTime;
@@ -17,6 +15,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AttendanceDetailsDTO extends BaseDTO {
 
 
@@ -28,9 +28,9 @@ public class AttendanceDetailsDTO extends BaseDTO {
 
     private Date attendanceDate;
 
-    private LocalTime lectureStartTime;
+    private String lectureStartTime;
 
-    private LocalTime lectureEndTime;
+    private String lectureEndTime;
 
     private SectionDTO sectionDTO;
 }

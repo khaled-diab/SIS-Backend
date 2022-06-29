@@ -1,5 +1,6 @@
 package com.sis.dto.facultyMember;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.DegreeDTO;
 import com.sis.dto.DepartmentDTO;
@@ -50,6 +51,7 @@ public class FacultyMemberDTO extends BaseDTO {
     private String photo;
 
     @NotNull(message = "Required")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     @NotNull(message = "Required")
