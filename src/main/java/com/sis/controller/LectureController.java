@@ -59,7 +59,6 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
             lectureDTO.setAttendanceCode(Math.abs(rand.nextInt()));
 
         }
-        System.out.println(lectureDTO.getLectureStartTime() + " lectureDTO.startTime");
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
                 , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
