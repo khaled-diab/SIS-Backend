@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -57,7 +56,7 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
         if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
             Random rand = new Random();
-            lectureDTO.setAttendanceCode(rand.nextInt());
+            lectureDTO.setAttendanceCode(Math.abs(rand.nextInt()));
 
         }
         System.out.println(lectureDTO.getLectureStartTime() + " lectureDTO.startTime");
