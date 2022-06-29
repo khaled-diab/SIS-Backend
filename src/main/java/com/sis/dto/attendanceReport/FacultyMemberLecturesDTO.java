@@ -23,9 +23,9 @@ public class FacultyMemberLecturesDTO extends BaseDTO {
 
     private double rate ;
 
-    private LocalTime lectureStartTime;
+    private String lectureStartTime;
 
-    private LocalTime lectureEndTime;
+    private String lectureEndTime;
 
 
 }
