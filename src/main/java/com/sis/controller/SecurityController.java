@@ -1,6 +1,5 @@
 package com.sis.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
@@ -47,7 +46,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email, @RequestParam("userID") String userID) throws JsonProcessingException {
+    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email, @RequestParam("userID") String userID) {
         return new ResponseEntity<>(securityService.uploadProfilePicture(file, email, Long.valueOf(userID)), HttpStatus.OK);
     }
 }

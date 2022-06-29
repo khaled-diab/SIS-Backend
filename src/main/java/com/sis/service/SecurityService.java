@@ -101,7 +101,7 @@ public class SecurityService {
         Optional<Student> optionalStudent = studentRepository.findByNationalId(registerDTO.getNationalityID());
         if (optionalStudent.isPresent()) {
             // the student is not in the system
-            return new ResponseEntity<>(MessageResponse.builder().message("You are not in the system contact The administrator").build(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(MessageResponse.builder().message("You are not in the system. contact The administrator").build(), HttpStatus.BAD_REQUEST);
         } else if (optionalStudent.get().getUser() != null) {
             // student already registered
             return new ResponseEntity<>(MessageResponse.builder().message("Already registered go to login").build(), HttpStatus.BAD_REQUEST);
