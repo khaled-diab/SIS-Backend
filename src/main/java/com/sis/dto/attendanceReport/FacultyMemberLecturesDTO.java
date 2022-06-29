@@ -1,5 +1,6 @@
 package com.sis.dto.attendanceReport;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class FacultyMemberLecturesDTO extends BaseDTO {
 
     private String lectureDay;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date lectureDate;
 
     private int presentStudent;
