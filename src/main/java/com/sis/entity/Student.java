@@ -6,6 +6,7 @@
 package com.sis.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.entity.security.User;
 import lombok.*;
 
@@ -41,6 +42,7 @@ public class Student extends BaseEntity {
 
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     @Column(name = "university_mail")
@@ -75,7 +77,7 @@ public class Student extends BaseEntity {
     @ManyToOne
     private Department departmentId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

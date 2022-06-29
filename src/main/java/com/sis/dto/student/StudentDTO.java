@@ -1,5 +1,6 @@
 package com.sis.dto.student;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.dto.AcademicProgramDTO;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.DepartmentDTO;
@@ -43,6 +44,7 @@ public class StudentDTO extends BaseDTO {
     @Pattern(regexp = Constants.DIGITS_ONLY_14, message = "must be 14 digits")
     private String nationalId;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     @NotEmpty(message = "Required")

@@ -1,5 +1,9 @@
 package com.sis.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sis.dto.college.CollegeDTO;
+
+
 public abstract class BaseDTO {
 	private long id;
 	public BaseDTO(){
