@@ -33,6 +33,10 @@ public interface StudentRepository extends BaseRepository<Student> {
             nativeQuery = true)
     void saveNativeStudent(String nameAR, String nameEN, String nationality, String nationalID, Long collegeID, Long departmentID, Long universityID);
 
-    Optional<Student> findByNationalId(String nationalID);
+    Student findByNationalId(String nationalID);
+
+    Boolean existsByNationalId(String nationalID);
+
+    Boolean existsByUniversityMail(String mail);
 
 }
