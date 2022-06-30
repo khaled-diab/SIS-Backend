@@ -21,23 +21,18 @@ public class SecurityController {
     private final SecurityService securityService;
 
     @PostMapping(value = "/register-student")
-    public ResponseEntity<MessageResponse> registerStudent(@RequestBody RegisterDTO registerDTO) {
+    public MessageResponse registerStudent(@RequestBody RegisterDTO registerDTO) {
         return securityService.registerStudent(registerDTO);
-    }
-
-    @PostMapping(value = "/register-student1")
-    public ResponseEntity<StudentDTO> registerStudent1(@RequestBody StudentDTO studentDTO) {
-        return securityService.registerStudent1(studentDTO);
-    }
-
-    @PostMapping(value = "/register-bulk-students", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<StudentDTO> registerBulkStudents(@RequestParam("file") MultipartFile file) {
-        return securityService.registerBulkStudents(file);
     }
 
     @PostMapping(value = "/register-faculty-member")
     public ResponseEntity<FacultyMemberDTO> createFacultyMember(@RequestBody final FacultyMemberDTO facultyMemberDTO) {
         return securityService.registerFacultyMember(facultyMemberDTO);
+    }
+
+    @PostMapping(value = "/register-bulk-students", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<StudentDTO> registerBulkStudents(@RequestParam("file") MultipartFile file) {
+        return securityService.registerBulkStudents(file);
     }
 
     @PostMapping(value = "/sign-in")
@@ -48,5 +43,10 @@ public class SecurityController {
     @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email, @RequestParam("userID") String userID) {
         return new ResponseEntity<>(securityService.uploadProfilePicture(file, email, Long.valueOf(userID)), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/register-student1")
+    public ResponseEntity<StudentDTO> registerStudent1(@RequestBody StudentDTO studentDTO) {
+        return securityService.registerStudent1(studentDTO);
     }
 }

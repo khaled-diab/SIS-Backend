@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -97,33 +98,37 @@ public class SecurityService {
         return new ResponseEntity<>(studentMapper.toDTO(studentRepository.save(student)), HttpStatus.OK);
     }
 
-    public ResponseEntity<MessageResponse> registerStudent(RegisterDTO registerDTO) {
-        Optional<Student> optionalStudent = studentRepository.findByNationalId(registerDTO.getNationalityID());
-        if (optionalStudent.isPresent()) {
-            // the student is not in the system
-            return new ResponseEntity<>(MessageResponse.builder().message("You are not in the system. contact The administrator").build(), HttpStatus.BAD_REQUEST);
-        } else if (optionalStudent.get().getUser() != null) {
-            // student already registered
-            return new ResponseEntity<>(MessageResponse.builder().message("Already registered go to login").build(), HttpStatus.BAD_REQUEST);
+    public MessageResponse registerStudent(RegisterDTO registerDTO) {
+        CompletableFuture<Boolean> nationalIDExist = CompletableFuture.supplyAsync(() -> studentRepository.existsByNationalId(registerDTO.getNationalityID()));
+        CompletableFuture<Boolean> mailExist = CompletableFuture.supplyAsync(() -> studentRepository.existsByUniversityMail(registerDTO.getEmail()));
+        CompletableFuture.allOf(nationalIDExist, mailExist);
+        if (!Boolean.TRUE.equals(nationalIDExist.join())) {
+            return new MessageResponse(500, "Your National ID is not in the system. contact The administrator", null);
         } else {
-            return registerStudent(registerDTO, optionalStudent.get());
+            Student student = studentRepository.findByNationalId(registerDTO.getNationalityID());
+            if (Boolean.TRUE.equals(mailExist.join()) || student.getUniversityMail() != null) {
+                return new MessageResponse(500, "Already registered go to login", null);
+            } else if (Boolean.TRUE.equals(!mailExist.join())) {
+                return registerStudent(registerDTO, student);
+            } else {
+                return new MessageResponse(500, "Your National ID is not in the system. contact The administrator", null);
+            }
         }
+
     }
 
-    private ResponseEntity<MessageResponse> registerStudent(RegisterDTO registerDTO, Student student) {
-        if (userRepository.findByEmailOrUsername(registerDTO.getUsername(), registerDTO.getUsername()).isPresent()) {
-            return new ResponseEntity<>(MessageResponse.builder().message("email already taken").build(), HttpStatus.BAD_REQUEST);
-        }
+    private MessageResponse registerStudent(RegisterDTO registerDTO, Student student) {
         User user = User.builder()
                 .firstname(student.getNameEn())
-                .email(registerDTO.getUsername())
-                .username(registerDTO.getUsername())
+                .email(registerDTO.getEmail())
+                .username(registerDTO.getEmail())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .role(roleRepository.getRoleStudent())
                 .type(Constants.TYPE_STUDENT).build();
         student.setUser(userRepository.save(user));
+        student.setUniversityMail(registerDTO.getEmail());
         studentRepository.save(student);
-        return new ResponseEntity<>(MessageResponse.builder().message("registered Successfully").build(), HttpStatus.OK);
+        return MessageResponse.builder().message("registered Successfully").build();
     }
 
     public ResponseEntity<FacultyMemberDTO> registerFacultyMember(FacultyMemberDTO facultyMemberDTO) {
@@ -229,4 +234,5 @@ public class SecurityService {
         List<String> directories = Arrays.asList(email, Constants.PROFILE_PICTURE_FOLDER_NAME);
         return FileUploadDownLoadModel.builder().directories(directories).removeOthers(true).fileName(originalFilename).build();
     }
+
 }
