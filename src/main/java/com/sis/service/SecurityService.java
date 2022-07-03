@@ -8,6 +8,7 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.dto.student.StudentUploadDto;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.Student;
 import com.sis.entity.mapper.FacultyMemberMapper;
@@ -19,6 +20,7 @@ import com.sis.repository.*;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import com.sis.util.MessageResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -36,13 +38,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@RequiredArgsConstructor
 public class SecurityService {
 
     private final ObjectMapper objectMapper;
@@ -55,39 +57,18 @@ public class SecurityService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final FacultyMemberMapper facultyMemberMapper;
-    private final CollegeService collegeService;
-    private final DepartmentService departmentService;
     private final UserMapper userMapper;
     private final RestTemplate restTemplate;
-
     private final UserFileRepository userFileRepository;
+    private final CashService cashService;
+
+    private final CollegeRepository collegeRepository;
+
+    private final PojoValidationService validationService;
     Logger logger = LoggerFactory.getLogger(SecurityService.class);
     @Value("${upload.picture.url}")
     private String uploadProfilePictureUrl;
 
-
-    public SecurityService(UserRepository userRepository, AuthenticationManager authenticationManager,
-                           JwtProvider jwtProvider, StudentRepository studentRepository,
-                           FacultyMemberRepository facultyMemberRepository, StudentMapper studentMapper,
-                           RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-                           FacultyMemberMapper facultyMemberMapper, CollegeService collegeService,
-                           DepartmentService departmentService, UserMapper userMapper, ObjectMapper objectMapper, RestTemplate restTemplate, UserFileRepository userFileRepository) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
-        this.studentRepository = studentRepository;
-        this.facultyMemberRepository = facultyMemberRepository;
-        this.studentMapper = studentMapper;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.facultyMemberMapper = facultyMemberMapper;
-        this.collegeService = collegeService;
-        this.departmentService = departmentService;
-        this.userMapper = userMapper;
-        this.objectMapper = objectMapper;
-        this.restTemplate = restTemplate;
-        this.userFileRepository = userFileRepository;
-    }
 
     public ResponseEntity<StudentDTO> registerStudent1(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -162,38 +143,63 @@ public class SecurityService {
                 .orElseThrow(InvalidUserNameOrPasswordException::new));
     }
 
-    public ResponseEntity<StudentDTO> registerBulkStudents(MultipartFile file) {
-        Map<String, Long> departmentsMap = departmentService.cashAllDepartments();
-        Map<String, Long> collegesMap = collegeService.cashAllColleges();
-        try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
-            sheet.removeRow(sheet.iterator().next());
-            processRows(StreamSupport.stream(sheet.spliterator(), false).collect(Collectors.toList()), departmentsMap, collegesMap).
-                    forEach(studentDTO -> studentRepository
-                            .saveNativeStudent(studentDTO.getNameAr(), studentDTO.getNameEn(), studentDTO.getNationality(),
-                                    studentDTO.getNationalId(), studentDTO.getCollegeID(), studentDTO.getDepartmentID(), studentDTO.getUniversityId()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public MessageResponse registerBulkStudents(MultipartFile file) {
+        CompletableFuture.runAsync(() -> {
+            Map<Object, List<Object[]>> colleges = cashService.cashAllColleges();
+            try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
+                Sheet sheet = workbook.getSheetAt(0);
+                sheet.removeRow(sheet.iterator().next());
+                List<Row> rows = StreamSupport.stream(sheet.spliterator(), false).collect(Collectors.toList());
+                Map<Boolean, List<StudentUploadDto>> studentUploadMap =
+                        processRows(, departmentsMap, collegesMap).
+                                forEach(studentDTO -> studentRepository
+                                        .saveNativeStudent(studentDTO.getNameAr(), studentDTO.getNameEn(), studentDTO.getNationality(),
+                                                studentDTO.getNationalId(), studentDTO.getCollegeID(), studentDTO.getDepartmentID(), studentDTO.getUniversityId()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        return new MessageResponse(200, "Students are being Registered", null);
     }
 
-    private List<StudentDTO> processRows(List<Row> collect, Map<String, Long> departmentsMap, Map<String, Long> collegesMap) {
-        List<StudentDTO> studentList = new ArrayList<>();
-        for (Row row : collect) {
-            studentList.add(StudentDTO.builder()
+    private Map<Boolean, List<StudentUploadDto>> processRows(List<Row> rows, Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap) throws Exception {
+        return rows.parallelStream().map(row -> {
+            StudentUploadDto studentUploadDto = StudentUploadDto.builder()
                     .nameAr(row.getCell(0).getStringCellValue())
-                    .nameEn(row.getCell(1).getStringCellValue())
-                    .nationality(row.getCell(2).getStringCellValue())
-                    .nationalId(row.getCell(3).getStringCellValue())
-                    .birthDate(Date.from(Instant.now()))
-                    .collegeID(collegesMap.get(row.getCell(5).getStringCellValue()))
-                    .departmentID(departmentsMap.get(row.getCell(6).getStringCellValue()))
-                    .universityId(0)
-                    .build());
-        }
-        return studentList;
+                    .nationality(row.getCell(1).getStringCellValue())
+                    .nationalId(row.getCell(2).getStringCellValue())
+                    .collegeCode(row.getCell(3).getStringCellValue())
+                    .departmentCode(row.getCell(4).getStringCellValue())
+                    .build();
+            studentUploadDto.setErrors(validationService.validate(studentUploadDto).stream()
+                    .map(violation -> new StringBuilder()
+                            .append("Field ").append("-> ").append(violation.getPropertyPath()).append(System.lineSeparator())
+                            .append("Error ").append("-> ").append(violation.getMessage()).append(System.lineSeparator()))
+                    .collect(Collectors.joining()));
+            validateCollegeAndDepartment(collegesMap, departmentsMap, studentUploadDto);
+            studentUploadDto.setIsValid(studentUploadDto.getErrors().equals(" "));
+            return studentUploadDto;
+        }).collect(Collectors.groupingBy(StudentUploadDto::getIsValid));
     }
+
+    private StudentUploadDto validateCollegeAndDepartment(Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap, StudentUploadDto studentUploadDto) {
+        Optional<List<Object[]>> optionalListColleges = Optional.ofNullable(collegesMap.get(studentUploadDto.getCollegeCode()));
+        if (optionalListColleges.isEmpty()) {
+            studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" college-code").append(System.lineSeparator())
+                    .append("Error ").append("-> ").append("college doesnt exist").append(System.lineSeparator()).toString());
+            return studentUploadDto;
+        } else {
+            Optional<List<Object[]>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(optionalListColleges.stream().findFirst()));
+            if (optionalListDepartments.isEmpty()) {
+                studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" department-code").append(System.lineSeparator())
+                        .append("Error ").append("-> ").append("department doesnt exist for the given college").append(System.lineSeparator()).toString());
+                return studentUploadDto;
+            } else if (optionalListDepartments.get().stream().filter(objects -> objects[0] != optionalListColleges.stream().findFirst().get())) {
+
+            }
+        }
+    }
+
 
     public MessageResponse uploadProfilePicture(MultipartFile file, String email, Long userID) {
         FileUploadDownLoadModel fileUploadDownLoadModel = constructUploadModelForPictureUpload(email, file.getOriginalFilename());

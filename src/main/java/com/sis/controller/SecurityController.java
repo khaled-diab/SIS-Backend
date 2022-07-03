@@ -31,7 +31,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/register-bulk-students", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<StudentDTO> registerBulkStudents(@RequestParam("file") MultipartFile file) {
+    public MessageResponse registerBulkStudents(@RequestParam("file") MultipartFile file) {
         return securityService.registerBulkStudents(file);
     }
 
