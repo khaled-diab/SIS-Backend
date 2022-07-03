@@ -17,8 +17,13 @@ public class Constants {
     public static final String COLLEGES_CASH_KEY = "COLLEGES";
     public static final String DEPARTMENTS_CASH_KEY = "DEPARTMENTS";
     public static final String FILE_TYPE_PROFILE_PICTURE = "PROFILE_PICTURE";
+    public static final String FILE_TYPE_STUDENT_UPLOAD = "STUDENT_UPLOAD";
+    public static final String FILE_TYPE_STAFF_UPLOAD = "STAFF_UPLOAD";
     public static final String PROFILE_PICTURE_FOLDER_NAME = "profilePicture";
     public static final String DASH_DELIMITER = "-";
+
+    public static final String FILE_STATUS_IN_PROGRESS = "IN_PROGRESS";
+    public static final String FILE_STATUS_DONE = "DONE";
 
 
     private Constants() {
