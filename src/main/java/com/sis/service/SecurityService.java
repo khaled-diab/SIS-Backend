@@ -99,7 +99,7 @@ public class SecurityService {
 
     public ResponseEntity<MessageResponse> registerStudent(RegisterDTO registerDTO) {
         Optional<Student> optionalStudent = studentRepository.findByNationalId(registerDTO.getNationalityID());
-        if (optionalStudent.isEmpty()) {
+        if (!optionalStudent.isPresent()) {
             // the student is not in the system
             return new ResponseEntity<>(MessageResponse.builder().message("You are not in the system contact The administrator").build(), HttpStatus.BAD_REQUEST);
         } else if (optionalStudent.get().getUser() != null) {
@@ -149,11 +149,13 @@ public class SecurityService {
 
     private void generateToken(LoginDTO loginDto, User user) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(),
+                    loginDto.getPassword()));
         } catch (AuthenticationException authenticationException) {
             throw new InvalidUserNameOrPasswordException();
         }
-        user.setToken(Optional.of(jwtProvider.createToken(user.getUsername(), Collections.singletonList(user.getRole())))
+        user.setToken(Optional.of(jwtProvider.createToken(user.getUsername(),
+                        Collections.singletonList(user.getRole())))
                 .orElseThrow(InvalidUserNameOrPasswordException::new));
     }
 

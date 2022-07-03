@@ -52,7 +52,8 @@ public class UserService  extends BaseServiceImp<User>{
     }
 
     public UserDto login(final LoginDTO loginDTO) {
-        User user = userRepository.findByUsername(loginDTO.getUsername()).orElseThrow(InvalidUserNameOrPasswordException::new);
+        User user = userRepository.findByUsername(loginDTO.getUsername())
+                .orElseThrow(InvalidUserNameOrPasswordException::new);
         boolean isPasswordMatch = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
         if (!isPasswordMatch)
             throw new InvalidUserNameOrPasswordException();

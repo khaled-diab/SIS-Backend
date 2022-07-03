@@ -87,7 +87,14 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lectureId);
         return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/getAttendancesBySectionIdAndStudentId/{sectionId}/{studentId}",
+            method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceDetailsDTO>> getAttendanceDetailsBySectoinAndStudentId
+            (@PathVariable long sectionId ,@PathVariable long studentId) {
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS =
+                this.attendanceDetailsService.getAttendanceDetailsBySectoinAndStudentId(sectionId, studentId);
+        return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
+    }
 //    // this function is written by abdo ramadan
 //    @RequestMapping(value="/getAttendancesByLectureId/{lectureId}", method = RequestMethod.GET)
 //    public ResponseEntity<Collection<AttendanceDetailsDTO>>

@@ -58,10 +58,12 @@ public class JwtTokenFilter extends GenericFilterBean {
         //Check for Authorization:Bearer JWT
         String headerValue = ((HttpServletRequest) req).getHeader("jwt-token");
         //Pull the Username and Roles from the JWT to construct the user details
-        getBearerToken(headerValue).flatMap(securityDetailsService::loadUserByJwtToken).ifPresent(userDetails -> {
+        getBearerToken(headerValue).flatMap(securityDetailsService::loadUserByJwtToken).
+                ifPresent(userDetails -> {
             //Add the user details (Permissions) to the Context for just this API invocation
             SecurityContextHolder.getContext().setAuthentication(
-                    new PreAuthenticatedAuthenticationToken(userDetails, "", userDetails.getAuthorities()));
+                    new PreAuthenticatedAuthenticationToken(userDetails,
+                            "", userDetails.getAuthorities()));
         });
 
         //move on to the next filter in the chains

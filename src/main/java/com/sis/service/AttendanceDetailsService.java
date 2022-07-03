@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
@@ -33,7 +34,8 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
     }
 
     public ArrayList<AttendanceDetailsDTO> findStudentAttendances(long studentId, long courseId){
-        ArrayList<AttendanceDetails> attendanceDetails= this.attendanceDetailsRepository.findStudentAttendances(studentId, courseId);
+        ArrayList<AttendanceDetails> attendanceDetails=
+                this.attendanceDetailsRepository.findStudentAttendances(studentId, courseId);
         if(attendanceDetails!=null){
             return this.attendanceDetailsMapper.toDTOs(attendanceDetails);
         }
@@ -49,9 +51,20 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         }
         return  attendanceReportDTO;
     }
+    // find studnet by specific course
+    // this function is written by Abdo ramadan
+    public ArrayList<AttendanceDetailsDTO> findStudentAttendancesByCourse(long courseId){
+        ArrayList<AttendanceDetails> attendanceDetails=
+                this.attendanceDetailsRepository.findStudentAttendanceByCourseId( courseId);
+        if(attendanceDetails!=null){
+            return this.attendanceDetailsMapper.toDTOs(attendanceDetails);
+        }
+        return null;
+    }
 
     public ArrayList<AttendanceDetailsDTO> getAttendanceDetailsByLecture(long lectureId){
-        ArrayList<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.findAttendanceDetailsByLectureId(lectureId);
+        ArrayList<AttendanceDetails> attendanceDetails =
+                this.attendanceDetailsRepository.findAttendanceDetailsByLectureId(lectureId);
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs = new ArrayList<>();
         if(attendanceDetails!= null){
             attendanceDetailsDTOs=  this.attendanceDetailsMapper.toDTOs(attendanceDetails);
@@ -80,7 +93,15 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         }
         this.attendanceDetailsRepository.saveAll(this.attendanceDetailsMapper.toEntities(attendanceDetailsDTOs));
     }
-
-
+    // Abdo Ramadan
+    public ArrayList<AttendanceDetailsDTO> getAttendanceDetailsBySectoinAndStudentId(Long sectionId, Long studentId){
+        ArrayList<AttendanceDetails> attendanceDetails =
+                this.attendanceDetailsRepository.findAttendanceDetailsBySectionIdAndStudentId(sectionId ,studentId);
+        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs = new ArrayList<>();
+        if(attendanceDetails!= null){
+            attendanceDetailsDTOs=  this.attendanceDetailsMapper.toDTOs(attendanceDetails);
+        }
+        return  attendanceDetailsDTOs;
+    }
 
 }
