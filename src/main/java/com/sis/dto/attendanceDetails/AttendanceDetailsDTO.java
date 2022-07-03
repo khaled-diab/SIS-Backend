@@ -1,5 +1,6 @@
 package com.sis.dto.attendanceDetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.lecture.LectureDTO;
@@ -26,6 +27,7 @@ public class AttendanceDetailsDTO extends BaseDTO {
 
     private String attendanceStatus;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date attendanceDate;
 
     private String lectureStartTime;

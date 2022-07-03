@@ -1,5 +1,6 @@
 package com.sis.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,7 @@ public class AttendanceDetails extends BaseEntity {
 
     @Column(name = "attendance_date")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date attendanceDate;
 
 
