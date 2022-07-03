@@ -145,16 +145,11 @@ public class SecurityService {
 
     public MessageResponse registerBulkStudents(MultipartFile file) {
         CompletableFuture.runAsync(() -> {
-            Map<Object, List<Object[]>> colleges = cashService.cashAllColleges();
             try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
                 Sheet sheet = workbook.getSheetAt(0);
                 sheet.removeRow(sheet.iterator().next());
                 List<Row> rows = StreamSupport.stream(sheet.spliterator(), false).collect(Collectors.toList());
-                Map<Boolean, List<StudentUploadDto>> studentUploadMap =
-                        processRows(, departmentsMap, collegesMap).
-                                forEach(studentDTO -> studentRepository
-                                        .saveNativeStudent(studentDTO.getNameAr(), studentDTO.getNameEn(), studentDTO.getNationality(),
-                                                studentDTO.getNationalId(), studentDTO.getCollegeID(), studentDTO.getDepartmentID(), studentDTO.getUniversityId()));
+                Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, cashService.cashAllColleges(), cashService.cashAllDepartments());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -162,7 +157,7 @@ public class SecurityService {
         return new MessageResponse(200, "Students are being Registered", null);
     }
 
-    private Map<Boolean, List<StudentUploadDto>> processRows(List<Row> rows, Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap) throws Exception {
+    private Map<Boolean, List<StudentUploadDto>> processRows(List<Row> rows, Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap) {
         return rows.parallelStream().map(row -> {
             StudentUploadDto studentUploadDto = StudentUploadDto.builder()
                     .nameAr(row.getCell(0).getStringCellValue())
@@ -176,27 +171,27 @@ public class SecurityService {
                             .append("Field ").append("-> ").append(violation.getPropertyPath()).append(System.lineSeparator())
                             .append("Error ").append("-> ").append(violation.getMessage()).append(System.lineSeparator()))
                     .collect(Collectors.joining()));
-            validateCollegeAndDepartment(collegesMap, departmentsMap, studentUploadDto);
+            validateCollegeAndDepartmentAndNationalID(collegesMap, departmentsMap, studentUploadDto);
             studentUploadDto.setIsValid(studentUploadDto.getErrors().equals(" "));
             return studentUploadDto;
         }).collect(Collectors.groupingBy(StudentUploadDto::getIsValid));
     }
 
-    private StudentUploadDto validateCollegeAndDepartment(Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap, StudentUploadDto studentUploadDto) {
+    private void validateCollegeAndDepartmentAndNationalID(Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap, StudentUploadDto studentUploadDto) {
         Optional<List<Object[]>> optionalListColleges = Optional.ofNullable(collegesMap.get(studentUploadDto.getCollegeCode()));
         if (optionalListColleges.isEmpty()) {
             studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" college-code").append(System.lineSeparator())
                     .append("Error ").append("-> ").append("college doesnt exist").append(System.lineSeparator()).toString());
-            return studentUploadDto;
         } else {
             Optional<List<Object[]>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(optionalListColleges.stream().findFirst()));
-            if (optionalListDepartments.isEmpty()) {
+            if (optionalListDepartments.isEmpty() || optionalListDepartments.get().stream().noneMatch(objects -> objects[0] == studentUploadDto.getDepartmentCode())) {
                 studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" department-code").append(System.lineSeparator())
                         .append("Error ").append("-> ").append("department doesnt exist for the given college").append(System.lineSeparator()).toString());
-                return studentUploadDto;
-            } else if (optionalListDepartments.get().stream().filter(objects -> objects[0] != optionalListColleges.stream().findFirst().get())) {
-
             }
+        }
+        if (studentRepository.existsByNationalId(studentUploadDto.getNationalId())) {
+            studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" national-ID").append(System.lineSeparator())
+                    .append("Error ").append("-> ").append("National ID already on the system").append(System.lineSeparator()).toString());
         }
     }
 
