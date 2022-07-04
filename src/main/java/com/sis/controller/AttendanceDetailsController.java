@@ -1,6 +1,8 @@
 package com.sis.controller;
 
 
+import com.sis.dto.attendanceDetails.AttendanceBySection;
+import com.sis.dto.attendanceDetails.AttendanceBySectionAndStudentDTO;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.dto.attendanceReport.AttendanceReportDTO;
@@ -86,5 +88,22 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
                 this.attendanceDetailsService.findAttendanceReportDTOByLecture(lectureId);
         return new ResponseEntity<>(attendanceReportDTOS, HttpStatus.OK);
     }
+    // Abdo Ramadan
+    @RequestMapping(value = "/getAttendancesBySectionIdAndStudentId/{sectionId}/{studentId}",
+            method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceBySectionAndStudentDTO>> getAttendanceDetailsBySectoinAndStudentId
+            (@PathVariable long sectionId ,@PathVariable long studentId) {
+        ArrayList<AttendanceBySectionAndStudentDTO> attendanceDetailsDTOS =
+                this.attendanceDetailsService.getAttendanceDetailsBySectoinAndStudentId(sectionId, studentId);
+        return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "/getAttendancesBySectionId/{sectionId}",
+            method = RequestMethod.GET)
+    public ResponseEntity<Collection<AttendanceBySection>> getAttendanceDetailsBySectoin
+            (@PathVariable long sectionId ) {
+        ArrayList<AttendanceBySection> attendanceDetailsDTOS =
+                this.attendanceDetailsService.getAttendanceDetailsBySectoin(sectionId);
+        return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
+    }
 }
