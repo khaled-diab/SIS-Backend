@@ -2,6 +2,7 @@ package com.sis.controller;
 
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
+import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
@@ -92,6 +93,15 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
         }
         facultyMemberService.save(facultyMemberMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
+    }
+
+    @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<FacultyMemberTableRecordsDTO>> filter(@PathVariable int pageNumber,
+                                                                           @PathVariable int size,
+                                                                           @RequestBody FacultyMemberRequestDTO
+                                                                                   facultyMemberRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(facultyMemberService.filter(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
     }
 
 }

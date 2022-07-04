@@ -2,9 +2,11 @@ package com.sis.service;
 
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
+import com.sis.dto.section.SectionTableRecordsDTO;
 import com.sis.dto.section.Section_Course;
 import com.sis.entity.*;
 import com.sis.entity.mapper.SectionMapper;
+import com.sis.entity.mapper.SectionTableRecordsMapper;
 import com.sis.repository.SectionRepository;
 import com.sis.repository.specification.SectionSpecification;
 import com.sis.util.PageQueryUtil;
@@ -28,6 +30,7 @@ public class SectionService extends BaseServiceImp<Section> {
 
     private final SectionRepository sectionRepository;
     private final SectionMapper sectionMapper;
+    private final SectionTableRecordsMapper sectionTableRecordsMapper;
     private final TimetableService timetableService;
     private final StudentEnrollmentService studentEnrollmentService;
 
@@ -144,13 +147,52 @@ public class SectionService extends BaseServiceImp<Section> {
                 section_courses.add(section_course);
 
 
-
             }
             return section_courses;
         }
 
-            return null;
-        }
+        return null;
+    }
 
+
+    public PageResult<SectionTableRecordsDTO> filter(PageQueryUtil pageUtil, SectionRequestDTO sectionRequestDTO) {
+        Page<Section> sectionPage;
+        String searchValue = sectionRequestDTO.getSearchValue();
+
+        Long filterCollege = sectionRequestDTO.getFilterCollege();
+
+        Long filterDepartment = sectionRequestDTO.getFilterDepartment();
+
+        Long filterAcademicYear = sectionRequestDTO.getFilterAcademicYear();
+
+        Long filterAcademicTerm = sectionRequestDTO.getFilterAcademicTerm();
+
+        Long filterCourse = sectionRequestDTO.getFilterCourse();
+
+        Long filterStudyType = sectionRequestDTO.getFilterStudyType();
+
+        Long filterMajor = sectionRequestDTO.getFilterMajor();
+
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(sectionRequestDTO));
+        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null ||
+                filterDepartment != null || filterAcademicYear != null || filterAcademicTerm != null ||
+                filterCourse != null || filterStudyType != null || filterMajor != null) {
+            SectionSpecification sectionSpecification = new SectionSpecification(searchValue, filterCollege, filterDepartment,
+                    filterAcademicYear, filterAcademicTerm, filterCourse, filterStudyType, filterMajor);
+
+            sectionPage = sectionRepository.findAll(sectionSpecification, pageable);
+        } else {
+            sectionPage = sectionRepository.findAll(pageable);
+        }
+        PageResult<Section> pageResult = new PageResult<>(sectionPage.getContent(), (int) sectionPage.getTotalElements(),
+                pageUtil.getLimit(), pageUtil.getPage());
+
+        PageResult<SectionTableRecordsDTO> sectionDTOsDtoPageResult = sectionTableRecordsMapper.toDataPage(pageResult);
+        for (SectionTableRecordsDTO section : sectionDTOsDtoPageResult.getData()) {
+            int students = this.countBySection(section.getId());
+            section.setNumberOfStudents(students);
+        }
+        return sectionDTOsDtoPageResult;
+    }
 
 }
