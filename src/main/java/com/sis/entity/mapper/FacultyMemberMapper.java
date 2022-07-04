@@ -79,11 +79,10 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         entity.setNameEn(dto.getNameEn());
         entity.setNationalID(dto.getNationalID());
         entity.setNationality(dto.getNationality());
-        if (dto.getDepartmentDTO() != null) {
+        if (dto.getDegreeDTO() != null) {
             entity.setDegree(this.degreeMapper.toEntity(dto.getDegreeDTO()));
         }
         if (dto.getDepartmentDTO() != null) {
-
             entity.setDepartment(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
         }
         if (dto.getCollegeDTO() != null) {
