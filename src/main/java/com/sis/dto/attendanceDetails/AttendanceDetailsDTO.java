@@ -1,14 +1,19 @@
 package com.sis.dto.attendanceDetails;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.lecture.LectureDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.dto.student.StudentRecordDTO;
+import com.sis.util.Constants;
 import lombok.*;
 
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -18,21 +23,26 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceDetailsDTO extends BaseDTO {
+public class AttendanceDetailsDTO extends BaseDTO{
 
-
-    private StudentDTO studentDTO;
-
-    private LectureDTO lectureDTO;
-
+    private long studentId;
+    private long universityId;
+    private String nameAr;
+    private String nameEn;
+    private long sectionId;
+    private long lectureId;
     private String attendanceStatus;
+//    private  String year;
+    /*Relations instances*/
+//    private String departmentName;
+//    private String collegeName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date attendanceDate;
+//    private Date attendanceDate;
+//    private String lectureStartTime;
+//    private String lectureEndTime;
+//    private SectionDTO sectionDTO;
 
-    private String lectureStartTime;
+//    private String sectionNumber;
+    //    private LectureDTO lectureDTO;
 
-    private String lectureEndTime;
-
-    private SectionDTO sectionDTO;
 }

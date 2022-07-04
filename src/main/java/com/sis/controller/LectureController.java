@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -36,46 +37,12 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
 
     private AcademicTermMapper academicTermMapper;
 
-    private AcademicYearMapper academicYearMapper;
 
-    private AttendanceDetailsService attendanceDetailsService;
-
-    private CourseMapper courseMapper;
-    private FacultyMemberMapper facultyMemberMapper;
 
     @RequestMapping(value = "/addLecture", method = RequestMethod.POST)
     public ResponseEntity<LectureDTO> addLecture(@Validated  @RequestBody LectureDTO lectureDTO) {
-        Course course = this.courseMapper.toEntity(lectureDTO.getCourseDTO());
-        FacultyMember facultyMember = this.facultyMemberMapper.toEntity(lectureDTO.getFacultyMemberDTO());
 
-        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
-        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
-
-        lectureDTO.setAcademicTermDTO(academicTermDTO);
-        lectureDTO.setAcademicYearDTO(this.academicYearMapper.toDTO(academicTerm.getAcademicYear()));
-
-        if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
-            Random rand = new Random();
-            lectureDTO.setAttendanceCode(Math.abs(rand.nextInt()));
-
-        }
-        System.out.println(lectureDTO.getLectureStartTime() + " lectureDTO.startTime");
-        boolean isFound = true;
-        LectureDTO lectureDTO1 = this.lectureService.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
-                , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
-        if (lectureDTO1 == null) {
-            isFound = false;
-        } else {
-            lectureDTO.setId(lectureDTO1.getId());
-        }
-
-        Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
-        LectureDTO lectureDTO2 = this.lectureMapper.toDTO(this.lectureService.save(lecture));
-
-        if (!isFound) {
-            this.attendanceDetailsService.saveAttendances(lectureDTO2);
-        }
-        return new ResponseEntity<>(lectureDTO2, HttpStatus.OK);
+        return new ResponseEntity<>(this.lectureService.addLecture(lectureDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getCurrentLecture/{studentId}", method = RequestMethod.GET)
