@@ -42,6 +42,8 @@ public class AttendanceDetailsDTO extends BaseDTO{
 //    private String lectureEndTime;
 //    private SectionDTO sectionDTO;
 
+
+
 //    private String sectionNumber;
     //    private LectureDTO lectureDTO;
 
