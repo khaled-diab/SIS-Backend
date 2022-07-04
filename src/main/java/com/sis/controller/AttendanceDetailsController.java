@@ -4,11 +4,8 @@ package com.sis.controller;
 import com.sis.dto.attendanceDetails.AttendanceDetailsDTO;
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.dto.attendanceReport.AttendanceReportDTO;
-import com.sis.dto.lecture.LectureDTO;
 import com.sis.entity.AttendanceDetails;
-import com.sis.entity.Lecture;
 import com.sis.entity.mapper.AttendanceDetailsMapper;
-import com.sis.entity.mapper.LectureMapper;
 import com.sis.exception.ItemNotFoundException;
 import com.sis.service.AttendanceDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +28,6 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     private AttendanceDetailsMapper attendanceDetailsMapper;
 
 
-    @Autowired
-    private LectureMapper lectureMapper;
-
     // by abdo ramadan
     @RequestMapping(value = "/updateReport", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> update(@RequestBody AttendanceDetailsDTO attendanceDetailsDTO) {
@@ -49,22 +43,8 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
     @RequestMapping(value = "/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode, @RequestBody StudentLecture studentLecture) {
 
-        long studentId = studentLecture.getStudentId();
-        LectureDTO lectureDTO = studentLecture.getLectureDTO();
-        Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
-        AttendanceDetailsDTO attendanceDetailsDTO2 = null;
-        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lecture.getId());
-        for (AttendanceDetailsDTO attendanceDetailsDTO : attendanceDetailsDTOS) {
-            if (attendanceDetailsDTO.getStudentDTO().getId() == studentId) {
-                if ((lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceStatus())) {
-                    attendanceDetailsDTO.setAttendanceStatus("Present");
-                    this.attendanceDetailsService.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
-                    attendanceDetailsDTO2 = attendanceDetailsDTO;
-                    break;
-                }
-            }
-        }
-        return new ResponseEntity<>(attendanceDetailsDTO2, HttpStatus.OK);
+        AttendanceDetailsDTO attendanceDetailsDTO = this.attendanceDetailsService.addAutoAttendance(attendanceCode,studentLecture);
+        return new ResponseEntity<>(attendanceDetailsDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/addManualAttendance", method = RequestMethod.POST)
@@ -87,7 +67,6 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.attendanceDetailsService.getAttendanceDetailsByLecture(lectureId);
         return new ResponseEntity<>(attendanceDetailsDTOS, HttpStatus.OK);
     }
-
 //    // this function is written by abdo ramadan
 //    @RequestMapping(value="/getAttendancesByLectureId/{lectureId}", method = RequestMethod.GET)
 //    public ResponseEntity<Collection<AttendanceDetailsDTO>>

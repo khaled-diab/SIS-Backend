@@ -1,5 +1,6 @@
 package com.sis.dto.lecture;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.AcademicYearDTO;
@@ -32,6 +33,7 @@ public class LectureDTO extends BaseDTO {
     private String attendanceType;
 
     @NotNull(message = "Required")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date lectureDate;
 
     @NotNull(message = "Required")
