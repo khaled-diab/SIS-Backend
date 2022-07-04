@@ -8,14 +8,10 @@ import com.sis.dto.BaseDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.section.SectionDTO;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
-
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
-import java.util.Collection;
 import java.util.Date;
 
 
