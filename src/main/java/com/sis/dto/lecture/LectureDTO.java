@@ -1,5 +1,6 @@
 package com.sis.dto.lecture;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.AcademicYearDTO;
@@ -7,14 +8,10 @@ import com.sis.dto.BaseDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.section.SectionDTO;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
-
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
-import java.util.Collection;
 import java.util.Date;
 
 
@@ -32,6 +29,7 @@ public class LectureDTO extends BaseDTO {
     private String attendanceType;
 
     @NotNull(message = "Required")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date lectureDate;
 
     @NotNull(message = "Required")

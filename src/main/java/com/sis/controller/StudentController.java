@@ -4,10 +4,12 @@ import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.student.StudentFilterDTO;
+import com.sis.dto.student.StudentRecordDTO;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.Student;
 import com.sis.entity.mapper.AcademicTermMapper;
 import com.sis.entity.mapper.StudentMapper;
+import com.sis.entity.mapper.StudentRecordMapper;
 import com.sis.exception.StudentFieldNotUniqueException;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
@@ -31,7 +33,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +58,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
 
     @Autowired
     private AcademicTermMapper academicTermMapper;
+    @Autowired
+    private StudentRecordMapper studentRecordMapper;
 
     public static final String DIRECTORY =
             System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
@@ -133,8 +136,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentDTO>> searchStudentPage(
                                                                     @RequestParam int page, @RequestParam int limit,
                                                                     @RequestBody StudentFilterDTO filterDTO ) {
-        LocalTime lt = LocalTime.parse("09:08:30");
-        System.out.println(lt + "LT");
+
         PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
         PageResult<StudentDTO> result = this.studentService.search(queryUtil, filterDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -155,6 +157,20 @@ public class StudentController extends BaseController<Student, StudentDTO> {
        return studentDTOs;
 
     }
+    @RequestMapping(
+            value = "/searchRecords",
+            method = RequestMethod.POST
+    )
+    public ResponseEntity<PageResult<StudentRecordDTO>> searchStudentPageRecords(
+            @RequestParam int page, @RequestParam int limit,
+            @RequestBody StudentFilterDTO filterDTO ) {
+        PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
+        PageResult<StudentDTO> studentPage = this.studentService.search(queryUtil, filterDTO);
+        List<StudentRecordDTO> studentRecordDTOS = this.studentRecordMapper.dtosToDTOs(studentPage.getData());
+        PageResult<StudentRecordDTO> recordPage = new PageResult<>(studentRecordDTOS,studentPage.getTotalCount(), studentPage.getPageSize(),
+        studentPage.getCurrPage());
 
+        return new ResponseEntity<>(recordPage, HttpStatus.OK);
 
+    }
 }
