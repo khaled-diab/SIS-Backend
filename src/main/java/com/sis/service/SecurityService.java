@@ -62,8 +62,6 @@ public class SecurityService {
     private final UserFileRepository userFileRepository;
     private final CashService cashService;
 
-    private final CollegeRepository collegeRepository;
-
     private final PojoValidationService validationService;
     Logger logger = LoggerFactory.getLogger(SecurityService.class);
     @Value("${upload.picture.url}")
@@ -148,8 +146,16 @@ public class SecurityService {
             try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
                 Sheet sheet = workbook.getSheetAt(0);
                 sheet.removeRow(sheet.iterator().next());
-                List<Row> rows = StreamSupport.stream(sheet.spliterator(), false).collect(Collectors.toList());
-                Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, cashService.cashAllColleges(), cashService.cashAllDepartments());
+                List<Row> rows = StreamSupport.stream(sheet.spliterator(), true).collect(Collectors.toList());
+                Map<Object, List<Object[]>> collegesMap = cashService.cashAllColleges();
+                Map<Object, List<Object[]>> departmentsMap = cashService.cashAllDepartments();
+                Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, collegesMap, departmentsMap);
+                studentUploadMap.get(Boolean.TRUE).stream().forEach(studentUploadDto -> {
+                    Object collegeID = collegesMap.get(studentUploadDto.getCollegeCode()).get(0)[0];
+                    Object departmentID = departmentsMap.get(collegeID).stream().filter(attributes -> attributes[0] == collegeID).findFirst().orElse(new Object[0])[0];
+                    studentRepository.saveNativeStudent(studentUploadDto.getNameAr(), studentUploadDto.getNationality(),
+                            studentUploadDto.getNationalId(), (Long) collegeID, (Long) departmentID);
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -158,7 +164,7 @@ public class SecurityService {
     }
 
     private Map<Boolean, List<StudentUploadDto>> processRows(List<Row> rows, Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap) {
-        return rows.parallelStream().map(row -> {
+        return rows.stream().map(row -> {
             StudentUploadDto studentUploadDto = StudentUploadDto.builder()
                     .nameAr(row.getCell(0).getStringCellValue())
                     .nationality(row.getCell(1).getStringCellValue())
@@ -168,8 +174,8 @@ public class SecurityService {
                     .build();
             studentUploadDto.setErrors(validationService.validate(studentUploadDto).stream()
                     .map(violation -> new StringBuilder()
-                            .append("Field ").append("-> ").append(violation.getPropertyPath()).append(System.lineSeparator())
-                            .append("Error ").append("-> ").append(violation.getMessage()).append(System.lineSeparator()))
+                            .append(Constants.FIELD).append("-> ").append(violation.getPropertyPath()).append(System.lineSeparator())
+                            .append(Constants.ERROR).append("-> ").append(violation.getMessage()).append(System.lineSeparator()))
                     .collect(Collectors.joining()));
             validateCollegeAndDepartmentAndNationalID(collegesMap, departmentsMap, studentUploadDto);
             studentUploadDto.setIsValid(studentUploadDto.getErrors().equals(" "));
@@ -180,18 +186,19 @@ public class SecurityService {
     private void validateCollegeAndDepartmentAndNationalID(Map<Object, List<Object[]>> collegesMap, Map<Object, List<Object[]>> departmentsMap, StudentUploadDto studentUploadDto) {
         Optional<List<Object[]>> optionalListColleges = Optional.ofNullable(collegesMap.get(studentUploadDto.getCollegeCode()));
         if (optionalListColleges.isEmpty()) {
-            studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" college-code").append(System.lineSeparator())
-                    .append("Error ").append("-> ").append("college doesnt exist").append(System.lineSeparator()).toString());
+            studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append(Constants.FIELD).append("-> ").append(" college-code").append(System.lineSeparator())
+                    .append(Constants.ERROR).append("-> ").append("college doesnt exist").append(System.lineSeparator()).toString());
         } else {
-            Optional<List<Object[]>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(optionalListColleges.stream().findFirst()));
+            Object collegeID = Arrays.stream(optionalListColleges.get().get(0)).toArray()[0];
+            Optional<List<Object[]>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(collegeID));
             if (optionalListDepartments.isEmpty() || optionalListDepartments.get().stream().noneMatch(objects -> objects[0] == studentUploadDto.getDepartmentCode())) {
-                studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" department-code").append(System.lineSeparator())
-                        .append("Error ").append("-> ").append("department doesnt exist for the given college").append(System.lineSeparator()).toString());
+                studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append(Constants.FIELD).append("-> ").append(" department-code").append(System.lineSeparator())
+                        .append(Constants.ERROR).append("-> ").append("department doesnt exist for the given college").append(System.lineSeparator()).toString());
             }
         }
-        if (studentRepository.existsByNationalId(studentUploadDto.getNationalId())) {
-            studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append("Field ").append("-> ").append(" national-ID").append(System.lineSeparator())
-                    .append("Error ").append("-> ").append("National ID already on the system").append(System.lineSeparator()).toString());
+        if (Boolean.TRUE.equals(studentRepository.existsByNationalId(studentUploadDto.getNationalId()))) {
+            studentUploadDto.setErrors(new StringBuilder(studentUploadDto.getErrors()).append(Constants.FIELD).append("-> ").append(" national-ID").append(System.lineSeparator())
+                    .append(Constants.ERROR).append("-> ").append("National ID already on the system").append(System.lineSeparator()).toString());
         }
     }
 

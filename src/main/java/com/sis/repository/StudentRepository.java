@@ -29,9 +29,9 @@ public interface StudentRepository extends BaseRepository<Student> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO student ( name_ar, name_en, nationality,nationalid,college_id,department_id,university_id) VALUES (?1, ?2, ?3, ?4,?5,?6,?7) ",
+    @Query(value = "INSERT INTO student ( name_ar, nationality,nationalid,college_id,department_id) VALUES (?1, ?2, ?3, ?4,?5) ",
             nativeQuery = true)
-    void saveNativeStudent(String nameAR, String nameEN, String nationality, String nationalID, Long collegeID, Long departmentID, Long universityID);
+    void saveNativeStudent(String nameAR, String nationality, String nationalID, Long collegeID, Long departmentID);
 
     Student findByNationalId(String nationalID);
 
