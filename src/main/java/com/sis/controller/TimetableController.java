@@ -3,6 +3,7 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
+import com.sis.dto.timetable.TimetableTableRecordsDTO;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.Student;
 import com.sis.entity.Timetable;
@@ -39,12 +40,12 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
     private AcademicTermService academicTermService;
     private AcademicTermMapper academicTermMapper;
 
-    @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
-    public ResponseEntity<PageResult<TimetableDTO>> filter(@PathVariable int pageNumber,
+    @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<TimetableDTO>> search(@PathVariable int pageNumber,
                                                            @PathVariable int size,
                                                            @RequestBody TimetableRequestDTO timetableRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
-        return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
+        return new ResponseEntity<>(timetableService.search(pageUtil, timetableRequestDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -96,6 +97,14 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
                 academicTermDTO.getId(),
                 sectionId);
         return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<TimetableTableRecordsDTO>> filter(@PathVariable int pageNumber,
+                                                                       @PathVariable int size,
+                                                                       @RequestBody TimetableRequestDTO timetableRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
     }
 
 }

@@ -3,6 +3,7 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.dto.section.SectionRequestDTO;
+import com.sis.dto.section.SectionTableRecordsDTO;
 import com.sis.dto.section.Section_Course;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.Section;
@@ -76,5 +77,13 @@ public class SectionController extends BaseController<Section, SectionDTO> {
 
         ArrayList<Section_Course> sectionDTOs = this.sectionService.findFacultyMemberSections_courses(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
         return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<SectionTableRecordsDTO>> filter(@PathVariable int pageNumber,
+                                                                     @PathVariable int size,
+                                                                     @RequestBody SectionRequestDTO sectionRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(sectionService.filter(pageUtil, sectionRequestDTO), HttpStatus.OK);
     }
 }

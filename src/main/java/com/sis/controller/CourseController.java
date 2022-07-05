@@ -3,6 +3,7 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
+import com.sis.dto.course.CourseTableRecordsDTO;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.Course;
 import com.sis.entity.mapper.AcademicTermMapper;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
-
 
 @RestController
 @AllArgsConstructor
@@ -83,8 +83,16 @@ public class CourseController extends BaseController<Course, CourseDTO> {
                 academicTermDTO.getId(),
                 courseId);
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
-        }
-     }
+    }
+
+    @RequestMapping(value = "/filter/{pageNumber}/{size}", method = RequestMethod.POST)
+    public ResponseEntity<PageResult<CourseTableRecordsDTO>> filter(@PathVariable int pageNumber,
+                                                                    @PathVariable int size,
+                                                                    @RequestBody CourseRequestDTO courseRequestDTO) {
+        PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
+        return new ResponseEntity<>(courseService.filter(pageUtil, courseRequestDTO), HttpStatus.OK);
+    }
+}
 
 
 
