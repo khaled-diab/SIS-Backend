@@ -3,10 +3,12 @@ package com.sis.controller;
 import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.entity.*;
-import com.sis.entity.mapper.*;
+import com.sis.entity.AcademicTerm;
+import com.sis.entity.Lecture;
+import com.sis.entity.Section;
+import com.sis.entity.mapper.AcademicTermMapper;
+import com.sis.entity.mapper.LectureMapper;
 import com.sis.service.AcademicTermService;
-import com.sis.service.AttendanceDetailsService;
 import com.sis.service.LectureService;
 import com.sis.service.SectionService;
 import lombok.AllArgsConstructor;
@@ -15,12 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/api/lectures")
@@ -38,9 +37,8 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     private AcademicTermMapper academicTermMapper;
 
 
-
     @RequestMapping(value = "/addLecture", method = RequestMethod.POST)
-    public ResponseEntity<LectureDTO> addLecture(@Validated  @RequestBody LectureDTO lectureDTO) {
+    public ResponseEntity<LectureDTO> addLecture(@Validated @RequestBody LectureDTO lectureDTO) {
 
         return new ResponseEntity<>(this.lectureService.addLecture(lectureDTO), HttpStatus.OK);
     }
