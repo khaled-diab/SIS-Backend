@@ -24,6 +24,8 @@ public class Constants {
 
     public static final String FILE_STATUS_IN_PROGRESS = "IN_PROGRESS";
     public static final String FILE_STATUS_DONE = "DONE";
+    public static final String FIELD = "Field";
+    public static final String ERROR = "Error";
 
 
     private Constants() {
