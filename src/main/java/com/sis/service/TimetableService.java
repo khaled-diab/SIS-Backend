@@ -2,22 +2,22 @@ package com.sis.service;
 
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.dto.timetable.TimetableRequestDTO;
+import com.sis.dto.timetable.TimetableTableRecordsDTO;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.Section;
 import com.sis.entity.Timetable;
 import com.sis.entity.mapper.AcademicTermMapper;
 import com.sis.entity.mapper.TimetableMapper;
+import com.sis.entity.mapper.TimetableTableRecordsMapper;
 import com.sis.repository.TimetableRepository;
 import com.sis.repository.specification.TimetableSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,17 +32,17 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     private final TimetableRepository timetableRepository;
     private final TimetableMapper timetableMapper;
+    private final TimetableTableRecordsMapper timetableTableRecordsMapper;
     private final StudentEnrollmentService studentEnrollmentService;
 
     private AcademicTermService academicTermService;
-    private AcademicTermMapper academicTermMapper;
 
     @Override
     public JpaRepository<Timetable, Long> Repository() {
         return timetableRepository;
     }
 
-    public PageResult<TimetableDTO> filter(PageQueryUtil pageUtil, TimetableRequestDTO timetableRequestDTO) {
+    public PageResult<TimetableDTO> search(PageQueryUtil pageUtil, TimetableRequestDTO timetableRequestDTO) {
         Page<Timetable> timetablePage;
 
         Long filterCollege = timetableRequestDTO.getFilterCollege();
@@ -140,6 +140,42 @@ public class TimetableService extends BaseServiceImp<Timetable> {
             return 0;
         });
         return timetableDTOs;
+    }
+
+    public PageResult<TimetableTableRecordsDTO> filter(PageQueryUtil pageUtil, TimetableRequestDTO timetableRequestDTO) {
+        Page<Timetable> timetablePage;
+
+        Long filterCollege = timetableRequestDTO.getFilterCollege();
+
+        Long filterDepartment = timetableRequestDTO.getFilterDepartment();
+
+        Long filterAcademicYear = timetableRequestDTO.getFilterAcademicYear();
+
+        Long filterAcademicTerm = timetableRequestDTO.getFilterAcademicTerm();
+
+        Long filterFacultyMember = timetableRequestDTO.getFilterFacultyMember();
+
+        Long filterCourse = timetableRequestDTO.getFilterCourse();
+
+        Long filterSection = timetableRequestDTO.getFilterSection();
+
+        String filterDay = timetableRequestDTO.getFilterDay();
+
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(timetableRequestDTO));
+        if (filterCollege != null || filterDepartment != null ||
+                filterAcademicYear != null || filterAcademicTerm != null || filterFacultyMember != null ||
+                filterCourse != null || filterSection != null || (filterDay != null && !filterDay.trim().isEmpty())) {
+            TimetableSpecification timetableSpecification = new TimetableSpecification(filterCollege, filterDepartment,
+                    filterAcademicYear, filterAcademicTerm, filterFacultyMember, filterCourse, filterSection, filterDay);
+
+            timetablePage = timetableRepository.findAll(timetableSpecification, pageable);
+        } else {
+            timetablePage = timetableRepository.findAll(pageable);
+        }
+        PageResult<Timetable> pageResult = new PageResult<>(timetablePage.getContent(), (int) timetablePage.getTotalElements(),
+                pageUtil.getLimit(), pageUtil.getPage());
+
+        return timetableTableRecordsMapper.toDataPage(pageResult);
     }
 
 }

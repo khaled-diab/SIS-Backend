@@ -3,8 +3,10 @@ package com.sis.service;
 
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
+import com.sis.dto.course.CourseTableRecordsDTO;
 import com.sis.entity.Course;
 import com.sis.entity.mapper.CourseMapper;
+import com.sis.entity.mapper.CourseTableRecordsMapper;
 import com.sis.repository.CourseRepository;
 import com.sis.repository.specification.CourseSpecification;
 import com.sis.util.PageQueryUtil;
@@ -26,6 +28,7 @@ public class CourseService extends BaseServiceImp<Course> {
 
     private CourseRepository courseRepository;
     private CourseMapper courseMapper;
+    private CourseTableRecordsMapper courseTableRecordsMapper;
     StudentEnrollmentService studentEnrollmentService;
 
     @Autowired
@@ -89,5 +92,26 @@ public class CourseService extends BaseServiceImp<Course> {
         return null;
     }
 
+    public PageResult<CourseTableRecordsDTO> filter(PageQueryUtil pageUtil, CourseRequestDTO courseRequestDTO) {
+        Page<Course> coursePage;
+        String searchValue = courseRequestDTO.getSearchValue();
+
+        Long filterCollege = courseRequestDTO.getFilterCollege();
+
+        Long filterDepartment = courseRequestDTO.getFilterDepartment();
+
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(courseRequestDTO));
+        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null) {
+            CourseSpecification courseSpecification = new CourseSpecification(searchValue, filterCollege, filterDepartment);
+
+            coursePage = courseRepository.findAll(courseSpecification, pageable);
+        } else {
+            coursePage = courseRepository.findAll(pageable);
+        }
+        PageResult<Course> pageResult = new PageResult<>(coursePage.getContent(), (int) coursePage.getTotalElements(),
+                pageUtil.getLimit(), pageUtil.getPage());
+
+        return courseTableRecordsMapper.toDataPage(pageResult);
+    }
 
 }

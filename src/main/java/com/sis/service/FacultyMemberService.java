@@ -2,8 +2,10 @@ package com.sis.service;
 
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
+import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.mapper.FacultyMemberMapper;
+import com.sis.entity.mapper.FacultyMemberTableRecordsMapper;
 import com.sis.repository.FacultyMemberRepository;
 import com.sis.repository.specification.FacultyMemberSpecification;
 import com.sis.util.PageQueryUtil;
@@ -23,6 +25,7 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
     private final FacultyMemberRepository facultyMemberRepository;
     private final FacultyMemberMapper facultyMemberMapper;
+    private final FacultyMemberTableRecordsMapper facultyMemberTableRecordsMapper;
 
     @Override
     public JpaRepository<FacultyMember, Long> Repository() {
@@ -67,5 +70,26 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
     public FacultyMember findByPhone(String phone) {
         return this.facultyMemberRepository.findByPhone(phone);
+    }
+
+    public PageResult<FacultyMemberTableRecordsDTO> filter(PageQueryUtil pageUtil, FacultyMemberRequestDTO facultyMemberRequestDTO) {
+        Page<FacultyMember> facultyMemberPage;
+
+        String searchValue = facultyMemberRequestDTO.getSearchValue();
+        Long filterCollege = facultyMemberRequestDTO.getFilterCollege();
+        Long filterDepartment = facultyMemberRequestDTO.getFilterDepartment();
+
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(facultyMemberRequestDTO));
+        if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null || filterDepartment != null) {
+            FacultyMemberSpecification facultyMemberSpecification = new FacultyMemberSpecification(searchValue, filterCollege, filterDepartment);
+
+            facultyMemberPage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
+        } else {
+            facultyMemberPage = facultyMemberRepository.findAll(pageable);
+        }
+        PageResult<FacultyMember> pageResult = new PageResult<>(facultyMemberPage.getContent(), (int) facultyMemberPage.getTotalElements(),
+                pageUtil.getLimit(), pageUtil.getPage());
+
+        return facultyMemberTableRecordsMapper.toDataPage(pageResult);
     }
 }
