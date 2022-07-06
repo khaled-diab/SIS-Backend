@@ -1,5 +1,6 @@
 package com.sis.dto.student;
 
+import com.sis.dto.BaseDTO;
 import com.sis.util.Constants;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Builder
-public class StudentUploadDto {
+public class StudentUploadDto extends BaseDTO {
 
 
     @NotEmpty(message = "Required")
@@ -58,6 +59,6 @@ public class StudentUploadDto {
     @NotBlank(message = "Required")
     private String departmentCode;
 
-    private String errors = " ";
+    private String errors;
     private Boolean isValid;
 }

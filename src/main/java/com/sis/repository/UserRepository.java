@@ -22,4 +22,6 @@ public interface UserRepository extends BaseRepository<User> {
      */
     Optional<User> findByEmailOrUsername(String email, String username);
 
+    User findUserByUsername(String username);
+
 }
