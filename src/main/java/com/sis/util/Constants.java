@@ -27,6 +27,9 @@ public class Constants {
     public static final String FIELD = "Field";
     public static final String ERROR = "Error";
 
+    public static final String ADMIN_USER_NAME = "admin";
+    public static final String STUDENT_UPLOAD_FOLDER_NAME = "student-upload";
+
 
     private Constants() {
 

@@ -1,5 +1,6 @@
 package com.sis.repository;
 
+import com.sis.dto.college.CollegeProjection;
 import com.sis.entity.College;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,8 @@ public interface CollegeRepository extends BaseRepository<College> {
     Boolean existsByCode(String code);
 
     @Query(value = " select  code,id from college", nativeQuery = true)
-    List<Object[]> findAllIdsAndCodes();
+    List<CollegeProjection> findAllIdsAndCodes();
+
+    College findByCode(String code);
 
 }
