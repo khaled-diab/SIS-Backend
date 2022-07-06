@@ -2,11 +2,7 @@ package com.sis.entity.mapper;
 
 
 import com.sis.dto.student.StudentDTO;
-
 import com.sis.entity.Student;
-import com.sis.entity.mapper.AcademicProgramMapper;
-import com.sis.entity.mapper.CollegeMapper;
-import com.sis.entity.mapper.DepartmentMapper;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -95,7 +91,7 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 
                 entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
             }
-//			entity.setUser(userMapper.toEntity(dto.getUser()));
+			entity.setUser(userMapper.toEntity(dto.getUser()));
 		}
 		return entity;
 	}
