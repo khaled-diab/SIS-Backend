@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = ("**"))
 @RestController
 public class SisSystemApplication extends SpringBootServletInitializer {
+
 	private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
 
 	public static void main(String[] args) {

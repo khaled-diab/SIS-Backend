@@ -37,7 +37,7 @@ public class Student extends BaseEntity {
     @Column(name = "nationality")
     private String nationality;
 
-    @Column(name = "nationalID")
+    @Column(name = "nationalID", unique = true)
     private String nationalId;
 
     @Column(name = "birth_date")
@@ -45,7 +45,7 @@ public class Student extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
 
-    @Column(name = "university_mail")
+    @Column(name = "university_mail", unique = true)
     private String universityMail;
 
     @Column(name = "alternative_mail")
@@ -56,6 +56,7 @@ public class Student extends BaseEntity {
 
     @Column(name = "parent_phone")
     private String parentPhone;
+
     @Column(name = "level")
     private  String level;
 
