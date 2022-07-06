@@ -1,5 +1,6 @@
 package com.sis.entity.mapper;
 
+
 import com.sis.dto.BaseDTO;
 import com.sis.entity.BaseEntity;
 import com.sis.util.PageResult;
