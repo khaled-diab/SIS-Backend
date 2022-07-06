@@ -13,5 +13,7 @@ public interface UserFileRepository extends BaseRepository<UserFile> {
     void saveUserFile(String directories, String fileName, Long userID, String fileType);
 
     @Transactional
-    void deleteAllByType(String type);
+    @Modifying
+    @Query(value = " delete from user_file where type=?1 and user_id=?2", nativeQuery = true)
+    void deletePreviousPictures(String type, long userID);
 }

@@ -13,9 +13,9 @@ import java.util.Collection;
 @Table(name = "department")
 public class Department extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;   
+    private static final long serialVersionUID = 1L;
 
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     private String code;
 
     @Column(name = "name_ar")
@@ -94,6 +94,6 @@ public class Department extends BaseEntity {
 
     public void setFacultyCollection(Collection<FacultyMember> facultyMemberCollection) {
         this.facultyMemberCollection = facultyMemberCollection;
-    } 
-    
+    }
+
 }

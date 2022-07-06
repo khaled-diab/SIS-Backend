@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "/api/security")
 @AllArgsConstructor
@@ -31,7 +33,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/register-bulk-students", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<StudentDTO> registerBulkStudents(@RequestParam("file") MultipartFile file) {
+    public MessageResponse registerBulkStudents(@RequestParam("file") MultipartFile file) {
         return securityService.registerBulkStudents(file);
     }
 
@@ -41,8 +43,8 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email, @RequestParam("userID") String userID) {
-        return new ResponseEntity<>(securityService.uploadProfilePicture(file, email, Long.valueOf(userID)), HttpStatus.OK);
+    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email) throws IOException {
+        return new ResponseEntity<>(securityService.uploadProfilePicture(file, email), HttpStatus.OK);
     }
 
     @PostMapping(value = "/register-student1")

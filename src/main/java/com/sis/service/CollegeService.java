@@ -2,22 +2,17 @@ package com.sis.service;
 
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.college.CollegeRequestDTO;
-import com.sis.entity.BaseEntity;
 import com.sis.entity.College;
 import com.sis.entity.mapper.CollegeMapper;
 import com.sis.repository.CollegeRepository;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -55,11 +50,6 @@ public class CollegeService extends BaseServiceImp<College> {
             return Sort.by(Sort.Direction.ASC, "nameAr");
         }
         return Sort.by(Sort.Direction.valueOf(collegeRequestDTO.getSortDirection()), collegeRequestDTO.getSortBy());
-    }
-
-    @Cacheable(value = "COLLEGES")
-    public Map<String, Long> cashAllColleges() {
-        return collegeRepository.findAll().parallelStream().collect(Collectors.toMap(College::getCode, BaseEntity::getId));
     }
 
     public MessageResponse checkCollegeCode(String code) {

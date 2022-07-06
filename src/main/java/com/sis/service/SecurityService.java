@@ -1,13 +1,16 @@
 package com.sis.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sis.dto.AdminDto;
 import com.sis.dto.BaseDTO;
-import com.sis.dto.FileUploadDownLoadModel;
+import com.sis.dto.DepartmentProjection;
+import com.sis.dto.college.CollegeProjection;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
 import com.sis.dto.student.StudentDTO;
+import com.sis.dto.student.StudentUploadDto;
+import com.sis.entity.College;
+import com.sis.entity.Department;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.Student;
 import com.sis.entity.mapper.FacultyMemberMapper;
@@ -19,33 +22,29 @@ import com.sis.repository.*;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import com.sis.util.MessageResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.Instant;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@RequiredArgsConstructor
 public class SecurityService {
 
-    private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
@@ -55,39 +54,15 @@ public class SecurityService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final FacultyMemberMapper facultyMemberMapper;
-    private final CollegeService collegeService;
-    private final DepartmentService departmentService;
     private final UserMapper userMapper;
-    private final RestTemplate restTemplate;
+    private final CashService cashService;
+    private final CollegeRepository collegeRepository;
+    private final DepartmentRepository departmentRepository;
+    private final PojoValidationService validationService;
+    private final ExcelFileGenerator excelFileGenerator;
 
-    private final UserFileRepository userFileRepository;
-    Logger logger = LoggerFactory.getLogger(SecurityService.class);
-    @Value("${upload.picture.url}")
-    private String uploadProfilePictureUrl;
+    private final UploadFilesService uploadFilesService;
 
-
-    public SecurityService(UserRepository userRepository, AuthenticationManager authenticationManager,
-                           JwtProvider jwtProvider, StudentRepository studentRepository,
-                           FacultyMemberRepository facultyMemberRepository, StudentMapper studentMapper,
-                           RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-                           FacultyMemberMapper facultyMemberMapper, CollegeService collegeService,
-                           DepartmentService departmentService, UserMapper userMapper, ObjectMapper objectMapper, RestTemplate restTemplate, UserFileRepository userFileRepository) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
-        this.studentRepository = studentRepository;
-        this.facultyMemberRepository = facultyMemberRepository;
-        this.studentMapper = studentMapper;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.facultyMemberMapper = facultyMemberMapper;
-        this.collegeService = collegeService;
-        this.departmentService = departmentService;
-        this.userMapper = userMapper;
-        this.objectMapper = objectMapper;
-        this.restTemplate = restTemplate;
-        this.userFileRepository = userFileRepository;
-    }
 
     public ResponseEntity<StudentDTO> registerStudent1(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -125,6 +100,7 @@ public class SecurityService {
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .role(roleRepository.getRoleStudent())
                 .type(Constants.TYPE_STUDENT).build();
+        student.setBirthDate(registerDTO.getBirthDate());
         student.setUser(userRepository.save(user));
         student.setUniversityMail(registerDTO.getEmail());
         studentRepository.save(student);
@@ -162,77 +138,95 @@ public class SecurityService {
                 .orElseThrow(InvalidUserNameOrPasswordException::new));
     }
 
-    public ResponseEntity<StudentDTO> registerBulkStudents(MultipartFile file) {
-        Map<String, Long> departmentsMap = departmentService.cashAllDepartments();
-        Map<String, Long> collegesMap = collegeService.cashAllColleges();
-        try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
-            sheet.removeRow(sheet.iterator().next());
-            processRows(StreamSupport.stream(sheet.spliterator(), false).collect(Collectors.toList()), departmentsMap, collegesMap).
-                    forEach(studentDTO -> studentRepository
-                            .saveNativeStudent(studentDTO.getNameAr(), studentDTO.getNameEn(), studentDTO.getNationality(),
-                                    studentDTO.getNationalId(), studentDTO.getCollegeID(), studentDTO.getDepartmentID(), studentDTO.getUniversityId()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public MessageResponse registerBulkStudents(MultipartFile file) {
+        CompletableFuture.runAsync(() -> {
+            try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
+                Sheet sheet = workbook.getSheetAt(0);
+                sheet.removeRow(sheet.iterator().next());
+                List<Row> rows = StreamSupport.stream(sheet.spliterator(), true).collect(Collectors.toList());
+                Map<String, List<CollegeProjection>> collegesMap = cashService.cashAllColleges();
+                Map<Long, List<DepartmentProjection>> departmentsMap = cashService.cashAllDepartments();
+                Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, collegesMap, departmentsMap);
+                saveValidUsers(studentUploadMap.get(Boolean.TRUE));
+                uploadInvalidUserToDrive(studentUploadMap.get(Boolean.FALSE), file.getOriginalFilename());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        return new MessageResponse(200, "Students are being Registered", null);
     }
 
-    private List<StudentDTO> processRows(List<Row> collect, Map<String, Long> departmentsMap, Map<String, Long> collegesMap) {
-        List<StudentDTO> studentList = new ArrayList<>();
-        for (Row row : collect) {
-            studentList.add(StudentDTO.builder()
+    private Map<Boolean, List<StudentUploadDto>> processRows(List<Row> rows, Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap) {
+        return rows.stream().map(row -> {
+            StudentUploadDto studentUploadDto = StudentUploadDto.builder()
                     .nameAr(row.getCell(0).getStringCellValue())
-                    .nameEn(row.getCell(1).getStringCellValue())
-                    .nationality(row.getCell(2).getStringCellValue())
-                    .nationalId(row.getCell(3).getStringCellValue())
-                    .birthDate(Date.from(Instant.now()))
-                    .collegeID(collegesMap.get(row.getCell(5).getStringCellValue()))
-                    .departmentID(departmentsMap.get(row.getCell(6).getStringCellValue()))
-                    .universityId(0)
-                    .build());
+                    .nationality(row.getCell(1).getStringCellValue())
+                    .nationalId(row.getCell(2).getStringCellValue())
+                    .collegeCode(row.getCell(3).getStringCellValue())
+                    .departmentCode(row.getCell(4).getStringCellValue())
+                    .build();
+            studentUploadDto.setErrors(validationService.validate(studentUploadDto).stream()
+                    .map(violation -> new StringBuilder()
+                            .append(Constants.FIELD).append(" -> ").append(violation.getPropertyPath()).append(System.lineSeparator())
+                            .append(" ")
+                            .append(Constants.ERROR).append(" -> ").append(violation.getMessage()).append(System.lineSeparator()))
+                    .collect(Collectors.joining()));
+            validateCollegeAndDepartmentAndNationalID(collegesMap, departmentsMap, studentUploadDto);
+            studentUploadDto.setIsValid(studentUploadDto.getErrors().isEmpty());
+            return studentUploadDto;
+        }).collect(Collectors.groupingBy(StudentUploadDto::getIsValid));
+    }
+
+    private void validateCollegeAndDepartmentAndNationalID(Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap, StudentUploadDto studentUploadDto) {
+        Optional<List<CollegeProjection>> optionalListColleges = Optional.ofNullable(collegesMap.get(studentUploadDto.getCollegeCode()));
+        if (optionalListColleges.isEmpty()) {
+            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " college-code " + System.lineSeparator() +
+                    Constants.ERROR + "-> " + "college doesnt exist" + System.lineSeparator());
+        } else {
+            Optional<List<DepartmentProjection>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(optionalListColleges.get().get(0).getId()));
+            boolean noneMatch = optionalListDepartments.get().stream().noneMatch(departmentProjection -> Objects.equals(departmentProjection.getCode(), studentUploadDto.getDepartmentCode()));
+            if (noneMatch) {
+                studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " department-code " + System.lineSeparator() +
+                        Constants.ERROR + " -> " + " department doesnt exist for the given college" + System.lineSeparator());
+            }
         }
-        return studentList;
-    }
-
-    public MessageResponse uploadProfilePicture(MultipartFile file, String email, Long userID) {
-        FileUploadDownLoadModel fileUploadDownLoadModel = constructUploadModelForPictureUpload(email, file.getOriginalFilename());
-        return uploadToDrive(file, fileUploadDownLoadModel, userID);
-    }
-
-    private MessageResponse uploadToDrive(MultipartFile file, FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
-        try {
-            String fileUploadModel = objectMapper.writeValueAsString(fileUploadDownLoadModel);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            body.add("file", Base64.getEncoder().encodeToString(file.getBytes()));
-            body.add("fileUploadModel", fileUploadModel);
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-            String content = restTemplate.exchange(uploadProfilePictureUrl, HttpMethod.POST, requestEntity, String.class).getBody();
-            MessageResponse messageResponse = objectMapper.readValue(content, MessageResponse.class);
-            userFileRepository.deleteAllByType(Constants.FILE_TYPE_PROFILE_PICTURE);
-            fileUploadDownLoadModel.setFileName(messageResponse.getMessage());
-            String directories = saveFile(fileUploadDownLoadModel, userID);
-            messageResponse.setMessage(directories);
-            return messageResponse;
-        } catch (Exception e) {
-            logger.error("error uploading file", e);
-            return new MessageResponse(500, "error Uploading file", null);
+        if (Boolean.TRUE.equals(studentRepository.existsByNationalId(studentUploadDto.getNationalId()))) {
+            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " national-ID " + System.lineSeparator() +
+                    Constants.ERROR + " -> " + " National ID already on the system" + System.lineSeparator());
         }
     }
 
-    private String saveFile(FileUploadDownLoadModel fileUploadDownLoadModel, Long userID) {
-        String directories = String.join(Constants.DASH_DELIMITER, fileUploadDownLoadModel.getDirectories()) +
-                Constants.DASH_DELIMITER + fileUploadDownLoadModel.getFileName();
-        userFileRepository.saveUserFile(directories,
-                fileUploadDownLoadModel.getFileName(), userID, Constants.FILE_TYPE_PROFILE_PICTURE);
-        return directories;
+    private void uploadInvalidUserToDrive(List<StudentUploadDto> studentUploadDtoList, String fileName) throws IOException {
+        String excelSheetEncoded = excelFileGenerator.generateInvalidStudentsExcelSheet(studentUploadDtoList);
+        uploadInvalidStudents(excelSheetEncoded, fileName);
     }
 
-    private FileUploadDownLoadModel constructUploadModelForPictureUpload(String email, String originalFilename) {
-        List<String> directories = Arrays.asList(email, Constants.PROFILE_PICTURE_FOLDER_NAME);
-        return FileUploadDownLoadModel.builder().directories(directories).removeOthers(true).fileName(originalFilename).build();
+    private void saveValidUsers(List<StudentUploadDto> studentUploadDtoList) {
+        if (studentUploadDtoList != null) {
+            College college = collegeRepository.findByCode(studentUploadDtoList.get(0).getCollegeCode());
+            Department department = departmentRepository.findByCode(studentUploadDtoList.get(0).getDepartmentCode());
+            studentRepository.saveAll(studentUploadDtoList
+                    .parallelStream()
+                    .map(studentUploadDto -> Student.builder()
+                            .nationalId(studentUploadDto.getNationalId())
+                            .nationality(studentUploadDto.getNationality())
+                            .collegeId(college)
+                            .departmentId(department)
+                            .nameAr(studentUploadDto.getNameAr())
+                            .level("1")
+                            .build())
+                    .collect(Collectors.toList()));
+        }
     }
+
+
+    public void uploadInvalidStudents(String file, String fileName) {
+        uploadFilesService.uploadStudents(file, fileName, Constants.ADMIN_USER_NAME);
+    }
+
+    public MessageResponse uploadProfilePicture(MultipartFile file, String email) throws IOException {
+        return uploadFilesService.uploadProfilePicture(Base64.getEncoder().encodeToString(file.getBytes()), file.getOriginalFilename(), email);
+    }
+
 
 }
