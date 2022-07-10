@@ -63,6 +63,8 @@ public class SecurityService {
 
     private final UploadFilesService uploadFilesService;
 
+    private final WebSocketService webSocketService;
+
 
     public ResponseEntity<StudentDTO> registerStudent1(StudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
@@ -149,6 +151,7 @@ public class SecurityService {
                 Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, collegesMap, departmentsMap);
                 saveValidUsers(studentUploadMap.get(Boolean.TRUE));
                 uploadInvalidUserToDrive(studentUploadMap.get(Boolean.FALSE), file.getOriginalFilename());
+                webSocketService.sendUploadDoneNotification();
             } catch (Exception e) {
                 e.printStackTrace();
             }

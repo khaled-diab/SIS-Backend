@@ -31,7 +31,6 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 
     @Override
     public StudentDTO toDTO(Student entity) {
-
         StudentDTO dto = new StudentDTO();
         dto.setAlternativeMail(entity.getAlternativeMail());
         dto.setUniversityMail(entity.getUniversityMail());
@@ -108,7 +107,7 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 
     @Override
     public PageResult<StudentDTO> toDataPage(PageResult<Student> pageResult) {
-        return new PageResult<>(pageResult.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<StudentDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
+        return new PageResult<>(pageResult.getData().stream().map(this::toDTO).collect(toCollection(ArrayList<StudentDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
 
     }
 }
