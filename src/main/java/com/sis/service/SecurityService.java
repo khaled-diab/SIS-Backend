@@ -26,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,6 +46,8 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 public class SecurityService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
@@ -153,7 +157,7 @@ public class SecurityService {
                 uploadInvalidUserToDrive(studentUploadMap.get(Boolean.FALSE), file.getOriginalFilename());
                 webSocketService.sendUploadDoneNotification();
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("error opining file", e);
             }
         });
         return new MessageResponse(200, "Students are being Registered", null);
