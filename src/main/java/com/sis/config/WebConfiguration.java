@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -24,7 +25,7 @@ public class WebConfiguration {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("*", "HEAD", "GET", "POST", "PUT", "DELETE", "PATCH");
+                registry.addMapping("http://loccalhost/4200/").allowedMethods("*", "HEAD", "GET", "POST", "PUT", "DELETE", "PATCH");
             }
         };
     }
@@ -32,14 +33,14 @@ public class WebConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*", "http://**", "https://**", "http://localhost:8080/**", "http://localhost:8080", "http://localhost:9090/**", "http://graduation.westeurope.cloudapp.azure.com:8080/**", "http://graduation.westeurope.cloudapp.azure.com:8080"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedOrigins(Arrays.asList("*", "http://**", "https://**"));
+        configuration.setAllowedMethods(List.of("*"));
         // setAllowCredentials(true) is important, otherwise:
         // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(Boolean.TRUE);
         // setAllowedHeaders is important! Without it, OPTIONS preflight request
         // will fail with 403 Invalid CORS request
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "jwt-token"));
+        configuration.setAllowedHeaders(List.of("*"));
         // allow header "Location" to be read by clients to enable them to read the location of an uploaded group logo
         configuration.addExposedHeader("Location");
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
