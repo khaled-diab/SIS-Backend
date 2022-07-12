@@ -11,6 +11,6 @@ public class WebSocketService {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void sendUploadDoneNotification() {
-        messagingTemplate.convertAndSend("/topic/upload", "File processing is done");
+        messagingTemplate.convertAndSend("/topic/uploadedUsers", "File processing is done");
     }
 }
