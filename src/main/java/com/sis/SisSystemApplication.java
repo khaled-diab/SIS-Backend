@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 @EnableAsync
 @CrossOrigin(origins = ("**"))
 @RestController
+@ServletComponentScan
 public class SisSystemApplication extends SpringBootServletInitializer {
 
     private static final Logger log = LogManager.getLogger(SisSystemApplication.class);
