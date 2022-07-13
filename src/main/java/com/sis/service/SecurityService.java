@@ -3,18 +3,18 @@ package com.sis.service;
 import com.sis.dto.AdminDto;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.DepartmentProjection;
+import com.sis.dto.UserFileDto;
 import com.sis.dto.college.CollegeProjection;
+import com.sis.dto.college.GeneralSearchRequest;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.student.StudentUploadDto;
-import com.sis.entity.College;
-import com.sis.entity.Department;
-import com.sis.entity.FacultyMember;
-import com.sis.entity.Student;
+import com.sis.entity.*;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.entity.mapper.StudentMapper;
+import com.sis.entity.mapper.UserFileMapper;
 import com.sis.entity.mapper.UserMapper;
 import com.sis.entity.security.User;
 import com.sis.exception.InvalidUserNameOrPasswordException;
@@ -22,12 +22,16 @@ import com.sis.repository.*;
 import com.sis.security.JwtProvider;
 import com.sis.util.Constants;
 import com.sis.util.MessageResponse;
+import com.sis.util.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,13 +47,17 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static com.sis.util.Constants.FILE_TYPE_STAFF_UPLOAD;
+import static com.sis.util.Constants.FILE_TYPE_STUDENT_UPLOAD;
+
 @Service
 @RequiredArgsConstructor
-public class SecurityService {
+public class SecurityService extends BaseServiceImp<User> {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-
     private final UserRepository userRepository;
+    private final UserFileRepository userFileRepository;
+    private final UserFileMapper userFileMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final StudentRepository studentRepository;
@@ -64,9 +72,7 @@ public class SecurityService {
     private final DepartmentRepository departmentRepository;
     private final PojoValidationService validationService;
     private final ExcelFileGenerator excelFileGenerator;
-
     private final UploadFilesService uploadFilesService;
-
     private final WebSocketService webSocketService;
 
 
@@ -245,4 +251,23 @@ public class SecurityService {
     }
 
 
+    public PageResult<UserFileDto> getAdminUploadedFiles(Integer page, Integer size, GeneralSearchRequest generalSearchRequest) {
+        Page<UserFile> userFilePage;
+        PageRequest pageRequest = PageRequest.of(page, size, constructSortObject(generalSearchRequest, "type"));
+        if (generalSearchRequest.getFilterValue() != null && !generalSearchRequest.getFilterValue().equals("")) {
+            userFilePage = this.userFileRepository.findAllByFileNameContainingIgnoreCaseAndTypeIn(
+                    generalSearchRequest.getFilterValue(), Arrays.asList(FILE_TYPE_STAFF_UPLOAD, FILE_TYPE_STUDENT_UPLOAD), pageRequest);
+        } else {
+            userFilePage = this.userFileRepository.findAllByTypeIn(Arrays.asList(FILE_TYPE_STAFF_UPLOAD, FILE_TYPE_STUDENT_UPLOAD), pageRequest);
+        }
+        return userFileMapper.toDataPage(new PageResult<>(userFilePage.getContent(),
+                (int) userFilePage.getTotalElements(),
+                userFilePage.getSize(),
+                userFilePage.getNumber()));
+    }
+
+    @Override
+    public JpaRepository<User, Long> Repository() {
+        return null;
+    }
 }

@@ -1,7 +1,7 @@
 package com.sis.controller;
 
 import com.sis.dto.college.CollegeDTO;
-import com.sis.dto.college.CollegeRequestDTO;
+import com.sis.dto.college.GeneralSearchRequest;
 import com.sis.entity.College;
 import com.sis.service.CollegeService;
 import com.sis.util.MessageResponse;
@@ -17,8 +17,8 @@ public class CollegeController extends BaseController<College, CollegeDTO> {
     private final CollegeService collegeService;
 
     @PostMapping(value = "/findAll/{page}/{size}")
-    public PageResult<CollegeDTO> findAll(@PathVariable Integer page, @PathVariable Integer size, @RequestBody CollegeRequestDTO collegeRequestDTO) {
-        return collegeService.getCollegesPage(page, size, collegeRequestDTO);
+    public PageResult<CollegeDTO> findAll(@PathVariable Integer page, @PathVariable Integer size, @RequestBody GeneralSearchRequest generalSearchRequest) {
+        return collegeService.getCollegesPage(page, size, generalSearchRequest);
     }
 
     @GetMapping(value = "/deleteCollege/{id}")
