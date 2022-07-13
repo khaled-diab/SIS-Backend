@@ -39,4 +39,6 @@ public interface StudentRepository extends BaseRepository<Student> {
 
     Boolean existsByUniversityMail(String mail);
 
+    Boolean existsByUniversityId(Long universityID);
+
 }
