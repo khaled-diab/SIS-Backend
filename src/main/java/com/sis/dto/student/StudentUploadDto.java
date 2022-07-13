@@ -53,6 +53,10 @@ public class StudentUploadDto extends BaseDTO {
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
+    private String universityNumber;
+
+    @NotEmpty(message = "Required")
+    @NotBlank(message = "Required")
     private String collegeCode;
 
     @NotEmpty(message = "Required")

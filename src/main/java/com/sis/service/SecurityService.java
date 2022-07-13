@@ -174,35 +174,40 @@ public class SecurityService {
                     .nationalId(row.getCell(2).getStringCellValue())
                     .collegeCode(row.getCell(3).getStringCellValue())
                     .departmentCode(row.getCell(4).getStringCellValue())
+                    .universityNumber(row.getCell(5).getStringCellValue())
                     .build();
             studentUploadDto.setErrors(validationService.validate(studentUploadDto).stream()
                     .map(violation -> new StringBuilder()
-                            .append(Constants.FIELD).append(" -> ").append(violation.getPropertyPath()).append(System.lineSeparator())
+                            .append(Constants.FIELD).append(" -> ").append(violation.getPropertyPath()).append("\n")
                             .append(" ")
-                            .append(Constants.ERROR).append(" -> ").append(violation.getMessage()).append(System.lineSeparator()))
+                            .append(Constants.ERROR).append(" -> ").append(violation.getMessage()).append("\n"))
                     .collect(Collectors.joining()));
-            validateCollegeAndDepartmentAndNationalID(collegesMap, departmentsMap, studentUploadDto);
+            validateCollegeAndDepartmentAndNationalIDAAndUniversityNumber(collegesMap, departmentsMap, studentUploadDto);
             studentUploadDto.setIsValid(studentUploadDto.getErrors().isEmpty());
             return studentUploadDto;
         }).collect(Collectors.groupingBy(StudentUploadDto::getIsValid));
     }
 
-    private void validateCollegeAndDepartmentAndNationalID(Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap, StudentUploadDto studentUploadDto) {
+    private void validateCollegeAndDepartmentAndNationalIDAAndUniversityNumber(Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap, StudentUploadDto studentUploadDto) {
         Optional<List<CollegeProjection>> optionalListColleges = Optional.ofNullable(collegesMap.get(studentUploadDto.getCollegeCode()));
         if (optionalListColleges.isEmpty()) {
-            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " college-code " + System.lineSeparator() +
-                    Constants.ERROR + "-> " + "college doesnt exist" + System.lineSeparator());
+            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " college-code " + "\n" +
+                    Constants.ERROR + "-> " + "college doesnt exist" + "\n");
         } else {
             Optional<List<DepartmentProjection>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(optionalListColleges.get().get(0).getId()));
             boolean noneMatch = optionalListDepartments.get().stream().noneMatch(departmentProjection -> Objects.equals(departmentProjection.getCode(), studentUploadDto.getDepartmentCode()));
             if (noneMatch) {
-                studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " department-code " + System.lineSeparator() +
-                        Constants.ERROR + " -> " + " department doesnt exist for the given college" + System.lineSeparator());
+                studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " department-code " + "\n" +
+                        Constants.ERROR + " -> " + " department doesnt exist for the given college" + "\n");
             }
         }
         if (Boolean.TRUE.equals(studentRepository.existsByNationalId(studentUploadDto.getNationalId()))) {
-            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " national-ID " + System.lineSeparator() +
-                    Constants.ERROR + " -> " + " National ID already on the system" + System.lineSeparator());
+            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " national-ID " + "\n" +
+                    Constants.ERROR + " -> " + " National ID already on the system" + "\n");
+        }
+        if (Boolean.TRUE.equals(studentRepository.existsByUniversityId(Long.valueOf(studentUploadDto.getUniversityNumber())))) {
+            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " university-number " + "\n" +
+                    Constants.ERROR + " -> " + " university number already on the system" + "\n");
         }
     }
 
@@ -224,6 +229,7 @@ public class SecurityService {
                             .departmentId(department)
                             .nameAr(studentUploadDto.getNameAr())
                             .level("1")
+                            .universityId(Long.parseLong(studentUploadDto.getUniversityNumber()))
                             .build())
                     .collect(Collectors.toList()));
         }
