@@ -146,18 +146,21 @@ public class SecurityService {
 
     public MessageResponse registerBulkStudents(MultipartFile file) {
         CompletableFuture.runAsync(() -> {
-            try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
-                Sheet sheet = workbook.getSheetAt(0);
-                sheet.removeRow(sheet.iterator().next());
-                List<Row> rows = StreamSupport.stream(sheet.spliterator(), true).collect(Collectors.toList());
-                Map<String, List<CollegeProjection>> collegesMap = cashService.cashAllColleges();
-                Map<Long, List<DepartmentProjection>> departmentsMap = cashService.cashAllDepartments();
-                Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, collegesMap, departmentsMap);
-                saveValidUsers(studentUploadMap.get(Boolean.TRUE));
-                uploadInvalidUserToDrive(studentUploadMap.get(Boolean.FALSE), file.getOriginalFilename());
-                webSocketService.sendUploadDoneNotification();
+            try {
+                try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
+                    Sheet sheet = workbook.getSheetAt(0);
+                    sheet.removeRow(sheet.iterator().next());
+                    List<Row> rows = StreamSupport.stream(sheet.spliterator(), true).collect(Collectors.toList());
+                    Map<String, List<CollegeProjection>> collegesMap = cashService.cashAllColleges();
+                    Map<Long, List<DepartmentProjection>> departmentsMap = cashService.cashAllDepartments();
+                    Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, collegesMap, departmentsMap);
+                    saveValidUsers(studentUploadMap.get(Boolean.TRUE));
+                    uploadInvalidUserToDrive(studentUploadMap.get(Boolean.FALSE), file.getOriginalFilename());
+                    webSocketService.sendUploadDoneNotification(200, "File processing is done");
+                }
             } catch (Exception e) {
                 logger.error("error opining file", e);
+                webSocketService.sendUploadDoneNotification(500, "File processing has Filed try Renaming File or try again Later");
             }
         });
         return new MessageResponse(200, "Students are being Registered", null);
