@@ -4,6 +4,8 @@ import com.sis.dto.security.UserDto;
 import com.sis.entity.security.User;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import static java.util.stream.Collectors.toCollection;
 public class UserMapper implements Mapper<User, UserDto> {
 
 	private final UserFileMapper userFileMapper;
+	@Autowired(required = true)
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public ArrayList<UserDto> toDTOs(final Collection<User> entity) {
@@ -60,7 +64,7 @@ public class UserMapper implements Mapper<User, UserDto> {
 		entity.setFirstname(dto.getFirstname());
 		entity.setLastname(dto.getLastname());
 		entity.setEmail(dto.getEmail());
-		entity.setPassword(dto.getPassword());
+		entity.setPassword(bCryptPasswordEncoder.encode("123456789"));
 		entity.setUserFileList(userFileMapper.toEntitiesOptional(Optional.ofNullable(dto.getUserFileList())));
 		return entity;
 	}
