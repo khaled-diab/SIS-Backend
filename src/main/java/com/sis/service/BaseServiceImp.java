@@ -1,5 +1,6 @@
 package com.sis.service;
 
+import com.sis.dto.college.GeneralSearchRequest;
 import com.sis.entity.BaseEntity;
 import com.sis.exception.ItemNotFoundException;
 import com.sis.util.PageQueryUtil;
@@ -73,5 +74,11 @@ public abstract class BaseServiceImp<E extends BaseEntity> implements BaseServic
         return pageResult;
     }
 
+    public Sort constructSortObject(GeneralSearchRequest generalSearchRequest, String defaultSortField) {
+        if (generalSearchRequest.getSortDirection() == null) {
+            return Sort.by(Sort.Direction.ASC, defaultSortField);
+        }
+        return Sort.by(Sort.Direction.valueOf(generalSearchRequest.getSortDirection()), generalSearchRequest.getSortBy());
+    }
 
 }

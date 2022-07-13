@@ -1,12 +1,14 @@
 package com.sis.controller;
 
 import com.sis.dto.BaseDTO;
+import com.sis.dto.UserFileDto;
+import com.sis.dto.college.GeneralSearchRequest;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
-import com.sis.dto.student.StudentDTO;
 import com.sis.service.SecurityService;
 import com.sis.util.MessageResponse;
+import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,8 +49,8 @@ public class SecurityController {
         return new ResponseEntity<>(securityService.uploadProfilePicture(file, email), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register-student1")
-    public ResponseEntity<StudentDTO> registerStudent1(@RequestBody StudentDTO studentDTO) {
-        return securityService.registerStudent1(studentDTO);
+    @PostMapping(value = "/findAll/{page}/{size}")
+    public PageResult<UserFileDto> findAll(@PathVariable Integer page, @PathVariable Integer size, @RequestBody GeneralSearchRequest generalSearchRequest) {
+        return securityService.getAdminUploadedFiles(page, size, generalSearchRequest);
     }
 }

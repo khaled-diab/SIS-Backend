@@ -20,12 +20,16 @@ public class UserFileMapper implements Mapper<UserFile, UserFileDto> {
 
     @Override
     public UserFileDto toDTO(UserFile userFile) {
-        return UserFileDto.builder().directories(userFile.getDirectories()).fileName(userFile.getFileName()).type(userFile.getType()).build();
+        return UserFileDto
+                .builder().directories(userFile.getDirectories()).fileName(userFile.getFileName()).type(userFile.getType()).uploadDate(userFile.getUploadDate())
+                .build();
     }
 
     @Override
     public UserFile toEntity(UserFileDto userFileDto) {
-        return UserFile.builder().directories(userFileDto.getDirectories()).fileName(userFileDto.getFileName()).type(userFileDto.getType()).build();
+        return UserFile
+                .builder().directories(userFileDto.getDirectories()).fileName(userFileDto.getFileName()).type(userFileDto.getType()).uploadDate(userFileDto.getUploadDate())
+                .build();
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.sis.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -11,4 +13,5 @@ public class UserFileDto extends BaseDTO {
     private String directories;
     private String fileName;
     private String type;
+    private Date uploadDate;
 }
