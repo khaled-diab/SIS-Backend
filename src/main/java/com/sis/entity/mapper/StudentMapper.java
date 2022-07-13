@@ -62,9 +62,9 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 		if(entity.getProgramId()!=null) {
 			dto.setAcademicProgramDTO(this.academicProgramMapper.toDTO(entity.getProgramId()));
 		}
-
-
-//		dto.setUser(userMapper.toDTO(entity.getUser()));
+		if(entity.getUser()!=null) {
+			dto.setUser(userMapper.toDTO(entity.getUser()));
+		}
 		return dto;
 	}
 
@@ -84,23 +84,27 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 			entity.setParentPhone(dto.getParentPhone());
 			entity.setPhone(dto.getPhone());
 			entity.setPhoto(dto.getPhoto());
-			System.out.println(dto.getUniversityId());
 			entity.setUniversityId(dto.getUniversityId());
 			entity.setNationalId(dto.getNationalId());
 			entity.setUniversityMail(dto.getUniversityMail());
 			if (dto.getCollegeDTO() != null) {
 				entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 			}
-			if (dto.getDepartmentDTO() != null) {
-
-				entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
-
+			if (dto.getDepartmentDTO() != null ) {
+				if(dto.getDepartmentDTO().getId()==-1){
+					entity.setDepartmentId(null);
+				}else {
+					entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+				}
 			}
-			if (dto.getAcademicProgramDTO() != null) {
-
-				entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
+			if (dto.getAcademicProgramDTO() != null ) {
+				if (dto.getAcademicProgramDTO().getId() == -1) {
+					entity.setProgramId(null);
+				} else {
+					entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
+				}
 			}
-//			entity.setUser(userMapper.toEntity(dto.getUser()));
+			entity.setUser(userMapper.toEntity(dto.getUser()));
 
 
 		}
