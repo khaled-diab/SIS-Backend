@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AttendanceReportDTO extends BaseDTO {
+public class AttendanceReportDTO {
 
     private ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs;
 
