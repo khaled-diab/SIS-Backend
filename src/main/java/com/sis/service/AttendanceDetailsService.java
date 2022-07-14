@@ -121,7 +121,7 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         return  attendanceBySectionAndStudentDTOS;
     }
 
-    public ArrayList<AttendanceBySection> getAttendanceDetailsBySectoin(Long sectionId  ){
+    public ArrayList<AttendanceBySection> getAttendanceDetailsBySectoin(Long sectionId){
         ArrayList<AttendanceDetails> attendanceDetailsList =
                 this.attendanceDetailsRepository.findStudentBySectionId(sectionId );
         ArrayList<AttendanceBySection> attendanceBySectionAndStudentDTOS = new ArrayList<>();

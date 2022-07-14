@@ -19,6 +19,7 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
         AcademicYearDTO academicYearDTO = new AcademicYearDTO(entity.getCode(),
                 entity.getName(), entity.getStartDate(), entity.getEndDate());
         academicYearDTO.setId(entity.getId());
+        academicYearDTO.setStatus(entity.isStatus());
         return academicYearDTO;
     }
 
@@ -30,6 +31,10 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
         academicYear.setEndDate(dto.getEnd_date());
         academicYear.setStartDate(dto.getStart_date());
         academicYear.setName(dto.getName());
+        academicYear.setStatus(dto.isStatus());
+        if(dto.getStart_date().after(dto.getEnd_date())){
+            throw new IllegalArgumentException("date not valid");
+        }
         return academicYear;
     }
 
