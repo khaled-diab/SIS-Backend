@@ -61,12 +61,22 @@ public class SectionSpecification implements Specification<Section> {
     public Predicate toPredicate(Root<Section> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Join<Section, Course> sectionCourseJoin = root.join("course");
         if (searchValue != null) {
-            Predicate searchPredicate = criteriaBuilder.or(
+            Predicate x = criteriaBuilder.or(
                     criteriaBuilder.like(sectionCourseJoin.get("code"), "%" + searchValue + "%"),
                     criteriaBuilder.like(sectionCourseJoin.get("nameAr"), "%" + searchValue + "%"),
                     criteriaBuilder.like(sectionCourseJoin.get("nameEn"), "%" + searchValue + "%"),
                     criteriaBuilder.like(root.get("sectionNumber"), "%" + searchValue + "%")
             );
+            int capacity;
+            try {
+                capacity = Integer.parseInt(searchValue);
+            } catch (Exception ex) {
+                capacity = -1;
+            }
+            Predicate y = criteriaBuilder.or(
+                    criteriaBuilder.equal(root.get("capacity"), capacity)
+            );
+            Predicate searchPredicate = criteriaBuilder.or(x, y);
             if (filterCollege == null && filterDepartment == null && filterAcademicYear == null
                     && filterAcademicTerm == null && filterCourse == null
                     && filterStudyType == null && filterMajor == null) {
@@ -78,13 +88,13 @@ public class SectionSpecification implements Specification<Section> {
     }
 
     private Predicate getFilterPredicate(Root<Section> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<Section, College> sectionCollegeJoin = root.join("college");
-        Join<Section, Department> sectionDepartmentJoin = root.join("department");
-        Join<Section, AcademicYear> sectionAcademicYearJoin = root.join("academicYear");
-        Join<Section, AcademicTerm> sectionAcademicTermJoin = root.join("academicTerm");
-        Join<Section, Course> sectionCourseJoin = root.join("course");
-        Join<Section, StudyType> sectionStudyTypeJoin = root.join("studyType");
-        Join<Section, Major> sectionMajorJoin = root.join("major");
+        Join<Section, College> sectionCollegeJoin = root.join("college", JoinType.LEFT);
+        Join<Section, Department> sectionDepartmentJoin = root.join("department", JoinType.LEFT);
+        Join<Section, AcademicYear> sectionAcademicYearJoin = root.join("academicYear", JoinType.LEFT);
+        Join<Section, AcademicTerm> sectionAcademicTermJoin = root.join("academicTerm", JoinType.LEFT);
+        Join<Section, Course> sectionCourseJoin = root.join("course", JoinType.LEFT);
+        Join<Section, StudyType> sectionStudyTypeJoin = root.join("studyType", JoinType.LEFT);
+        Join<Section, Major> sectionMajorJoin = root.join("major", JoinType.LEFT);
 
         Predicate college;
         if (filterCollege != null)
@@ -119,7 +129,7 @@ public class SectionSpecification implements Specification<Section> {
         Predicate major;
         if (filterMajor != null)
             major = criteriaBuilder.equal(sectionMajorJoin.get("id"), filterMajor);
-        else major = criteriaBuilder.notEqual(sectionMajorJoin.get("id"), -1);
+        else major = criteriaBuilder.or(criteriaBuilder.notEqual(sectionMajorJoin.get("id"), -1),criteriaBuilder.isNull(sectionMajorJoin.get("id")));
 
         return criteriaBuilder.and(college, department,
                 academicYear, academicTerm, course, studyType, major);

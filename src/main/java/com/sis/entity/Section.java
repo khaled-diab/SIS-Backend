@@ -32,6 +32,9 @@ public class Section extends BaseEntity {
     @Column(name = "exercises_lectures")
     private int exercisesLectures;
 
+    @Column(name = "capacity")
+    private int capacity;
+
     @ManyToOne
     @JoinColumn(name = "major_id", referencedColumnName = "id")
     private Major major;

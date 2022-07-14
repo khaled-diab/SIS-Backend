@@ -85,11 +85,28 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
 
             facultyMemberPage = facultyMemberRepository.findAll(facultyMemberSpecification, pageable);
         } else {
-            facultyMemberPage = facultyMemberRepository.findAll(pageable);
+            if (facultyMemberRequestDTO.getSortBy().equalsIgnoreCase("nameAr")) {
+                facultyMemberRequestDTO.setSortBy("name_ar");
+            } else if (facultyMemberRequestDTO.getSortBy().equalsIgnoreCase("collegeId")) {
+                facultyMemberRequestDTO.setSortBy("college_id");
+            } else if (facultyMemberRequestDTO.getSortBy().equalsIgnoreCase("departmentId")) {
+                facultyMemberRequestDTO.setSortBy("department_id");
+            }
+
+            Sort sort2 = constructSortObject2(facultyMemberRequestDTO);
+            Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), sort2);
+            facultyMemberPage = facultyMemberRepository.findAllWithUser(pageable2);
         }
         PageResult<FacultyMember> pageResult = new PageResult<>(facultyMemberPage.getContent(), (int) facultyMemberPage.getTotalElements(),
                 pageUtil.getLimit(), pageUtil.getPage());
 
         return facultyMemberTableRecordsMapper.toDataPage(pageResult);
+    }
+
+    private Sort constructSortObject2(FacultyMemberRequestDTO facultyMemberRequestDTO) {
+        if (facultyMemberRequestDTO.getSortDirection() == null) {
+            return Sort.by(Sort.Direction.ASC, "name_ar");
+        }
+        return Sort.by(Sort.Direction.valueOf(facultyMemberRequestDTO.getSortDirection()), facultyMemberRequestDTO.getSortBy());
     }
 }

@@ -10,9 +10,12 @@ import com.sis.entity.Student;
 import com.sis.entity.mapper.AcademicTermMapper;
 import com.sis.entity.mapper.StudentMapper;
 import com.sis.entity.mapper.StudentRecordMapper;
+import com.sis.entity.mapper.UserMapper;
+import com.sis.entity.security.User;
 import com.sis.exception.StudentFieldNotUniqueException;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
+import com.sis.service.UserService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -60,6 +63,10 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     private AcademicTermMapper academicTermMapper;
     @Autowired
     private StudentRecordMapper studentRecordMapper;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
     public static final String DIRECTORY =
             System.getProperty("user.dir") + "/src/main/resources/Images/studentsImages/";
@@ -98,6 +105,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         if(this.studentService.findByUniversityMail(dto.getUniversityMail())!=null){
             throw new StudentFieldNotUniqueException("universityMail","University Mail Already Exists");
         }
+//        this.userService.save(this.userMapper.toEntity(dto.getUser()));
         this.studentService.save(this.studentMapper.toEntity(dto));
         return new MessageResponse("Item has been saved successfully");
     }
@@ -117,6 +125,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         if(studentByuniversityMail!=null && studentByuniversityMail.getId() != dto.getId()){
             throw new StudentFieldNotUniqueException("universityMail","University Mail Already Exists");
         }
+//        User user = this.userService.findById(dto.getUser().getId());
+
         this.studentService.save(this.studentMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
@@ -164,6 +174,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
     public ResponseEntity<PageResult<StudentRecordDTO>> searchStudentPageRecords(
             @RequestParam int page, @RequestParam int limit,
             @RequestBody StudentFilterDTO filterDTO ) {
+        System.out.println(filterDTO);
         PageQueryUtil queryUtil = new PageQueryUtil(page, limit);
         PageResult<StudentDTO> studentPage = this.studentService.search(queryUtil, filterDTO);
         List<StudentRecordDTO> studentRecordDTOS = this.studentRecordMapper.dtosToDTOs(studentPage.getData());

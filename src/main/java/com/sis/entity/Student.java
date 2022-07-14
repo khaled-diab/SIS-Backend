@@ -70,6 +70,7 @@ public class Student extends BaseEntity {
     @ManyToOne
     private AcademicProgram programId;
 
+
     @JoinColumn(name = "college_id", referencedColumnName = "id")
     @ManyToOne
     private College collegeId;

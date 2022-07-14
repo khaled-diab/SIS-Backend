@@ -35,9 +35,7 @@ public class SectionTableRecordsMapper implements Mapper<Section, SectionTableRe
         SectionTableRecordsDTO dto = new SectionTableRecordsDTO();
         dto.setId(entity.getId());
         dto.setSectionNumber(entity.getSectionNumber());
-        dto.setTheoreticalLectures(entity.getTheoreticalLectures());
-        dto.setPracticalLectures(entity.getPracticalLectures());
-        dto.setExercisesLectures(entity.getExercisesLectures());
+        dto.setCapacity(entity.getCapacity());
         if (entity.getCourse() != null) {
             dto.setCourseName(entity.getCourse().getNameEn());
         }
@@ -46,6 +44,12 @@ public class SectionTableRecordsMapper implements Mapper<Section, SectionTableRe
         }
         if (entity.getStudyType() != null) {
             dto.setStudyTypeName(entity.getStudyType().getNameEn());
+        }
+        if (entity.getCollege() != null) {
+            dto.setCollegeName(entity.getCollege().getNameEn());
+        }
+        if (entity.getDepartment() != null) {
+            dto.setDepartmentName(entity.getDepartment().getNameEn());
         }
         return dto;
     }

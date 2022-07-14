@@ -126,9 +126,12 @@ public class LectureService extends BaseServiceImp<Lecture> {
         lectureDTO.setAcademicTermDTO(academicTermDTO);
         lectureDTO.setAcademicYearDTO(this.academicYearMapper.toDTO(academicTerm.getAcademicYear()));
 
+        System.out.println(lectureDTO);
         if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
             Random rand = new Random();
             lectureDTO.setAttendanceCode(Math.abs(rand.nextInt()));
+        }else{
+            lectureDTO.setAttendanceCode(0);
         }
         boolean isFound = true;
         LectureDTO lectureDTO1 = this.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
@@ -137,7 +140,9 @@ public class LectureService extends BaseServiceImp<Lecture> {
             isFound = false;
         } else {
             lectureDTO.setId(lectureDTO1.getId());
+            System.out.println("id= "+lectureDTO1.getId());
         }
+        System.out.println(isFound);
         Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
         LectureDTO lectureDTO2 = this.lectureMapper.toDTO(this.save(lecture));
         if (!isFound) {
