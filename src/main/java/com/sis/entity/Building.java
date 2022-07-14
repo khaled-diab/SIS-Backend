@@ -21,11 +21,8 @@ public class Building extends BaseEntity {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "name_ar")
-    private String nameAr;
-
-    @Column(name = "name_en")
-    private String nameEn;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "status")
     private int status;
@@ -33,6 +30,10 @@ public class Building extends BaseEntity {
     @JoinColumn(name = "college_id", referencedColumnName = "id")
     @ManyToOne
     private College collegeId;
+
+    @JoinColumn(name = "department", referencedColumnName = "id")
+    @ManyToOne
+    private Department department;
 
     @OneToMany(mappedBy = "building")
     private Collection<Classroom> classroomCollection;
