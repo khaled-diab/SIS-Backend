@@ -10,6 +10,7 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.section.SectionDTO;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.Date;
 @Setter
 //@Builder
 @Validated
+@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LectureDTO extends BaseDTO {
 
