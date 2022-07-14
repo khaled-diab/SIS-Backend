@@ -3,6 +3,7 @@ package com.sis.repository.specification;
 import com.sis.entity.College;
 import com.sis.entity.Department;
 import com.sis.entity.FacultyMember;
+import com.sis.entity.security.User;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
@@ -54,19 +55,23 @@ public class FacultyMemberSpecification implements Specification<FacultyMember> 
     }
 
     private Predicate getFilterPredicate(Root<FacultyMember> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<FacultyMember, College> facultyMemberCollegeJoin = root.join("college");
-        Join<FacultyMember, Department> facultyMemberDepartmentJoin = root.join("department");
+        Join<FacultyMember, College> facultyMemberCollegeJoin = root.join("college", JoinType.LEFT);
+        Join<FacultyMember, Department> facultyMemberDepartmentJoin = root.join("department", JoinType.LEFT);
+        Join<FacultyMember, User> facultyMemberUserJoin = root.join("user", JoinType.LEFT);
 
-        System.out.println(filterCollege);
-        System.out.println(filterDepartment);
+        Predicate college;
+        if (filterCollege != null)
+            college = criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
+        else college = criteriaBuilder.notEqual(facultyMemberCollegeJoin.get("id"), -1);
 
-        Predicate college = criteriaBuilder.equal(facultyMemberCollegeJoin.get("id"), filterCollege);
-        if (filterDepartment == null){
-            return college;
-        }
-        Predicate department = criteriaBuilder.equal(facultyMemberDepartmentJoin.get("id"), filterDepartment);
+        Predicate department;
+        if (filterDepartment != null)
+            department = criteriaBuilder.equal(facultyMemberDepartmentJoin.get("id"), filterDepartment);
+        else department = criteriaBuilder.notEqual(facultyMemberDepartmentJoin.get("id"), -1);
 
-        return criteriaBuilder.and(college, department);
+        Predicate user = criteriaBuilder.isNotNull(facultyMemberUserJoin.get("id"));
+
+        return criteriaBuilder.and(college, department, user);
     }
 
 }

@@ -91,15 +91,15 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
     }
 
     private Predicate getFilterPredicate(Root<StudentEnrollment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<StudentEnrollment, College> studentEnrollmentCollegeJoin = root.join("college");
-        Join<StudentEnrollment, Department> studentEnrollmentDepartmentJoin = root.join("department");
-        Join<StudentEnrollment, AcademicYear> studentEnrollmentAcademicYearJoin = root.join("academicYear");
-        Join<StudentEnrollment, AcademicTerm> studentEnrollmentAcademicTermJoin = root.join("academicTerm");
-        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("course");
-        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("student");
-        Join<StudentEnrollment, Section> studentEnrollmentSectionJoin = root.join("section");
-        Join<StudentEnrollment, StudyType> studentEnrollmentStudyTypeJoin = root.join("studyType");
-        Join<StudentEnrollment, Major> studentEnrollmentMajorJoin = root.join("major");
+        Join<StudentEnrollment, College> studentEnrollmentCollegeJoin = root.join("college", JoinType.LEFT);
+        Join<StudentEnrollment, Department> studentEnrollmentDepartmentJoin = root.join("department", JoinType.LEFT);
+        Join<StudentEnrollment, AcademicYear> studentEnrollmentAcademicYearJoin = root.join("academicYear", JoinType.LEFT);
+        Join<StudentEnrollment, AcademicTerm> studentEnrollmentAcademicTermJoin = root.join("academicTerm", JoinType.LEFT);
+        Join<StudentEnrollment, Course> studentEnrollmentCourseJoin = root.join("course", JoinType.LEFT);
+        Join<StudentEnrollment, Student> studentEnrollmentStudentJoin = root.join("student", JoinType.LEFT);
+        Join<StudentEnrollment, Section> studentEnrollmentSectionJoin = root.join("section", JoinType.LEFT);
+        Join<StudentEnrollment, StudyType> studentEnrollmentStudyTypeJoin = root.join("studyType", JoinType.LEFT);
+        Join<StudentEnrollment, Major> studentEnrollmentMajorJoin = root.join("major", JoinType.LEFT);
 
         Predicate college;
         if (filterCollege != null)
@@ -144,7 +144,8 @@ public class StudentEnrollmentSpecification implements Specification<StudentEnro
         Predicate major;
         if (filterMajor != null)
             major = criteriaBuilder.equal(studentEnrollmentMajorJoin.get("id"), filterMajor);
-        else major = criteriaBuilder.notEqual(studentEnrollmentMajorJoin.get("id"), -1);
+        else major = criteriaBuilder.or(criteriaBuilder.notEqual(studentEnrollmentMajorJoin.get("id"), -1),criteriaBuilder.isNull(studentEnrollmentMajorJoin.get("id")));
+
 
         return criteriaBuilder.and(college, department, academicYear,
                 academicTerm, course, student, studyType, section, major);

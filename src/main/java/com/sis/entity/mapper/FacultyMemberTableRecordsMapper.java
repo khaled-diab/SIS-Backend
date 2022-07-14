@@ -35,7 +35,6 @@ public class FacultyMemberTableRecordsMapper implements Mapper<FacultyMember, Fa
         FacultyMemberTableRecordsDTO dto = new FacultyMemberTableRecordsDTO();
         dto.setId(entity.getId());
         dto.setNameAr(entity.getNameAr());
-        dto.setNameEn(entity.getNameEn());
         dto.setUniversityMail(entity.getUniversityMail());
         if (entity.getDegree() != null) {
             dto.setDegreeName(entity.getDegree().getNameEn());

@@ -63,13 +63,13 @@ public class TimetableSpecification implements Specification<Timetable> {
     }
 
     private Predicate getFilterPredicate(Root<Timetable> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<Timetable, College> timetableCollegeJoin = root.join("college");
-        Join<Timetable, Department> timetableDepartmentJoin = root.join("department");
-        Join<Timetable, AcademicYear> timetableAcademicYearJoin = root.join("academicYear");
-        Join<Timetable, AcademicTerm> timetableAcademicTermJoin = root.join("academicTerm");
-        Join<Timetable, FacultyMember> timetableFacultyMemberJoin = root.join("facultyMember");
-        Join<Timetable, Course> timetableCourseJoin = root.join("course");
-        Join<Timetable, Section> timetableSectionJoin = root.join("section");
+        Join<Timetable, College> timetableCollegeJoin = root.join("college", JoinType.LEFT);
+        Join<Timetable, Department> timetableDepartmentJoin = root.join("department", JoinType.LEFT);
+        Join<Timetable, AcademicYear> timetableAcademicYearJoin = root.join("academicYear", JoinType.LEFT);
+        Join<Timetable, AcademicTerm> timetableAcademicTermJoin = root.join("academicTerm", JoinType.LEFT);
+        Join<Timetable, FacultyMember> timetableFacultyMemberJoin = root.join("facultyMember", JoinType.LEFT);
+        Join<Timetable, Course> timetableCourseJoin = root.join("course", JoinType.LEFT);
+        Join<Timetable, Section> timetableSectionJoin = root.join("section", JoinType.LEFT);
 
         Predicate college;
         if (filterCollege != null)
@@ -107,7 +107,7 @@ public class TimetableSpecification implements Specification<Timetable> {
         else section = criteriaBuilder.notEqual(timetableSectionJoin.get("id"), -1);
 
         Predicate day;
-        if (filterDay!= null && !filterDay.trim().isEmpty())
+        if (filterDay != null && !filterDay.trim().isEmpty())
             day = criteriaBuilder.equal(root.get("day"), filterDay);
         else day = criteriaBuilder.notEqual(root.get("day"), "");
 
