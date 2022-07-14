@@ -50,10 +50,10 @@ public class TimetableTableRecordsMapper implements Mapper<Timetable, TimetableT
             dto.setSectionName(entity.getSection().getSectionNumber());
         }
         if (entity.getBuilding() != null) {
-            dto.setBuildingName(entity.getBuilding().getNameEn());
+            dto.setBuildingName(entity.getBuilding().getName());
         }
         if (entity.getClassroom() != null) {
-            dto.setClassroomName(entity.getClassroom().getName_en());
+            dto.setClassroomName(entity.getClassroom().getName());
         }
         return dto;
     }
