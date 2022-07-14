@@ -78,7 +78,7 @@ public class Student extends BaseEntity {
     @ManyToOne
     private Department departmentId;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
