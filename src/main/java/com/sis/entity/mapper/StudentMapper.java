@@ -4,35 +4,41 @@ package com.sis.entity.mapper;
 import com.sis.dto.student.StudentDTO;
 
 import com.sis.entity.Student;
-import com.sis.entity.mapper.AcademicProgramMapper;
-import com.sis.entity.mapper.CollegeMapper;
-import com.sis.entity.mapper.DepartmentMapper;
+import com.sis.entity.security.User;
+import com.sis.repository.RoleRepository;
+import com.sis.repository.UserRepository;
 import com.sis.util.PageResult;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toCollection;
 
 @Component
+@AllArgsConstructor
 public class StudentMapper implements Mapper<Student,StudentDTO> {
 
 
 
-	@Autowired
 	private DepartmentMapper departmentMapper;
 
-	@Autowired
 	private CollegeMapper collegeMapper;
 
-	@Autowired
 	private AcademicProgramMapper academicProgramMapper;
 
 
-	@Autowired
 	private UserMapper userMapper;
+	private UserRepository userRepository;
+	private RoleRepository roleRepository;
+
+	private final PasswordEncoder passwordEncoder;
+
+
 
 	@Override
 	public StudentDTO toDTO(Student entity) {
@@ -62,9 +68,9 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 		if(entity.getProgramId()!=null) {
 			dto.setAcademicProgramDTO(this.academicProgramMapper.toDTO(entity.getProgramId()));
 		}
-
-
-//		dto.setUser(userMapper.toDTO(entity.getUser()));
+		if(entity.getUser()!=null) {
+			dto.setUser(userMapper.toDTO(entity.getUser()));
+		}
 		return dto;
 	}
 
@@ -84,25 +90,42 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 			entity.setParentPhone(dto.getParentPhone());
 			entity.setPhone(dto.getPhone());
 			entity.setPhoto(dto.getPhoto());
-			System.out.println(dto.getUniversityId());
 			entity.setUniversityId(dto.getUniversityId());
 			entity.setNationalId(dto.getNationalId());
 			entity.setUniversityMail(dto.getUniversityMail());
 			if (dto.getCollegeDTO() != null) {
 				entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 			}
-			if (dto.getDepartmentDTO() != null) {
-
-				entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
-
+			if (dto.getDepartmentDTO() != null ) {
+				if(dto.getDepartmentDTO().getId()==-1){
+					entity.setDepartmentId(null);
+				}else {
+					entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
+				}
 			}
-			if (dto.getAcademicProgramDTO() != null) {
-
-				entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
+			if (dto.getAcademicProgramDTO() != null ) {
+				if (dto.getAcademicProgramDTO().getId() == -1) {
+					entity.setProgramId(null);
+				} else {
+					entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
+				}
 			}
-//			entity.setUser(userMapper.toEntity(dto.getUser()));
-
-
+			User user;
+			if(dto.getUser()==null){
+				user = new User();
+				user.setPassword(passwordEncoder.encode("changeme"));
+			}else {
+				 Optional<User> user1 = this.userRepository.findById(dto.getUser().getId());
+				 user=user1.get();
+			}
+			user.setRole(roleRepository.getRoleStudent());
+			user.setEmail(dto.getUniversityMail());
+			user.setUsername(dto.getUniversityMail());
+			user.setType("STUDENT");
+			user.setFirstname(dto.getNameAr());
+			user.setLastname(dto.getNameAr());
+			 user = userRepository.save(user);
+			entity.setUser(user);
 		}
 		return entity;
 

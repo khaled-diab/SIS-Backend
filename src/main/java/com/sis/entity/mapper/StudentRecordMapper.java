@@ -21,7 +21,7 @@ public class StudentRecordMapper implements Mapper<Student, StudentRecordDTO> {
         StudentRecordDTO dto = new StudentRecordDTO();
         dto.setId(entity.getId());
         dto.setNameEn(entity.getNameEn());
-        dto.setYear(entity.getYear());
+        dto.setLevel(entity.getLevel());
         dto.setNameAr(entity.getNameAr());
         dto.setUniversityId(entity.getUniversityId());
         if (entity.getDepartmentId() != null) {
@@ -39,11 +39,13 @@ public class StudentRecordMapper implements Mapper<Student, StudentRecordDTO> {
         StudentRecordDTO dto = new StudentRecordDTO();
         dto.setId(studentDTO.getId());
         dto.setNameEn(studentDTO.getNameEn());
-        dto.setYear(studentDTO.getYear());
+        dto.setLevel(studentDTO.getLevel());
         dto.setNameAr(studentDTO.getNameAr());
         dto.setUniversityId(studentDTO.getUniversityId());
         if(studentDTO.getDepartmentDTO()!=null) {
             dto.setDepartmentName(studentDTO.getDepartmentDTO().getNameEn());
+        }else{
+            dto.setDepartmentName("لا يوجد");
         }
         if(studentDTO.getCollegeDTO()!=null) {
             dto.setCollegeName(studentDTO.getCollegeDTO().getNameAr());
