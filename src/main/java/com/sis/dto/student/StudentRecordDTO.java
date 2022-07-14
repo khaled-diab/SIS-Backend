@@ -26,7 +26,8 @@ public class StudentRecordDTO  extends BaseDTO {
     @Pattern(regexp= Constants.ENGLISH_CHARACTERS, message="English Letters only")
     private String nameEn;
 
-    private  String year;
+    private  String level;
+//    private  String year;
 
     /*Relations instances*/
 

@@ -70,16 +70,35 @@ public class StudentService extends BaseServiceImp<Student> {
         Long filterCollege = studentFilterDTO.getCollegeId();
         Long filterDepartment = studentFilterDTO.getDepartmentId();
         String filterLevel = studentFilterDTO.getLevel();
+//        Long filterUser = studentFilterDTO.getUserId();
 
-        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(studentFilterDTO));
+        Sort sort = constructSortObject(studentFilterDTO);
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),sort);
         if ((searchValue != null && !searchValue.trim().isEmpty()) || filterCollege != null ||
                 filterDepartment != null || (filterLevel != null && !filterLevel.trim().isEmpty())) {
-            System.out.println("khaled");
             StudentSpecification studentSpecification = new StudentSpecification(searchValue, filterCollege, filterDepartment, filterLevel);
-
-            studentPage = studentRepository.findAll(studentSpecification, pageable);
+            studentPage=studentRepository.findAll(studentSpecification,pageable);
         } else {
-            studentPage = studentRepository.findAll(pageable);
+            if(studentFilterDTO.getSortBy().equalsIgnoreCase("nameAr")){
+                    studentFilterDTO.setSortBy("name_ar");
+            }else if(studentFilterDTO.getSortBy().equalsIgnoreCase("collegeId")){
+                studentFilterDTO.setSortBy("college_id");
+
+            }else if(studentFilterDTO.getSortBy().equalsIgnoreCase("departmentId")){
+
+                studentFilterDTO.setSortBy("department_id");
+
+            }else if(studentFilterDTO.getSortBy().equalsIgnoreCase("levels")){
+                studentFilterDTO.setSortBy("level");
+
+            }
+            else if(studentFilterDTO.getSortBy().equalsIgnoreCase("universityId")){
+                studentFilterDTO.setSortBy("university_id");
+
+            }
+            Sort sort2 = constructSortObject2(studentFilterDTO);
+            Pageable pageable2 = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(),sort2);
+            studentPage = studentRepository.findAllStudentss(pageable2);
         }
         PageResult<Student> pageResult = new PageResult<>(studentPage.getContent(), (int) studentPage.getTotalElements(),
                 pageUtil.getLimit(), pageUtil.getPage());
@@ -90,6 +109,13 @@ public class StudentService extends BaseServiceImp<Student> {
     private Sort constructSortObject(StudentFilterDTO studentFilterDTO) {
         if (studentFilterDTO.getSortDirection() == null) {
             return Sort.by(Sort.Direction.ASC, "nameAr");
+        }
+        return Sort.by(Sort.Direction.valueOf(studentFilterDTO.getSortDirection()), studentFilterDTO.getSortBy());
+    }
+
+    private Sort constructSortObject2(StudentFilterDTO studentFilterDTO) {
+        if (studentFilterDTO.getSortDirection() == null) {
+            return Sort.by(Sort.Direction.ASC, "name_ar");
         }
         return Sort.by(Sort.Direction.valueOf(studentFilterDTO.getSortDirection()), studentFilterDTO.getSortBy());
     }

@@ -16,24 +16,13 @@ import javax.validation.constraints.Pattern;
 @Validated
 public class FacultyMemberTableRecordsDTO extends BaseDTO {
 
-    @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.ARABIC_CHARACTERS, message = "Arabic Letters only")
     private String nameAr;
 
-    @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.ENGLISH_CHARACTERS, message = "English Letters only")
-    private String nameEn;
-
-    @NotEmpty(message = "Required")
-    @Email(message = "must be email")
     private String universityMail;
 
-    @NotNull(message = "Required")
     private String degreeName;
 
-    @NotNull(message = "Required")
     private String collegeName;
 
-    @NotNull(message = "Required")
     private String departmentName;
 }

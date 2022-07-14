@@ -9,9 +9,12 @@ import com.sis.entity.Student;
 import com.sis.entity.Timetable;
 import com.sis.entity.mapper.AcademicTermMapper;
 import com.sis.entity.mapper.TimetableMapper;
+import com.sis.entity.security.User;
+import com.sis.repository.StudentRepository;
 import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.service.TimetableService;
+import com.sis.service.UserService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -35,6 +38,8 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
     private final TimetableService timetableService;
     private final TimetableMapper timetableMapper;
     private final StudentService studentService;
+    private final StudentRepository studentRepository;
+    private final UserService userService;
 
     //Abdo.Amr
     private AcademicTermService academicTermService;
@@ -60,9 +65,11 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         return new MessageResponse("Item has been updated successfully");
     }
 
-    @RequestMapping(value = "/getStudentTimetables/{studentId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<TimetableDTO>> getStudentTimetables(@PathVariable long studentId) {
-        Student student = this.studentService.findById(studentId);
+    @RequestMapping(value = "/getStudentTimetables/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<TimetableDTO>> getStudentTimetables(@PathVariable long userId) {
+        User user = this.userService.findById(userId);
+        Student student = this.studentRepository.findStudentByUserId(user.getId());
+//        Student student = this.studentService.findById(studentId);
         ArrayList<TimetableDTO> timetableDTOs = this.timetableService.getStudentTimetables(student.getId());
         return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);
     }

@@ -1,6 +1,8 @@
 package com.sis.repository;
 
 import com.sis.entity.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,4 +43,8 @@ public interface StudentRepository extends BaseRepository<Student> {
 
     Boolean existsByUniversityId(Long universityID);
 
+    @Query(value = "SELECT * FROM student s WHERE s.user_id is not null ", nativeQuery = true)
+    Page<Student> findAllStudentss(Pageable pageable);
+
+    Student findStudentByUserId(Long userId);
 }

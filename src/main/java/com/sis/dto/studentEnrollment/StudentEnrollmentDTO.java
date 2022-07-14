@@ -1,6 +1,5 @@
 package com.sis.dto.studentEnrollment;
 
-
 import com.sis.dto.*;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.course.CourseDTO;
@@ -10,9 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 
 @Getter
 @Setter
