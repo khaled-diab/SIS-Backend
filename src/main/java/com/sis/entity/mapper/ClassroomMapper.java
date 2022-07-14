@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toCollection;
 public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
 
     private final BuildingMapper buildingMapper;
-    private final DepartmentMapper departmentMapper;
+    private final CollegeMapper collegeMapper;
 
     @Override
     public ArrayList<ClassroomDTO> toDTOs(Collection<Classroom> entity) {
@@ -38,12 +38,11 @@ public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
         ClassroomDTO dto = new ClassroomDTO();
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
-        dto.setNameAr(entity.getName_ar());
-        dto.setNameEn(entity.getName_en());
+        dto.setName(entity.getName());
         dto.setStatus(entity.getStatus());
         dto.setCapacity(entity.getCapacity());
         dto.setBuildingDTO(buildingMapper.toDTO(entity.getBuilding()));
-        dto.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartment()));
+        dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollege()));
         return dto;
     }
 
@@ -52,11 +51,10 @@ public class ClassroomMapper implements Mapper<Classroom, ClassroomDTO> {
         Classroom entity = new Classroom();
         entity.setId(dto.getId());
         entity.setCode(dto.getCode());
-        entity.setName_ar(dto.getNameAr());
-        entity.setName_en(dto.getNameEn());
+        entity.setName(dto.getName());
         entity.setStatus(dto.getStatus());
         entity.setCapacity(dto.getCapacity());
-        entity.setDepartment(departmentMapper.toEntity(dto.getDepartmentDTO()));
+        entity.setCollege(collegeMapper.toEntity(dto.getCollegeDTO()));
         entity.setBuilding(buildingMapper.toEntity(dto.getBuildingDTO()));
         return entity;
     }
