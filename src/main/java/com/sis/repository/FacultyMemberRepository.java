@@ -1,7 +1,6 @@
 package com.sis.repository;
 
 import com.sis.entity.FacultyMember;
-import com.sis.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +20,12 @@ public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
     Page<FacultyMember> findAllWithUser(Pageable pageable);
 
     FacultyMember findFacultyMemberByUserId(Long userId);
+
+    Boolean existsByNationalID(String nationalID);
+
+    Boolean existsByUniversityMail(String mail);
+
+    Boolean existsByUniversityId(Long universityID);
+
+    Boolean existsByPhone(String phone);
 }

@@ -7,14 +7,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserFileRepository extends BaseRepository<UserFile> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO user_file (directories, file_name, user_id, type) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
-    void saveUserFile(String directories, String fileName, Long userID, String fileType);
+    @Query(value = "INSERT INTO user_file (directories, file_name, user_id, type ,upload_date) VALUES (?1, ?2, ?3, ?4,?5)", nativeQuery = true)
+    void saveUserFile(String directories, String fileName, Long userID, String fileType, Date date);
 
     @Transactional
     @Modifying

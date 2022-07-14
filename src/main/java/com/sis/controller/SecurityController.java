@@ -3,7 +3,6 @@ package com.sis.controller;
 import com.sis.dto.BaseDTO;
 import com.sis.dto.UserFileDto;
 import com.sis.dto.college.GeneralSearchRequest;
-import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
 import com.sis.service.SecurityService;
@@ -18,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static com.sis.util.Constants.TYPE_STAFF;
+import static com.sis.util.Constants.TYPE_STUDENT;
+
 @RestController
 @RequestMapping(value = "/api/security")
 @AllArgsConstructor
@@ -30,13 +32,18 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/register-faculty-member")
-    public ResponseEntity<FacultyMemberDTO> createFacultyMember(@RequestBody final FacultyMemberDTO facultyMemberDTO) {
-        return securityService.registerFacultyMember(facultyMemberDTO);
+    public MessageResponse createFacultyMember(@RequestBody final RegisterDTO registerDTO) {
+        return securityService.registerFacultyMember(registerDTO);
     }
 
     @PostMapping(value = "/register-bulk-students", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public MessageResponse registerBulkStudents(@RequestParam("file") MultipartFile file) {
-        return securityService.registerBulkStudents(file);
+        return securityService.registerBulkUsers(file, TYPE_STUDENT);
+    }
+
+    @PostMapping(value = "/register-bulk-faculty-member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public MessageResponse registerBulkFacultyMember(@RequestParam("file") MultipartFile file) {
+        return securityService.registerBulkUsers(file, TYPE_STAFF);
     }
 
     @PostMapping(value = "/sign-in")
