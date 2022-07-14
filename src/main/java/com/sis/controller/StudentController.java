@@ -105,7 +105,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         if(this.studentService.findByUniversityMail(dto.getUniversityMail())!=null){
             throw new StudentFieldNotUniqueException("universityMail","University Mail Already Exists");
         }
-
+//        this.userService.save(this.userMapper.toEntity(dto.getUser()));
         this.studentService.save(this.studentMapper.toEntity(dto));
         return new MessageResponse("Item has been saved successfully");
     }
@@ -125,6 +125,8 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         if(studentByuniversityMail!=null && studentByuniversityMail.getId() != dto.getId()){
             throw new StudentFieldNotUniqueException("universityMail","University Mail Already Exists");
         }
+//        User user = this.userService.findById(dto.getUser().getId());
+
         this.studentService.save(this.studentMapper.toEntity(dto));
         return new MessageResponse("Item has been updated successfully");
     }
