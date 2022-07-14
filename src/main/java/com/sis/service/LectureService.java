@@ -1,20 +1,25 @@
 package com.sis.service;
 
+import com.sis.dto.AcademicTermDTO;
 import com.sis.dto.attendanceReport.FacultyMemberLecturesDTO;
 import com.sis.dto.lecture.LectureDTO;
-import com.sis.entity.AttendanceDetails;
-import com.sis.entity.Course;
-import com.sis.entity.FacultyMember;
-import com.sis.entity.Lecture;
-import com.sis.entity.mapper.LectureMapper;
+import com.sis.entity.*;
+import com.sis.entity.mapper.*;
 import com.sis.repository.LectureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -28,6 +33,19 @@ public class LectureService extends BaseServiceImp<Lecture> {
 
     @Autowired
     private LectureMapper lectureMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
+    @Autowired
+    private FacultyMemberMapper facultyMemberMapper;
+    @Autowired
+    private AttendanceDetailsService attendanceDetailsService;
+    @Autowired
+    private AcademicTermService academicTermService;
+    @Autowired
+    private AcademicTermMapper academicTermMapper;
+    @Autowired
+    private AcademicYearMapper academicYearMapper;
 
     @Override
     public JpaRepository<Lecture, Long> Repository() {
@@ -99,4 +117,32 @@ public class LectureService extends BaseServiceImp<Lecture> {
         return null;
     }
 
+
+    public LectureDTO addLecture( LectureDTO lectureDTO) {
+        Course course = this.courseMapper.toEntity(lectureDTO.getCourseDTO());
+        FacultyMember facultyMember = this.facultyMemberMapper.toEntity(lectureDTO.getFacultyMemberDTO());
+        AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        lectureDTO.setAcademicTermDTO(academicTermDTO);
+        lectureDTO.setAcademicYearDTO(this.academicYearMapper.toDTO(academicTerm.getAcademicYear()));
+
+        if (!lectureDTO.getAttendanceType().equalsIgnoreCase("Manual")) {
+            Random rand = new Random();
+            lectureDTO.setAttendanceCode(Math.abs(rand.nextInt()));
+        }
+        boolean isFound = true;
+        LectureDTO lectureDTO1 = this.searchLecture(lectureDTO.getSectionDTO().getId(),lectureDTO.getLectureDate(),course
+                , facultyMember, lectureDTO.getLectureStartTime(), lectureDTO.getLectureEndTime());
+        if (lectureDTO1 == null) {
+            isFound = false;
+        } else {
+            lectureDTO.setId(lectureDTO1.getId());
+        }
+        Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
+        LectureDTO lectureDTO2 = this.lectureMapper.toDTO(this.save(lecture));
+        if (!isFound) {
+            this.attendanceDetailsService.saveAttendances(lectureDTO2);
+        }
+        return lectureDTO2;
+    }
 }

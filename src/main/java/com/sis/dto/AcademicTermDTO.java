@@ -15,5 +15,6 @@ public class AcademicTermDTO extends BaseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date end_date;
     private AcademicYearDTO academicYearDTO ;
+    private boolean status ;
 
 }

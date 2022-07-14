@@ -2,7 +2,11 @@ package com.sis.entity.mapper;
 
 
 import com.sis.dto.student.StudentDTO;
+
 import com.sis.entity.Student;
+import com.sis.entity.mapper.AcademicProgramMapper;
+import com.sis.entity.mapper.CollegeMapper;
+import com.sis.entity.mapper.DepartmentMapper;
 import com.sis.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +17,8 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Component
-public class StudentMapper implements Mapper<Student, StudentDTO> {
+public class StudentMapper implements Mapper<Student,StudentDTO> {
+
 
 
 	@Autowired
@@ -25,9 +30,9 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 	@Autowired
 	private AcademicProgramMapper academicProgramMapper;
 
+
 	@Autowired
 	private UserMapper userMapper;
-
 
 	@Override
 	public StudentDTO toDTO(Student entity) {
@@ -47,16 +52,18 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 		dto.setParentPhone(entity.getParentPhone());
 		dto.setPhoto(entity.getPhoto());
 		dto.setUniversityId(entity.getUniversityId());
-		if (entity.getDepartmentId() != null) {
+		if(entity.getDepartmentId()!=null) {
 			dto.setDepartmentDTO(this.departmentMapper.toDTO(entity.getDepartmentId()));
 
 		}
-		if (entity.getCollegeId() != null) {
+		if(entity.getCollegeId()!=null) {
 			dto.setCollegeDTO(this.collegeMapper.toDTO(entity.getCollegeId()));
 		}
-		if (entity.getProgramId() != null) {
+		if(entity.getProgramId()!=null) {
 			dto.setAcademicProgramDTO(this.academicProgramMapper.toDTO(entity.getProgramId()));
 		}
+
+
 //		dto.setUser(userMapper.toDTO(entity.getUser()));
 		return dto;
 	}
@@ -64,8 +71,8 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 	@Override
 	public Student toEntity(StudentDTO dto) {
 
-		Student entity = new Student();
-		if (dto != null) {
+		Student entity=new Student();
+		if(dto != null) {
 			entity.setId(dto.getId());
 			entity.setAlternativeMail(dto.getAlternativeMail());
 			entity.setLevel(dto.getLevel());
@@ -77,6 +84,7 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 			entity.setParentPhone(dto.getParentPhone());
 			entity.setPhone(dto.getPhone());
 			entity.setPhoto(dto.getPhoto());
+			System.out.println(dto.getUniversityId());
 			entity.setUniversityId(dto.getUniversityId());
 			entity.setNationalId(dto.getNationalId());
 			entity.setUniversityMail(dto.getUniversityMail());
@@ -93,8 +101,11 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 				entity.setProgramId(this.academicProgramMapper.toEntity(dto.getAcademicProgramDTO()));
 			}
 //			entity.setUser(userMapper.toEntity(dto.getUser()));
+
+
 		}
 		return entity;
+
 	}
 
 	@Override
@@ -103,13 +114,13 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 	}
 
 	@Override
-    public ArrayList<Student> toEntities(Collection<StudentDTO> studentDTOS) {
-        return studentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Student>::new));
-    }
+	public ArrayList<Student> toEntities(Collection<StudentDTO> studentDTOS) {
+		return studentDTOS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Student>::new));
+	}
 
 	@Override
-	public PageResult<StudentDTO> toDataPage(PageResult<Student> pageResult) {
-		return new PageResult<>(pageResult.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<StudentDTO>::new)), pageResult.getTotalCount(), pageResult.getPageSize(), pageResult.getCurrPage());
+	public PageResult<StudentDTO> toDataPage(PageResult<Student> entities) {
+		return new PageResult<>(entities.getData().stream().map(entity -> toDTO(entity)).collect(toCollection(ArrayList<StudentDTO>::new)), entities.getTotalCount(), entities.getPageSize(), entities.getCurrPage());
 
 	}
 }
