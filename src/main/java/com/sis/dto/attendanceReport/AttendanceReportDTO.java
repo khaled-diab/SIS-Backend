@@ -6,12 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class AttendanceReportDTO extends BaseDTO {
+public class AttendanceReportDTO {
 
-    private List<AttendanceDetailsDTO> attendanceDetailsDTOs;
+    private ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOs;
 
 }
