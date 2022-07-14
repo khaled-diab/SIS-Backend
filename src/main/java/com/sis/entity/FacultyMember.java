@@ -70,7 +70,7 @@ public class FacultyMember extends BaseEntity {
     @OneToMany(mappedBy = "facultyMemberId")
     private List<Lecture> lectures;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

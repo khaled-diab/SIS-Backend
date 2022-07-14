@@ -35,4 +35,6 @@ public interface StudentRepository extends BaseRepository<Student> {
 
     Optional<Student> findByNationalId(String nationalID);
 
+    Student findStudentByUserId(Long userId);
+
 }

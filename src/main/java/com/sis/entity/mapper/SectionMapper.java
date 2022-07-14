@@ -46,6 +46,7 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
         dto.setTheoreticalLectures(entity.getTheoreticalLectures());
         dto.setPracticalLectures(entity.getPracticalLectures());
         dto.setExercisesLectures(entity.getExercisesLectures());
+        dto.setCapacity(entity.getCapacity());
         if (entity.getCollege() != null) {
             dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollege()));
         }
@@ -79,6 +80,7 @@ public class SectionMapper implements Mapper<Section, SectionDTO> {
         entity.setTheoreticalLectures(dto.getTheoreticalLectures());
         entity.setPracticalLectures(dto.getPracticalLectures());
         entity.setExercisesLectures(dto.getExercisesLectures());
+        entity.setCapacity(dto.getCapacity());
         if (dto.getCollegeDTO() != null) {
             entity.setCollege(collegeMapper.toEntity(dto.getCollegeDTO()));
         }
