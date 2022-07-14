@@ -38,7 +38,6 @@ public class StudentDTO extends BaseDTO {
     @NotBlank(message = "Required")
     @Pattern(regexp = Constants.DIGITS_ONLY_14, message = "must be 14 digits")
     private String nationalId;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
     @NotEmpty(message = "Required")
