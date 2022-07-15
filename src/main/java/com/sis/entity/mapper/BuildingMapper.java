@@ -17,6 +17,8 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
 
     private final CollegeMapper collegeMapper;
 
+    private final DepartmentMapper departmentMapper;
+
     @Override
     public ArrayList<BuildingDTO> toDTOs(Collection<Building> entity) {
         return entity.stream().map(this::toDTO).collect(toCollection(ArrayList<BuildingDTO>::new));
@@ -38,9 +40,9 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
         dto.setCollegeDTO(collegeMapper.toDTO(entity.getCollegeId()));
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
-        dto.setNameAr(entity.getNameAr());
-        dto.setNameEn(entity.getNameEn());
+        dto.setName(entity.getName());
         dto.setStatus(entity.getStatus());
+        if (entity.getDepartment() != null) dto.setDepartmentDTO(departmentMapper.toDTO(entity.getDepartment()));
         return dto;
     }
 
@@ -49,10 +51,10 @@ public class BuildingMapper implements Mapper<Building, BuildingDTO> {
         Building entity = new Building();
         entity.setId(dto.getId());
         entity.setCode(dto.getCode());
-        entity.setNameAr(dto.getNameAr());
-        entity.setNameEn(dto.getNameEn());
+        entity.setName(dto.getName());
         entity.setStatus(dto.getStatus());
         entity.setCollegeId(collegeMapper.toEntity(dto.getCollegeDTO()));
+        if (dto.getDepartmentDTO() != null) entity.setDepartment(departmentMapper.toEntity(dto.getDepartmentDTO()));
         return entity;
     }
 
