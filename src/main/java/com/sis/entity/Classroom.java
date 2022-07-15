@@ -24,11 +24,8 @@ public class Classroom extends BaseEntity {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "name_ar")
-    private String name_ar;
-
-    @Column(name = "name_en")
-    private String name_en;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "capacity")
     private int capacity;
@@ -36,9 +33,9 @@ public class Classroom extends BaseEntity {
     @Column(name = "status")
     private int status;
 
-    @JoinColumn(name = "department", referencedColumnName = "id")
+    @JoinColumn(name = "college_id", referencedColumnName = "id")
     @ManyToOne
-    private Department department;
+    private College college;
 
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @ManyToOne

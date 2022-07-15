@@ -1,6 +1,7 @@
 package com.sis.dto.building;
 
 import com.sis.dto.BaseDTO;
+import com.sis.dto.DepartmentDTO;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
@@ -17,13 +18,7 @@ import javax.validation.constraints.Pattern;
 public class BuildingDTO extends BaseDTO {
     @NotNull(message = "Required")
     @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.ARABIC_CHARACTERS_OR_DIGITS, message = "Arabic Letters and/or Digits")
-    private String nameAr;
-
-    @NotNull(message = "Required")
-    @NotEmpty(message = "Required")
-    @Pattern(regexp = Constants.ENGLISH_CHARACTERS_OR_DIGITS, message = "English Letters and/or Digits")
-    private String nameEn;
+    private String name;
 
     @NotNull(message = "Required")
     @NotEmpty(message = "Required")
@@ -33,4 +28,6 @@ public class BuildingDTO extends BaseDTO {
 
     @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
+
+    private DepartmentDTO departmentDTO;
 }
