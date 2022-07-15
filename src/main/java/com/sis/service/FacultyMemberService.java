@@ -3,6 +3,7 @@ package com.sis.service;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
+import com.sis.entity.College;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.entity.mapper.FacultyMemberTableRecordsMapper;
@@ -18,6 +19,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
@@ -26,6 +29,7 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
     private final FacultyMemberRepository facultyMemberRepository;
     private final FacultyMemberMapper facultyMemberMapper;
     private final FacultyMemberTableRecordsMapper facultyMemberTableRecordsMapper;
+    private final CollegeService collegeService;
 
     @Override
     public JpaRepository<FacultyMember, Long> Repository() {
@@ -108,5 +112,10 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
             return Sort.by(Sort.Direction.ASC, "name_ar");
         }
         return Sort.by(Sort.Direction.valueOf(facultyMemberRequestDTO.getSortDirection()), facultyMemberRequestDTO.getSortBy());
+    }
+
+    public List<FacultyMemberDTO> getFacultyMembersByCollegeId(Long collegeId) {
+        College college = this.collegeService.findById(collegeId);
+        return this.facultyMemberMapper.toDTOs(this.facultyMemberRepository.getFacultyMembersByCollegeId(college.getId()));
     }
 }

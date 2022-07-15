@@ -5,6 +5,7 @@ import com.sis.dto.course.CourseDTO;
 import com.sis.dto.course.CourseRequestDTO;
 import com.sis.dto.course.CourseTableRecordsDTO;
 import com.sis.entity.Course;
+import com.sis.entity.Department;
 import com.sis.entity.mapper.CourseMapper;
 import com.sis.entity.mapper.CourseTableRecordsMapper;
 import com.sis.repository.CourseRepository;
@@ -21,6 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -31,6 +33,8 @@ public class CourseService extends BaseServiceImp<Course> {
     private CourseTableRecordsMapper courseTableRecordsMapper;
     StudentEnrollmentService studentEnrollmentService;
 
+    private final DepartmentService departmentService;
+
     @Autowired
     private TimetableService timetableService;
 
@@ -38,8 +42,6 @@ public class CourseService extends BaseServiceImp<Course> {
     public JpaRepository<Course, Long> Repository() {
         return courseRepository;
     }
-
-
 
     public PageResult<CourseDTO> search(PageQueryUtil pageUtil, CourseRequestDTO courseRequestDTO) {
         Page<Course> coursePage;
@@ -77,7 +79,7 @@ public class CourseService extends BaseServiceImp<Course> {
 
     //Abdo.Amr
     public ArrayList<CourseDTO> findFacultyMemberCourses(long academicYearId, long academicTermId, long facultyMemberId) {
-        ArrayList<Long> courseIds = this.timetableService. findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
+        ArrayList<Long> courseIds = this.timetableService.findFacultyMemberCourses(academicYearId, academicTermId, facultyMemberId);
         ArrayList<Course> courses = new ArrayList<>();
         ArrayList<CourseDTO> courseDTOs = new ArrayList<>();
 
@@ -112,6 +114,11 @@ public class CourseService extends BaseServiceImp<Course> {
                 pageUtil.getLimit(), pageUtil.getPage());
 
         return courseTableRecordsMapper.toDataPage(pageResult);
+    }
+
+    public List<CourseDTO> getCoursesByDepartmentId(Long departmentId) {
+        Department department = this.departmentService.findById(departmentId);
+        return this.courseMapper.toDTOs(this.courseRepository.getCoursesByDepartmentId(department.getId()));
     }
 
 }

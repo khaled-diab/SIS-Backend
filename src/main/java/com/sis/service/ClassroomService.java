@@ -2,7 +2,7 @@ package com.sis.service;
 
 import com.sis.entity.Classroom;
 import com.sis.repository.ClassroomSpecification;
-import com.sis.repository.Classroomrepository;
+import com.sis.repository.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class ClassroomService extends BaseServiceImp<Classroom>{
 
 	@Autowired
-	private Classroomrepository classroomrepository;
+	private ClassroomRepository classroomrepository;
 
 	@Override
 	public JpaRepository<Classroom, Long> Repository() {

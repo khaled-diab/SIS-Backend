@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -33,6 +34,8 @@ public class SectionService extends BaseServiceImp<Section> {
     private final SectionTableRecordsMapper sectionTableRecordsMapper;
     private final TimetableService timetableService;
     private final StudentEnrollmentService studentEnrollmentService;
+
+    private final CourseService courseService;
 
     @Override
     public JpaRepository<Section, Long> Repository() {
@@ -193,6 +196,11 @@ public class SectionService extends BaseServiceImp<Section> {
             section.setNumberOfStudents(students);
         }
         return sectionDTOsDtoPageResult;
+    }
+
+    public List<SectionDTO> getSectionsByCourseId(Long courseId) {
+        Course course = this.courseService.findById(courseId);
+        return this.sectionMapper.toDTOs(this.sectionRepository.getSectionsByCourseId(course.getId()));
     }
 
 }
