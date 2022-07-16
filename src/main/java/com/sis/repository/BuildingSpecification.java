@@ -29,8 +29,7 @@ public class BuildingSpecification implements Specification<Building> {
     @Override
     public Predicate toPredicate(Root<Building> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Predicate x = criteriaBuilder.or(
-                criteriaBuilder.like(root.get("name_ar"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("name_en"), "%" + key + "%"),
+                criteriaBuilder.like(root.get("name"), "%" + key + "%"),
                 criteriaBuilder.like(root.get("code"), "%" + key + "%")
         );
         return x;

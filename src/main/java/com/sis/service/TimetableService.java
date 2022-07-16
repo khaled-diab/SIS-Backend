@@ -6,7 +6,6 @@ import com.sis.dto.timetable.TimetableTableRecordsDTO;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.Section;
 import com.sis.entity.Timetable;
-import com.sis.entity.mapper.AcademicTermMapper;
 import com.sis.entity.mapper.TimetableMapper;
 import com.sis.entity.mapper.TimetableTableRecordsMapper;
 import com.sis.repository.TimetableRepository;
@@ -115,28 +114,38 @@ public class TimetableService extends BaseServiceImp<Timetable> {
 
     }
 
-    public ArrayList<TimetableDTO> getSectionTimeTables(long academicYearId, long academicTermId, long sectionId) {
+    public Collection<TimetableDTO> getSectionTimeTables(long academicYearId, long academicTermId, long sectionId) {
         ArrayList<Timetable> timetables = this.timetableRepository.findTimetableBySection(academicYearId, academicTermId, sectionId);
-        ArrayList<TimetableDTO> timetableDTOs = new ArrayList<>();
+        ArrayList<TimetableDTO> timetableDTOS = new ArrayList<>();
 
         if (timetables != null) {
-            timetableDTOs = this.timetableMapper.toDTOs(timetables);
+            timetableDTOS = this.timetableMapper.toDTOs(timetables);
         }
-        return timetableDTOs;
+        return timetableDTOS;
     }
 
-    public ArrayList<TimetableDTO> getStudentTimetables(long studentId) {
+    public Collection<TimetableTableRecordsDTO> getSectionTimeTables1(long academicYearId, long academicTermId, long sectionId) {
+        ArrayList<Timetable> timetables = this.timetableRepository.findTimetableBySection(academicYearId, academicTermId, sectionId);
+        ArrayList<TimetableTableRecordsDTO> timetableTableRecordsDTOS = new ArrayList<>();
+
+        if (timetables != null) {
+            timetableTableRecordsDTOS = this.timetableTableRecordsMapper.toDTOs(timetables);
+        }
+        return timetableTableRecordsDTOS;
+    }
+
+    public ArrayList<TimetableTableRecordsDTO> getStudentTimetables(long studentId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         Collection<Section> sections = this.studentEnrollmentService.
                 findStudentSections(academicTerm.getAcademicYear(), academicTerm, studentId);
-        ArrayList<TimetableDTO> timetableDTOs = new ArrayList<>();
+        ArrayList<TimetableTableRecordsDTO> timetableDTOs = new ArrayList<>();
         for (Section section : sections) {
-            timetableDTOs.addAll(this.getSectionTimeTables(
+            timetableDTOs.addAll(this.getSectionTimeTables1(
                     section.getAcademicYear().getId(), section.getAcademicTerm().getId(), section.getId()));
         }
         timetableDTOs.sort((timetableDTO, t1) -> {
-            if (LocalTime.parse(t1.getStartTime()).isAfter(LocalTime.parse(timetableDTO.getStartTime()))) return -1;
-            else if (LocalTime.parse(t1.getStartTime()).isBefore(LocalTime.parse(timetableDTO.getStartTime()))) return 1;
+            if (LocalTime.parse(t1.getStartTime().substring(0,5)).isAfter(LocalTime.parse(timetableDTO.getStartTime().substring(0,5)))) return -1;
+            else if (LocalTime.parse(t1.getStartTime().substring(0,5)).isBefore(LocalTime.parse(timetableDTO.getStartTime().substring(0,5)))) return 1;
             return 0;
         });
         return timetableDTOs;

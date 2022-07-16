@@ -115,12 +115,13 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
             attendanceBySectionAndStudentDTO.setAttendanceStatus(attendanceDetails.getAttendanceStatus());
             attendanceBySectionAndStudentDTO.setLectureStartTime(attendanceDetails.getLectureStartTime());
             attendanceBySectionAndStudentDTO.setLectureEndTime(attendanceDetails.getLectureEndTime());
+            attendanceBySectionAndStudentDTO.setId(attendanceDetails.getId());
             attendanceBySectionAndStudentDTOS.add(attendanceBySectionAndStudentDTO);
         }
         return  attendanceBySectionAndStudentDTOS;
     }
 
-    public ArrayList<AttendanceBySection> getAttendanceDetailsBySectoin(Long sectionId  ){
+    public ArrayList<AttendanceBySection> getAttendanceDetailsBySectoin(Long sectionId){
         ArrayList<AttendanceDetails> attendanceDetailsList =
                 this.attendanceDetailsRepository.findStudentBySectionId(sectionId );
         ArrayList<AttendanceBySection> attendanceBySectionAndStudentDTOS = new ArrayList<>();
@@ -128,14 +129,22 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         ArrayList<Long> lectureIds = lectureRepository.findFacultyMemberLectures(sectionId);
 
         for(int i = 0 ;i < n ;i++){
+            int lectureNumber = lectureIds.size();
             AttendanceDetails attendanceDetails = attendanceDetailsList.get(i);
             AttendanceBySection attendanceBySection = new AttendanceBySection();
             attendanceBySection.setNameOfStudent(attendanceDetails.getStudent().getNameAr());
-            attendanceBySection.setNumberOfLecture(lectureIds.size());
+            attendanceBySection.setNumberOfLecture(lectureNumber);
             Long studentId = attendanceDetails.getStudent().getId();
             int absenceNumber = attendanceDetailsRepository.findStudentAbsenceLecture(studentId, sectionId).size();
+            double rate = 0 ;
+            try {
+                rate = 100.0 - (1.0 * absenceNumber / lectureNumber) * 100;
+            }catch (Exception ex){
+            }
+            attendanceBySection.setRate(rate);
             attendanceBySection.setIdOfStudent(studentId);
             attendanceBySection.setAbsentLecture(absenceNumber);
+
             attendanceBySectionAndStudentDTOS.add(attendanceBySection);
         }
         return  attendanceBySectionAndStudentDTOS;
