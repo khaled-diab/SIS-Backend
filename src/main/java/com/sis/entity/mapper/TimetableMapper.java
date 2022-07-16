@@ -82,13 +82,25 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
         return dto;
     }
 
+    private String from24To12System(String time) {
+        int hours = Integer.parseInt(time.substring(0, 2));
+        if (hours > 12) {
+            hours -= 12;
+            String h = String.valueOf(hours);
+            time = time.replaceFirst(time.substring(0, 2), h) + " PM";
+        } else {
+            time += " AM";
+        }
+        return time;
+    }
+
     @Override
     public Timetable toEntity(TimetableDTO dto) {
         Timetable entity = new Timetable();
         entity.setId(dto.getId());
         entity.setDay(dto.getDay());
-        entity.setStartTime(dto.getStartTime());
-        entity.setEndTime(dto.getEndTime());
+        entity.setStartTime(this.from24To12System(dto.getStartTime()));
+        entity.setEndTime(this.from24To12System(dto.getEndTime()));
         if (dto.getLectureTypeDTO() != null) {
             entity.setLectureType(lectureTypeMapper.toEntity(dto.getLectureTypeDTO()));
         }

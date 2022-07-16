@@ -135,8 +135,8 @@ public class TimetableService extends BaseServiceImp<Timetable> {
                     section.getAcademicYear().getId(), section.getAcademicTerm().getId(), section.getId()));
         }
         timetableDTOs.sort((timetableDTO, t1) -> {
-            if (LocalTime.parse(t1.getStartTime()).isAfter(LocalTime.parse(timetableDTO.getStartTime()))) return -1;
-            else if (LocalTime.parse(t1.getStartTime()).isBefore(LocalTime.parse(timetableDTO.getStartTime()))) return 1;
+            if (LocalTime.parse(t1.getStartTime().substring(0,5)).isAfter(LocalTime.parse(timetableDTO.getStartTime().substring(0,5)))) return -1;
+            else if (LocalTime.parse(t1.getStartTime().substring(0,5)).isBefore(LocalTime.parse(timetableDTO.getStartTime().substring(0,5)))) return 1;
             return 0;
         });
         return timetableDTOs;
