@@ -25,7 +25,7 @@ public interface AttendanceDetailsRepository extends BaseRepository<AttendanceDe
 
     // this function is written by Abdo Ramadan
     @Query(value = "SELECT * FROM attendance_details WHERE  section_id= :sectionId and " +
-            "section_id=:studnetId", nativeQuery = true)
+            " student_id=:studnetId", nativeQuery = true)
     ArrayList<AttendanceDetails> findAttendanceDetailsBySectionIdAndStudentId(Long sectionId, Long studnetId);
 
     @Query(value = "SELECT * FROM attendance_details WHERE  section_id= :sectionId", nativeQuery = true)
