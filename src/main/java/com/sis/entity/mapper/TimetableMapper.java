@@ -2,6 +2,7 @@ package com.sis.entity.mapper;
 
 import com.sis.dto.timetable.TimetableDTO;
 import com.sis.entity.Timetable;
+import com.sis.util.Constants;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -42,26 +43,15 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
     }
 
 
-    private String from12To24System(String time) {
-        if (time.charAt(5) == 'P' || time.charAt(6) == 'P') {
-            time = time.substring(0, 5);
-            int hours = Integer.parseInt(time.substring(0, 2));
-            hours += 12;
-            String h = String.valueOf(hours);
-            time = time.replaceFirst(time.substring(0, 2), h);
-        } else {
-            time = time.substring(0, 5);
-        }
-        return time;
-    }
+
 
     @Override
     public TimetableDTO toDTO(Timetable entity) {
         TimetableDTO dto = new TimetableDTO();
         dto.setId(entity.getId());
         dto.setDay(entity.getDay());
-        dto.setStartTime(from12To24System(entity.getStartTime()));
-        dto.setEndTime(from12To24System(entity.getEndTime()));
+        dto.setStartTime(Constants.from12To24System(entity.getStartTime()));
+        dto.setEndTime(Constants.from12To24System(entity.getEndTime()));
         if (entity.getLectureType() != null) {
             dto.setLectureTypeDTO(lectureTypeMapper.toDTO(entity.getLectureType()));
         }
@@ -96,28 +86,15 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
         return dto;
     }
 
-    private String from24To12System(String time) {
-        if (time.charAt(1) == ':') {
-            time = '0' + time;
-        }
-        int hours = Integer.parseInt(time.substring(0, 2));
-        if (hours > 12) {
-            hours -= 12;
-            String h = String.valueOf(hours);
-            time = time.replaceFirst(time.substring(0, 2), h) + " PM";
-        } else {
-            time += " AM";
-        }
-        return time;
-    }
+
 
     @Override
     public Timetable toEntity(TimetableDTO dto) {
         Timetable entity = new Timetable();
         entity.setId(dto.getId());
         entity.setDay(dto.getDay());
-        entity.setStartTime(this.from24To12System(dto.getStartTime()));
-        entity.setEndTime(this.from24To12System(dto.getEndTime()));
+        entity.setStartTime(Constants.from24To12System(dto.getStartTime()));
+        entity.setEndTime(Constants.from24To12System(dto.getEndTime()));
         if (dto.getLectureTypeDTO() != null) {
             entity.setLectureType(lectureTypeMapper.toEntity(dto.getLectureTypeDTO()));
         }
