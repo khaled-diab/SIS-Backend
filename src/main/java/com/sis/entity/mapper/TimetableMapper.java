@@ -41,6 +41,7 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Timetable>::new));
     }
 
+
     private String from12To24System(String time) {
         if (time.charAt(5) == 'P' || time.charAt(6) == 'P') {
             time = time.substring(0, 5);
