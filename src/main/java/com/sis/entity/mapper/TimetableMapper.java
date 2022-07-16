@@ -41,13 +41,26 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
         return dtos.stream().map(this::toEntity).collect(toCollection(ArrayList<Timetable>::new));
     }
 
+    private String from12To24System(String time) {
+        if (time.charAt(5) == 'P' || time.charAt(6) == 'P') {
+            time = time.substring(0, 5);
+            int hours = Integer.parseInt(time.substring(0, 2));
+            hours += 12;
+            String h = String.valueOf(hours);
+            time = time.replaceFirst(time.substring(0, 2), h);
+        } else {
+            time = time.substring(0, 5);
+        }
+        return time;
+    }
+
     @Override
     public TimetableDTO toDTO(Timetable entity) {
         TimetableDTO dto = new TimetableDTO();
         dto.setId(entity.getId());
         dto.setDay(entity.getDay());
-        dto.setStartTime(entity.getStartTime());
-        dto.setEndTime(entity.getEndTime());
+        dto.setStartTime(from12To24System(entity.getStartTime()));
+        dto.setEndTime(from12To24System(entity.getEndTime()));
         if (entity.getLectureType() != null) {
             dto.setLectureTypeDTO(lectureTypeMapper.toDTO(entity.getLectureType()));
         }
@@ -83,6 +96,9 @@ public class TimetableMapper implements Mapper<Timetable, TimetableDTO> {
     }
 
     private String from24To12System(String time) {
+        if (time.charAt(1) == ':') {
+            time = '0' + time;
+        }
         int hours = Integer.parseInt(time.substring(0, 2));
         if (hours > 12) {
             hours -= 12;
