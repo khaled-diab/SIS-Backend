@@ -6,6 +6,7 @@ import com.sis.entity.FacultyMember;
 import com.sis.entity.security.User;
 import com.sis.repository.RoleRepository;
 import com.sis.repository.UserRepository;
+import com.sis.util.Constants;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -107,7 +108,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         user.setRole(roleRepository.getRoleFacultyMember());
         user.setEmail(dto.getUniversityMail());
         user.setUsername(dto.getUniversityMail());
-        user.setType("FACULTY_MEMBER");
+        user.setType(Constants.TYPE_STAFF);
         user.setFirstname(dto.getNameAr());
         user.setLastname(dto.getNameAr());
         user = userRepository.save(user);
