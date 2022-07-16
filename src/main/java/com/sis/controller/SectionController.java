@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/sections")
@@ -85,5 +86,11 @@ public class SectionController extends BaseController<Section, SectionDTO> {
                                                                      @RequestBody SectionRequestDTO sectionRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         return new ResponseEntity<>(sectionService.filter(pageUtil, sectionRequestDTO), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/SectionsByCourseId/{courseId}", method = RequestMethod.GET)
+    public ResponseEntity<List<SectionDTO>> sectionsByCourseId(@PathVariable long courseId) {
+        List<SectionDTO> sectionDTOS = this.sectionService.getSectionsByCourseId(courseId);
+        return new ResponseEntity<>(sectionDTOS, HttpStatus.OK);
     }
 }

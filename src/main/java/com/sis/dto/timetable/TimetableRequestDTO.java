@@ -11,7 +11,6 @@ public class TimetableRequestDTO {
     private Long filterAcademicYear;
     private Long filterAcademicTerm;
     private Long filterFacultyMember;
-//    private Long filterStudent;
     private Long filterCourse;
     private Long filterSection;
     private String filterDay;

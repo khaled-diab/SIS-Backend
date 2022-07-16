@@ -6,13 +6,13 @@ import com.sis.entity.mapper.BuildingMapper;
 import com.sis.service.BuildingService;
 import com.sis.util.MessageResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @Validated
@@ -28,5 +28,11 @@ public class BuildingController extends BaseController<Building, BuildingDTO> {
         buildingService.save(buildingMapper.toEntity(dto));
         System.out.println("entered");
         return new MessageResponse("Item has been saved successfully");
+    }
+
+    @RequestMapping(value = "/buildingsByCollegeId/{collegeId}", method = RequestMethod.GET)
+    public ResponseEntity<List<BuildingDTO>> buildingsByCollegeId(@Valid @PathVariable Long collegeId) {
+        List<BuildingDTO> buildingDTOS = buildingService.getBuildingsByCollegeId(collegeId);
+        return new ResponseEntity<>(buildingDTOS, HttpStatus.OK);
     }
 }

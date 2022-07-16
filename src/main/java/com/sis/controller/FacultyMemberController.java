@@ -3,9 +3,7 @@ package com.sis.controller;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
-import com.sis.dto.timetable.TimetableDTO;
 import com.sis.entity.FacultyMember;
-import com.sis.entity.Student;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.entity.security.User;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
@@ -32,7 +30,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,6 +50,7 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     private final FacultyMemberRepository facultyMemberRepository;
 
     private final UserService userService;
+
 
     public static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/Images/facultyMemberImages/";
 
@@ -119,5 +117,11 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
         User user = this.userService.findById(userId);
         FacultyMemberDTO facultyMemberDTO = this.facultyMemberMapper.toDTO(this.facultyMemberRepository.findFacultyMemberByUserId(user.getId()));
         return new ResponseEntity<>(facultyMemberDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/facultyMembersByCollegeId/{collegeId}", method = RequestMethod.GET)
+    public ResponseEntity<List<FacultyMemberDTO>> facultyMembersByCollegeId(@PathVariable long collegeId) {
+        List<FacultyMemberDTO> facultyMemberDTOs = this.facultyMemberService.getFacultyMembersByCollegeId(collegeId);
+        return new ResponseEntity<>(facultyMemberDTOs, HttpStatus.OK);
     }
 }

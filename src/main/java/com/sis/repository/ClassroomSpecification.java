@@ -28,8 +28,7 @@ public class ClassroomSpecification implements Specification<Classroom> {
     @Override
     public Predicate toPredicate(Root<Classroom> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Predicate x = criteriaBuilder.or(
-                criteriaBuilder.like(root.get("name_ar"), "%" + key + "%"),
-                criteriaBuilder.like(root.get("name_en"), "%" + key + "%"),
+                criteriaBuilder.like(root.get("name"), "%" + key + "%"),
                 criteriaBuilder.like(root.get("code"), "%" + key + "%")
 
         );

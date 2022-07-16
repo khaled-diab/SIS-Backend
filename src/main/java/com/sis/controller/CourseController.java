@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -91,6 +92,12 @@ public class CourseController extends BaseController<Course, CourseDTO> {
                                                                     @RequestBody CourseRequestDTO courseRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         return new ResponseEntity<>(courseService.filter(pageUtil, courseRequestDTO), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/CoursesByDepartmentId/{departmentId}", method = RequestMethod.GET)
+    public ResponseEntity<List<CourseDTO>> coursesByCollegeId(@PathVariable long departmentId) {
+        List<CourseDTO> courseDTOS = this.courseService.getCoursesByDepartmentId(departmentId);
+        return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
     }
 }
 

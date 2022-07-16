@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/attendanceDetails")
+@CrossOrigin("")
 public class AttendanceDetailsController extends BaseController<AttendanceDetails, AttendanceDetailsDTO> {
 
     @Autowired
@@ -41,7 +43,20 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
             throw new ItemNotFoundException(attendanceDetailsDTO.getId());
         }
     }
-
+    // by abdo ramadan
+    @RequestMapping(value = "/updateStatusByStudentId", method = RequestMethod.POST)
+    public ResponseEntity<String> updateStatusByStudentId(
+            @RequestBody AttendanceBySectionAndStudentDTO attendanceBySectionAndStudentDTO, Long id ) {
+        AttendanceDetailsDTO attendanceDetailsDTO1
+                = attendanceDetailsMapper.toDTO(attendanceDetailsService.findById(id));
+        if(attendanceDetailsDTO1!=null){
+            attendanceDetailsDTO1.setAttendanceStatus(attendanceBySectionAndStudentDTO.getAttendanceStatus());
+            attendanceDetailsService.save(attendanceDetailsMapper.toEntity(attendanceDetailsDTO1));
+            return new ResponseEntity<>("Done", HttpStatus.OK);
+        }else{
+            throw new ItemNotFoundException(id);
+        }
+    }
     @RequestMapping(value = "/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
     public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode, @RequestBody StudentLecture studentLecture) {
 

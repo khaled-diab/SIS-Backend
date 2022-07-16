@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
@@ -20,6 +21,8 @@ public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
     Page<FacultyMember> findAllWithUser(Pageable pageable);
 
     FacultyMember findFacultyMemberByUserId(Long userId);
+
+    List<FacultyMember> getFacultyMembersByCollegeId(Long collegeId);
 
     Boolean existsByNationalID(String nationalID);
 
