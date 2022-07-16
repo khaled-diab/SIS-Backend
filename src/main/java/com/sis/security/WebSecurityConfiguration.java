@@ -36,7 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Entry points
+//         Entry points
         http.authorizeRequests().anyRequest().permitAll();
 //        http.authorizeRequests()
 //                .antMatchers("/api/security/**")
