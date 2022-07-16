@@ -20,8 +20,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+import static com.sis.util.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -53,12 +57,13 @@ public class UploadFilesService {
         }
     }
 
-    public void uploadStudents(String file, String fileName, String adminUserName) {
-        FileUploadDownLoadModel fileUploadDownLoadModel = constructUploadModel(adminUserName, fileName, Constants.STUDENT_UPLOAD_FOLDER_NAME, Boolean.FALSE);
+    public void uploadUsers(String file, String fileName, String adminUserName, String userType) {
+        boolean typeStudent = userType.equals(Constants.TYPE_STUDENT);
+        FileUploadDownLoadModel fileUploadDownLoadModel = constructUploadModel(adminUserName, fileName, typeStudent ? STUDENT_UPLOAD_FOLDER_NAME : STAFF_UPLOAD_FOLDER_NAME, Boolean.FALSE);
         try {
             MessageResponse messageResponse = uploadToDrive(file, fileUploadDownLoadModel);
             fileUploadDownLoadModel.setFileName(messageResponse.getMessage());
-            saveFile(fileUploadDownLoadModel, userRepository.findUserByUsername(adminUserName).getId(), Constants.FILE_TYPE_STUDENT_UPLOAD);
+            saveFile(fileUploadDownLoadModel, userRepository.findUserByUsername(adminUserName).getId(), typeStudent ? FILE_TYPE_STUDENT_UPLOAD : FILE_TYPE_STAFF_UPLOAD);
         } catch (Exception e) {
             logger.error("error uploading file", e);
         }
@@ -83,7 +88,7 @@ public class UploadFilesService {
 
     public String saveFile(FileUploadDownLoadModel fileUploadDownLoadModel, Long userID, String fileType) {
         String directories = String.join(Constants.DASH_DELIMITER, fileUploadDownLoadModel.getDirectories()) + Constants.DASH_DELIMITER + fileUploadDownLoadModel.getFileName();
-        userFileRepository.saveUserFile(directories, fileUploadDownLoadModel.getFileName(), userID, fileType);
+        userFileRepository.saveUserFile(directories, fileUploadDownLoadModel.getFileName(), userID, fileType, Date.from(Instant.now()));
         return directories;
     }
 

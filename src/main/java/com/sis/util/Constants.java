@@ -13,6 +13,9 @@ public class Constants {
     public static final String DIGITS_ONLY = "^[0-9]+$";
     public static final String DIGITS_ONLY_11 = "^[01][0-9]{10}$";
     public static final String TYPE_STUDENT = "STUDENT";
+
+    public static final String TYPE_STAFF = "STAFF";
+
     public static final String TYPE_FACULTY_MEMBER = "FACULTY_MEMBER";
     public static final String COLLEGES_CASH_KEY = "COLLEGES";
     public static final String DEPARTMENTS_CASH_KEY = "DEPARTMENTS";
@@ -29,7 +32,8 @@ public class Constants {
 
     public static final String ADMIN_USER_NAME = "admin";
     public static final String STUDENT_UPLOAD_FOLDER_NAME = "studentUpload";
-
+    public static final String STAFF_UPLOAD_FOLDER_NAME = "staffUpload";
+    public static final String NATIONAL_ID_ERROR = "Your National ID is not in the system. contact The administrator";
 
     private Constants() {
 
