@@ -66,11 +66,11 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
     }
 
     @RequestMapping(value = "/getStudentTimetables/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<TimetableDTO>> getStudentTimetables(@PathVariable long userId) {
+    public ResponseEntity<Collection<TimetableTableRecordsDTO>> getStudentTimetables(@PathVariable long userId) {
         User user = this.userService.findById(userId);
         Student student = this.studentRepository.findStudentByUserId(user.getId());
 //        Student student = this.studentService.findById(studentId);
-        ArrayList<TimetableDTO> timetableDTOs = this.timetableService.getStudentTimetables(student.getId());
+        ArrayList<TimetableTableRecordsDTO> timetableDTOs = this.timetableService.getStudentTimetables(student.getId());
         return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);
     }
 
