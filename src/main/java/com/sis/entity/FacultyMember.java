@@ -25,9 +25,6 @@ public class FacultyMember extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "university_id")
-    private long universityId;
-
     @Column(name = "name_ar")
     private String nameAr;
 
