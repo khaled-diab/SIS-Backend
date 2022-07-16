@@ -65,12 +65,9 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
         return new MessageResponse("Item has been updated successfully");
     }
 
-    @RequestMapping(value = "/getStudentTimetables/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<TimetableTableRecordsDTO>> getStudentTimetables(@PathVariable long userId) {
-        User user = this.userService.findById(userId);
-        Student student = this.studentRepository.findStudentByUserId(user.getId());
-//        Student student = this.studentService.findById(studentId);
-        ArrayList<TimetableTableRecordsDTO> timetableDTOs = this.timetableService.getStudentTimetables(student.getId());
+    @RequestMapping(value = "/getStudentTimetables/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<Collection<TimetableTableRecordsDTO>> getStudentTimetables(@PathVariable long studentId) {
+        ArrayList<TimetableTableRecordsDTO> timetableDTOs = this.timetableService.getStudentTimetables(studentId);
         return new ResponseEntity<>(timetableDTOs, HttpStatus.OK);
     }
 
