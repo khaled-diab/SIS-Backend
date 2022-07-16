@@ -34,23 +34,22 @@ public class Constants {
     private Constants() {
 
     }
-    public static  String from12To24System(String time) {
+
+    public static String from12To24System(String time) {
         if (time.charAt(1) == ':') {
             time = '0' + time;
         }
         time = time.substring(0, 5);
-        if (time.indexOf('P')>0) {
+        if (time.indexOf('P') > 0) {
             int hours = Integer.parseInt(time.substring(0, 2));
             hours += 12;
             String h = String.valueOf(hours);
             time = time.replaceFirst(time.substring(0, 2), h);
         }
-        System.out.println("time = "+time);
         return time;
     }
-    public static String from24To12System(String time) {
-//        System.out.println(time);
 
+    public static String from24To12System(String time) {
         if (time.charAt(1) == ':') {
             time = '0' + time;
         }
@@ -63,7 +62,6 @@ public class Constants {
         } else {
             time += " AM";
         }
-//        System.out.println(time);
         return time;
     }
 }
