@@ -51,7 +51,7 @@ public class BaseController <T extends BaseEntity, DTO extends BaseDTO>{
 		 return new MessageResponse("Item has been updated successfully");
 	}
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public MessageResponse delete(@PathVariable(value = "id") Long id) {
 		baseService.deleteById(id);
 		return new MessageResponse("Item has been deleted successfully");
