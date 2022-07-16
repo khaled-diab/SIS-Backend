@@ -111,11 +111,12 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         for(int i = 0 ;i < n ;i++){
             AttendanceDetails attendanceDetails = attendanceDetailsList.get(i);
             AttendanceBySectionAndStudentDTO attendanceBySectionAndStudentDTO = new AttendanceBySectionAndStudentDTO();
-            attendanceBySectionAndStudentDTO.setAttendanceDate(attendanceDetails.getAttendanceDate());
+            attendanceBySectionAndStudentDTO.setAttendanceDate(attendanceDetails.getAttendanceDate().toString());
             attendanceBySectionAndStudentDTO.setAttendanceStatus(attendanceDetails.getAttendanceStatus());
             attendanceBySectionAndStudentDTO.setLectureStartTime(attendanceDetails.getLectureStartTime());
             attendanceBySectionAndStudentDTO.setLectureEndTime(attendanceDetails.getLectureEndTime());
             attendanceBySectionAndStudentDTO.setId(attendanceDetails.getId());
+            attendanceBySectionAndStudentDTO.setUniversityId(attendanceDetails.getStudent().getUniversityId());
             attendanceBySectionAndStudentDTOS.add(attendanceBySectionAndStudentDTO);
         }
         return  attendanceBySectionAndStudentDTOS;
@@ -138,7 +139,7 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
             int absenceNumber = attendanceDetailsRepository.findStudentAbsenceLecture(studentId, sectionId).size();
             double rate = 0 ;
             try {
-                rate = 100.0 - (1.0 * absenceNumber / lectureNumber) * 100;
+                rate =  (1.0 * absenceNumber / lectureNumber) * 100;
             }catch (Exception ex){
             }
             attendanceBySection.setRate(rate);

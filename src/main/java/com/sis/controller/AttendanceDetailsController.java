@@ -44,9 +44,9 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         }
     }
     // by abdo ramadan
-    @RequestMapping(value = "/updateStatusByStudentId", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateStatusByStudentId/{id}", method = RequestMethod.POST)
     public ResponseEntity<String> updateStatusByStudentId(
-            @RequestBody AttendanceBySectionAndStudentDTO attendanceBySectionAndStudentDTO, Long id ) {
+            @RequestBody AttendanceBySectionAndStudentDTO attendanceBySectionAndStudentDTO,@PathVariable Long id ) {
         AttendanceDetailsDTO attendanceDetailsDTO1
                 = attendanceDetailsMapper.toDTO(attendanceDetailsService.findById(id));
         if(attendanceDetailsDTO1!=null){
