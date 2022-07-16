@@ -6,12 +6,13 @@ import com.sis.dto.DepartmentProjection;
 import com.sis.dto.UserFileDto;
 import com.sis.dto.college.CollegeProjection;
 import com.sis.dto.college.GeneralSearchRequest;
-import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.security.LoginDTO;
 import com.sis.dto.security.RegisterDTO;
-import com.sis.dto.student.StudentDTO;
-import com.sis.dto.student.StudentUploadDto;
-import com.sis.entity.*;
+import com.sis.dto.security.UserUploadDto;
+import com.sis.entity.Degree;
+import com.sis.entity.FacultyMember;
+import com.sis.entity.Student;
+import com.sis.entity.UserFile;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.entity.mapper.StudentMapper;
 import com.sis.entity.mapper.UserFileMapper;
@@ -70,27 +71,22 @@ public class SecurityService extends BaseServiceImp<User> {
     private final CashService cashService;
     private final CollegeRepository collegeRepository;
     private final DepartmentRepository departmentRepository;
+    private final DegreeRepository degreeRepository;
     private final PojoValidationService validationService;
     private final ExcelFileGenerator excelFileGenerator;
     private final UploadFilesService uploadFilesService;
     private final WebSocketService webSocketService;
 
 
-    public ResponseEntity<StudentDTO> registerStudent1(StudentDTO studentDTO) {
-        Student student = studentMapper.toEntity(studentDTO);
-        User user = student.getUser();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(roleRepository.getRoleStudent());
-        student.setUser(userRepository.save(user));
-        return new ResponseEntity<>(studentMapper.toDTO(studentRepository.save(student)), HttpStatus.OK);
-    }
-
     public MessageResponse registerStudent(RegisterDTO registerDTO) {
         CompletableFuture<Boolean> nationalIDExist = CompletableFuture.supplyAsync(() -> studentRepository.existsByNationalId(registerDTO.getNationalityID()));
         CompletableFuture<Boolean> mailExist = CompletableFuture.supplyAsync(() -> studentRepository.existsByUniversityMail(registerDTO.getEmail()));
-        CompletableFuture.allOf(nationalIDExist, mailExist);
+        CompletableFuture<Boolean> phoneExist = CompletableFuture.supplyAsync(() -> studentRepository.existsByPhone(registerDTO.getPhoneNumber()));
+        CompletableFuture.allOf(nationalIDExist, mailExist, phoneExist);
         if (!Boolean.TRUE.equals(nationalIDExist.join())) {
-            return new MessageResponse(500, "Your National ID is not in the system. contact The administrator", null);
+            return new MessageResponse(500, Constants.NATIONAL_ID_ERROR, null);
+        } else if (Boolean.TRUE.equals(phoneExist.join())) {
+            return new MessageResponse(500, "Phone Number Already Exist", null);
         } else {
             Student student = studentRepository.findByNationalId(registerDTO.getNationalityID());
             if (Boolean.TRUE.equals(mailExist.join()) || student.getUniversityMail() != null) {
@@ -98,10 +94,46 @@ public class SecurityService extends BaseServiceImp<User> {
             } else if (Boolean.TRUE.equals(!mailExist.join())) {
                 return registerStudent(registerDTO, student);
             } else {
-                return new MessageResponse(500, "Your National ID is not in the system. contact The administrator", null);
+                return new MessageResponse(500, Constants.NATIONAL_ID_ERROR, null);
             }
         }
+    }
 
+    public MessageResponse registerFacultyMember(RegisterDTO registerDTO) {
+        CompletableFuture<Boolean> nationalIDExist = CompletableFuture.supplyAsync(() -> facultyMemberRepository.existsByNationalID(registerDTO.getNationalityID()));
+        CompletableFuture<Boolean> mailExist = CompletableFuture.supplyAsync(() -> facultyMemberRepository.existsByUniversityMail(registerDTO.getEmail()));
+        CompletableFuture<Boolean> phoneExist = CompletableFuture.supplyAsync(() -> facultyMemberRepository.existsByPhone(registerDTO.getPhoneNumber()));
+        CompletableFuture.allOf(nationalIDExist, mailExist, phoneExist);
+        if (!Boolean.TRUE.equals(nationalIDExist.join())) {
+            return new MessageResponse(500, Constants.NATIONAL_ID_ERROR, null);
+        } else if (Boolean.TRUE.equals(phoneExist.join())) {
+            return new MessageResponse(500, "Phone Number Already Exist", null);
+        } else {
+            FacultyMember facultyMember = facultyMemberRepository.findByNationalID(registerDTO.getNationalityID());
+            if (Boolean.TRUE.equals(mailExist.join()) || facultyMember.getUniversityMail() != null) {
+                return new MessageResponse(500, "Already registered go to login", null);
+            } else if (Boolean.TRUE.equals(!mailExist.join())) {
+                return registerFacultyMember(registerDTO, facultyMember);
+            } else {
+                return new MessageResponse(500, Constants.NATIONAL_ID_ERROR, null);
+            }
+        }
+    }
+
+    private MessageResponse registerFacultyMember(RegisterDTO registerDTO, FacultyMember facultyMember) {
+        User user = User.builder()
+                .email(registerDTO.getEmail())
+                .username(registerDTO.getEmail())
+                .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .role(roleRepository.getRoleFacultyMember())
+                .firstname(facultyMember.getNameEn())
+                .type(Constants.TYPE_STAFF).build();
+        facultyMember.setBirthDate(registerDTO.getBirthDate());
+        facultyMember.setUser(userRepository.save(user));
+        facultyMember.setUniversityMail(registerDTO.getEmail());
+        facultyMember.setPhone(registerDTO.getPhoneNumber());
+        facultyMemberRepository.save(facultyMember);
+        return MessageResponse.builder().message("Staff Member registered Successfully").build();
     }
 
     private MessageResponse registerStudent(RegisterDTO registerDTO, Student student) {
@@ -115,12 +147,9 @@ public class SecurityService extends BaseServiceImp<User> {
         student.setBirthDate(registerDTO.getBirthDate());
         student.setUser(userRepository.save(user));
         student.setUniversityMail(registerDTO.getEmail());
+        student.setPhone(registerDTO.getPhoneNumber());
         studentRepository.save(student);
-        return MessageResponse.builder().message("registered Successfully").build();
-    }
-
-    public ResponseEntity<FacultyMemberDTO> registerFacultyMember(FacultyMemberDTO facultyMemberDTO) {
-        return null;
+        return MessageResponse.builder().message("Student registered Successfully").build();
     }
 
     public ResponseEntity<BaseDTO> login(LoginDTO loginDto) {
@@ -150,7 +179,7 @@ public class SecurityService extends BaseServiceImp<User> {
                 .orElseThrow(InvalidUserNameOrPasswordException::new));
     }
 
-    public MessageResponse registerBulkStudents(MultipartFile file) {
+    public MessageResponse registerBulkUsers(MultipartFile file, String userType) {
         CompletableFuture.runAsync(() -> {
             try {
                 try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
@@ -159,9 +188,10 @@ public class SecurityService extends BaseServiceImp<User> {
                     List<Row> rows = StreamSupport.stream(sheet.spliterator(), true).collect(Collectors.toList());
                     Map<String, List<CollegeProjection>> collegesMap = cashService.cashAllColleges();
                     Map<Long, List<DepartmentProjection>> departmentsMap = cashService.cashAllDepartments();
-                    Map<Boolean, List<StudentUploadDto>> studentUploadMap = processRows(rows, collegesMap, departmentsMap);
-                    saveValidUsers(studentUploadMap.get(Boolean.TRUE));
-                    uploadInvalidUserToDrive(studentUploadMap.get(Boolean.FALSE), file.getOriginalFilename());
+                    Map<Long, List<Degree>> degreeMap = cashService.degreeMap();
+                    Map<Boolean, List<UserUploadDto>> usersUploadMap = processRows(rows, collegesMap, departmentsMap, degreeMap, userType);
+                    saveValidUsers(usersUploadMap.get(Boolean.TRUE), userType);
+                    uploadInvalidUserToDrive(usersUploadMap.get(Boolean.FALSE), file.getOriginalFilename(), userType);
                     webSocketService.sendUploadDoneNotification(200, "File processing is done");
                 }
             } catch (Exception e) {
@@ -172,78 +202,104 @@ public class SecurityService extends BaseServiceImp<User> {
         return new MessageResponse(200, "Students are being Registered", null);
     }
 
-    private Map<Boolean, List<StudentUploadDto>> processRows(List<Row> rows, Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap) {
+    private Map<Boolean, List<UserUploadDto>> processRows(List<Row> rows, Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap, Map<Long, List<Degree>> degreeMap, String userType) {
         return rows.stream().map(row -> {
-            StudentUploadDto studentUploadDto = StudentUploadDto.builder()
+            UserUploadDto userUploadDto = UserUploadDto.builder()
                     .nameAr(row.getCell(0).getStringCellValue())
                     .nationality(row.getCell(1).getStringCellValue())
                     .nationalId(row.getCell(2).getStringCellValue())
                     .collegeCode(row.getCell(3).getStringCellValue())
                     .departmentCode(row.getCell(4).getStringCellValue())
-                    .universityNumber(row.getCell(5).getStringCellValue())
                     .build();
-            studentUploadDto.setErrors(validationService.validate(studentUploadDto).stream()
+            if (userType.equals(Constants.TYPE_STUDENT)) {
+                userUploadDto.setUniversityNumber(row.getCell(5).getStringCellValue());
+            } else {
+                userUploadDto.setDegreeID(row.getCell(5).getStringCellValue());
+            }
+            userUploadDto.setErrors(validationService.validate(userUploadDto).stream()
                     .map(violation -> new StringBuilder()
                             .append(Constants.FIELD).append(" -> ").append(violation.getPropertyPath()).append(System.lineSeparator())
                             .append(" ")
                             .append(Constants.ERROR).append(" -> ").append(violation.getMessage()).append(System.lineSeparator()))
                     .collect(Collectors.joining()));
-            validateCollegeAndDepartmentAndNationalIDAAndUniversityNumber(collegesMap, departmentsMap, studentUploadDto);
-            studentUploadDto.setIsValid(studentUploadDto.getErrors().isEmpty());
-            return studentUploadDto;
-        }).collect(Collectors.groupingBy(StudentUploadDto::getIsValid));
+            dbValidation(collegesMap, departmentsMap, degreeMap, userUploadDto, userType);
+            userUploadDto.setIsValid(userUploadDto.getErrors().isEmpty());
+            return userUploadDto;
+        }).collect(Collectors.groupingBy(UserUploadDto::getIsValid));
     }
 
-    private void validateCollegeAndDepartmentAndNationalIDAAndUniversityNumber(Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap, StudentUploadDto studentUploadDto) {
-        Optional<List<CollegeProjection>> optionalListColleges = Optional.ofNullable(collegesMap.get(studentUploadDto.getCollegeCode()));
+    private void dbValidation(Map<String, List<CollegeProjection>> collegesMap, Map<Long, List<DepartmentProjection>> departmentsMap, Map<Long, List<Degree>> degreeMap, UserUploadDto userUploadDto, String userType) {
+        Optional<List<CollegeProjection>> optionalListColleges = Optional.ofNullable(collegesMap.get(userUploadDto.getCollegeCode()));
         if (optionalListColleges.isEmpty()) {
-            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " college-code " + System.lineSeparator() +
+            userUploadDto.setErrors(userUploadDto.getErrors() + Constants.FIELD + " -> " + " college-code " + System.lineSeparator() +
                     Constants.ERROR + "-> " + "college doesnt exist" + System.lineSeparator());
         } else {
             Optional<List<DepartmentProjection>> optionalListDepartments = Optional.ofNullable(departmentsMap.get(optionalListColleges.get().get(0).getId()));
-            boolean noneMatch = optionalListDepartments.get().stream().noneMatch(departmentProjection -> Objects.equals(departmentProjection.getCode(), studentUploadDto.getDepartmentCode()));
+            boolean noneMatch = optionalListDepartments.get().stream().noneMatch(departmentProjection -> Objects.equals(departmentProjection.getCode(), userUploadDto.getDepartmentCode()));
             if (noneMatch) {
-                studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " department-code " + System.lineSeparator() +
+                userUploadDto.setErrors(userUploadDto.getErrors() + Constants.FIELD + " -> " + " department-code " + System.lineSeparator() +
                         Constants.ERROR + " -> " + " department doesnt exist for the given college" + System.lineSeparator());
             }
         }
-        if (Boolean.TRUE.equals(studentRepository.existsByNationalId(studentUploadDto.getNationalId()))) {
-            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " national-ID " + System.lineSeparator() +
-                    Constants.ERROR + " -> " + " National ID already on the system" + System.lineSeparator());
-        }
-        if (Boolean.TRUE.equals(studentRepository.existsByUniversityId(Long.valueOf(studentUploadDto.getUniversityNumber())))) {
-            studentUploadDto.setErrors(studentUploadDto.getErrors() + Constants.FIELD + " -> " + " university-number " + System.lineSeparator() +
-                    Constants.ERROR + " -> " + " university number already on the system" + System.lineSeparator());
-        }
-    }
-
-    private void uploadInvalidUserToDrive(List<StudentUploadDto> studentUploadDtoList, String fileName) throws IOException {
-        String excelSheetEncoded = excelFileGenerator.generateInvalidStudentsExcelSheet(studentUploadDtoList);
-        uploadInvalidStudents(excelSheetEncoded, fileName);
-    }
-
-    private void saveValidUsers(List<StudentUploadDto> studentUploadDtoList) {
-        if (studentUploadDtoList != null) {
-            College college = collegeRepository.findByCode(studentUploadDtoList.get(0).getCollegeCode());
-            Department department = departmentRepository.findByCode(studentUploadDtoList.get(0).getDepartmentCode());
-            studentRepository.saveAll(studentUploadDtoList
-                    .parallelStream()
-                    .map(studentUploadDto -> Student.builder()
-                            .nationalId(studentUploadDto.getNationalId())
-                            .nationality(studentUploadDto.getNationality())
-                            .collegeId(college)
-                            .departmentId(department)
-                            .nameAr(studentUploadDto.getNameAr())
-                            .level("1")
-                            .universityId(Long.parseLong(studentUploadDto.getUniversityNumber()))
-                            .build())
-                    .collect(Collectors.toList()));
+        if (userType.equals(Constants.TYPE_STUDENT)) {
+            if (Boolean.TRUE.equals(studentRepository.existsByNationalId(userUploadDto.getNationalId()))) {
+                userUploadDto.setErrors(userUploadDto.getErrors() + Constants.FIELD + " -> " + " national-ID " + System.lineSeparator() +
+                        Constants.ERROR + " -> " + " National ID already on the system" + System.lineSeparator());
+            }
+            if (Boolean.TRUE.equals(studentRepository.existsByUniversityId(Long.valueOf(userUploadDto.getUniversityNumber())))) {
+                userUploadDto.setErrors(userUploadDto.getErrors() + Constants.FIELD + " -> " + " university-number " + System.lineSeparator() +
+                        Constants.ERROR + " -> " + " university number already on the system" + System.lineSeparator());
+            }
+        } else {
+            if (Boolean.TRUE.equals(facultyMemberRepository.existsByNationalID(userUploadDto.getNationalId()))) {
+                userUploadDto.setErrors(userUploadDto.getErrors() + Constants.FIELD + " -> " + " national-ID " + System.lineSeparator() +
+                        Constants.ERROR + " -> " + " National ID already on the system" + System.lineSeparator());
+            }
+            if (userUploadDto.getDegreeID() == null || Optional.ofNullable(degreeMap.get(Long.valueOf(userUploadDto.getDegreeID()))).isEmpty()) {
+                userUploadDto.setErrors(userUploadDto.getErrors() + Constants.FIELD + " -> " + " degree-ID " + System.lineSeparator() +
+                        Constants.ERROR + " -> " + " degree does not exist" + System.lineSeparator());
+            }
         }
     }
 
+    private void uploadInvalidUserToDrive(List<UserUploadDto> userUploadDtoList, String fileName, String userType) throws IOException {
+        String excelSheetEncoded = excelFileGenerator.generateInvalidUsersExcelSheet(userUploadDtoList, userType);
+        uploadInvalidUsers(excelSheetEncoded, fileName, userType);
+    }
 
-    public void uploadInvalidStudents(String file, String fileName) {
-        uploadFilesService.uploadStudents(file, fileName, Constants.ADMIN_USER_NAME);
+    private void saveValidUsers(List<UserUploadDto> userUploadDtoList, String userType) {
+        if (userUploadDtoList != null) {
+            if (Objects.equals(userType, Constants.TYPE_STUDENT)) {
+                studentRepository.saveAll(userUploadDtoList
+                        .parallelStream()
+                        .map(userUploadDto -> Student.builder()
+                                .nationalId(userUploadDto.getNationalId())
+                                .nationality(userUploadDto.getNationality())
+                                .collegeId(collegeRepository.findByCode(userUploadDto.getCollegeCode()))
+                                .departmentId(departmentRepository.findByCode(userUploadDto.getDepartmentCode()))
+                                .nameAr(userUploadDto.getNameAr())
+                                .level("1")
+                                .universityId(Long.parseLong(userUploadDto.getUniversityNumber()))
+                                .build())
+                        .collect(Collectors.toList()));
+            } else {
+                facultyMemberRepository.saveAll(userUploadDtoList.parallelStream()
+                        .map(userUploadDto -> FacultyMember.builder()
+                                .nationalID(userUploadDto.getNationalId())
+                                .nationality(userUploadDto.getNationality())
+                                .college(collegeRepository.findByCode(userUploadDto.getCollegeCode()))
+                                .department(departmentRepository.findByCode(userUploadDto.getDepartmentCode()))
+                                .nameAr(userUploadDto.getNameAr())
+                                .degree(degreeRepository.findDegreeById(Long.valueOf(userUploadDto.getDegreeID())))
+                                .build())
+                        .collect(Collectors.toList()));
+            }
+        }
+    }
+
+
+    public void uploadInvalidUsers(String file, String fileName, String userType) {
+        uploadFilesService.uploadUsers(file, fileName, Constants.ADMIN_USER_NAME, userType);
     }
 
     public MessageResponse uploadProfilePicture(MultipartFile file, String email) throws IOException {

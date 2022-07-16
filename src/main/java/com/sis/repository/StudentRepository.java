@@ -43,6 +43,8 @@ public interface StudentRepository extends BaseRepository<Student> {
 
     Boolean existsByUniversityId(Long universityID);
 
+    Boolean existsByPhone(String phone);
+
     @Query(value = "SELECT * FROM student s WHERE s.user_id is not null ", nativeQuery = true)
     Page<Student> findAllStudentss(Pageable pageable);
 

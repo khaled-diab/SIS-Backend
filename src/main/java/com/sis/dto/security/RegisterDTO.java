@@ -19,6 +19,7 @@ public class RegisterDTO {
     private String password;
     private String nationalityID;
     private Date birthDate;
+    private String phoneNumber;
 
 
 }
