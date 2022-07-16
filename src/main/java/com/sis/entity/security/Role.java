@@ -1,5 +1,6 @@
 package com.sis.entity.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sis.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
 
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return roleName;
     }

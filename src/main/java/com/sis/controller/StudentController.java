@@ -131,7 +131,7 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         return new MessageResponse("Item has been updated successfully");
     }
 
-    @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.GET)
     public MessageResponse delete(@PathVariable(value = "id") Long id) {
 
         this.studentService.deleteById(id);
