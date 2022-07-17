@@ -44,16 +44,21 @@ public class LectureController extends BaseController<Lecture, LectureDTO> {
     }
 
     @RequestMapping(value = "/getCurrentLecture/{studentId}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<LectureDTO>> getCurrentLectures(@PathVariable long studentId) {
+    public ResponseEntity<Collection<Long>> getCurrentLectures(@PathVariable long studentId) {
 
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         Collection<Section> sections = this.sectionService.findStudentSections(academicTerm.getAcademicYear(), academicTerm, studentId);
-        Collection<LectureDTO> lectureDTOs = new ArrayList<>();
+        Collection<Long> lectureIds = new ArrayList<>();
         for (Section sec : sections) {
-            lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
+//            lectureDTOs.addAll(this.lectureMapper.toDTOs(sec.getLectures()));
+            for(Lecture lecture : sec.getLectures()){
+                if(lecture.getAttendanceStatus() && lecture.getAttendanceType().equalsIgnoreCase("Automatic")){
+                    lectureIds.add(lecture.getId());
+                }
+            }
         }
-        lectureDTOs = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceStatus() && lectureDTO.getAttendanceType().equalsIgnoreCase("Automatic")).collect(Collectors.toList());
-        return new ResponseEntity<>(lectureDTOs, HttpStatus.OK);
+//       Collection<Long> ids = lectureDTOs.stream().filter(lectureDTO -> lectureDTO.getAttendanceStatus() && lectureDTO.getAttendanceType().equalsIgnoreCase("Automatic")).collect(Collectors.toList());
+        return new ResponseEntity<>(lectureIds, HttpStatus.OK);
     }
 
 

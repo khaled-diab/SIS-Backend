@@ -17,9 +17,9 @@ public class AcademicProgramController extends BaseController<AcademicProgram, A
     @Autowired
     private AcademicProgramService academicProgramService;
 
-    @RequestMapping(value = "/academicProgramsByCollegeId/{collegeId}", method = RequestMethod.GET)
-    public ResponseEntity<List<AcademicProgramDTO>> academicProgramsByCollegeId(@PathVariable long collegeId) {
-        List<AcademicProgramDTO> academicProgramDTOS = this.academicProgramService.academicProgramsByCollegeId(collegeId);
+    @RequestMapping(value = "/academicProgramsByDepartmentId/{departmentId}", method = RequestMethod.GET)
+    public ResponseEntity<List<AcademicProgramDTO>> academicProgramsByDepartmentId(@PathVariable long departmentId) {
+        List<AcademicProgramDTO> academicProgramDTOS = this.academicProgramService.academicProgramsByDepartmentId(departmentId);
         return new ResponseEntity<>(academicProgramDTOS, HttpStatus.OK);
     }
 

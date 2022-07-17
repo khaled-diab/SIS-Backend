@@ -64,8 +64,9 @@ public class SectionController extends BaseController<Section, SectionDTO> {
     @RequestMapping(value = "/getFacultyMemberSections/{facultyMemberId}", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<SectionDTO>> getFacultyMemberSections(@PathVariable long facultyMemberId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
-        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
 
+        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
+        System.out.println(academicTermDTO);
         ArrayList<SectionDTO> sectionDTOs = this.sectionService.findFacultyMemberSections(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
         return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
     }
