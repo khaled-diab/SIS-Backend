@@ -1,4 +1,4 @@
-package com.sis.dto.student;
+package com.sis.dto.security;
 
 import com.sis.dto.BaseDTO;
 import com.sis.util.Constants;
@@ -13,18 +13,13 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Builder
-public class StudentUploadDto extends BaseDTO {
+public class UserUploadDto extends BaseDTO {
 
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
     @Pattern(regexp = Constants.ARABIC_CHARACTERS, message = "Arabic Letters only")
     private String nameAr;
-
-//    @NotEmpty(message = "Required")
-//    @NotBlank(message = "Required")
-//    @Pattern(regexp = Constants.ENGLISH_CHARACTERS, message = "English Letters only")
-//    private String nameEn;
 
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
@@ -35,24 +30,6 @@ public class StudentUploadDto extends BaseDTO {
     @Pattern(regexp = Constants.DIGITS_ONLY_14, message = "must be 14 digits")
     private String nationalId;
 
-//    @NotEmpty(message = "Required")
-//    @NotBlank(message = "Required")
-//    @Pattern(regexp = Constants.DATE_EXPRESSION, message = "the date must be like dd/mm/yyyy")
-//    private Date birthDate;
-
-
-    //    @Pattern(regexp = Constants.DIGITS_ONLY_11, message = "Invalid Mobile Number")
-//    @NotEmpty(message = "Required")
-//    @NotBlank(message = "Required")
-//    private String phone;
-
-    //    @Pattern(regexp = Constants.DIGITS_ONLY_11, message = "Invalid Mobile Number")
-//    @NotEmpty(message = "Required")
-//    @NotBlank(message = "Required")
-//    private String parentPhone;
-
-    @NotEmpty(message = "Required")
-    @NotBlank(message = "Required")
     private String universityNumber;
 
     @NotEmpty(message = "Required")
@@ -62,6 +39,8 @@ public class StudentUploadDto extends BaseDTO {
     @NotEmpty(message = "Required")
     @NotBlank(message = "Required")
     private String departmentCode;
+
+    private String degreeID;
 
     private String errors;
     private Boolean isValid;
