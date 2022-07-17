@@ -5,8 +5,11 @@ import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.mapper.FacultyMemberMapper;
+import com.sis.entity.security.User;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
+import com.sis.repository.FacultyMemberRepository;
 import com.sis.service.FacultyMemberService;
+import com.sis.service.UserService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -43,6 +46,11 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     private final FacultyMemberService facultyMemberService;
 
     private final FacultyMemberMapper facultyMemberMapper;
+
+    private final FacultyMemberRepository facultyMemberRepository;
+
+    private final UserService userService;
+
 
     public static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/Images/facultyMemberImages/";
 
@@ -102,6 +110,13 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
                                                                                    facultyMemberRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
         return new ResponseEntity<>(facultyMemberService.filter(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/facultyMemberByUserId/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<FacultyMemberDTO> facultyMemberByUserId(@PathVariable long userId) {
+        User user = this.userService.findById(userId);
+        FacultyMemberDTO facultyMemberDTO = this.facultyMemberMapper.toDTO(this.facultyMemberRepository.findFacultyMemberByUserId(user.getId()));
+        return new ResponseEntity<>(facultyMemberDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/facultyMembersByCollegeId/{collegeId}", method = RequestMethod.GET)

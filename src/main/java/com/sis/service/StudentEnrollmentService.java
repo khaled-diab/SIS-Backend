@@ -2,6 +2,8 @@ package com.sis.service;
 
 
 import com.sis.dto.course.CourseDTO;
+import com.sis.dto.student.StudentDTO;
+import com.sis.dto.studentEnrollment.StudentArray;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
 import com.sis.entity.AcademicTerm;
@@ -10,8 +12,10 @@ import com.sis.entity.Section;
 import com.sis.entity.StudentEnrollment;
 import com.sis.entity.mapper.CourseMapper;
 import com.sis.entity.mapper.StudentEnrollmentMapper;
+import com.sis.exception.StudentEnrollmentFieldNotUniqueException;
 import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.specification.StudentEnrollmentSpecification;
+import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -21,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -123,4 +128,29 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return courseDTOs;
     }
 
+    public ArrayList<StudentEnrollment> save(@RequestBody StudentArray dto) {
+        ArrayList<StudentEnrollment> studentEnrollments = new ArrayList<>();
+        for (StudentDTO studentDTO : dto.getStudentDTOS()) {
+            StudentEnrollmentDTO studentEnrollmentDTO = new StudentEnrollmentDTO();
+            studentEnrollmentDTO.setAcademicYearDTO(dto.getStudentEnrollmentDTO().getAcademicYearDTO());
+            studentEnrollmentDTO.setAcademicTermDTO(dto.getStudentEnrollmentDTO().getAcademicTermDTO());
+            studentEnrollmentDTO.setCollegeDTO(dto.getStudentEnrollmentDTO().getCollegeDTO());
+            studentEnrollmentDTO.setDepartmentDTO(dto.getStudentEnrollmentDTO().getDepartmentDTO());
+            studentEnrollmentDTO.setMajorDTO(dto.getStudentEnrollmentDTO().getMajorDTO());
+            studentEnrollmentDTO.setStudyTypeDTO(dto.getStudentEnrollmentDTO().getStudyTypeDTO());
+            studentEnrollmentDTO.setCourseDTO(dto.getStudentEnrollmentDTO().getCourseDTO());
+            studentEnrollmentDTO.setSectionDTO(dto.getStudentEnrollmentDTO().getSectionDTO());
+            studentEnrollmentDTO.setStudentDTO(studentDTO);
+            StudentEnrollment studentEnrollment = this.studentEnrollmentRepository.findStudentEnrollmentByCourseIdAndSectionIdAndStudentId
+                    (dto.getStudentEnrollmentDTO().getCourseDTO().getId(), dto.getStudentEnrollmentDTO().getSectionDTO().getId(),
+                            studentDTO.getId());
+            if (studentEnrollment == null) {
+                studentEnrollments.add(this.studentEnrollmentMapper.toEntity(studentEnrollmentDTO));
+            } else {
+                throw new StudentEnrollmentFieldNotUniqueException("Student with id: " + studentDTO.getUniversityId()
+                        + " Already Enrolled in this section", "exists");
+            }
+        }
+        return studentEnrollments;
+    }
 }
