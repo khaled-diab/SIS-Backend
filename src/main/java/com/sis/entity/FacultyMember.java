@@ -7,8 +7,7 @@ package com.sis.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sis.entity.security.User;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -19,6 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "faculty_member")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FacultyMember extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +34,7 @@ public class FacultyMember extends BaseEntity {
     @Column(name = "nationality")
     private String nationality;
 
-    @Column(name = "nationalID")
+    @Column(name = "nationalID", unique = true)
     private String nationalID;
 
     @Column(name = "birth_date")

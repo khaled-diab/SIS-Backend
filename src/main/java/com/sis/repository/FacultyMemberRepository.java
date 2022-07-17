@@ -22,4 +22,10 @@ public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
 
     FacultyMember findFacultyMemberByUserId(Long userId);
     List<FacultyMember> getFacultyMembersByCollegeId(Long collegeId);
+
+    Boolean existsByNationalID(String nationalID);
+
+    Boolean existsByUniversityMail(String mail);
+
+    Boolean existsByPhone(String phone);
 }
