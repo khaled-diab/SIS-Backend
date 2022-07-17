@@ -117,7 +117,6 @@ public class StudentController extends BaseController<Student, StudentDTO> {
         Student studentByNationalID=this.studentService.findByNationalId(dto.getNationalId());
         Student studentByuniversityMail=this.studentService.findByUniversityMail(dto.getUniversityMail());
         if(studentByuniversityID!=null && studentByuniversityID.getId() != dto.getId()){
-            System.out.println("yes yes");
             throw new StudentFieldNotUniqueException("universityId","University Id Already Exists");
         }
         if(studentByNationalID!=null && studentByNationalID.getId() != dto.getId()){
