@@ -36,7 +36,6 @@ public class Constants {
     public static final String NATIONAL_ID_ERROR = "Your National ID is not in the system. contact The administrator";
 
     private Constants() {
-
     }
     public static  String from12To24System(String time) {
         if (time.charAt(1) == ':') {
