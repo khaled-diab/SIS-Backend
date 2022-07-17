@@ -162,7 +162,7 @@ public class SecurityService extends BaseServiceImp<User> {
     private ResponseEntity<BaseDTO> collectUserData(User user) {
         if (user.getType().equals(Constants.TYPE_STUDENT)) {
             return new ResponseEntity<>(studentMapper.toDTO(studentRepository.findByUser_Id(user.getId()).orElse(new Student())), HttpStatus.OK);
-        } else if (user.getType().equals(Constants.TYPE_FACULTY_MEMBER)) {
+        } else if (user.getType().equals(Constants.TYPE_STAFF)) {
             return new ResponseEntity<>(facultyMemberMapper.toDTO(facultyMemberRepository.findByUser_Id(user.getId()).orElse(new FacultyMember())), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new AdminDto(userMapper.toDTO(user)), HttpStatus.OK);
