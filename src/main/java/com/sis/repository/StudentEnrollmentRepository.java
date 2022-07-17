@@ -28,5 +28,6 @@ public interface StudentEnrollmentRepository extends BaseRepository<StudentEnrol
     @Query(value = "SELECT * FROM student_enrollment WHERE academic_year_id =:academicYearId and  academic_term_id=:academicTermId and section_id= :sectionId  ", nativeQuery = true)
     ArrayList<StudentEnrollment> findStudentsBySection(long academicYearId, long academicTermId, long sectionId);
 
+    StudentEnrollment findStudentEnrollmentByCourseIdAndSectionIdAndStudentId(Long courseId, Long sectionId, Long studentId);
 
 }

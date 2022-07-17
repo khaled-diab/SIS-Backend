@@ -20,5 +20,6 @@ public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
     @Query(value = "select * from faculty_member where user_id is not null", nativeQuery = true)
     Page<FacultyMember> findAllWithUser(Pageable pageable);
 
+    FacultyMember findFacultyMemberByUserId(Long userId);
     List<FacultyMember> getFacultyMembersByCollegeId(Long collegeId);
 }

@@ -43,20 +43,8 @@ public class StudentEnrollmentController extends BaseController<StudentEnrollmen
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public MessageResponse save(@RequestBody StudentArray dto){
-        for(StudentDTO studentDTO: dto.getStudentDTOS()) {
-            StudentEnrollmentDTO studentEnrollmentDTO = new StudentEnrollmentDTO();
-            studentEnrollmentDTO.setAcademicYearDTO(dto.getStudentEnrollmentDTO().getAcademicYearDTO());
-            studentEnrollmentDTO.setAcademicTermDTO(dto.getStudentEnrollmentDTO().getAcademicTermDTO());
-            studentEnrollmentDTO.setCollegeDTO(dto.getStudentEnrollmentDTO().getCollegeDTO());
-            studentEnrollmentDTO.setDepartmentDTO(dto.getStudentEnrollmentDTO().getDepartmentDTO());
-            studentEnrollmentDTO.setMajorDTO(dto.getStudentEnrollmentDTO().getMajorDTO());
-            studentEnrollmentDTO.setStudyTypeDTO(dto.getStudentEnrollmentDTO().getStudyTypeDTO());
-            studentEnrollmentDTO.setCourseDTO(dto.getStudentEnrollmentDTO().getCourseDTO());
-            studentEnrollmentDTO.setSectionDTO(dto.getStudentEnrollmentDTO().getSectionDTO());
-            studentEnrollmentDTO.setStudentDTO(studentDTO);
-            this.studentEnrollmentService.save(this.studentEnrollmentMapper.toEntity(studentEnrollmentDTO));
-        }
+    public MessageResponse save(@RequestBody StudentArray dto) {
+        this.studentEnrollmentService.saveAll(this.studentEnrollmentService.save(dto));
         return new MessageResponse("Item has been saved successfully");
     }
 
