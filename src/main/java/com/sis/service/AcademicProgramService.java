@@ -3,6 +3,7 @@ package com.sis.service;
 import com.sis.dto.AcademicProgramDTO;
 import com.sis.entity.AcademicProgram;
 import com.sis.entity.College;
+import com.sis.entity.Department;
 import com.sis.entity.mapper.AcademicProgramMapper;
 import com.sis.repository.AcademicProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ public class AcademicProgramService extends BaseServiceImp<AcademicProgram> {
     @Autowired
     private AcademicProgramMapper academicProgramMapper;
     @Autowired
-    private CollegeService collegeService;
+    private DepartmentService departmentService;
 
     @Override
     public JpaRepository<AcademicProgram, Long> Repository() {
         return academicProgramRepository;
     }
 
-    public List<AcademicProgramDTO> academicProgramsByCollegeId(Long collegeId) {
-        College college = this.collegeService.findById(collegeId);
-        return this.academicProgramMapper.toDTOs(this.academicProgramRepository.getAcademicProgramsByCollegeIdId(college.getId()));
+    public List<AcademicProgramDTO> academicProgramsByDepartmentId(Long departmentId) {
+//        Department dept = this.departmentService.findById(departmentId);
+        return this.academicProgramMapper.toDTOs(this.academicProgramRepository.findAcademicProgramByDepartmentId(departmentId));
     }
 }

@@ -2,6 +2,7 @@ package com.sis.service;
 
 import com.sis.dto.attendanceDetails.StudentLecture;
 import com.sis.entity.mapper.LectureMapper;
+import com.sis.exception.StudentFieldNotUniqueException;
 import com.sis.repository.AttendanceDetailsRepository;
 import com.sis.dto.attendanceDetails.AttendanceBySection;
 import com.sis.dto.attendanceDetails.AttendanceBySectionAndStudentDTO;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -68,9 +71,13 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         }
         return  attendanceReportDTO;
     }
-
+    public AttendanceDetails getAttendanceDetailsByLectureAndStudent(long lectureId, long studentId){
+        AttendanceDetails attendanceDetails = this.attendanceDetailsRepository.findAttendanceDetailsByLectureIdAndStudentId(lectureId,
+                studentId);
+        return  attendanceDetails;
+    }
     public ArrayList<AttendanceDetailsDTO> getAttendanceDetailsByLecture(long lectureId){
-        ArrayList<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.findAttendanceDetailsByLectureId(lectureId);
+        List<AttendanceDetails> attendanceDetails = this.attendanceDetailsRepository.findAttendanceDetailsByLectureId(lectureId);
         ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = new ArrayList<>();
         if(attendanceDetails!= null){
             attendanceDetailsDTOS = this.attendanceDetailsMapper.toDTOs(attendanceDetails);
@@ -149,24 +156,25 @@ public class AttendanceDetailsService extends BaseServiceImp<AttendanceDetails>{
         }
         return  attendanceBySectionAndStudentDTOS;
     }
-    public AttendanceDetailsDTO addAutoAttendance( long attendanceCode,  StudentLecture studentLecture) {
+    public void addAutoAttendance(long attendanceCode,  long studentId, long lectureId  ) {
 
-        long studentId = studentLecture.getStudentId();
-        LectureDTO lectureDTO = studentLecture.getLectureDTO();
-        Lecture lecture = this.lectureMapper.toEntity(lectureDTO);
-        AttendanceDetailsDTO attendanceDetailsDTO2 = null;
-        ArrayList<AttendanceDetailsDTO> attendanceDetailsDTOS = this.getAttendanceDetailsByLecture(lecture.getId());
-        for (AttendanceDetailsDTO attendanceDetailsDTO : attendanceDetailsDTOS) {
-            if (attendanceDetailsDTO.getStudentId() == studentId) {
-                if ((lectureDTO.getAttendanceCode() == attendanceCode) && (lectureDTO.getAttendanceStatus())) {
-                    attendanceDetailsDTO.setAttendanceStatus("Present");
-                    this.save(this.attendanceDetailsMapper.toEntity(attendanceDetailsDTO));
-                    attendanceDetailsDTO2 = attendanceDetailsDTO;
-                    break;
+//        Optional<Lecture> lecture = this.lectureRepository.findById(lectureId);
+        AttendanceDetails attendanceDetails = this.getAttendanceDetailsByLectureAndStudent(lectureId,studentId);
+        if(attendanceDetails ==null){
+            throw new StudentFieldNotUniqueException(null,"Attendance Registration Failed !!");
+        }else {
+            if (attendanceDetails.getStudent().getId() == studentId) {
+                if ((attendanceDetails.getLecture().getAttendanceCode() == attendanceCode) && (attendanceDetails.getLecture().getAttendanceStatus())) {
+                    attendanceDetails.setAttendanceStatus("Present");
+                    this.save(attendanceDetails);
+                } else {
+                    throw new StudentFieldNotUniqueException(null,"Attendance Registration Failed !!");
                 }
+            }else{
+                throw new StudentFieldNotUniqueException(null,"Attendance Registration Failed !!");
+
             }
         }
-        return attendanceDetailsDTO2;
     }
 
 }

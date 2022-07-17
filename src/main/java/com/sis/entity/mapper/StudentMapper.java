@@ -97,11 +97,11 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 				entity.setCollegeId(this.collegeMapper.toEntity(dto.getCollegeDTO()));
 			}
 			if (dto.getDepartmentDTO() != null ) {
-				if(dto.getDepartmentDTO().getId()==-1){
-					entity.setDepartmentId(null);
-				}else {
+//				if(dto.getDepartmentDTO().getId()==-1){
+//					entity.setDepartmentId(null);
+//				}else {
 					entity.setDepartmentId(this.departmentMapper.toEntity(dto.getDepartmentDTO()));
-				}
+//				}
 			}
 			if (dto.getAcademicProgramDTO() != null ) {
 				if (dto.getAcademicProgramDTO().getId() == -1) {

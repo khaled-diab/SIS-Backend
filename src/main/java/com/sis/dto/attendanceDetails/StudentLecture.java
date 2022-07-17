@@ -9,5 +9,7 @@ import lombok.Setter;
 @Setter
 public class StudentLecture {
     private Long studentId;
-    private LectureDTO lectureDTO;
+//    private LectureDTO lectureDTO;
+    private Long lectureId;
+
 }
