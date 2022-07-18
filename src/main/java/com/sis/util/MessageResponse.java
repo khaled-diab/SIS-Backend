@@ -4,7 +4,6 @@ import lombok.Builder;
 
 @Builder
 public class MessageResponse {
-
     private Integer status;
     private String message;
     private String field;
