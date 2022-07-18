@@ -140,16 +140,23 @@ public class SectionService extends BaseServiceImp<Section> {
                 section_course.setId(section.getId());
                 section_course.setSectionNumber(section.getSectionNumber());
                 section_course.setCourseName(section.getCourse().getNameEn());
-                section_course.setLecturesNumber(section.getLectures().size());
-                section_course.setStudentsNumber(section.getStudentEnrollments().size());
-                for (Lecture lecture : section.getLectures()) {
-                    ArrayList<AttendanceDetails> attendanceDetails = lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
-                            attendanceDetails1.getAttendanceStatus().equalsIgnoreCase("Present")).collect(toCollection(ArrayList<AttendanceDetails>::new));
-                    section_course.setPresentsNumber(attendanceDetails.size());
+                if(section.getLectures() == null || section.getLectures().size() ==0){
+                    section_course.setLecturesNumber(0);
+                    section_course.setPresentAverage(0);
+                    section_courses.add(section_course);
+                }else {
+                    section_course.setLecturesNumber(section.getLectures().size());
+//                section_course.setStudentsNumber(section.getStudentEnrollments().size());
+                    double presentsNumber = 0;
+                    double studentNumber = section.getStudentEnrollments().size() * section.getLectures().size();
+                    for (Lecture lecture : section.getLectures()) {
+                        ArrayList<AttendanceDetails> attendanceDetails = lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+                                attendanceDetails1.getAttendanceStatus().equalsIgnoreCase("Present")).collect(toCollection(ArrayList<AttendanceDetails>::new));
+                        presentsNumber += attendanceDetails.size();
+                    }
+                    section_course.setPresentAverage((presentsNumber / studentNumber) * 100);
+                    section_courses.add(section_course);
                 }
-                section_courses.add(section_course);
-
-
             }
             return section_courses;
         }
