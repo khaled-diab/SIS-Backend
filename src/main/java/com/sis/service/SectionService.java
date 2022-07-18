@@ -8,6 +8,7 @@ import com.sis.entity.*;
 import com.sis.entity.mapper.SectionMapper;
 import com.sis.entity.mapper.SectionTableRecordsMapper;
 import com.sis.repository.SectionRepository;
+import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.specification.SectionSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -34,6 +35,8 @@ public class SectionService extends BaseServiceImp<Section> {
     private final SectionTableRecordsMapper sectionTableRecordsMapper;
     private final TimetableService timetableService;
     private final StudentEnrollmentService studentEnrollmentService;
+    private final StudentEnrollmentRepository studentEnrollmentRepository;
+
 
     private final CourseService courseService;
 
@@ -155,6 +158,42 @@ public class SectionService extends BaseServiceImp<Section> {
                         presentsNumber += attendanceDetails.size();
                     }
                     section_course.setPresentAverage((presentsNumber / studentNumber) * 100);
+                    section_courses.add(section_course);
+                }
+            }
+            return section_courses;
+        }
+
+        return null;
+    }
+    //Abdo.Amr
+    public ArrayList<Section_Course> findStudentSections_courses(AcademicYear academicYear, AcademicTerm academicTerm, long studentId) {
+        Collection<Section> sections = this.studentEnrollmentService.findStudentSections(academicYear,academicTerm,studentId);
+
+        ArrayList<Section_Course> section_courses = new ArrayList<>();
+
+        if (sections != null && sections.size() > 0) {
+            for (Section section : sections) {
+                Section_Course section_course = new Section_Course();
+
+                section_course.setId(section.getId());
+                section_course.setSectionNumber(section.getSectionNumber());
+                section_course.setCourseName(section.getCourse().getNameEn());
+                if(section.getLectures() == null || section.getLectures().size() ==0){
+                    section_course.setLecturesNumber(0);
+                    section_course.setPresentAverage(0);
+                    section_courses.add(section_course);
+                }else {
+                    section_course.setLecturesNumber(section.getLectures().size());
+//                section_course.setStudentsNumber(section.getStudentEnrollments().size());
+                    double presentsNumber = 0;
+                    double lecturesNumber =  section.getLectures().size();
+                    for (Lecture lecture : section.getLectures()) {
+                        ArrayList<AttendanceDetails> attendanceDetails = lecture.getAttendanceDetails().stream().filter(attendanceDetails1 ->
+                                attendanceDetails1.getAttendanceStatus().equalsIgnoreCase("Present") && attendanceDetails1.getStudent().getId() == studentId).collect(toCollection(ArrayList<AttendanceDetails>::new));
+                        presentsNumber += attendanceDetails.size();
+                    }
+                    section_course.setPresentAverage((presentsNumber / lecturesNumber) * 100);
                     section_courses.add(section_course);
                 }
             }
