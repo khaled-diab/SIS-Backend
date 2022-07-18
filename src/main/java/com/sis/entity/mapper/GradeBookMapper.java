@@ -50,6 +50,10 @@ public class GradeBookMapper implements Mapper<GradeBook, GradeBookDTO> {
         if (entity.getFacultyMember() != null) {
             dto.setFacultyMemberDTO(facultyMemberMapper.toDTO(entity.getFacultyMember()));
         }
+        dto.setFinalExamGrade(entity.getFinalExamGrade());
+        dto.setPracticalGrade(entity.getPracticalGrade());
+        dto.setOralGrade(entity.getOralGrade());
+        dto.setMidGrade(entity.getMidGrade());
         return dto;
     }
 
@@ -69,6 +73,10 @@ public class GradeBookMapper implements Mapper<GradeBook, GradeBookDTO> {
         if (dto.getFacultyMemberDTO() != null) {
             entity.setFacultyMember(facultyMemberMapper.toEntity(dto.getFacultyMemberDTO()));
         }
+        entity.setFinalExamGrade(dto.getFinalExamGrade());
+        entity.setPracticalGrade(dto.getPracticalGrade());
+        entity.setOralGrade(dto.getOralGrade());
+        entity.setMidGrade(dto.getMidGrade());
         return entity;
     }
 

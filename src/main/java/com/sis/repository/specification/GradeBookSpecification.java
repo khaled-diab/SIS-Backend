@@ -16,7 +16,8 @@ public class GradeBookSpecification implements Specification<GradeBook> {
     private final Long filterFacultyMember;
 
 
-    public GradeBookSpecification(Long filterAcademicTerm, Long filterCourse, Long filterStudent, Long filterFacultyMember) {
+    public GradeBookSpecification(Long filterAcademicTerm, Long filterCourse, Long filterStudent,
+                                  Long filterFacultyMember) {
         this.filterAcademicTerm = filterAcademicTerm;
         this.filterCourse = filterCourse;
         this.filterStudent = filterStudent;
@@ -70,7 +71,6 @@ public class GradeBookSpecification implements Specification<GradeBook> {
         if (filterFacultyMember != null)
             facultyMember = criteriaBuilder.equal(gradeBookFacultyMemberJoin.get("id"), filterFacultyMember);
         else facultyMember = criteriaBuilder.notEqual(gradeBookFacultyMemberJoin.get("id"), -1);
-
 
         return criteriaBuilder.and(academicTerm, course, student, facultyMember);
     }
