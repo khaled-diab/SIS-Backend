@@ -88,7 +88,8 @@ public class LectureService extends BaseServiceImp<Lecture> {
                 FacultyMemberLecturesDTO facultyMemberLecturesDTO = new FacultyMemberLecturesDTO();
                 facultyMemberLecturesDTO.setPresentStudent(presentAttendanceDetails.size());
                 facultyMemberLecturesDTO.setAbsentStudent(absetAttendance.size());
-                facultyMemberLecturesDTO.setRate(1.0 * presentAttendanceDetails.size() / (absetAttendance.size() + presentAttendanceDetails.size()));
+                facultyMemberLecturesDTO.setRate(1.0 * presentAttendanceDetails.size()
+                        / (absetAttendance.size() + presentAttendanceDetails.size()));
                 facultyMemberLecturesDTO.setLectureEndTime(lecture.getLectureEndTime());
                 facultyMemberLecturesDTO.setLectureDay(lecture.getLectureDay());
                 facultyMemberLecturesDTO.setLectureStartTime(lecture.getLectureStartTime());
