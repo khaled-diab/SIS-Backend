@@ -56,16 +56,14 @@ public class CourseController extends BaseController<Course, CourseDTO> {
 
     //Abdo.Amr
     @RequestMapping(
-            value = "/studentCourses/{studentId}",
+            value = "/studentCourses/{studentId}}",
             method = RequestMethod.GET
     )
     public ResponseEntity<Collection<CourseDTO>> getStudentCourses(@PathVariable long studentId) {
-
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
-        AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
         Collection<CourseDTO> courseDTOS = this.courseService.getStudentCourses(
-                academicTermDTO.getAcademicYearDTO().getId(),
-                academicTermDTO.getId(),
+                academicTerm.getAcademicYear().getId(),
+                academicTerm.getId(),
                 studentId);
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
     }
