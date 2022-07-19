@@ -32,9 +32,6 @@ public class AcademicYearMapper implements Mapper<AcademicYear, AcademicYearDTO>
         academicYear.setStartDate(dto.getStart_date());
         academicYear.setName(dto.getName());
         academicYear.setStatus(dto.isStatus());
-        if(dto.getStart_date().after(dto.getEnd_date())){
-            throw new IllegalArgumentException("date not valid");
-        }
         return academicYear;
     }
 

@@ -12,18 +12,16 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class Section_Course extends BaseDTO {
 
-    @NotNull(message = "Required")
     private String sectionNumber;
 
-    @NotNull(message = "Required")
     private String courseName;
 
-    @NotNull(message = "Required")
     private int lecturesNumber;
 
-    @NotNull(message = "Required")
-    private int presentsNumber;
-
-    @NotNull(message = "Required")
-    private int studentsNumber;
+//    @NotNull(message = "Required")
+//    private int presentsNumber;
+//
+//    @NotNull(message = "Required")
+//    private int studentsNumber;
+    private double presentAverage;
 }

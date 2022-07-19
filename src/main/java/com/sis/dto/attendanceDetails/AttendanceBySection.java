@@ -9,5 +9,5 @@ public class AttendanceBySection {
     private int numberOfLecture ;
     private int absentLecture ;
     private Long idOfStudent ;
-    double rate ;
+    private double rate ;
 }

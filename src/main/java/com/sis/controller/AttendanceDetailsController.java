@@ -10,6 +10,7 @@ import com.sis.entity.AttendanceDetails;
 import com.sis.entity.mapper.AttendanceDetailsMapper;
 import com.sis.exception.ItemNotFoundException;
 import com.sis.service.AttendanceDetailsService;
+import com.sis.util.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,9 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
         }
     }
     // by abdo ramadan
-    @RequestMapping(value = "/updateStatusByStudentId", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateStatusByStudentId/{id}", method = RequestMethod.POST)
     public ResponseEntity<String> updateStatusByStudentId(
-            @RequestBody AttendanceBySectionAndStudentDTO attendanceBySectionAndStudentDTO, Long id ) {
+            @RequestBody AttendanceBySectionAndStudentDTO attendanceBySectionAndStudentDTO,@PathVariable Long id ) {
         AttendanceDetailsDTO attendanceDetailsDTO1
                 = attendanceDetailsMapper.toDTO(attendanceDetailsService.findById(id));
         if(attendanceDetailsDTO1!=null){
@@ -57,11 +58,11 @@ public class AttendanceDetailsController extends BaseController<AttendanceDetail
             throw new ItemNotFoundException(id);
         }
     }
-    @RequestMapping(value = "/addAutoAttendance/{attendanceCode}", method = RequestMethod.POST)
-    public ResponseEntity<AttendanceDetailsDTO> addAutoAttendance(@PathVariable long attendanceCode, @RequestBody StudentLecture studentLecture) {
+    @RequestMapping(value = "/addAutoAttendance/{attendanceCode}/{studentId}/{lectureId}", method = RequestMethod.GET)
+    public ResponseEntity<MessageResponse> addAutoAttendance(@PathVariable long attendanceCode, @PathVariable long studentId,@PathVariable long lectureId) {
 
-        AttendanceDetailsDTO attendanceDetailsDTO = this.attendanceDetailsService.addAutoAttendance(attendanceCode,studentLecture);
-        return new ResponseEntity<>(attendanceDetailsDTO, HttpStatus.OK);
+        this.attendanceDetailsService.addAutoAttendance(attendanceCode,studentId,lectureId);
+        return new ResponseEntity<>(new MessageResponse("Attendance registered successfully"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/addManualAttendance", method = RequestMethod.POST)
