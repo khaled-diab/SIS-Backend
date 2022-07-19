@@ -15,7 +15,6 @@ import com.sis.entity.mapper.StudentEnrollmentMapper;
 import com.sis.exception.StudentEnrollmentFieldNotUniqueException;
 import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.specification.StudentEnrollmentSpecification;
-import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
