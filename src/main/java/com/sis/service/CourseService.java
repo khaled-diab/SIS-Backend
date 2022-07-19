@@ -13,7 +13,6 @@ import com.sis.repository.specification.CourseSpecification;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +34,6 @@ public class CourseService extends BaseServiceImp<Course> {
 
     private final DepartmentService departmentService;
 
-    @Autowired
     private TimetableService timetableService;
 
     @Override

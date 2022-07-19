@@ -7,6 +7,7 @@ import com.sis.entity.StudentEnrollment;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface StudentEnrollmentRepository extends BaseRepository<StudentEnrollment> {
 
@@ -30,4 +31,5 @@ public interface StudentEnrollmentRepository extends BaseRepository<StudentEnrol
 
     StudentEnrollment findStudentEnrollmentByCourseIdAndSectionIdAndStudentId(Long courseId, Long sectionId, Long studentId);
 
+    List<StudentEnrollment> getStudentEnrollmentsByCourseId (Long courseId);
 }
