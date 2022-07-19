@@ -55,9 +55,13 @@ public class StudentDTO extends BaseDTO {
     private String level;
     private String year;
     private String photo;
+
+    @NotNull(message = "Required")
     private DepartmentDTO departmentDTO;
+
     @NotNull(message = "Required")
     private CollegeDTO collegeDTO;
+
     private AcademicProgramDTO academicProgramDTO;
     private UserDto user;
     private Long collegeID;

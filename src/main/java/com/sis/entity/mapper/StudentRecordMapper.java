@@ -44,9 +44,10 @@ public class StudentRecordMapper implements Mapper<Student, StudentRecordDTO> {
         dto.setUniversityId(studentDTO.getUniversityId());
         if(studentDTO.getDepartmentDTO()!=null) {
             dto.setDepartmentName(studentDTO.getDepartmentDTO().getNameEn());
-        }else{
-            dto.setDepartmentName("لا يوجد");
         }
+//        }else{
+//            dto.setDepartmentName("لا يوجد");
+//        }
         if(studentDTO.getCollegeDTO()!=null) {
             dto.setCollegeName(studentDTO.getCollegeDTO().getNameAr());
         }

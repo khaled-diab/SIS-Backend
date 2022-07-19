@@ -6,13 +6,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Objects;
 
 
-//@ControllerAdvice
+@ControllerAdvice
 public class ControllerExceptionHandler {
     private static final Logger log = LogManager.getLogger(ControllerExceptionHandler.class);
 
@@ -73,6 +74,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(SectionFieldNotUniqueException.class)
     public ResponseEntity<MessageResponse> globalExceptionHandler(SectionFieldNotUniqueException ex, WebRequest request) {
+        System.out.println("no no");
         log.error(ex.getMessage());
         return new ResponseEntity<>(new MessageResponse(ex.getMessage(), ex.getField()),
                 HttpStatus.BAD_REQUEST);

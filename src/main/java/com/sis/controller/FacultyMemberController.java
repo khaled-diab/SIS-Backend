@@ -112,13 +112,6 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
         return new ResponseEntity<>(facultyMemberService.filter(pageUtil, facultyMemberRequestDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/facultyMemberByUserId/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<FacultyMemberDTO> facultyMemberByUserId(@PathVariable long userId) {
-        User user = this.userService.findById(userId);
-        FacultyMemberDTO facultyMemberDTO = this.facultyMemberMapper.toDTO(this.facultyMemberRepository.findFacultyMemberByUserId(user.getId()));
-        return new ResponseEntity<>(facultyMemberDTO, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/facultyMembersByCollegeId/{collegeId}", method = RequestMethod.GET)
     public ResponseEntity<List<FacultyMemberDTO>> facultyMembersByCollegeId(@PathVariable long collegeId) {
         List<FacultyMemberDTO> facultyMemberDTOs = this.facultyMemberService.getFacultyMembersByCollegeId(collegeId);

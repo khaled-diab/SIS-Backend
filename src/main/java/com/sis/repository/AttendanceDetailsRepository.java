@@ -18,15 +18,16 @@ public interface AttendanceDetailsRepository extends BaseRepository<AttendanceDe
 
     //@Query(value="SELECT * FROM attendance_details WHERE  lecture_id= :lectureId", nativeQuery = true)
     ArrayList<AttendanceDetails> findAttendanceDetailsByLectureId(long lectureId);
+    AttendanceDetails findAttendanceDetailsByLectureIdAndStudentId(long lectureId,long studentId);
 
     // this function is written by Abdo Ramadan
     @Query(value = "SELECT * FROM attendance_details WHERE  lecture_id= :lectureId", nativeQuery = true)
     ArrayList<AttendanceDetails> findAttendanceDetailsByLectureId(Long lectureId);
 
     // this function is written by Abdo Ramadan
-    @Query(value = "SELECT * FROM attendance_details WHERE  lecture_id= :lectureId and " +
-            "section_id=:studnetId", nativeQuery = true)
-    ArrayList<AttendanceDetails> findAttendanceDetailsBySectionIdAndStudentId(Long lectureId, Long studnetId);
+    @Query(value = "SELECT * FROM attendance_details WHERE  section_id= :sectionId and " +
+            " student_id=:studnetId", nativeQuery = true)
+    ArrayList<AttendanceDetails> findAttendanceDetailsBySectionIdAndStudentId(Long sectionId, Long studnetId);
 
     @Query(value = "SELECT * FROM attendance_details WHERE  section_id= :sectionId", nativeQuery = true)
     ArrayList<AttendanceDetails> findStudentBySectionId(Long sectionId);
