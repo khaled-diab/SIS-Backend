@@ -7,6 +7,7 @@ import com.sis.dto.UserFileDto;
 import com.sis.dto.college.CollegeProjection;
 import com.sis.dto.college.GeneralSearchRequest;
 import com.sis.dto.security.LoginDTO;
+import com.sis.dto.security.ProfilePassword;
 import com.sis.dto.security.RegisterDTO;
 import com.sis.dto.security.UserUploadDto;
 import com.sis.entity.Degree;
@@ -40,6 +41,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -320,6 +322,18 @@ public class SecurityService extends BaseServiceImp<User> {
                 (int) userFilePage.getTotalElements(),
                 userFilePage.getSize(),
                 userFilePage.getNumber()));
+    }
+    public Boolean changePassword( ProfilePassword profilePassword) {
+        Optional<User> user = this.userRepository.findByUsername(profilePassword.getUserName());
+        if(user.isPresent()){
+            String oldPass = user.get().getPassword();
+            if(this.passwordEncoder.matches(profilePassword.getOldPass(),oldPass)){
+                user.get().setPassword(passwordEncoder.encode(profilePassword.getNewPass()));
+                this.userRepository.save(user.get());
+                return  true;
+            }
+        }
+        return false;
     }
 
     @Override
