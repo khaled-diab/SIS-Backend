@@ -61,7 +61,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         dto.setNationalID(entity.getNationalID());
         dto.setNationality(entity.getNationality());
         dto.setPhone(entity.getPhone());
-        dto.setPhoto(entity.getPhoto());
+//        dto.setPhoto(entity.getPhoto());
         if (entity.getDegree() != null) {
             dto.setDegreeDTO(this.degreeMapper.toDTO(entity.getDegree()));
         }
@@ -83,7 +83,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         entity.setAlternativeMail(dto.getAlternativeMail());
         entity.setBirthDate(dto.getBirthDate());
         entity.setPhone(dto.getPhone());
-        entity.setPhoto(dto.getPhoto());
+//        entity.setPhoto(dto.getPhoto());
         entity.setNameAr(dto.getNameAr());
         entity.setNameEn(dto.getNameEn());
         entity.setNationalID(dto.getNationalID());

@@ -5,36 +5,19 @@ import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.mapper.FacultyMemberMapper;
-import com.sis.entity.security.User;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
-import com.sis.repository.FacultyMemberRepository;
 import com.sis.service.FacultyMemberService;
-import com.sis.service.UserService;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static java.nio.file.Files.copy;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @RestController
 @Validated
@@ -46,35 +29,6 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
     private final FacultyMemberService facultyMemberService;
 
     private final FacultyMemberMapper facultyMemberMapper;
-
-    private final FacultyMemberRepository facultyMemberRepository;
-
-    private final UserService userService;
-
-
-    public static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/Images/facultyMemberImages/";
-
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFiles) throws IOException {
-        List<String> filenames = new ArrayList<>();
-        for (MultipartFile file : multipartFiles) {
-            String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-            Path fileStorage = Paths.get(DIRECTORY, filename).toAbsolutePath().normalize();
-            copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
-            filenames.add(filename);
-        }
-        return ResponseEntity.ok().body(filenames);
-    }
-
-    @RequestMapping(value = "/download/{filename}", method = RequestMethod.GET)
-    public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename) throws IOException {
-        Path filePath = Paths.get(DIRECTORY).toAbsolutePath().normalize().resolve(filename);
-        if (!Files.exists(filePath)) {
-            throw new FileNotFoundException(filename + " was not found on the server");
-        }
-        Resource resource = new UrlResource(filePath.toUri());
-        return new ResponseEntity<>(resource, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/search/{pageNumber}/{size}", method = RequestMethod.POST)
     public ResponseEntity<PageResult<FacultyMemberDTO>> search(@PathVariable int pageNumber,
