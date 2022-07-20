@@ -10,6 +10,7 @@ import com.sis.entity.mapper.TimetableMapper;
 import com.sis.entity.mapper.TimetableTableRecordsMapper;
 import com.sis.repository.TimetableRepository;
 import com.sis.repository.specification.TimetableSpecification;
+import com.sis.util.Constants;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -144,8 +145,8 @@ public class TimetableService extends BaseServiceImp<Timetable> {
                     section.getAcademicYear().getId(), section.getAcademicTerm().getId(), section.getId()));
         }
         timetableDTOs.sort((timetableDTO, t1) -> {
-            if (LocalTime.parse(t1.getStartTime().substring(0,5)).isAfter(LocalTime.parse(timetableDTO.getStartTime().substring(0,5)))) return -1;
-            else if (LocalTime.parse(t1.getStartTime().substring(0,5)).isBefore(LocalTime.parse(timetableDTO.getStartTime().substring(0,5)))) return 1;
+            if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0,2))>(Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0,2)))) return -1;
+            else if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0,2))>(Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0,2)))) return 1;
             return 0;
         });
         return timetableDTOs;
