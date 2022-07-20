@@ -43,13 +43,14 @@ public class Constants {
         if (time.charAt(1) == ':') {
             time = '0' + time;
         }
-        time = time.substring(0, 5);
-        if (time.indexOf('P') > 0) {
+        if (time.indexOf('P') > 1) {
+            time = time.substring(0, 5);
             int hours = Integer.parseInt(time.substring(0, 2));
             hours += 12;
             String h = String.valueOf(hours);
             time = time.replaceFirst(time.substring(0, 2), h);
         }
+        time = time.substring(0, 5);
         return time;
     }
 
@@ -62,6 +63,9 @@ public class Constants {
         if (hours > 12) {
             hours -= 12;
             String h = String.valueOf(hours);
+            if (h.length() == 1) {
+                h = '0' + h;
+            }
             time = time.replaceFirst(time.substring(0, 2), h) + " PM";
         } else {
             time += " AM";
