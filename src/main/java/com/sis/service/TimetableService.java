@@ -96,7 +96,7 @@ public class TimetableService extends BaseServiceImp<Timetable> {
         if (timetables != null) {
             timetableDTOs = this.timetableMapper.toDTOs(timetables);
         }
-        for (Timetable timetable : timetables){
+        for (Timetable timetable : timetables) {
             System.out.println(timetable.getStartTime() + " start");
             System.out.println(timetable.getEndTime() + " end");
         }
@@ -145,8 +145,10 @@ public class TimetableService extends BaseServiceImp<Timetable> {
                     section.getAcademicYear().getId(), section.getAcademicTerm().getId(), section.getId()));
         }
         timetableDTOs.sort((timetableDTO, t1) -> {
-            if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0,2))>(Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0,2)))) return -1;
-            else if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0,2))>(Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0,2)))) return 1;
+            if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0, 2)) > (Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0, 2))))
+                return -1;
+            else if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0, 2)) < (Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0, 2))))
+                return 1;
             return 0;
         });
         return timetableDTOs;
