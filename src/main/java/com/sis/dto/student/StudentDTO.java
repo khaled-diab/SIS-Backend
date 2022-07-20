@@ -54,8 +54,7 @@ public class StudentDTO extends BaseDTO {
     private String parentPhone;
     private String level;
     private String year;
-    private String photo;
-
+//    private String photo;
     @NotNull(message = "Required")
     private DepartmentDTO departmentDTO;
 

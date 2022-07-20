@@ -14,4 +14,5 @@ public class UserFileDto extends BaseDTO {
     private String fileName;
     private String type;
     private Date uploadDate;
+    private String fileLink;
 }
