@@ -27,4 +27,8 @@ public interface FacultyMemberRepository extends BaseRepository<FacultyMember> {
     Boolean existsByUniversityMail(String mail);
 
     Boolean existsByPhone(String phone);
+
+    Long countFacultyMembersByUser_IdNotNull();
+
+    Long countFacultyMembersByUser_IdIsNull();
 }
