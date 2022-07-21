@@ -3,7 +3,6 @@ package com.sis.service;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
-import com.sis.dto.student.StudentDTO;
 import com.sis.entity.College;
 import com.sis.entity.FacultyMember;
 import com.sis.entity.mapper.FacultyMemberMapper;
@@ -129,29 +128,15 @@ public class FacultyMemberService extends BaseServiceImp<FacultyMember> {
         return this.facultyMemberMapper.toDTOs(this.facultyMemberRepository.getFacultyMembersByCollegeId(college.getId()));
     }
 
-//    public User addFacultyMemberUser(FacultyMemberDTO facultyMemberDTO){
-//        User user = new User();
-//        user.setPassword(passwordEncoder.encode("changeme"));
-//        user.setRole(roleRepository.getRoleFacultyMember());
-//        user.setEmail(facultyMemberDTO.getUniversityMail());
-//        user.setUsername(facultyMemberDTO.getUniversityMail());
-//        user.setType(Constants.TYPE_STAFF);
-//        user.setFirstname(facultyMemberDTO.getNameAr());
-//        user.setLastname(facultyMemberDTO.getNameAr());
-//        user = userRepository.save(user);
-//        return user;
-//    }
-    public User updateFacultyMemberUser(FacultyMemberDTO facultyMemberDTO){
+    public User updateFacultyMemberUser(FacultyMemberDTO facultyMemberDTO) {
         User user;
-
-        if(facultyMemberDTO.getUser()==null){
+        if (facultyMemberDTO.getUser() == null) {
             user = new User();
             user.setPassword(passwordEncoder.encode("changeme"));
-        }else{
+        } else {
             Optional<User> user1 = this.userRepository.findById(facultyMemberDTO.getUser().getId());
             user = user1.get();
         }
-
         user.setRole(roleRepository.getRoleFacultyMember());
         user.setEmail(facultyMemberDTO.getUniversityMail());
         user.setUsername(facultyMemberDTO.getUniversityMail());
