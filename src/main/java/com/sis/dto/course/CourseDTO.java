@@ -7,11 +7,8 @@ import com.sis.dto.college.CollegeDTO;
 import com.sis.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 
 @Getter
@@ -59,19 +56,19 @@ public class CourseDTO extends BaseDTO {
 
     @NotNull(message = "can't be empty")
     @Digits(integer = 3, fraction = 2)
-    @Positive
+    @PositiveOrZero
     private Float finalExamGrade;
 
     @Digits(integer = 3, fraction = 2)
-    @Positive
+    @PositiveOrZero
     private Float practicalGrade;
 
     @Digits(integer = 3, fraction = 2)
-    @Positive
+    @PositiveOrZero
     private Float oralGrade;
 
     @Digits(integer = 3, fraction = 2)
-    @Positive
+    @PositiveOrZero
     private Float midGrade;
 
     @NotNull(message = "can't be null")

@@ -1,6 +1,5 @@
 package com.sis.service;
 
-
 import com.sis.dto.course.CourseDTO;
 import com.sis.dto.student.StudentDTO;
 import com.sis.dto.studentEnrollment.StudentArray;
@@ -15,7 +14,6 @@ import com.sis.entity.mapper.StudentEnrollmentMapper;
 import com.sis.exception.StudentEnrollmentFieldNotUniqueException;
 import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.specification.StudentEnrollmentSpecification;
-import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -25,7 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -128,7 +125,7 @@ public class StudentEnrollmentService extends BaseServiceImp<StudentEnrollment> 
         return courseDTOs;
     }
 
-    public ArrayList<StudentEnrollment> save(@RequestBody StudentArray dto) {
+    public ArrayList<StudentEnrollment> save(StudentArray dto) {
         ArrayList<StudentEnrollment> studentEnrollments = new ArrayList<>();
         for (StudentDTO studentDTO : dto.getStudentDTOS()) {
             StudentEnrollmentDTO studentEnrollmentDTO = new StudentEnrollmentDTO();
