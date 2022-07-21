@@ -4,7 +4,6 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
 import com.sis.entity.FacultyMember;
-import com.sis.entity.Student;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
 import com.sis.service.FacultyMemberService;
