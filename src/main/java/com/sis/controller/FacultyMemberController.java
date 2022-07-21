@@ -4,6 +4,7 @@ import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.dto.facultyMember.FacultyMemberRequestDTO;
 import com.sis.dto.facultyMember.FacultyMemberTableRecordsDTO;
 import com.sis.entity.FacultyMember;
+import com.sis.entity.Student;
 import com.sis.entity.mapper.FacultyMemberMapper;
 import com.sis.exception.FacultyMemberFieldNotUniqueException;
 import com.sis.service.FacultyMemberService;
@@ -53,7 +54,9 @@ public class FacultyMemberController extends BaseController<FacultyMember, Facul
         if (facultyMemberByPhone != null && facultyMemberByPhone.getId() != dto.getId()) {
             throw new FacultyMemberFieldNotUniqueException("phone", "Phone Number Already Exists");
         }
-        facultyMemberService.save(facultyMemberMapper.toEntity(dto));
+        FacultyMember facultyMember = this.facultyMemberMapper.toEntity(dto);
+        facultyMember.setUser(this.facultyMemberService.updateFacultyMemberUser(dto));
+        this.facultyMemberService.save(facultyMember);
         return new MessageResponse("Item has been updated successfully");
     }
 
