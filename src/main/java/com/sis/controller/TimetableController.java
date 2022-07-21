@@ -15,6 +15,7 @@ import com.sis.service.AcademicTermService;
 import com.sis.service.StudentService;
 import com.sis.service.TimetableService;
 import com.sis.service.UserService;
+import com.sis.util.Constants;
 import com.sis.util.MessageResponse;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
@@ -108,7 +109,17 @@ public class TimetableController extends BaseController<Timetable, TimetableDTO>
                                                                        @PathVariable int size,
                                                                        @RequestBody TimetableRequestDTO timetableRequestDTO) {
         PageQueryUtil pageUtil = new PageQueryUtil(pageNumber, size);
-        return new ResponseEntity<>(timetableService.filter(pageUtil, timetableRequestDTO), HttpStatus.OK);
+        PageResult<TimetableTableRecordsDTO> pageResult = this.timetableService.filter(pageUtil, timetableRequestDTO);
+        if (timetableRequestDTO.getSortBy().equals("startTime")) {
+            pageResult.getData().sort((timetableDTO, t1) -> {
+                if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0, 2)) > (Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0, 2))))
+                    return -1;
+                else if (Integer.parseInt(Constants.from12To24System(t1.getStartTime()).substring(0, 2)) < (Integer.parseInt(Constants.from12To24System(timetableDTO.getStartTime()).substring(0, 2))))
+                    return 1;
+                return 0;
+            });
+        }
+        return new ResponseEntity<>(pageResult, HttpStatus.OK);
     }
 
 }

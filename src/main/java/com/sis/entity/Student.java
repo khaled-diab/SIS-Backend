@@ -63,8 +63,8 @@ public class Student extends BaseEntity {
     @Column(name = "year")
     private  String year;
 
-    @Column(name = "photo")
-    private  String photo;
+//    @Column(name = "photo")
+//    private  String photo;
 
     @JoinColumn(name = "academic_program_id", referencedColumnName = "id")
     @ManyToOne
