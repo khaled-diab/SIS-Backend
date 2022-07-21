@@ -4,8 +4,6 @@ package com.sis.repository;
 import com.sis.entity.AcademicTerm;
 import com.sis.entity.AcademicYear;
 import com.sis.entity.StudentEnrollment;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
@@ -32,5 +30,4 @@ public interface StudentEnrollmentRepository extends BaseRepository<StudentEnrol
 
     StudentEnrollment findStudentEnrollmentByCourseIdAndSectionIdAndStudentId(Long courseId, Long sectionId, Long studentId);
 
-    Page<StudentEnrollment> getStudentEnrollmentsByCourseId (Pageable pageable, Long courseId);
 }

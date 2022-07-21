@@ -1,8 +1,7 @@
 package com.sis.dto.gradeBook;
 
 import com.sis.dto.*;
-import com.sis.dto.course.CourseDTO;
-import com.sis.dto.facultyMember.FacultyMemberDTO;
+import com.sis.dto.section.SectionDTO;
 import com.sis.dto.student.StudentDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
@@ -25,10 +23,7 @@ public class GradeBookDTO extends BaseDTO {
     private StudentDTO studentDTO;
 
     @NotNull(message = "Required")
-    private CourseDTO courseDTO;
-
-//    @NotNull(message = "Required")
-//    private FacultyMemberDTO facultyMemberDTO;
+    private SectionDTO sectionDTO;
 
     @NotNull(message = "can't be empty")
     @Digits(integer = 3, fraction = 2)

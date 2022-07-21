@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class GradeBookRequestDTO {
     private Long filterAcademicTerm;
-    private Long filterCourse;
+    private Long filterSection;
     private Long filterStudent;
-//    private Long filterFacultyMember;
     private String sortDirection;
     private String sortBy;
 }
