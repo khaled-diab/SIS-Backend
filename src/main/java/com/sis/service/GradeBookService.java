@@ -85,13 +85,4 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
         return null;
     }
 
-//    public ResponseEntity<MessageResponse> updateGradeBooks(List<GradeBookDTO> gradeBookDTOS) {
-//        for (GradeBookDTO gradeBookDTO :gradeBookDTOS) {
-//            GradeBook gradeBook = this.findById(gradeBookDTO.getId());
-//            if(gradeBook!=null){
-//                gradeBook.
-//            }
-//        }
-//    }
-
 }
