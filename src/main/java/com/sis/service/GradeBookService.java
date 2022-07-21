@@ -2,6 +2,7 @@ package com.sis.service;
 
 import com.sis.dto.gradeBook.GradeBookDTO;
 import com.sis.dto.gradeBook.GradeBookRequestDTO;
+import com.sis.dto.gradeBook.GradeBookStudentRecordsDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.entity.*;
 import com.sis.entity.mapper.*;
@@ -19,6 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,11 +29,17 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
     private final GradeBookRepository gradeBookRepository;
     private final GradeBookMapper gradeBookMapper;
 
+    private final GradeBookStudentRecordsMapper gradeBookStudentRecordsMapper;
+
     private final TimetableRepository timetableRepository;
 
     private final SectionService sectionService;
 
     private final SectionMapper sectionMapper;
+
+    private final StudentService studentService;
+
+    private final AcademicTermService academicTermService;
 
     @Override
     public JpaRepository<GradeBook, Long> Repository() {
@@ -83,6 +91,24 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
             return sectionDTOs;
         }
         return null;
+    }
+
+    public List<GradeBookStudentRecordsDTO> getGradeBooksByTermIdAndStudentId (Long termId, Long studentId){
+        AcademicTerm academicTerm = this.academicTermService.findById(termId);
+        Student student = this.studentService.findById(studentId);
+        return this.gradeBookStudentRecordsMapper.toDTOs(this.gradeBookRepository.getGradeBooksByAcademicTerm_IdAndStudentId(academicTerm.getId(), student.getId()));
+    }
+
+    // for mobile
+    public List<GradeBookStudentRecordsDTO> getGradeBooksByStudentId (Long studentId){
+        Student student = this.studentService.findById(studentId);
+        return this.gradeBookStudentRecordsMapper.toDTOs(this.gradeBookRepository.getGradeBooksByStudentId(student.getId()));
+    }
+
+    // for mobile
+    public List<GradeBookStudentRecordsDTO> getGradeBooksBySectionId (Long sectionId){
+        Section section = this.sectionService.findById(sectionId);
+        return this.gradeBookStudentRecordsMapper.toDTOs(this.gradeBookRepository.getGradeBooksBySectionId(section.getId()));
     }
 
 }

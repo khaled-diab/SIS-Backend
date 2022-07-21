@@ -2,6 +2,7 @@ package com.sis.controller;
 
 import com.sis.dto.gradeBook.GradeBookDTO;
 import com.sis.dto.gradeBook.GradeBookRequestDTO;
+import com.sis.dto.gradeBook.GradeBookStudentRecordsDTO;
 import com.sis.dto.section.SectionDTO;
 import com.sis.entity.GradeBook;
 import com.sis.entity.mapper.GradeBookMapper;
@@ -43,6 +44,26 @@ public class GradeBookController extends BaseController<GradeBook, GradeBookDTO>
     public ResponseEntity<MessageResponse> updateGradeBooks(@RequestBody List<GradeBookDTO> gradeBookDTOS) {
         this.gradeBookService.saveAll(this.gradeBookMapper.toEntities(gradeBookDTOS));
         return new ResponseEntity<>(new MessageResponse("GradeBooks Updated Successfully"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getGradeBooksByTermIdAndStudentId/{termId}/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<List<GradeBookStudentRecordsDTO>> getGradeBooksByTermIdAndStudentId(@PathVariable Long termId, @PathVariable Long studentId) {
+        List<GradeBookStudentRecordsDTO> GradeBookStudentRecordsDTOs = this.gradeBookService.getGradeBooksByTermIdAndStudentId(termId, studentId);
+        return new ResponseEntity<>(GradeBookStudentRecordsDTOs, HttpStatus.OK);
+    }
+
+    // for mobile
+    @RequestMapping(value = "/getGradeBooksByStudentId/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<List<GradeBookStudentRecordsDTO>> getGradeBooksByStudentId(@PathVariable Long studentId) {
+        List<GradeBookStudentRecordsDTO> GradeBookStudentRecordsDTOs = this.gradeBookService.getGradeBooksByStudentId(studentId);
+        return new ResponseEntity<>(GradeBookStudentRecordsDTOs, HttpStatus.OK);
+    }
+
+    // for mobile
+    @RequestMapping(value = "/getGradeBooksBySectionId/{sectionId}", method = RequestMethod.GET)
+    public ResponseEntity<List<GradeBookStudentRecordsDTO>> getGradeBooksBySectionId(@PathVariable Long sectionId) {
+        List<GradeBookStudentRecordsDTO> GradeBookStudentRecordsDTOs = this.gradeBookService.getGradeBooksBySectionId(sectionId);
+        return new ResponseEntity<>(GradeBookStudentRecordsDTOs, HttpStatus.OK);
     }
 
 }
