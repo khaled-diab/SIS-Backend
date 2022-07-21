@@ -4,19 +4,11 @@ package com.sis.entity.mapper;
 import com.sis.dto.student.StudentDTO;
 
 import com.sis.entity.Student;
-import com.sis.entity.security.User;
-import com.sis.repository.RoleRepository;
-import com.sis.repository.UserRepository;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
-
 import static java.util.stream.Collectors.toCollection;
 
 @Component
@@ -33,10 +25,6 @@ public class StudentMapper implements Mapper<Student,StudentDTO> {
 
 
 	private UserMapper userMapper;
-	private UserRepository userRepository;
-	private RoleRepository roleRepository;
-
-	private final PasswordEncoder passwordEncoder;
 
 
 

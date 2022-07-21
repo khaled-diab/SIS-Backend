@@ -3,18 +3,11 @@ package com.sis.entity.mapper;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.entity.FacultyMember;
-import com.sis.entity.security.User;
-import com.sis.repository.RoleRepository;
-import com.sis.repository.UserRepository;
-import com.sis.util.Constants;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -29,9 +22,6 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
     private DegreeMapper degreeMapper;
 
     private UserMapper userMapper;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entity) {
@@ -97,7 +87,6 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         if (dto.getCollegeDTO() != null) {
             entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
         }
-
 
         return entity;
     }
