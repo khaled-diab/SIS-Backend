@@ -28,7 +28,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(InvalidUserNameOrPasswordException.class)
     public ResponseEntity<MessageResponse> globalExceptionHandler(InvalidUserNameOrPasswordException ex, WebRequest request) {
         log.error(ex.getMessage());
-        return new ResponseEntity<>(new MessageResponse(ex.getMessage()),
+        return new ResponseEntity<>(new MessageResponse(ex.getMessage(),ex.getField()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

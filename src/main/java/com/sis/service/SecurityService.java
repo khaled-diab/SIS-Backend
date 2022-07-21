@@ -331,6 +331,8 @@ public class SecurityService extends BaseServiceImp<User> {
                 user.get().setPassword(passwordEncoder.encode(profilePassword.getNewPass()));
                 this.userRepository.save(user.get());
                 return  true;
+            }else{
+                throw new InvalidUserNameOrPasswordException("Invalid password", "oldPass");
             }
         }
         return false;
