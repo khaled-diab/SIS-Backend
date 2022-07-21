@@ -4,6 +4,7 @@ import com.sis.dto.BaseDTO;
 import com.sis.dto.UserFileDto;
 import com.sis.dto.college.GeneralSearchRequest;
 import com.sis.dto.security.LoginDTO;
+import com.sis.dto.security.ProfilePassword;
 import com.sis.dto.security.RegisterDTO;
 import com.sis.service.SecurityService;
 import com.sis.util.MessageResponse;
@@ -59,5 +60,13 @@ public class SecurityController {
     @PostMapping(value = "/findAll/{page}/{size}")
     public PageResult<UserFileDto> findAll(@PathVariable Integer page, @PathVariable Integer size, @RequestBody GeneralSearchRequest generalSearchRequest) {
         return securityService.getAdminUploadedFiles(page, size, generalSearchRequest);
+    }
+
+    @PostMapping(value = "/changePassword")
+    public ResponseEntity<MessageResponse> changePassword(@RequestBody ProfilePassword profilePassword) {
+        if(!securityService.changePassword(profilePassword)){
+            return new ResponseEntity<>(new MessageResponse("Password updated Failed"),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new MessageResponse("Password updated Successfully"),HttpStatus.OK);
     }
 }

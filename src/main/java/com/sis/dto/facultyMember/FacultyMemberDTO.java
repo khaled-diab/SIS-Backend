@@ -48,7 +48,7 @@ public class FacultyMemberDTO extends BaseDTO {
     @Pattern(regexp = Constants.DIGITS_ONLY_11, message = "Invalid Mobile Number")
     private String phone;
 
-    private String photo;
+//    private String photo;
 
     @NotNull(message = "Required")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

@@ -3,18 +3,11 @@ package com.sis.entity.mapper;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.facultyMember.FacultyMemberDTO;
 import com.sis.entity.FacultyMember;
-import com.sis.entity.security.User;
-import com.sis.repository.RoleRepository;
-import com.sis.repository.UserRepository;
-import com.sis.util.Constants;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -29,9 +22,6 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
     private DegreeMapper degreeMapper;
 
     private UserMapper userMapper;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ArrayList<FacultyMemberDTO> toDTOs(Collection<FacultyMember> entity) {
@@ -61,7 +51,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         dto.setNationalID(entity.getNationalID());
         dto.setNationality(entity.getNationality());
         dto.setPhone(entity.getPhone());
-        dto.setPhoto(entity.getPhoto());
+//        dto.setPhoto(entity.getPhoto());
         if (entity.getDegree() != null) {
             dto.setDegreeDTO(this.degreeMapper.toDTO(entity.getDegree()));
         }
@@ -83,7 +73,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         entity.setAlternativeMail(dto.getAlternativeMail());
         entity.setBirthDate(dto.getBirthDate());
         entity.setPhone(dto.getPhone());
-        entity.setPhoto(dto.getPhoto());
+//        entity.setPhoto(dto.getPhoto());
         entity.setNameAr(dto.getNameAr());
         entity.setNameEn(dto.getNameEn());
         entity.setNationalID(dto.getNationalID());
@@ -97,22 +87,7 @@ public class FacultyMemberMapper implements Mapper<FacultyMember, FacultyMemberD
         if (dto.getCollegeDTO() != null) {
             entity.setCollege(this.collegeMapper.toEntity(dto.getCollegeDTO()));
         }
-        User user;
-        if (dto.getUser() == null) {
-            user = new User();
-            user.setPassword(passwordEncoder.encode("changeme"));
-        } else {
-            Optional<User> user1 = this.userRepository.findById(dto.getUser().getId());
-            user = user1.get();
-        }
-        user.setRole(roleRepository.getRoleFacultyMember());
-        user.setEmail(dto.getUniversityMail());
-        user.setUsername(dto.getUniversityMail());
-        user.setType(Constants.TYPE_STAFF);
-        user.setFirstname(dto.getNameAr());
-        user.setLastname(dto.getNameAr());
-        user = userRepository.save(user);
-        entity.setUser(user);
+
         return entity;
     }
 
