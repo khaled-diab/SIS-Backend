@@ -4,7 +4,6 @@ import com.sis.dto.ClassroomDTO;
 import com.sis.entity.Building;
 import com.sis.entity.Classroom;
 import com.sis.entity.mapper.ClassroomMapper;
-import com.sis.repository.ClassroomSpecification;
 import com.sis.repository.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,11 +26,6 @@ public class ClassroomService extends BaseServiceImp<Classroom> {
     @Override
     public JpaRepository<Classroom, Long> Repository() {
         return classroomrepository;
-    }
-
-    public List<Classroom> search(String key) {
-        ClassroomSpecification classroomSpecification = new ClassroomSpecification(key);
-        return classroomrepository.findAll(classroomSpecification);
     }
 
     public List<ClassroomDTO> getClassroomsByBuildingId(Long buildingId) {

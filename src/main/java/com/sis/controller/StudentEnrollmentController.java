@@ -1,6 +1,5 @@
 package com.sis.controller;
 
-import com.sis.dto.student.StudentDTO;
 import com.sis.dto.studentEnrollment.StudentArray;
 import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
 import com.sis.dto.studentEnrollment.StudentEnrollmentRequestDTO;
