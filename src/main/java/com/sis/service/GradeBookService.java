@@ -9,10 +9,12 @@ import com.sis.entity.*;
 import com.sis.entity.mapper.CourseMapper;
 import com.sis.entity.mapper.GradeBookMapper;
 import com.sis.entity.mapper.StudentEnrollmentMapper;
+import com.sis.entity.mapper.StudentMapper;
 import com.sis.repository.GradeBookRepository;
 import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.TimetableRepository;
 import com.sis.repository.specification.GradeBookSpecification;
+import com.sis.util.Constants;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -37,8 +39,6 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
 
     private final StudentEnrollmentRepository studentEnrollmentRepository;
 
-    private final StudentEnrollmentMapper studentEnrollmentMapper;
-
     private final TimetableRepository timetableRepository;
 
     private final AcademicTermService academicTermService;
@@ -46,6 +46,8 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
     private final FacultyMemberService facultyMemberService;
 
     private CourseMapper courseMapper;
+
+    private StudentMapper studentMapper;
 
     @Override
     public JpaRepository<GradeBook, Long> Repository() {
@@ -61,12 +63,12 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
 
         Long filterStudent = gradeBookRequestDTO.getFilterStudent();
 
-        Long filterFacultyMember = gradeBookRequestDTO.getFilterFacultyMember();
+//        Long filterFacultyMember = gradeBookRequestDTO.getFilterFacultyMember();
 
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(gradeBookRequestDTO));
-        if (filterAcademicTerm != null || filterCourse != null || filterStudent != null || filterFacultyMember != null) {
+        if (filterAcademicTerm != null || filterCourse != null || filterStudent != null) {
             GradeBookSpecification gradeBookSpecification =
-                    new GradeBookSpecification(filterAcademicTerm, filterCourse, filterStudent, filterFacultyMember);
+                    new GradeBookSpecification(filterAcademicTerm, filterCourse, filterStudent);
 
             gradeBookPage = gradeBookRepository.findAll(gradeBookSpecification, pageable);
         } else {
@@ -86,15 +88,22 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
     }
 
     // by ziad
-    public List<StudentDTO> getStudentsByCourseId(Long courseId) {
+    public PageResult<StudentDTO> getStudentsByCourseId(PageQueryUtil pageUtil, Long courseId) {
         Course course = this.courseService.findById(courseId);
-        List<StudentEnrollmentDTO> studentEnrollmentDTOS = this.studentEnrollmentMapper
-                .toDTOs(this.studentEnrollmentRepository.getStudentEnrollmentsByCourseId(course.getId()));
-        ArrayList<StudentDTO> studentDTOS = new ArrayList<>();
-        for (StudentEnrollmentDTO studentEnrollmentDTO : studentEnrollmentDTOS) {
-            studentDTOS.add(studentEnrollmentDTO.getStudentDTO());
+        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit());
+        Page<StudentEnrollment> studentEnrollmentPage = this.studentEnrollmentRepository.getStudentEnrollmentsByCourseId(pageable, course.getId());
+        List<Student> students = new ArrayList<>();
+        for (StudentEnrollment studentEnrollment : studentEnrollmentPage.getContent()) {
+            students.add(studentEnrollment.getStudent());
         }
-        return studentDTOS;
+        List<StudentDTO> studentDTOS = this.studentMapper.toDTOs(students);
+        studentDTOS.sort((st1, st2) -> {
+            if (st1.getUniversityId() < st2.getUniversityId()) return -1;
+            else if (st1.getUniversityId() > st2.getUniversityId()) return 1;
+            return 0;
+        });
+        return new PageResult<>(studentDTOS, (int) studentEnrollmentPage.getTotalElements(),
+                pageUtil.getLimit(), pageUtil.getPage());
     }
 
     // by ziad

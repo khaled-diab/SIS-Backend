@@ -27,8 +27,8 @@ public class GradeBookDTO extends BaseDTO {
     @NotNull(message = "Required")
     private CourseDTO courseDTO;
 
-    @NotNull(message = "Required")
-    private FacultyMemberDTO facultyMemberDTO;
+//    @NotNull(message = "Required")
+//    private FacultyMemberDTO facultyMemberDTO;
 
     @NotNull(message = "can't be empty")
     @Digits(integer = 3, fraction = 2)

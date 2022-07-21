@@ -30,9 +30,9 @@ public class GradeBook extends BaseEntity {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
-    @ManyToOne
-    @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
-    private FacultyMember facultyMember;
+//    @ManyToOne
+//    @JoinColumn(name = "faculty_member_id", referencedColumnName = "id")
+//    private FacultyMember facultyMember;
 
     @Column(name = "final_exam_grade")
     private Double finalExamGrade;
