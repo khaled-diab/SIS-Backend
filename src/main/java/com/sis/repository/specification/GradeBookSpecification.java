@@ -13,22 +13,21 @@ public class GradeBookSpecification implements Specification<GradeBook> {
 
     private final Long filterStudent;
 
-    private final Long filterFacultyMember;
+//    private final Long filterFacultyMember;
 
 
-    public GradeBookSpecification(Long filterAcademicTerm, Long filterCourse, Long filterStudent,
-                                  Long filterFacultyMember) {
+    public GradeBookSpecification(Long filterAcademicTerm, Long filterCourse, Long filterStudent) {
         this.filterAcademicTerm = filterAcademicTerm;
         this.filterCourse = filterCourse;
         this.filterStudent = filterStudent;
-        this.filterFacultyMember = filterFacultyMember;
+//        this.filterFacultyMember = filterFacultyMember;
     }
 
     public GradeBookSpecification() {
         this.filterAcademicTerm = null;
         this.filterCourse = null;
         this.filterStudent = null;
-        this.filterFacultyMember = null;
+//        this.filterFacultyMember = null;
     }
 
     @Override
@@ -50,7 +49,7 @@ public class GradeBookSpecification implements Specification<GradeBook> {
         Join<GradeBook, AcademicTerm> gradeBookAcademicTermJoin = root.join("academicTerm", JoinType.LEFT);
         Join<GradeBook, Course> gradeBookCourseJoin = root.join("course", JoinType.LEFT);
         Join<GradeBook, Student> gradeBookStudentJoin = root.join("student", JoinType.LEFT);
-        Join<GradeBook, FacultyMember> gradeBookFacultyMemberJoin = root.join("facultyMember", JoinType.LEFT);
+//        Join<GradeBook, FacultyMember> gradeBookFacultyMemberJoin = root.join("facultyMember", JoinType.LEFT);
 
         Predicate academicTerm;
         if (filterAcademicTerm != null)
@@ -67,12 +66,12 @@ public class GradeBookSpecification implements Specification<GradeBook> {
             student = criteriaBuilder.equal(gradeBookStudentJoin.get("id"), filterStudent);
         else student = criteriaBuilder.notEqual(gradeBookStudentJoin.get("id"), -1);
 
-        Predicate facultyMember;
-        if (filterFacultyMember != null)
-            facultyMember = criteriaBuilder.equal(gradeBookFacultyMemberJoin.get("id"), filterFacultyMember);
-        else facultyMember = criteriaBuilder.notEqual(gradeBookFacultyMemberJoin.get("id"), -1);
+//        Predicate facultyMember;
+//        if (filterFacultyMember != null)
+//            facultyMember = criteriaBuilder.equal(gradeBookFacultyMemberJoin.get("id"), filterFacultyMember);
+//        else facultyMember = criteriaBuilder.notEqual(gradeBookFacultyMemberJoin.get("id"), -1);
 
-        return criteriaBuilder.and(academicTerm, course, student, facultyMember);
+        return criteriaBuilder.and(academicTerm, course, student);
     }
 
 }
