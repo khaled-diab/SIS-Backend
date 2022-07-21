@@ -1,20 +1,13 @@
 package com.sis.service;
 
-import com.sis.dto.course.CourseDTO;
 import com.sis.dto.gradeBook.GradeBookDTO;
 import com.sis.dto.gradeBook.GradeBookRequestDTO;
-import com.sis.dto.student.StudentDTO;
-import com.sis.dto.studentEnrollment.StudentEnrollmentDTO;
+import com.sis.dto.section.SectionDTO;
 import com.sis.entity.*;
-import com.sis.entity.mapper.CourseMapper;
-import com.sis.entity.mapper.GradeBookMapper;
-import com.sis.entity.mapper.StudentEnrollmentMapper;
-import com.sis.entity.mapper.StudentMapper;
+import com.sis.entity.mapper.*;
 import com.sis.repository.GradeBookRepository;
-import com.sis.repository.StudentEnrollmentRepository;
 import com.sis.repository.TimetableRepository;
 import com.sis.repository.specification.GradeBookSpecification;
-import com.sis.util.Constants;
 import com.sis.util.PageQueryUtil;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;
@@ -26,7 +19,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -35,19 +27,11 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
     private final GradeBookRepository gradeBookRepository;
     private final GradeBookMapper gradeBookMapper;
 
-    private final CourseService courseService;
-
-    private final StudentEnrollmentRepository studentEnrollmentRepository;
-
     private final TimetableRepository timetableRepository;
 
-    private final AcademicTermService academicTermService;
+    private final SectionService sectionService;
 
-    private final FacultyMemberService facultyMemberService;
-
-    private CourseMapper courseMapper;
-
-    private StudentMapper studentMapper;
+    private final SectionMapper sectionMapper;
 
     @Override
     public JpaRepository<GradeBook, Long> Repository() {
@@ -59,16 +43,14 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
 
         Long filterAcademicTerm = gradeBookRequestDTO.getFilterAcademicTerm();
 
-        Long filterCourse = gradeBookRequestDTO.getFilterCourse();
+        Long filterSection = gradeBookRequestDTO.getFilterSection();
 
         Long filterStudent = gradeBookRequestDTO.getFilterStudent();
 
-//        Long filterFacultyMember = gradeBookRequestDTO.getFilterFacultyMember();
-
         Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit(), constructSortObject(gradeBookRequestDTO));
-        if (filterAcademicTerm != null || filterCourse != null || filterStudent != null) {
+        if (filterAcademicTerm != null || filterSection != null || filterStudent != null) {
             GradeBookSpecification gradeBookSpecification =
-                    new GradeBookSpecification(filterAcademicTerm, filterCourse, filterStudent);
+                    new GradeBookSpecification(filterAcademicTerm, filterSection, filterStudent);
 
             gradeBookPage = gradeBookRepository.findAll(gradeBookSpecification, pageable);
         } else {
@@ -87,44 +69,29 @@ public class GradeBookService extends BaseServiceImp<GradeBook> {
         return Sort.by(Sort.Direction.valueOf(gradeBookRequestDTO.getSortDirection()), gradeBookRequestDTO.getSortBy());
     }
 
-    // by ziad
-    public PageResult<StudentDTO> getStudentsByCourseId(PageQueryUtil pageUtil, Long courseId) {
-        Course course = this.courseService.findById(courseId);
-        Pageable pageable = PageRequest.of(pageUtil.getPage() - 1, pageUtil.getLimit());
-        Page<StudentEnrollment> studentEnrollmentPage = this.studentEnrollmentRepository.getStudentEnrollmentsByCourseId(pageable, course.getId());
-        List<Student> students = new ArrayList<>();
-        for (StudentEnrollment studentEnrollment : studentEnrollmentPage.getContent()) {
-            students.add(studentEnrollment.getStudent());
-        }
-        List<StudentDTO> studentDTOS = this.studentMapper.toDTOs(students);
-        studentDTOS.sort((st1, st2) -> {
-            if (st1.getUniversityId() < st2.getUniversityId()) return -1;
-            else if (st1.getUniversityId() > st2.getUniversityId()) return 1;
-            return 0;
-        });
-        return new PageResult<>(studentDTOS, (int) studentEnrollmentPage.getTotalElements(),
-                pageUtil.getLimit(), pageUtil.getPage());
-    }
+    public ArrayList<SectionDTO> getFacultyMemberSections(Long termId, Long facultyMemberId) {
+        ArrayList<Long> sectionIds = this.timetableRepository.getFacultyMemberSections(termId, facultyMemberId);
+        ArrayList<Section> sections = new ArrayList<>();
+        ArrayList<SectionDTO> sectionDTOs = new ArrayList<>();
 
-    // by ziad
-    public ArrayList<CourseDTO> getCoursesByFacultyMemberId(Long termId, Long facultyMemberId) {
-        AcademicTerm academicTerm = this.academicTermService.findById(termId);
-        FacultyMember facultyMember = this.facultyMemberService.findById(facultyMemberId);
-        ArrayList<Long> courseIds = this.timetableRepository
-                .getTimetablesByAcademicTerm_IdAndFacultyMemberId
-                        (academicTerm.getId(), facultyMember.getId());
-        ArrayList<Course> courses = new ArrayList<>();
-        ArrayList<CourseDTO> courseDTOs = new ArrayList<>();
-        if (courseIds != null && courseIds.size() > 0) {
-            for (long id : courseIds) {
-                Course course = this.courseService.findById(id);
-                courses.add(course);
+        if (sectionIds != null && sectionIds.size() > 0) {
+            for (long id : sectionIds) {
+                Section section = this.sectionService.findById(id);
+                sections.add(section);
             }
-            courseDTOs = this.courseMapper.toDTOs(courses);
-            return courseDTOs;
+            sectionDTOs = this.sectionMapper.toDTOs(sections);
+            return sectionDTOs;
         }
         return null;
     }
 
+//    public ResponseEntity<MessageResponse> updateGradeBooks(List<GradeBookDTO> gradeBookDTOS) {
+//        for (GradeBookDTO gradeBookDTO :gradeBookDTOS) {
+//            GradeBook gradeBook = this.findById(gradeBookDTO.getId());
+//            if(gradeBook!=null){
+//                gradeBook.
+//            }
+//        }
+//    }
 
 }

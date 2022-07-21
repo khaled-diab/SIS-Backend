@@ -28,4 +28,6 @@ public interface TimetableRepository extends BaseRepository<Timetable> {
     @Query(value = "SELECT distinct course_id FROM timetable WHERE academic_term_id=:academicTermId and faculty_member_id= :facultyMemberId", nativeQuery = true)
     ArrayList<Long> getTimetablesByAcademicTerm_IdAndFacultyMemberId(Long academicTermId, Long facultyMemberId);
 
+    @Query(value = "SELECT distinct section_id FROM timetable WHERE academic_term_id=:academicTermId and faculty_member_id= :facultyMemberId  ", nativeQuery = true)
+    ArrayList<Long> getFacultyMemberSections(long academicTermId, long facultyMemberId);
 }

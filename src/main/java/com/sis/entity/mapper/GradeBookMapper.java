@@ -16,8 +16,7 @@ import static java.util.stream.Collectors.toCollection;
 public class GradeBookMapper implements Mapper<GradeBook, GradeBookDTO> {
     private AcademicTermMapper academicTermMapper;
     private StudentMapper studentMapper;
-    private CourseMapper courseMapper;
-    private FacultyMemberMapper facultyMemberMapper;
+    private SectionMapper sectionMapper;
 
     @Override
     public ArrayList<GradeBookDTO> toDTOs(Collection<GradeBook> entity) {
@@ -44,12 +43,9 @@ public class GradeBookMapper implements Mapper<GradeBook, GradeBookDTO> {
         if (entity.getStudent() != null) {
             dto.setStudentDTO(studentMapper.toDTO(entity.getStudent()));
         }
-        if (entity.getCourse() != null) {
-            dto.setCourseDTO(courseMapper.toDTO(entity.getCourse()));
+        if (entity.getSection() != null) {
+            dto.setSectionDTO(sectionMapper.toDTO(entity.getSection()));
         }
-//        if (entity.getFacultyMember() != null) {
-//            dto.setFacultyMemberDTO(facultyMemberMapper.toDTO(entity.getFacultyMember()));
-//        }
         dto.setFinalExamGrade(entity.getFinalExamGrade());
         dto.setPracticalGrade(entity.getPracticalGrade());
         dto.setOralGrade(entity.getOralGrade());
@@ -67,12 +63,9 @@ public class GradeBookMapper implements Mapper<GradeBook, GradeBookDTO> {
         if (dto.getStudentDTO() != null) {
             entity.setStudent(studentMapper.toEntity(dto.getStudentDTO()));
         }
-        if (dto.getCourseDTO() != null) {
-            entity.setCourse(courseMapper.toEntity(dto.getCourseDTO()));
+        if (dto.getSectionDTO() != null) {
+            entity.setSection(sectionMapper.toEntity(dto.getSectionDTO()));
         }
-//        if (dto.getFacultyMemberDTO() != null) {
-//            entity.setFacultyMember(facultyMemberMapper.toEntity(dto.getFacultyMemberDTO()));
-//        }
         entity.setFinalExamGrade(dto.getFinalExamGrade());
         entity.setPracticalGrade(dto.getPracticalGrade());
         entity.setOralGrade(dto.getOralGrade());

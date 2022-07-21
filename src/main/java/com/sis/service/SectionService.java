@@ -35,8 +35,6 @@ public class SectionService extends BaseServiceImp<Section> {
     private final SectionTableRecordsMapper sectionTableRecordsMapper;
     private final TimetableService timetableService;
     private final StudentEnrollmentService studentEnrollmentService;
-    private final StudentEnrollmentRepository studentEnrollmentRepository;
-
 
     private final CourseService courseService;
 
