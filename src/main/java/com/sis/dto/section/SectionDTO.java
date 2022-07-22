@@ -3,6 +3,7 @@ package com.sis.dto.section;
 import com.sis.dto.*;
 import com.sis.dto.college.CollegeDTO;
 import com.sis.dto.course.CourseDTO;
+import com.sis.dto.major.MajorDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
