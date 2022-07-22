@@ -49,4 +49,8 @@ public interface StudentRepository extends BaseRepository<Student> {
     Page<Student> findAllStudentss(Pageable pageable);
 
     Student findStudentByUserId(Long userId);
+
+    Long countStudentsByUser_IdNotNull();
+
+    Long countStudentsByUser_IdIsNull();
 }
