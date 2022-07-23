@@ -1,6 +1,6 @@
 package com.sis.entity.mapper;
 
-import com.sis.dto.MajorDTO;
+import com.sis.dto.major.MajorDTO;
 import com.sis.entity.Major;
 import com.sis.util.PageResult;
 import lombok.AllArgsConstructor;

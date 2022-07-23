@@ -30,34 +30,34 @@ public class Course extends BaseEntity {
     @Column(name = "name_en")
     private String nameEn;
 
-    @Column(name = "theoretical_hours")
+    @Column(name = "theoretical_hours", columnDefinition = "varchar(255) default '0'")
     private Float theoreticalHours;
 
-    @Column(name = "exercises_hours")
+    @Column(name = "exercises_hours", columnDefinition = "varchar(255) default '0'")
     private Float exercisesHours;
 
-    @Column(name = "practical_hours")
+    @Column(name = "practical_hours", columnDefinition = "varchar(255) default '0'")
     private Float practicalHours;
 
-    @Column(name = "total_hours")
+    @Column(name = "total_hours", columnDefinition = "varchar(255) default '0'")
     private Float totalHours;
 
-    @Column(name = "weeks")
+    @Column(name = "weeks", columnDefinition = "varchar(255) default '0'")
     private Integer weeks;
 
-    @Column(name = "final_grade")
+    @Column(name = "final_grade", columnDefinition = "varchar(255) default '0'")
     private Float finalGrade;
 
-    @Column(name = "final_exam_grade")
+    @Column(name = "final_exam_grade", columnDefinition = "varchar(255) default '0'")
     private Float finalExamGrade;
 
-    @Column(name = "practical_grade")
+    @Column(name = "practical_grade", columnDefinition = "varchar(255) default '0'")
     private Float practicalGrade;
 
-    @Column(name = "oral_grade")
+    @Column(name = "oral_grade", columnDefinition = "varchar(255) default '0'")
     private Float oralGrade;
 
-    @Column(name = "mid_grade")
+    @Column(name = "mid_grade", columnDefinition = "varchar(255) default '0'")
     private Float midGrade;
 
     @ManyToOne
