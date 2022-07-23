@@ -73,11 +73,14 @@ public class SectionController extends BaseController<Section, SectionDTO> {
 
     // Abdo.Amr
     @RequestMapping(value = "/getFacultyMemberSections_courses/{facultyMemberId}", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Section_Course>> getFacultyMemberSections_Courses(@PathVariable long facultyMemberId) {
+    public ResponseEntity<ArrayList<Section_Course>>
+    getFacultyMemberSections_Courses(@PathVariable long facultyMemberId) {
         AcademicTerm academicTerm = this.academicTermService.getCurrentAcademicTerm();
         AcademicTermDTO academicTermDTO = this.academicTermMapper.toDTO(academicTerm);
 
-        ArrayList<Section_Course> sectionDTOs = this.sectionService.findFacultyMemberSections_courses(academicTermDTO.getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
+        ArrayList<Section_Course> sectionDTOs =
+                this.sectionService.findFacultyMemberSections_courses(academicTermDTO
+                        .getAcademicYearDTO().getId(), academicTermDTO.getId(), facultyMemberId);
         return new ResponseEntity<>(sectionDTOs, HttpStatus.OK);
     }
 
