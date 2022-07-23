@@ -21,6 +21,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MessageResponse> globalExceptionHandler(Exception ex, WebRequest request) {
         log.error(ex.getMessage());
+
         return new ResponseEntity<>(new MessageResponse("An error has occurred please try again later"),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
