@@ -129,7 +129,9 @@ public class SectionService extends BaseServiceImp<Section> {
     }
 
     //Abdo.Amr
-    public ArrayList<Section_Course> findFacultyMemberSections_courses(long academicYearId, long academicTermId, long facultyMemberId) {
+    public ArrayList<Section_Course> findFacultyMemberSections_courses(long academicYearId,
+                                                                       long academicTermId,
+                                                                       long facultyMemberId) {
         ArrayList<Long> sectionIds = this.timetableService.findFacultyMemberSections(academicYearId, academicTermId, facultyMemberId);
         ArrayList<Section_Course> section_courses = new ArrayList<>();
 
