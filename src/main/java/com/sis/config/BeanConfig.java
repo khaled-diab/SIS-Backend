@@ -17,7 +17,6 @@ public class BeanConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         ObjectMapper mapper = new ObjectMapper();
